@@ -3,9 +3,13 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
+
+// Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
+
+
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
-    this.pkg = require('../package.json');
+    this.pkg = require('../../package.json');
   },
 
   prompting: function () {
@@ -13,7 +17,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ultimate' + chalk.red('Ngwebapp') + ' generator!'
+      'Welcome to the ultimate ' + chalk.red('Ngwebapp') + ' generator!'
     ));
 
     var prompts = [{
