@@ -9,58 +9,99 @@ var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
-    this.pkg = require('../../package.json');
+    // Check if there is an existing config
+    this.hasExistingConfig = !!this.config.get('taskRunner');
   },
 
-  prompting: function () {
+  promptForMode: function () {
     var done = this.async();
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the ultimate ' + chalk.red('Ngwebapp') + ' generator!'
+      'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
     ));
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+    if (this.hasExistingConfig) {
 
-    this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      var modePrompt = [
+        {
+          type: 'confirm',
+          name: 'rebuildFromConfig',
+          message: 'Would you like to rebuild from the existing configuration in .yo-rc.json?',
+          default: true
+        }
+      ];
+
+      this.prompt(modePrompt, function(props) {
+        // Build site, skip to configuring
+        this.rebuildFromConfig = props.rebuildFromConfig
+
+        done();
+      }.bind(this));
+    }
+  },
+
+  promptForEverything: function() {
+    // Bail out if we just want to rebuild from the configuration file
+    if (this.rebuildFromConfig) {
+      return;
+    }
+
+    var done = this.async();
+
+    // Ask everything...
+    var prompts = [
+      {
+        type: 'list',
+        name: 'taskRunner',
+        message: 'Choose a task runner to build your project',
+        choices: ["grunt"],
+        store: true
+      }
+    ];
+
+    this.prompt(prompts, function(props) {
+      this.taskRunner = props.taskRunner;
 
       done();
     }.bind(this));
   },
 
-  writing: {
-    app: function () {
-      this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('_bower.json'),
-        this.destinationPath('bower.json')
-      );
-    },
-
-    projectfiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
+  writeConfig: function() {
+    // Where we save the configuration for the project
+    if (this.taskRunner) {
+      this.config.set('taskRunner', this.taskRunner);
     }
   },
 
+  writing: {
+    //app: function () {
+    //  this.fs.copy(
+    //    this.templatePath('_package.json'),
+    //    this.destinationPath('package.json')
+    //  );
+    //  this.fs.copy(
+    //    this.templatePath('_bower.json'),
+    //    this.destinationPath('bower.json')
+    //  );
+    //},
+    //
+    //projectfiles: function () {
+    //  this.fs.copy(
+    //    this.templatePath('editorconfig'),
+    //    this.destinationPath('.editorconfig')
+    //  );
+    //  this.fs.copy(
+    //    this.templatePath('jshintrc'),
+    //    this.destinationPath('.jshintrc')
+    //  );
+    //}
+  },
+
   install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
+    // InstallDependencies runs 'npm install' and 'bower install'
+    //this.installDependencies({
+    //  skipInstall: this.options['skip-install']
+    //});
   }
 });
