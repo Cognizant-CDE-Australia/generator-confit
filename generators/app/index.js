@@ -2,26 +2,29 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var common; // Need to wait until we initialise the generator before we can use this.
 
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
+// This generator is a shell to call other generators. It doesn't do much other work.
 
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
+    common = require('./common')(this);
     // Check if there is an existing config
-    this.hasExistingConfig = !!this.config.get('taskRunner');
+    this.hasExistingConfig = common.hasExistingConfig('taskRunner');
+    this.rebuildFromConfig = false;
   },
 
   promptForMode: function () {
-    var done = this.async();
-
     // Have Yeoman greet the user.
     this.log(yosay(
       'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
     ));
 
     if (this.hasExistingConfig) {
+      var done = this.async();
 
       var modePrompt = [
         {
@@ -34,7 +37,7 @@ module.exports = yeoman.generators.Base.extend({
 
       this.prompt(modePrompt, function(props) {
         // Build site, skip to configuring
-        this.rebuildFromConfig = props.rebuildFromConfig
+        this.rebuildFromConfig = props.rebuildFromConfig;
 
         done();
       }.bind(this));
@@ -42,6 +45,8 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForEverything: function() {
+    this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
+
     // Bail out if we just want to rebuild from the configuration file
     if (this.rebuildFromConfig) {
       return;
@@ -68,37 +73,21 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writeConfig: function() {
+    this.log('writeConfig');
     // Where we save the configuration for the project
     if (this.taskRunner) {
       this.config.set('taskRunner', this.taskRunner);
     }
   },
 
-  writing: {
-    //app: function () {
-    //  this.fs.copy(
-    //    this.templatePath('_package.json'),
-    //    this.destinationPath('package.json')
-    //  );
-    //  this.fs.copy(
-    //    this.templatePath('_bower.json'),
-    //    this.destinationPath('bower.json')
-    //  );
-    //},
-    //
-    //projectfiles: function () {
-    //  this.fs.copy(
-    //    this.templatePath('editorconfig'),
-    //    this.destinationPath('.editorconfig')
-    //  );
-    //  this.fs.copy(
-    //    this.templatePath('jshintrc'),
-    //    this.destinationPath('.jshintrc')
-    //  );
-    //}
+  writing: function() {
+    this.log('writing');
+    this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {
+    this.log('install');
     // InstallDependencies runs 'npm install' and 'bower install'
     //this.installDependencies({
     //  skipInstall: this.options['skip-install']
