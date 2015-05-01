@@ -3,6 +3,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var common; // Need to wait until we initialise the generator before we can use this.
+var buildTool;
 
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
@@ -11,10 +12,13 @@ var common; // Need to wait until we initialise the generator before we can use 
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
-    common = require('./common')(this);
+    common = require('./common')(this, 'app');
+
+    buildTool = common.getBuildTool();
     // Check if there is an existing config
-    this.hasExistingConfig = common.hasExistingConfig('taskRunner');
     this.rebuildFromConfig = false;
+    this.hasExistingConfig = !!common.getConfig('buildTool');
+    this.log('hasExistingConfig = ' + common.getConfig('buildTool'));
   },
 
   promptForMode: function () {
@@ -58,39 +62,54 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [
       {
         type: 'list',
-        name: 'taskRunner',
-        message: 'Choose a task runner to build your project',
+        name: 'buildTool',
+        message: 'Choose a build-tool to build your project',
         choices: ["grunt"],
         store: true
       }
     ];
 
     this.prompt(prompts, function(props) {
-      this.taskRunner = props.taskRunner;
+      this.buildTool = props.buildTool;
 
       done();
     }.bind(this));
   },
 
   writeConfig: function() {
-    this.log('writeConfig');
     // Where we save the configuration for the project
-    if (this.taskRunner) {
-      this.config.set('taskRunner', this.taskRunner);
-    }
+    var cfg = {
+      buildTool: this.buildTool || this.config.get('buildTool')
+    };
+    this.config.set(cfg);
   },
 
   writing: function() {
     this.log('writing');
+
+    // Common files (independent of the build-tool) to write
+    this.fs.copy(
+      this.templatePath('_package.json'),
+      this.destinationPath('package.json')
+    );
+    this.fs.copy(
+      this.templatePath('_bower.json'),
+      this.destinationPath('bower.json')
+    );
+
+    buildTool.write(this, common);
+
+    // Now call the other generators
     this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {
     this.log('install');
+
     // InstallDependencies runs 'npm install' and 'bower install'
-    //this.installDependencies({
-    //  skipInstall: this.options['skip-install']
-    //});
+    this.installDependencies({
+      skipInstall: this.options['skip-install']
+    });
   }
 });

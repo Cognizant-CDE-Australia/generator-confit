@@ -3,6 +3,7 @@ module.exports = function() {
 
   function write(generator) {
     generator.log('Writing grunt path options');
+
   };
 
 

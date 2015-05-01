@@ -48,8 +48,7 @@ module.exports = yeoman.generators.Base.extend({
 
 
   writing: function () {
-    // Defer the actual writing to the task-runner-choice the user has made (currently), this is Grunt.
-    // require(this.taskRunnerName + 'Writer.js').write(this);
+    // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
 
     // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
     this.fs.copy(
