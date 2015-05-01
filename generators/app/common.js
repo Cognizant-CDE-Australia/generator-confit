@@ -16,15 +16,18 @@ module.exports = function(generator, genName) {
     parentConfig = gen.config.get(name);
   }
 
-
-  function addNpmDevDependencies(deps) {
+  function addNpmDependencies(deps, optKey) {
     var filePath = gen.destinationPath('package.json');
     var packageJson = gen.fs.readJSON(filePath);
+    var key = optKey || 'dependencies';
 
-    packageJson.devDependencies = _.assign(packageJson.devDependencies, deps);
+    packageJson[key] = _.assign(packageJson[key], deps);
     gen.fs.writeJSON(filePath, packageJson);
   }
 
+  function addNpmDevDependencies(deps) {
+    addNpmDependencies(deps, 'devDependencies');
+  }
 
 
   function getBuildTool() {
@@ -34,14 +37,49 @@ module.exports = function(generator, genName) {
 
 
   function getConfig(childKey) {
-    return parentConfig[childKey];
+    return _.get(parentConfig, childKey);   // Supports getConfig('key.a.b');
+  }
+
+  function generateObjFromAnswers(answers) {
+    var obj = {};
+
+    for (var key in answers) {
+      // Split key-string by '.', and generate object graph
+      var parts = key.split('.');
+      var curObj = obj;
+      var part;
+
+      while (parts.length) {
+        part = parts.shift();
+
+        // If the part does not exist on the object, and there is another part to come, create it as an object
+        if (!curObj[part] && parts.length) {
+          curObj[part] = {};
+        }
+        if (parts.length) {
+          curObj = curObj[part];
+        }
+      }
+      curObj[part] = answers[key];
+    }
+    return obj;
+  }
+
+
+  function mergeNewAnswersWithExistingConfig(obj) {
+    // Take the parentConfig and over-write it with the obj, so long as the obj exists
+    var obj = {};
+    obj[name] = _.extend(parentConfig, obj);;
+    return obj;
   }
 
 
   return {
-    //addNpmDependencies: addNpmDependencies,
+    addNpmDependencies: addNpmDependencies,
     addNpmDevDependencies: addNpmDevDependencies,
     getBuildTool: getBuildTool,
-    getConfig: getConfig
+    getConfig: getConfig,
+    generateObjFromAnswers: generateObjFromAnswers,
+    mergeNewAnswersWithExistingConfig: mergeNewAnswersWithExistingConfig
   };
 };

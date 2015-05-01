@@ -2,7 +2,7 @@ module.exports = function() {
   'use strict';
 
   function write(gen, commonLib) {
-    gen.log('Writing app grunt path options');
+    gen.log('Writing "app" using GruntJS');
 
     gen.fs.copy(
       gen.templatePath('../grunt/templates/_Gruntfile.js'),

@@ -61,45 +61,46 @@ module.exports = yeoman.generators.Base.extend({
     }
 
     var done = this.async();
-    var self = this;
 
     var prompts = [
       {
         type: 'input',
-        name: 'srcDir',
+        name: 'input.srcDir',
         message: 'Path to source code (relative to the current directory)',
-        default: common.getConfig('srcDir') || 'src'
+        default: common.getConfig('input.srcDir') || 'src/'
       },
       {
         type: 'input',
-        name: 'modulesDir',
+        name: 'input.modulesDir',
         message: 'Path to source modules',
-        default: common.getConfig('modulesDir') || 'src/modules' // This should default to a path in the base config - which we can read from generator.config.get()
+        default: common.getConfig('input.modulesDir') || 'src/modules/'
+      },
+      {
+        type: 'input',
+        name: 'input.assetsDir',
+        message: 'Name of module assets directory',
+        default: common.getConfig('input.assetsDir') || 'assets'
       }
     ];
 
 
     this.prompt(prompts, function (props) {
-      this.srcDir = props.srcDir;
-      this.modulesDir = props.modulesDir;
+      this.answers = common.generateObjFromAnswers(props);
+
+      this.log(this.answers);
+
       done();
     }.bind(this));
   },
 
   writeConfig: function() {
-    var cfg = {
-      paths: {
-        srcDir: this.srcDir || common.getConfig('srcDir'),
-        modulesDir: this.modulesDir || common.getConfig('modulesDir')
-      }
-    };
-
-    this.config.set(cfg);
+    this.log(common.mergeNewAnswersWithExistingConfig(this.answers));
+    this.config.set(common.mergeNewAnswersWithExistingConfig(this.answers));
   },
 
 
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-    buildTool.write(this);
+    buildTool.write(this, common);
   }
 });
