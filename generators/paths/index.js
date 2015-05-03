@@ -46,9 +46,10 @@ module.exports = yeoman.generators.Base.extend({
     this.log(chalk.green('Project path generator'));
     common = require('../app/common')(this, 'paths');
     buildTool = common.getBuildTool();
+    this.answers = undefined; // Don't initialise this to an object, in case we rebuild from config
 
     // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
-    this.hasExistingConfig = !!common.getConfig('srcDir');
+    this.hasExistingConfig = !!common.getConfig('input.srcDir');
     this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
 
     this.log('Paths: rebuildFromConfig = ' + this.rebuildFromConfig);
@@ -94,8 +95,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writeConfig: function() {
-    this.log(common.mergeNewAnswersWithExistingConfig(this.answers));
-    this.config.set(common.mergeNewAnswersWithExistingConfig(this.answers));
+    // If we have new answers, then change the config
+    if (this.answers) {
+      common.setConfig(this.answers);
+    }
   },
 
 

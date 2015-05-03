@@ -1,27 +1,19 @@
 module.exports = function() {
   'use strict';
 
-  function write(gen, commonLib) {
+  function write(gen) {
     gen.log('Writing grunt path options');
 
-    var templates = {
-      input: {
-        srcDir: commonLib.getConfig('input.srcDir'),
-        modulesDir: commonLib.getConfig('input.modulesDir'),
-        assetsDir: commonLib.getConfig('input.assetsDir')
-      }
-    };
+    var templates = gen.config.get('paths');
 
-    gen.log(templates);
-    //gen.log(commonLbi);
+    //gen.log(templates);
 
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntPaths.js'),
       gen.destinationPath('config/grunt/paths.js'),
       templates
     );
-
-  };
+  }
 
 
   return {

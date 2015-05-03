@@ -6,18 +6,14 @@ module.exports = function() {
 
     gen.fs.copy(
       gen.templatePath('../grunt/templates/_Gruntfile.js'),
-      gen.destinationPath('Gruntfile.js'),
-      {
-        'dependencies.paths': ''
-      }
+      gen.destinationPath('Gruntfile.js')
     );
 
     // Add the NPM dev dependencies
     commonLib.addNpmDevDependencies({
       'grunt-extend-config': '*'
     });
-
-  };
+  }
 
 
   return {

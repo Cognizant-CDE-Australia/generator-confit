@@ -66,10 +66,12 @@ module.exports = function(generator, genName) {
   }
 
 
-  function mergeNewAnswersWithExistingConfig(obj) {
-    // Take the parentConfig and over-write it with the obj, so long as the obj exists
+  function setConfig(newConfig) {
     var obj = {};
-    obj[name] = _.extend(parentConfig, obj);;
+
+    obj[name] = newConfig;
+
+    gen.config.set(obj);
     return obj;
   }
 
@@ -80,6 +82,6 @@ module.exports = function(generator, genName) {
     getBuildTool: getBuildTool,
     getConfig: getConfig,
     generateObjFromAnswers: generateObjFromAnswers,
-    mergeNewAnswersWithExistingConfig: mergeNewAnswersWithExistingConfig
+    setConfig: setConfig
   };
 };
