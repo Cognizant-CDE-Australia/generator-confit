@@ -13,9 +13,11 @@ module.exports = function() {
       templates
     );
 
-    // Modify Package JSON to use grunt-connect
-    // serverName - The name of the grunt-connect server
-    // baseDir -
+    // Modify Package JSON
+    common.addNpmDevDependencies({
+      'grunt-contrib-watch': '*',
+      'grunt-contrib-connect': '*'
+    });
 
     // Create a new section in the file based on the responses
 

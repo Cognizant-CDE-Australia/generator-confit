@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
   'use strict';
 
-  var compression = require('compression');
   var sslKey = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString(),
       cert = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.crt').toString();
 

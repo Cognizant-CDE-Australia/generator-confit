@@ -19,7 +19,7 @@ module.exports = yeoman.generators.Base.extend({
 
     this.answers = undefined;
 
-    this.hasExistingConfig = !!common.getConfig('input.serverName');
+    this.hasExistingConfig = !!common.getConfig('serverName');
     this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
 
     if (this.name) {
@@ -28,8 +28,12 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   prompting: function () {
-    var done = this.async();
+    if (this.rebuildFromConfig) {
+      return;
+    }
+
     var self = this;
+    var done = this.async();
 
     var prompts = [
       {
@@ -96,5 +100,14 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     buildTool.write(this, common);
+  },
+
+  install: function () {
+    this.log('install');
+
+    // InstallDependencies runs 'npm install' and 'bower install'
+    this.installDependencies({
+      skipInstall: this.options['skip-install']
+    });
   }
 });
