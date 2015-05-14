@@ -4,43 +4,6 @@ var chalk = require('chalk');
 var common;
 var buildTool;
 
-// We need to build this config
-// Global config that will probably never change
-//bowerDir: 'bower_components/',
-//  config: {
-//  dir: 'config/',
-//    gruntFiles: ['Gruntfile.js']
-//},
-//
-//input: {
-//  srcDir: 'src/',
-//    modulesDir: 'src/modules/',
-//    moduleAssets: 'assets',
-//    moduleIncludes: 'includes',
-//    modulePartials: 'partials',
-//    moduleStyles: 'styles',
-//    moduleTemplates: 'template',
-//    moduleUnitTest: 'unitTest',
-//    moduleE2ETest: 'e2eTest',
-//
-//    assetFiles: ['**/<%= modularProject.input.moduleAssets %>/**/*'],
-//    htmlFiles: ['**/*.html'], //templates directory needs to be ignored
-//    jsFiles: ['**/_*.js', '**/*.js'],
-//    templateHTMLFiles: ['**/<%= modularProject.input.moduleTemplates %>/*.html']
-//},
-//output: {
-//  devDir: 'dev/',
-//    prodDir: 'dist/',
-//    reportDir: 'reports/',
-//    assetsSubDir: 'assets/',
-//    cssSubDir: 'css/',
-//    jsSubDir: 'js/',
-//    vendorJSSubDir: 'vendor/',
-//    viewsSubDir: 'views/'
-//},
-
-
-
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
     this.log(chalk.green('Project path generator'));
