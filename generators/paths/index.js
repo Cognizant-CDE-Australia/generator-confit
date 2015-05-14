@@ -124,8 +124,6 @@ module.exports = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.answers = common.generateObjFromAnswers(props);
 
-      this.log(this.answers);
-
       done();
     }.bind(this));
   },
