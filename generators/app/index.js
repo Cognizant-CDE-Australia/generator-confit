@@ -23,10 +23,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForMode: function() {
-    // Have Yeoman greet the user.
-    //this.log(yosay(
-    //  'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
-    //));
     var welcome =
       "\n" +
       chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
