@@ -9,6 +9,12 @@ module.exports = function() {
       gen.destinationPath('Gruntfile.js')
     );
 
+    //copy utils file for grunt projects
+    gen.fs.copy(
+      gen.templatePath('../grunt/templates/_utils.js'),
+      gen.destinationPath('config/grunt/lib/utils.js')
+    );
+
     // Add the NPM dev dependencies
     commonLib.addNpmDevDependencies({
       'time-grunt': '*',
