@@ -67,7 +67,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'list',
         name: 'protocol',
-        message: 'Protocol',
+        message: 'Server protocol',
         choices: [
           'http',
           'https'
@@ -77,13 +77,7 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.answers = {
-        serverName: props.serverName,
-        baseDir: props.baseDir,
-        port: props.port,
-        hostname: props.hostname,
-        protocol: props.protocol
-      };
+      this.answers = common.generateObjFromAnswers(props);
 
       done();
     }.bind(this));
