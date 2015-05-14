@@ -5,29 +5,36 @@ var common;
 var buildTool;
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.log(chalk.green('Project serve generator'));
+  initializing: {
+    preInit: function() {
+      common = require('../app/common')(this, 'server');
+      buildTool = common.getBuildTool();
+    },
+    init: function() {
+      this.argument('name', {
+        required: false,
+        type: String,
+        desc: 'The sub-generator name'
+      });
 
-    common = require('../app/common')(this, 'server');
-    buildTool = common.getBuildTool();
-
-    this.argument('name', {
-      required: false,
-      type: String,
-      desc: 'The subgenerator name'
-    });
-
-    this.answers = undefined;
-
-    this.hasExistingConfig = !!common.getConfig('input.serverName');
-    this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-
-    if (this.name) {
-      this.log('Creating a server called "' + this.name + '".');
+      // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
+      this.hasExistingConfig = common.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
     }
   },
 
-  prompting: function () {
+  prompting: function() {
+    this.log(chalk.green('Project serve generator'));
+    this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
+    if (this.name) {
+      this.log('Creating a server called "' + this.name + '".');
+    }
+
+    // Bail out if we just want to rebuild from the configuration file
+    if (this.rebuildFromConfig && !this.name) {
+      return;
+    }
+
     var done = this.async();
     var self = this;
 
