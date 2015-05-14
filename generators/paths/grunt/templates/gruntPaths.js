@@ -20,14 +20,14 @@ module.exports = function(grunt) {
         moduleE2ETest: '<%= input.e2eTestDir %>'
       },
       output: {
-        devDir: 'dev/',
-        prodDir: 'build/static/',
-        assetsSubDir: 'assets/',
-        cssSubDir: 'css/',
-        jsSubDir: 'js/',
-        vendorJSSubDir: 'vendor/',
-        viewsSubDir: 'views/',
-        reportDir: 'bin/'
+        devDir: '<%= output.devDir %>',
+        prodDir: '<%= output.prodDir %>',
+        assetsSubDir: '<%= output.assetsSubDir %>',
+        cssSubDir: '<%= output.cssSubDir %>',
+        jsSubDir: '<%= output.jsSubDir %>',
+        vendorJSSubDir: '<%= output.vendorJSSubDir %>',
+        viewsSubDir: '<%= output.viewsSubDir %>',
+        reportDir: '<%= output.reportDir %>'
       }
     }
   });
