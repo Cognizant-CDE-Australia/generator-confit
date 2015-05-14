@@ -11,8 +11,9 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     commonLib.addNpmDevDependencies({
+      'time-grunt': '*',
       'grunt-extend-config': '*',
-      'time-grunt': '*'
+      'load-grunt-tasks': '*'
     });
   }
 
