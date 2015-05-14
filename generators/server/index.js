@@ -35,8 +35,8 @@ module.exports = yeoman.generators.Base.extend({
       return;
     }
 
-    var done = this.async();
     var self = this;
+    var done = this.async();
 
     var prompts = [
       {
@@ -53,7 +53,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'baseDir',
         message: 'Server base directory',
-        default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
+        default: this.config.get('baseDir') || 'src' // This should default to a path in the base config - which we can read from generator.config.get()
       },
       {
         type: 'input',
@@ -70,7 +70,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'list',
         name: 'protocol',
-        message: 'Protocol',
+        message: 'Server protocol',
         choices: [
           'http',
           'https'
@@ -80,15 +80,7 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.answers = {
-        serverName: props.serverName,
-        baseDir: props.baseDir,
-        port: props.port,
-        hostname: props.hostname,
-        protocol: props.protocol
-      };
-
-      //this.log(this.answers);
+      this.answers = common.generateObjFromAnswers(props);
 
       done();
     }.bind(this));
@@ -103,5 +95,14 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     buildTool.write(this, common);
+  },
+
+  install: function () {
+    this.log('install');
+
+    // InstallDependencies runs 'npm install' and 'bower install'
+    this.installDependencies({
+      skipInstall: this.options['skip-install']
+    });
   }
 });
