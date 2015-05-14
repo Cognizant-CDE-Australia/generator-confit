@@ -6,8 +6,7 @@ module.exports = function(grunt) {
 
   grunt.extendConfig({
     serve: {
-      //dev: ['connect:dev'],
-      //prod: ['connect:prod']
+      '<%= serverName %>': ['connect:<%= serverName %>']
     },
     // The actual grunt serve settings
     connect: {

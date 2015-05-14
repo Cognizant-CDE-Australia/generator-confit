@@ -1,24 +1,21 @@
 module.exports = function() {
   'use strict';
 
-  function write(gen) {
+  function write(gen, common) {
     gen.log('Writing grunt serve options');
 
-    var templates = gen.config.get('serve');
-
-    //gen.log(templates);
-
-
-    // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
+    var templates = gen.config.get('server');
 
     // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntServe.js'),
-      gen.destinationPath('config/grunt/serve.js')
+      gen.destinationPath('config/grunt/serve.js'),
+      templates
     );
 
     // Modify Package JSON to use grunt-connect
-
+    // serverName - The name of the grunt-connect server
+    // baseDir -
 
     // Create a new section in the file based on the responses
 

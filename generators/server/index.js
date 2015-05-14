@@ -47,18 +47,45 @@ module.exports = yeoman.generators.Base.extend({
         name: 'baseDir',
         message: 'Base directory',
         default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
+      },
+      {
+        type: 'input',
+        name: 'basePort',
+        message: 'Base port',
+        default: this.config.get('basePort') || 3000
+      },
+      {
+        type: 'list',
+        name: 'protocol',
+        message: 'Which protocol do you want to use?',
+        choices: [
+          'http',
+          'https'
+        ],
+        default: this.config.get('protocol') || 'https'
       }
     ];
 
     this.prompt(prompts, function (props) {
-      this.serverName = props.serverName;
-      this.baseDir = props.baseDir;
+      this.answers = {
+        serverName: props.serverName,
+        baseDir: props.baseDir
+      };
+
+      this.log(this.answers);
+
       done();
     }.bind(this));
   },
 
+  writeConfig: function() {
+    // If we have new answers, then change the config
+    if (this.answers) {
+      common.setConfig(this.answers);
+    }
+  },
+
   writing: function () {
-    console.log(JSON.stringify(buildTool));
     buildTool.write(this, common);
   }
 });
