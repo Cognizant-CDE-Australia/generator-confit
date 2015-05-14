@@ -28,6 +28,7 @@
     "yosay": "^0.3.0"
   },
   "devDependencies": {
+    "checksum": "^0.1.1",
     "mocha": "*",
     "yeoman-generator": "^0.18.0"
   },
