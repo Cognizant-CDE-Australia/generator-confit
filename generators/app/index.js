@@ -11,17 +11,18 @@ var buildTool;
 
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
-    common = require('./common')(this, 'app');
-
-    buildTool = common.getBuildTool();
-    // Check if there is an existing config
-    this.rebuildFromConfig = false;
-    this.hasExistingConfig = !!common.getConfig('buildTool');
-    this.log('hasExistingConfig = ' + common.getConfig('buildTool'));
+  initializing: {
+    preInit: function() {
+      common = require('./common')(this, 'app');
+      buildTool = common.getBuildTool();
+    },
+    init: function() {
+      this.rebuildFromConfig = false;
+      this.hasExistingConfig = common.hasExistingConfig();
+    }
   },
 
-  promptForMode: function () {
+  promptForMode: function() {
     // Have Yeoman greet the user.
     this.log(yosay(
       'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
@@ -63,25 +64,24 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'list',
         name: 'buildTool',
-        message: 'Choose a build-tool to build your project',
+        message: 'Choose a build-tool for your project',
         choices: ['grunt'],
         store: true
       }
     ];
 
     this.prompt(prompts, function(props) {
-      this.buildTool = props.buildTool;
+      this.answers = common.generateObjFromAnswers(props);
 
       done();
     }.bind(this));
   },
 
   writeConfig: function() {
-    // Where we save the configuration for the project
-    var cfg = {
-      buildTool: this.buildTool || this.config.get('buildTool')
-    };
-    this.config.set(cfg);
+    // If we have new answers, then change the config
+    if (this.answers) {
+      common.setConfig(this.answers);
+    }
   },
 
   writing: function() {

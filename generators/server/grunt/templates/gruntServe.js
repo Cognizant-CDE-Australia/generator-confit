@@ -1,8 +1,12 @@
 module.exports = function(grunt) {
   'use strict';
 
+  <% var ssl = (protocol === 'https'); %>
+
+  <% if(ssl) { %>
   var sslKey = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString(),
       cert = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.crt').toString();
+  <% } %>
 
   grunt.extendConfig({
     serve: {
@@ -17,7 +21,8 @@ module.exports = function(grunt) {
           port: '<%= port %>',
           hostname: '<%= hostname %>',
           protocol: '<%= protocol %>',
-          livereload: 35729
+          livereload: 35729,
+          keepalive: true
         }
       }
     },
@@ -25,10 +30,10 @@ module.exports = function(grunt) {
       '<%= serverName %>': {
         files: '<%= baseDir %>',
         options: {
-          livereload: {
+          livereload: <% if(!ssl) { %> true <% } else { %>{
             key: sslKey,
             cert: cert
-          }
+          }<% } %>
         }
       }
     }

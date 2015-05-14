@@ -5,30 +5,33 @@ var common;
 var buildTool;
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.log(chalk.green('Project serve generator'));
+  initializing: {
+    preInit: function() {
+      common = require('../app/common')(this, 'server');
+      buildTool = common.getBuildTool();
+    },
+    init: function() {
+      this.argument('name', {
+        required: false,
+        type: String,
+        desc: 'The sub-generator name'
+      });
 
-    common = require('../app/common')(this, 'server');
-    buildTool = common.getBuildTool();
-
-    this.argument('name', {
-      required: false,
-      type: String,
-      desc: 'The subgenerator name'
-    });
-
-    this.answers = undefined;
-
-    this.hasExistingConfig = !!common.getConfig('serverName');
-    this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-
-    if (this.name) {
-      this.log('Creating a server called "' + this.name + '".');
+      // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
+      this.hasExistingConfig = common.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
     }
   },
 
-  prompting: function () {
-    if (this.rebuildFromConfig) {
+  prompting: function() {
+    this.log(chalk.green('Project serve generator'));
+    this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
+    if (this.name) {
+      this.log('Creating a server called "' + this.name + '".');
+    }
+
+    // Bail out if we just want to rebuild from the configuration file
+    if (this.rebuildFromConfig && !this.name) {
       return;
     }
 
@@ -50,7 +53,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'baseDir',
         message: 'Server base directory',
-        default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
+        default: this.config.get('baseDir') || 'src' // This should default to a path in the base config - which we can read from generator.config.get()
       },
       {
         type: 'input',
@@ -67,7 +70,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'list',
         name: 'protocol',
-        message: 'Protocol',
+        message: 'Server protocol',
         choices: [
           'http',
           'https'
@@ -78,8 +81,6 @@ module.exports = yeoman.generators.Base.extend({
 
     this.prompt(prompts, function (props) {
       this.answers = common.generateObjFromAnswers(props);
-
-      this.log(this.answers);
 
       done();
     }.bind(this));
