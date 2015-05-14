@@ -1,14 +1,26 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+var common;
+var buildTool;
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
+    this.log(chalk.green('Project serve generator'));
+
+    common = require('../app/common')(this, 'server');
+    buildTool = common.getBuildTool();
+
     this.argument('name', {
       required: false,
       type: String,
       desc: 'The subgenerator name'
     });
 
+    this.answers = undefined;
+
+    this.hasExistingConfig = !!common.getConfig('input.serverName');
+    this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
 
     if (this.name) {
       this.log('Creating a server called "' + this.name + '".');
@@ -38,7 +50,6 @@ module.exports = yeoman.generators.Base.extend({
       }
     ];
 
-
     this.prompt(prompts, function (props) {
       this.serverName = props.serverName;
       this.baseDir = props.baseDir;
@@ -46,22 +57,8 @@ module.exports = yeoman.generators.Base.extend({
     }.bind(this));
   },
 
-
   writing: function () {
-    // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-
-    // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
-    this.fs.copy(
-      this.templatePath('serve.js'),
-      this.destinationPath('config/grunt/serve.js')
-    );
-    // Modify Package JSON to use grunt-connect
-
-
-    // Create a new section in the file based on the responses
-
-
-    // Update the generator config.
-    this.config.set('baseDir', this.baseDir);   // This isn't a perfect example... it really represents 'the last-specified baseDir', rather than the 'global baseDir'.
+    console.log(JSON.stringify(buildTool));
+    buildTool.write(this, common);
   }
 });

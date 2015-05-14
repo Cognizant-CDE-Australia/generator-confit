@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       //dev: ['connect:dev'],
       //prod: ['connect:prod']
     },
-    // The actual grunt server settings
+    // The actual grunt serve settings
     connect: {
       // Configs go here
     }
