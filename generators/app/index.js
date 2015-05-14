@@ -101,7 +101,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Now call the other generators
     this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
