@@ -24,9 +24,30 @@ module.exports = yeoman.generators.Base.extend({
 
   promptForMode: function() {
     // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
-    ));
+    //this.log(yosay(
+    //  'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
+    //));
+    var welcome =
+      "\n" +
+      chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
+      chalk.cyan.bold("\n                                                                 ")+ chalk.white.bold("╗╣╣╣╣╣╣╣╗") +
+      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.red.bold("╣╗╗╗") +
+      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.red.bold("╣╣╣╣╝") +
+      chalk.cyan.bold("\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ")+ chalk.white.bold("╣╣╗      ╙╣╣╣╣╣╣╣╣╜") +
+      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ") +
+      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╓  ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕") +
+      chalk.cyan.bold("\n ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣") +
+      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
+      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
+      chalk.cyan.bold("\n └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        ") + chalk.white.bold("╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙ ") +
+      "\n" +
+      "\n";
+
+
+
+
+
+    this.log(welcome);
 
     if (this.hasExistingConfig) {
       var done = this.async();
@@ -67,6 +88,12 @@ module.exports = yeoman.generators.Base.extend({
         message: 'Choose a build-tool for your project',
         choices: ['grunt'],
         store: true
+      },
+      {
+        type: 'confirm',
+        name: 'editorConfig',
+        message: 'Use EditorConfig?',
+        default: common.getConfig('editorConfig') || true
       }
     ];
 
@@ -97,10 +124,21 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
+    if (this.answers.editorConfig) {
+      this.fs.copy(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
+    }
+
     buildTool.write(this, common);
 
     // Now call the other generators
     this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
+    // buildCSS seems to be causing an infinite generator loop
+    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
     this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 

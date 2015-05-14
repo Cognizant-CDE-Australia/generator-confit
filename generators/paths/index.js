@@ -82,6 +82,54 @@ module.exports = yeoman.generators.Base.extend({
         name: 'input.e2eTestDir',
         message: 'Name of module e2eTest directory',
         default: common.getConfig('input.e2eTestDir') || 'e2eTest'
+      },
+      {
+        type: 'input',
+        name: 'output.devDir',
+        message: 'Path to dev (relative to the current directory)',
+        default: common.getConfig('output.devDir') || 'dev/'
+      },
+      {
+        type: 'input',
+        name: 'output.prodDir',
+        message: 'Path to prod (relative to the current directory)',
+        default: common.getConfig('output.prodDir') || 'build/static/'
+      },
+      {
+        type: 'input',
+        name: 'output.assetsSubDir',
+        message: 'Path to source code (relative to the current directory)',
+        default: common.getConfig('output.assetsSubDir') || 'assets/'
+      },
+      {
+        type: 'input',
+        name: 'output.cssSubDir',
+        message: 'Path to CSS code (relative to the current directory)',
+        default: common.getConfig('output.cssSubDir') || 'css/'
+      },
+      {
+        type: 'input',
+        name: 'output.jsSubDir',
+        message: 'Path to JS code (relative to the current directory)',
+        default: common.getConfig('output.jsSubDir') || 'js/'
+      },
+      {
+        type: 'input',
+        name: 'output.vendorJSSubDir',
+        message: 'Path to external libraries (relative to the current directory)',
+        default: common.getConfig('output.vendorJSSubDir') || 'vendor/'
+      },
+      {
+        type: 'input',
+        name: 'output.viewsSubDir',
+        message: 'Path to source code (relative to the current directory)',
+        default: common.getConfig('output.viewsSubDir') || 'views/'
+      },
+      {
+        type: 'input',
+        name: 'output.reportDir',
+        message: 'Path to  (relative to the current directory)',
+        default: common.getConfig('output.reportDir') || 'bin/'
       }
     ];
 
