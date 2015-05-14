@@ -1,8 +1,9 @@
 module.exports = function(grunt) {
   'use strict';
 
-  var config = grunt.config.get('modularProject.serve');
   var compression = require('compression');
+  var sslKey = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString(),
+      cert = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.crt').toString();
 
   grunt.extendConfig({
     serve: {
@@ -10,7 +11,27 @@ module.exports = function(grunt) {
     },
     // The actual grunt serve settings
     connect: {
-      // Configs go here
+      '<%= serverName %>': {
+        options: {
+          open: true,
+          base: '<%= baseDir %>',
+          port: '<%= port %>',
+          hostname: '<%= hostname %>',
+          protocol: '<%= protocol %>',
+          livereload: 35729
+        }
+      }
+    },
+    watch: {
+      '<%= serverName %>': {
+        files: '<%= baseDir %>',
+        options: {
+          livereload: {
+            key: sslKey,
+            cert: cert
+          }
+        }
+      }
     }
   });
 

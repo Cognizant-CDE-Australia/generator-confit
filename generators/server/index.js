@@ -35,7 +35,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'serverName',
-        message: 'Name of the server to generate?',
+        message: 'Server name',
         default: 'dev',
         when: function() {
           // Only ask this question when self.name is undefined
@@ -45,19 +45,25 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'baseDir',
-        message: 'Base directory',
+        message: 'Server base directory',
         default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
       },
       {
         type: 'input',
-        name: 'basePort',
-        message: 'Base port',
-        default: this.config.get('basePort') || 3000
+        name: 'port',
+        message: 'Server port',
+        default: this.config.get('port') || 3000
+      },
+      {
+        type: 'input',
+        name: 'hostname',
+        message: 'Server hostname',
+        default: this.config.get('hostname') || 'localhost'
       },
       {
         type: 'list',
         name: 'protocol',
-        message: 'Which protocol do you want to use?',
+        message: 'Protocol',
         choices: [
           'http',
           'https'
@@ -69,10 +75,13 @@ module.exports = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       this.answers = {
         serverName: props.serverName,
-        baseDir: props.baseDir
+        baseDir: props.baseDir,
+        port: props.port,
+        hostname: props.hostname,
+        protocol: props.protocol
       };
 
-      this.log(this.answers);
+      //this.log(this.answers);
 
       done();
     }.bind(this));
