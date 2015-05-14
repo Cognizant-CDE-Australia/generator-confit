@@ -1,36 +1,10 @@
 module.exports = function(grunt) {
   'use strict';
 
+
   //var path = require('path');
   //var util = require(path.resolve(__dirname + '/../lib/utils.js'));
   //var config = grunt.config.get('modularProject.buildHTML');
-
-
-  //input: {
-  //  srcDir: 'src/',
-  //    modulesDir: 'src/modules/',
-  //    moduleAssets: 'assets',
-  //    moduleIncludes: 'includes',
-  //    modulePartials: 'partials',
-  //    moduleStyles: 'styles',
-  //    moduleTemplates: 'template',
-  //    moduleUnitTest: 'unitTest',
-  //
-  //    assetFiles: ['**/modularProject.input.moduleAsset/**/*'],
-  //    htmlFiles: ['**/*.html'], //templates directory needs to be ignored
-  //    jsFiles: ['**/_*.js', '**/*.js'],
-  //    templateHTMLFiles: ['**/modularProject.input.moduleTemplates/*.html']
-  //},
-  //output: {
-  //  devDir: 'dev/',
-  //    prodDir: 'dist/',
-  //    reportDir: 'reports/',
-  //    assetsSubDir: 'assets/',
-  //    cssSubDir: 'css/',
-  //    jsSubDir: 'js/',
-  //    vendorJSSubDir: 'vendor/',
-  //    viewsSubDir: 'views/'
-  //},
 
   //todo, add these to yeoman config.....
   var tempInput = {
@@ -40,24 +14,14 @@ module.exports = function(grunt) {
       templateHTMLFiles: ['**/<%= paths.input.templateDir %>/*.html']
   };
 
-  var tempOutput = {
-    devDir: 'dev/',
-    prodDir: 'build/static/',
-    assetsSubDir: 'assets/',
-    cssSubDir: 'css/',
-    jsSubDir: 'js/',
-    vendorJSSubDir: 'vendor/',
-    viewsSubDir: 'views/',
-    reportDir: 'bin/'
-  };
 
   grunt.extendConfig({
     copy: {
       html: {
         files: [
-          {expand: true, flatten: false, cwd: '<%= paths.input.modulesDir %>', src: '= tempInput.htmlFiles ', dest: '= modularProject.build.dev.viewsDir '},
-          {expand: true, flatten: true,  cwd: '<%= paths.input.srcDir %>', src: '*.html', dest: '= modularProject.build.dev.dir '},
-          {expand: true, flatten: false, cwd: '<%= paths.input.srcDir %>', src: '<%= paths.input.viewsDir %>/*', dest: '= modularProject.build.dev.viewsDir '}
+          {expand: true, flatten: false, cwd: '<%= paths.input.modulesDir %>', src: '= tempInput.htmlFiles ', dest: '<%= paths.output.viewsSubDir %>'},
+          {expand: true, flatten: true,  cwd: '<%= paths.input.srcDir %>', src: '*.html', dest: '<%= paths.output.devDir %>'},
+          {expand: true, flatten: false, cwd: '<%= paths.input.srcDir %>', src: '<%= paths.input.viewsDir %>/*', dest: '<%= paths.output.viewsSubDir %>'}
         ]
       },
       moduleAssets: {
@@ -85,7 +49,7 @@ module.exports = function(grunt) {
     targethtml: {
       unoptimised: {
         files: [
-          {src: '= modularProject.build.dev.dir *.html', dest: '= modularProject.build.dev.dir '}
+          {src: '<%= paths.output.devDir %>*.html', dest: '<%= paths.output.devDir %>'}
         ]
       }
     },
@@ -129,12 +93,14 @@ module.exports = function(grunt) {
 
 
   // This tasks creates the {{ }} tags for the 'targethtml' task to replace
-  grunt.registerTask('mpBuildHTMLUnoptimisedTags', [
-    'mpSetHTMLTag:modularProject.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:modularProject.output.vendorJSSubDir',
-    'mpSetHTMLTag:modularProject.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:modularProject.output.vendorJSSubDir',
-    'mpSetHTMLTag:modularProject.buildHTML.compiledCSSFileSpec:unoptimised:cssFiles:link',
-    'mpSetHTMLTag:modularProject.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
-  ]);
+  //grunt.registerTask('mpBuildHTMLUnoptimisedTags', [
+  //  'mpSetHTMLTag:modularProject.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:modularProject.output.vendorJSSubDir',
+  //  'mpSetHTMLTag:modularProject.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:modularProject.output.vendorJSSubDir',
+  //  'mpSetHTMLTag:modularProject.buildHTML.compiledCSSFileSpec:unoptimised:cssFiles:link',
+  //  'mpSetHTMLTag:modularProject.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
+  //]);
 
-  grunt.registerTask('mpBuildHTML', ['copy:html', 'copy:moduleAssets', 'mpBuildHTMLUnoptimisedTags', 'targethtml:unoptimised']);
+  //grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'mpBuildHTMLUnoptimisedTags', 'targethtml:unoptimised']);
+
+  grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'targethtml:unoptimised']);
 };

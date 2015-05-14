@@ -6,9 +6,6 @@ module.exports = function() {
 
     var templates = gen.config.getAll();
 
-    //console.log(JSON.stringify(templates));
-    console.log(JSON.stringify(templates.paths));
-
     // Generate a file in %configDir/grunt called "gruntBuildHTML.js", if it doesn't already exist
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntBuildHTML.js'),
@@ -17,10 +14,10 @@ module.exports = function() {
     );
 
     // Modify Package JSON
-    //common.addNpmDevDependencies({
-    //  'grunt-contrib-watch': '*',
-    //  'grunt-contrib-connect': '*'
-    //});
+    common.addNpmDevDependencies({
+      'grunt-contrib-copy': '*',
+      'grunt-targethtml': '*'
+    });
 
     // Create a new section in the file based on the responses
     // Update the generator config.
