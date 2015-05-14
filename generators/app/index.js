@@ -64,7 +64,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'list',
         name: 'buildTool',
         message: 'Choose a build-tool to build your project',
-        choices: ["grunt"],
+        choices: ['grunt'],
         store: true
       }
     ];
