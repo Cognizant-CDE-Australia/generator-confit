@@ -120,7 +120,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
-    if (this.answers.editorConfig) {
+    if (common.getConfig('editorconfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
