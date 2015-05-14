@@ -1,14 +1,26 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var chalk = require('chalk');
+var common;
+var buildTool;
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
+    this.log(chalk.green('Project serve generator'));
+
+    common = require('../app/common')(this, 'server');
+    buildTool = common.getBuildTool();
+
     this.argument('name', {
       required: false,
       type: String,
       desc: 'The subgenerator name'
     });
 
+    this.answers = undefined;
+
+    this.hasExistingConfig = !!common.getConfig('input.serverName');
+    this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
 
     if (this.name) {
       this.log('Creating a server called "' + this.name + '".');
@@ -23,7 +35,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'serverName',
-        message: 'Name of the server to generate?',
+        message: 'Server name',
         default: 'dev',
         when: function() {
           // Only ask this question when self.name is undefined
@@ -33,35 +45,56 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'baseDir',
-        message: 'Base directory',
+        message: 'Server base directory',
         default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
+      },
+      {
+        type: 'input',
+        name: 'port',
+        message: 'Server port',
+        default: this.config.get('port') || 3000
+      },
+      {
+        type: 'input',
+        name: 'hostname',
+        message: 'Server hostname',
+        default: this.config.get('hostname') || 'localhost'
+      },
+      {
+        type: 'list',
+        name: 'protocol',
+        message: 'Protocol',
+        choices: [
+          'http',
+          'https'
+        ],
+        default: this.config.get('protocol') || 'https'
       }
     ];
 
-
     this.prompt(prompts, function (props) {
-      this.serverName = props.serverName;
-      this.baseDir = props.baseDir;
+      this.answers = {
+        serverName: props.serverName,
+        baseDir: props.baseDir,
+        port: props.port,
+        hostname: props.hostname,
+        protocol: props.protocol
+      };
+
+      //this.log(this.answers);
+
       done();
     }.bind(this));
   },
 
+  writeConfig: function() {
+    // If we have new answers, then change the config
+    if (this.answers) {
+      common.setConfig(this.answers);
+    }
+  },
 
   writing: function () {
-    // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-
-    // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
-    this.fs.copy(
-      this.templatePath('serve.js'),
-      this.destinationPath('config/grunt/serve.js')
-    );
-    // Modify Package JSON to use grunt-connect
-
-
-    // Create a new section in the file based on the responses
-
-
-    // Update the generator config.
-    this.config.set('baseDir', this.baseDir);   // This isn't a perfect example... it really represents 'the last-specified baseDir', rather than the 'global baseDir'.
+    buildTool.write(this, common);
   }
 });

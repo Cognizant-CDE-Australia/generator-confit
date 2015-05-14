@@ -12,12 +12,12 @@ module.exports = function(grunt) {
         srcDir: '<%= input.srcDir %>',
         modulesDir: '<%= input.modulesDir %>',
         moduleAssets: '<%= input.assetsDir %>',
-        moduleIncludes: 'includes',
-        modulePartials: 'views',
-        moduleStyles: 'styles',
-        moduleTemplates: 'template',
-        moduleUnitTest: 'unitTest',
-        moduleE2ETest: 'e2eTest'
+        moduleIncludes: '<%= input.includesDir %>',
+        modulePartials: '<%= input.viewsDir %>',
+        moduleStyles: '<%= input.stylesDir %>',
+        moduleTemplates: '<%= input.templateDir %>',
+        moduleUnitTest: '<%= input.unitTestDir %>',
+        moduleE2ETest: '<%= input.e2eTestDir %>'
       },
       output: {
         devDir: 'dev/',

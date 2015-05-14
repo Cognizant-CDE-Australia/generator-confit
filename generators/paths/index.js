@@ -81,6 +81,42 @@ module.exports = yeoman.generators.Base.extend({
         name: 'input.assetsDir',
         message: 'Name of module assets directory',
         default: common.getConfig('input.assetsDir') || 'assets'
+      },
+      {
+        type: 'input',
+        name: 'input.includesDir',
+        message: 'Name of module includes directory',
+        default: common.getConfig('input.includesDir') || 'includes'
+      },
+      {
+        type: 'input',
+        name: 'input.viewsDir',
+        message: 'Name of module views directory',
+        default: common.getConfig('input.viewsDir') || 'views'
+      },
+      {
+        type: 'input',
+        name: 'input.stylesDir',
+        message: 'Name of module styles directory',
+        default: common.getConfig('input.stylesDir') || 'styles'
+      },
+      {
+        type: 'input',
+        name: 'input.templateDir',
+        message: 'Name of module template directory',
+        default: common.getConfig('input.templateDir') || 'template'
+      },
+      {
+        type: 'input',
+        name: 'input.unitTestDir',
+        message: 'Name of module unitTest directory',
+        default: common.getConfig('input.unitTestDir') || 'unitTest'
+      },
+      {
+        type: 'input',
+        name: 'input.e2eTestDir',
+        message: 'Name of module e2eTest directory',
+        default: common.getConfig('input.e2eTestDir') || 'e2eTest'
       }
     ];
 
