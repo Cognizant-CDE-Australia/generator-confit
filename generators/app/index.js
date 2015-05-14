@@ -88,6 +88,12 @@ module.exports = yeoman.generators.Base.extend({
         message: 'Choose a build-tool for your project',
         choices: ['grunt'],
         store: true
+      },
+      {
+        type: 'confirm',
+        name: 'editorConfig',
+        message: 'Use EditorConfig?',
+        default: common.getConfig('editorConfig') || true
       }
     ];
 
@@ -118,11 +124,21 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
+    if (this.answers.editorConfig) {
+      this.fs.copy(
+        this.templatePath('editorconfig'),
+        this.destinationPath('.editorconfig')
+      );
+    }
+
     buildTool.write(this, common);
 
     // Now call the other generators
     this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
+    // buildCSS seems to be causing an infinite generator loop
+    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
     this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
