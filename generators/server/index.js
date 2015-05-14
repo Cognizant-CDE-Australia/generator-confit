@@ -77,15 +77,9 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.answers = {
-        serverName: props.serverName,
-        baseDir: props.baseDir,
-        port: props.port,
-        hostname: props.hostname,
-        protocol: props.protocol
-      };
+      this.answers = common.generateObjFromAnswers(props);
 
-      //this.log(this.answers);
+      this.log(this.answers);
 
       done();
     }.bind(this));
