@@ -50,7 +50,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'baseDir',
         message: 'Server base directory',
-        default: this.config.get('baseDir') || 'dev' // This should default to a path in the base config - which we can read from generator.config.get()
+        default: this.config.get('baseDir') || 'src' // This should default to a path in the base config - which we can read from generator.config.get()
       },
       {
         type: 'input',
@@ -84,8 +84,6 @@ module.exports = yeoman.generators.Base.extend({
         hostname: props.hostname,
         protocol: props.protocol
       };
-
-      //this.log(this.answers);
 
       done();
     }.bind(this));
