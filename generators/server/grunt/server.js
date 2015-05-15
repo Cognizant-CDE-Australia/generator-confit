@@ -4,8 +4,6 @@ module.exports = function() {
   var _ = require('lodash');
 
   function write(gen, common) {
-    //gen.log('Writing grunt serve options');
-
     var config = common.getConfig();  // Gets the entire config
 
     // Convert the config into an array of servers, to make it easier to generate the template
@@ -13,7 +11,6 @@ module.exports = function() {
       return (typeof value === 'object');   // We only want objects
     });
 
-    gen.log(servers);
     var configObj = {
       servers: servers
     };

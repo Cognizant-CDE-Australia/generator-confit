@@ -25,15 +25,16 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   prompting: function() {
-    this.log(chalk.underline.bold.green('Project Server Generator'));
     //this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
-    if (this.name) {
-      this.log('Creating/editing a server called "' + this.name + '".');
-    }
 
     // Bail out if we just want to rebuild from the configuration file
     if (this.rebuildFromConfig && !this.name) {
       return;
+    }
+
+    this.log(chalk.underline.bold.green('Server Generator'));
+    if (this.name) {
+      this.log('Creating/editing a server called "' + this.name + '".');
     }
 
     // Check the existing config, and list the existing servers. Once selected, you can edit or delete.

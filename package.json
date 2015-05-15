@@ -41,6 +41,7 @@
     "chalk": "^0.5.0",
     "checksum": "^0.1.1",
     "lodash": "^3.7.0",
+    "main-bower-files": "^2.7.1",
     "yosay": "^0.3.0"
   },
   "devDependencies": {
