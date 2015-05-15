@@ -7,9 +7,12 @@
     #main { width: 100%; max-width: 960px; margin: 30px auto; border-bottom: 1px solid #b3b3b3; }
     #main > div { border-top: 1px solid #b3b3b3; padding: 0 0 10px;  }
     #main ul ul { margin-bottom: 10px; }
+
     #head { width: 665px; margin: 0 auto; }
     pre span { color: #ffff4f }
     pre span span { color: orangered; }
+
+    h3 { border-bottom: 1px solid #b3b3b3 }
   </style>
 </head>
 <body>
@@ -31,52 +34,59 @@
   </code>
 </div>
 <div id="main"></div>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
-  $(document).ready(function() {
+  var data = <%= data %>;
 
-    var data = <%= data %>;
-    var subData = {};
-    var $main = $('#main');
+  //create a heading for each item
+  var init = function(data, id) {
+    var keys = Object.keys(data);
+    for(var i = 0; i < keys.length; i++) {
+      createHeading(data, keys[i], id, 'h2');
+    }
+  };
 
-    var updateDom = function(id, data) {
-      var domObj = $('<div id="'+ id +'"><h2>' + id + '</h2><ul class="data"></ul></div>');
+  var createHeading = function(data, text, id, type) {
+    var elem = document.getElementById(id),
+      heading = document.createElement(type),
+      headingText = document.createTextNode(text);
 
+    heading.appendChild(headingText);
+    elem.appendChild(heading);
 
-      $.each(data, function( key, value ) {
-        if (typeof(value) !== 'object') {
-          domObj.find('.data').append('<li><strong>' + key + '</strong> - ' + value + '</li>');
-        } else {
-          var subDomObj = $('<ul class="sub"></ul>');
+    createList(data, text, id);
+  };
 
-          $.each(value, function(keyA, valueA) {
-            subDomObj.append('<li><strong>' + keyA + '</strong> -- ' + valueA + '</li>');
-          });
+  //create a wrapper
+  var createList = function(object, key, id) {
+    if (typeof object[key] === 'object') {
+      var list = document.createElement('ul'),
+        wrapper = document.getElementById(id);
 
-          domObj.find('.data').append('<li><strong>' + key + '</strong></li>');
-          domObj.find('ul > li:last').append(subDomObj);
-        }
-      });
+      list.setAttribute("id", key);
+      wrapper.appendChild(list);
+      appendToList(object[key], key);
+    }
+  };
 
-      $main.append(domObj);
-    };
+  //add list item to wrapper
+  var appendToList = function(item, id) {
+    var itemKeys = Object.keys(item);
 
-    $.each(data, function(key, value) {
-      updateDom(key, value);
-    });
-  });
+    for(var i = 0; i < itemKeys.length; i++) {
+      if (typeof item[itemKeys[i]] !== 'object') {
+        var list = document.getElementById(id),
+          listItem = document.createElement('li'),
+          listItemText = document.createTextNode(itemKeys[i] + ' ' + item[itemKeys[i]]);
 
-//  start no jquery implementation
-//  var keys = Object.keys(data);
-//  var keyDom = [];
-//
-//  for(var i = 0; i < keys.length; i++) {
-//    var heading = document.createElement('H2');
-//    var headingText = document.createTextNode(keys[i]);
-//
-//    keyDom.push(heading.appendChild(headingText));
-//  }
+        listItem.appendChild(listItemText);
+        list.appendChild(listItem);
+      } else {
+        createHeading(item, itemKeys[i], id, 'h3');
+      }
+    }
+  };
 
+  init(data, 'main');
 </script>
 </body>
 </html>
