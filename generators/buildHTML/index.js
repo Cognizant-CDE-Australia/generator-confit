@@ -5,23 +5,25 @@ var common;
 var buildTool;
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.log(chalk.green('Project build html generator'));
+  initializing: {
 
-    common = require('../app/common')(this, 'buildHTML');
-    buildTool = common.getBuildTool();
-
-    this.answers = undefined;
-
-    this.hasExistingConfig = !!common.getConfig('extension');
-    this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-
+    preInit: function() {
+      common = require('../app/common')(this, 'buildHTML');
+      buildTool = common.getBuildTool();
+    },
+    init: function() {
+      // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
+      this.hasExistingConfig = common.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+    }
   },
 
   prompting: function () {
     if (this.rebuildFromConfig) {
       return;
     }
+
+    this.log(chalk.underline.bold.green('Project build html generator'));
 
     var done = this.async();
     var prompts = [

@@ -1,0 +1,75 @@
+<html>
+<head>
+  <title>Test</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: helvetica, 'sans serif'; font-size: 14px; color: #555555; background-color: #efefef;  }
+    #main { width: 100%; max-width: 960px; margin: 30px auto; border-bottom: 1px solid #b3b3b3; }
+    #main > div { border-top: 1px solid #b3b3b3; padding: 20px 0;  }
+    #main ul ul { margin-bottom: 10px; }
+    #head { width: 665px; margin: 0 auto; }
+    pre span { color: #ffff4f }
+    pre span span { color: orangered; }
+  </style>
+</head>
+<body>
+<div id="head">
+  <code>
+    <pre>
+                                                                      <span>╓╗╗</span>
+                                                                 <span>╗╣╣╣╣╣╣╣╗</span>
+                                                                <span>╠╣╣╣╣╣╣╣╣<span>╣╣╗╗╗</span></span>
+                                                                <span>╚╣╣╣╣╣╣╣╣<span>╣╣╣╣╝</span></span>
+ ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ <span>╣╣╗      ╙╣╣╣╣╣╣╣╣╜</span>
+ ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   <span>╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗</span> 
+ ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╓  ╣╣╣╣   ╠╣╣╣   <span>╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕</span>
+ ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   <span>╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣</span>
+ ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   <span>└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝</span>
+ ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     <span>╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝</span>
+ └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        <span>╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙</span> 
+    </pre>
+  </code>
+</div>
+<div id="main"></div>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+    var data = <%= data %>;
+    var subData = {};
+    var $main = $('#main');
+
+    var updateDom = function(id, data) {
+      var domObj = $('<div id="'+ id +'">' + id + '<ul></ul></div>');
+      $.each(data, function( key, value ) {
+        if (typeof(value) !== 'object') {
+          domObj.find('ul').append('<li>' + key + ' - ' + value + '</li>');
+        } else {
+          var subDomObj = $('<ul></ul>');
+
+          $.each(value, function(key, value) {
+            subDomObj.append('<li>' + key + ' - ' + value + '</li>');
+          });
+          domObj.find('ul').append('<li>' + key + '</li>');
+          domObj.find('li:last').append(subDomObj);
+        }
+      });
+      $main.append(domObj);
+    };
+
+    $.each(data, function( key, value ) {
+      if (typeof(value) !== 'object') {
+        $main.append('<div id="'+ key +'">' + key + ' ' + value  + '</div>');
+      } else {
+        subData[key] = value;
+      }
+    });
+
+    $.each(subData, function(key, value) {
+      updateDom(key, value);
+    });
+  });
+
+</script>
+</body>
+</html>

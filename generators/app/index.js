@@ -108,6 +108,17 @@ module.exports = yeoman.generators.Base.extend({
     }
   },
 
+  reporting: function() {
+    var templates = {
+      data: JSON.stringify(this.config.getAll())
+    };
+    this.fs.copyTpl(
+      this.templatePath('_report.html'),
+      this.destinationPath('report.html'),
+      templates
+    );
+  },
+
   writing: function() {
     // Common files (independent of the build-tool) to write
     this.fs.copy(
@@ -132,7 +143,7 @@ module.exports = yeoman.generators.Base.extend({
     this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     // buildCSS seems to be causing an infinite generator loop
-    //this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});

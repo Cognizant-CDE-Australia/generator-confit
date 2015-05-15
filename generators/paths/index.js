@@ -243,6 +243,12 @@ module.exports = yeoman.generators.Base.extend({
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
     buildTool.write(this, common);
 
-    //
+    // Create the directory structure from the config
+    var srcTmpDir = '../templates/src/';
+    var moduleDir = srcTmpDir + 'modules/demoModule/';
+    var inputConfig = common.getConfig('input');
+    
+    this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), inputConfig.srcDir + 'index.html');
+    this.fs.copy(this.templatePath(moduleDir + 'assets/*'), inputConfig.modulesDir + 'demoModule/' + inputConfig.assetsDir);
   }
 });

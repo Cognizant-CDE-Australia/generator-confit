@@ -14,13 +14,6 @@ module.exports = function() {
       config
     );
 
-
-    // Create the directory structure from the config
-    var srcTmpDir = '../grunt/templates/src/';
-    var moduleDir = srcTmpDir + 'modules/demoModule/';
-
-    gen.fs.copy(gen.templatePath(srcTmpDir + 'index.html'), config.input.srcDir + 'index.html');
-    gen.fs.copy(gen.templatePath(moduleDir + 'assets/*'), config.input.modulesDir + 'demoModule/' + config.input.assetsDir);
   }
 
 
