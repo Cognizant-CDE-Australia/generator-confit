@@ -129,13 +129,13 @@ module.exports = yeoman.generators.Base.extend({
     buildTool.write(this, common);
 
     // Now call the other generators
-    this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     // buildCSS seems to be causing an infinite generator loop
-    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    //this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
-    this.composeWith('ngwebapp:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {
