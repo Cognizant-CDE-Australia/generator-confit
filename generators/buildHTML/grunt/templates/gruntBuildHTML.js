@@ -1,10 +1,8 @@
 module.exports = function(grunt) {
   'use strict';
 
-
-  //var path = require('path');
-  //var util = require(path.resolve(__dirname + '/../lib/utils.js'));
-  //var config = grunt.config.get('modularProject.buildHTML');
+  var path = require('path');
+  var util = require(path.resolve(__dirname + '/lib/utils.js'));
 
   //todo, add these to yeoman config.....
   var tempInput = {
@@ -13,6 +11,21 @@ module.exports = function(grunt) {
       jsFiles: ['**/_*.js', '**/*.js'],
       templateHTMLFiles: ['**/<%= paths.input.templateDir %>/*.html']
   };
+
+  grunt.initConfig({
+    //todo, these arrays should be part of yo-rc?
+    modularProject: {
+      buildHTML: {
+        compiledCSSFiles: [],
+        compilableVendorJSFiles: [],
+        nonCompilableVendorJSFiles: [],
+        compiledCSSFileSpec: []
+      },
+      buildJS: {
+        compiledAppJSFiles: []
+      }
+    }
+  });
 
 
   grunt.extendConfig({
@@ -72,14 +85,15 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('mpSetHTMLTag', function (configPropertyName, tagNamePrefix, tagName, fileType, outputDirPrefix) {
-    var fileSpec = grunt.config(configPropertyName), files = [],
-      outputDirPath = (outputDirPrefix) ? grunt.config(outputDirPrefix) : '';
-
-//    grunt.log.ok('tagType = ' + tagNamePrefix);
-//    grunt.log.ok('tagName = ' + tagName);
-//    grunt.log.ok('fileType = ' + fileType); // Can be 'script' or 'link'
-//    grunt.log.ok('outputPrefix = ' + outputDirPrefix);
-//    grunt.log.ok('fileSpec = ' + JSON.stringify(fileSpec));
+    var fileSpec = grunt.config(configPropertyName),
+        files = [],
+        outputDirPath = (outputDirPrefix) ? grunt.config(outputDirPrefix) : '';
+    
+    //grunt.log.ok('tagType = ' + tagNamePrefix);
+    //grunt.log.ok('tagName = ' + tagName);
+    //grunt.log.ok('fileType = ' + fileType); // Can be 'script' or 'link'
+    //grunt.log.ok('outputPrefix = ' + outputDirPrefix);
+    //grunt.log.ok('fileSpec = ' + JSON.stringify(fileSpec));
 
     if (fileSpec.cwd) {
       files = grunt.file.expand({cwd: fileSpec.cwd}, fileSpec.src);
@@ -93,14 +107,12 @@ module.exports = function(grunt) {
 
 
   // This tasks creates the {{ }} tags for the 'targethtml' task to replace
-  //grunt.registerTask('mpBuildHTMLUnoptimisedTags', [
-  //  'mpSetHTMLTag:modularProject.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:modularProject.output.vendorJSSubDir',
-  //  'mpSetHTMLTag:modularProject.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:modularProject.output.vendorJSSubDir',
-  //  'mpSetHTMLTag:modularProject.buildHTML.compiledCSSFileSpec:unoptimised:cssFiles:link',
-  //  'mpSetHTMLTag:modularProject.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
-  //]);
+  grunt.registerTask('mpBuildHTMLUnoptimisedTags', [
+    'mpSetHTMLTag:modularProject.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:<%= paths.output.vendorJSSubDir %>',
+    'mpSetHTMLTag:modularProject.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:<%= paths.output.vendorJSSubDir %>',
+    'mpSetHTMLTag:modularProject.buildHTML.compiledCSSFileSpec:unoptimised:cssFiles:link',
+    'mpSetHTMLTag:modularProject.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
+  ]);
 
-  //grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'mpBuildHTMLUnoptimisedTags', 'targethtml:unoptimised']);
-
-  grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'targethtml:unoptimised']);
+  grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'mpBuildHTMLUnoptimisedTags', 'targethtml:unoptimised']);
 };

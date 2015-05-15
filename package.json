@@ -1,15 +1,30 @@
 {
-  "name": "generator-ngwebapp",
+  "name": "generator-confit",
   "version": "0.0.0",
-  "description": "Yeoman generator",
-  "license": "MIT",
-  "main": "app/index.js",
-  "repository": "mikrich/generator-ngwebapp",
-  "author": {
-    "name": "Michael Richardson",
-    "email": "michael@mjrichardson.com.au",
-    "url": "https://github.com/mikrich"
-  },
+  "description": "Yeoman generator for build web development ecosystem",
+  "license": "None",
+  "main": "app/generators/index.js",
+  "repository": "https://stash.odecee.com.au/scm/in/generator-confit.git",
+  "contributors": [
+    {
+      "name": "Michael Richardson",
+      "email": "michael@mjrichardson.com.au",
+      "url": "https://github.com/mikrich"
+    },
+    {
+      "name": "Brett Uglow",
+      "email": "buglow@odecee.com.au",
+      "url": "https://github.com/uglow"
+    },
+    {
+      "name": "Tim Weightman",
+      "email": "tweightman@odecee.com.au"
+    },
+    {
+      "name": "Keren Burshtein",
+      "email": "kburshtein@odecee.com.au"
+    }
+  ],
   "engines": {
     "node": ">=0.10.0"
   },
@@ -17,18 +32,18 @@
     "test": "mocha"
   },
   "files": [
-    "app"
+    "generators"
   ],
   "keywords": [
     "build-system yeoman-generator"
   ],
   "dependencies": {
     "chalk": "^0.5.0",
+    "checksum": "^0.1.1",
     "lodash": "^3.7.0",
     "yosay": "^0.3.0"
   },
   "devDependencies": {
-    "checksum": "^0.1.1",
     "mocha": "*",
     "yeoman-generator": "^0.18.0"
   },

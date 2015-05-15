@@ -31,8 +31,8 @@ module.exports = yeoman.generators.Base.extend({
       "\n" +
       chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
       chalk.cyan.bold("\n                                                                 ")+ chalk.white.bold("╗╣╣╣╣╣╣╣╗") +
-      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.red.bold("╣╗╗╗") +
-      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.red.bold("╣╣╣╣╝") +
+      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╗╗╗") +
+      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╣╣╣╝") +
       chalk.cyan.bold("\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ")+ chalk.white.bold("╣╣╗      ╙╣╣╣╣╣╣╣╣╜") +
       chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ") +
       chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╓  ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕") +
@@ -43,11 +43,8 @@ module.exports = yeoman.generators.Base.extend({
       "\n" +
       "\n";
 
-
-
-
-
     this.log(welcome);
+    this.log(chalk.underline.bold.green('Confit App Generator'));
 
     if (this.hasExistingConfig) {
       var done = this.async();
@@ -71,7 +68,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForEverything: function() {
-    this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
+    //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
 
     // Bail out if we just want to rebuild from the configuration file
     if (this.rebuildFromConfig) {
@@ -112,8 +109,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function() {
-    this.log('writing');
-
     // Common files (independent of the build-tool) to write
     this.fs.copy(
       this.templatePath('_package.json'),
@@ -124,7 +119,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
-    if (this.answers.editorConfig) {
+    if (common.getConfig('editorConfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
@@ -134,16 +129,13 @@ module.exports = yeoman.generators.Base.extend({
     buildTool.write(this, common);
 
     // Now call the other generators
-    this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-<<<<<<< HEAD
-    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-=======
+    this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     // buildCSS seems to be causing an infinite generator loop
-    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    //this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
->>>>>>> 664cc9908779c1e2d184075d9ac8b385d124c6ac
-    this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {
