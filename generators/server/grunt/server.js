@@ -1,16 +1,28 @@
 module.exports = function() {
   'use strict';
 
-  function write(gen, common) {
-    gen.log('Writing grunt serve options');
+  var _ = require('lodash');
 
-    var templates = gen.config.get('server');
+  function write(gen, common) {
+    //gen.log('Writing grunt serve options');
+
+    var config = common.getConfig();  // Gets the entire config
+
+    // Convert the config into an array of servers, to make it easier to generate the template
+    var servers = _.values(config).filter(function(value) {
+      return (typeof value === 'object');   // We only want objects
+    });
+
+    gen.log(servers);
+    var configObj = {
+      servers: servers
+    };
 
     // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntServe.js'),
+      gen.templatePath('../grunt/templates/gruntServe.js.tpl'),
       gen.destinationPath('config/grunt/serve.js'),
-      templates
+      configObj
     );
 
     // Modify Package JSON
@@ -18,12 +30,6 @@ module.exports = function() {
       'grunt-contrib-watch': '*',
       'grunt-contrib-connect': '*'
     });
-
-    // Create a new section in the file based on the responses
-
-
-    // Update the generator config.
-    gen.config.set('baseDir', this.baseDir);   // This isn't a perfect example... it really represents 'the last-specified baseDir', rather than the 'global baseDir'.
   }
 
   return {

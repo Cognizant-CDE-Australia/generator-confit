@@ -242,5 +242,7 @@ module.exports = yeoman.generators.Base.extend({
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
     buildTool.write(this, common);
+
+    //
   }
 });
