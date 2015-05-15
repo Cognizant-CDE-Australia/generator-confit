@@ -108,6 +108,17 @@ module.exports = yeoman.generators.Base.extend({
     }
   },
 
+  reporting: function() {
+    var templates = {
+      data: JSON.stringify(this.config.getAll())
+    };
+    this.fs.copyTpl(
+      this.templatePath('_report.html'),
+      this.destinationPath('report.html'),
+      templates
+    );
+  },
+
   writing: function() {
     // Common files (independent of the build-tool) to write
     this.fs.copy(
