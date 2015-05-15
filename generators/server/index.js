@@ -24,8 +24,8 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   prompting: function() {
-    this.log(chalk.green('Project serve generator'));
-    this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
+    this.log(chalk.underline.bold.green('Project Server Generator'));
+    //this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
     if (this.name) {
       this.log('Creating a server called "' + this.name + '".');
     }

@@ -11,7 +11,7 @@ npm link
 cd ..
 mkdir test-app
 cd test-app
-yo ngwebapp
+yo confit
 
 ```
 

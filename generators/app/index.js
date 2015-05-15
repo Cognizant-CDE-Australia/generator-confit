@@ -23,6 +23,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForMode: function() {
+    // Have Yeoman greet the user.
+    //this.log(yosay(
+    //  'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
+    //));
     var welcome =
       "\n" +
       chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
@@ -40,6 +44,7 @@ module.exports = yeoman.generators.Base.extend({
       "\n";
 
     this.log(welcome);
+    this.log(chalk.underline.bold.green('Confit App Generator'));
 
     if (this.hasExistingConfig) {
       var done = this.async();
@@ -63,7 +68,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForEverything: function() {
-    this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
+    //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
 
     // Bail out if we just want to rebuild from the configuration file
     if (this.rebuildFromConfig) {
@@ -104,8 +109,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function() {
-    this.log('writing');
-
     // Common files (independent of the build-tool) to write
     this.fs.copy(
       this.templatePath('_package.json'),
@@ -116,7 +119,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
-    if (common.getConfig('editorconfig')) {
+    if (common.getConfig('editorConfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
@@ -126,26 +129,13 @@ module.exports = yeoman.generators.Base.extend({
     buildTool.write(this, common);
 
     // Now call the other generators
-    this.composeWith('ngwebapp:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     // buildCSS seems to be causing an infinite generator loop
-    //this.composeWith('ngwebapp:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    //this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
-    this.composeWith('ngwebapp:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-
-  },
-
-  reporting: function() {
-    var templates = {
-      data: JSON.stringify(this.config.getAll())
-    };
-
-    this.fs.copyTpl(
-      this.templatePath('_report.html'),
-      this.destinationPath('report.html'),
-      templates
-    );
+    this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {

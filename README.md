@@ -1,4 +1,4 @@
-# generator-ngwebapp [![Build Status](https://secure.travis-ci.org/mikrich/generator-ngwebapp.png?branch=master)](https://travis-ci.org/mikrich/generator-ngwebapp)
+# generator-confit 
 
 > [Yeoman](http://yeoman.io) generator
 
@@ -23,16 +23,16 @@ npm install -g yo
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-ngwebapp from npm, run:
+To install generator-confit from npm, run:
 
 ```bash
-npm install -g generator-ngwebapp
+npm install -g generator-confit
 ```
 
 Finally, initiate the generator:
 
 ```bash
-yo ngwebapp
+yo confit
 ```
 
 ### Getting To Know Yeoman
