@@ -1,0 +1,49 @@
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+<div id="main"></div>
+<script src="jquery-2.1.4.min.js"></script>
+<script>
+  $(document).ready(function() {
+
+    var data = <%= data %>;
+    var subData = {};
+    var $main = $('#main');
+
+    var updateDom = function(id, data) {
+      var domObj = $('<div id="'+ id +'">' + id + '<ul></ul></div>');
+      $.each(data, function( key, value ) {
+        if (typeof(value) !== 'object') {
+          domObj.find('ul').append('<li>' + key + ' - ' + value + '</li>');
+        } else {
+          var subDomObj = $('<ul></ul>');
+
+          $.each(value, function(key, value) {
+            subDomObj.append('<li>' + key + ' - ' + value + '</li>');
+          });
+          domObj.find('ul').append('<li>' + key + '</li>');
+          domObj.find('li:last').append(subDomObj);
+        }
+      });
+      $main.append(domObj);
+    };
+
+    $.each(data, function( key, value ) {
+      if (typeof(value) !== 'object') {
+        $main.append('<div id="'+ key +'">' + key + ' ' + value  + '</div>');
+      } else {
+        subData[key] = value;
+      }
+    });
+
+    $.each(subData, function(key, value) {
+      updateDom(key, value);
+    });
+  });
+
+</script>
+
+</body>
+</html>

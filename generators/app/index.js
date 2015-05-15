@@ -133,6 +133,19 @@ module.exports = yeoman.generators.Base.extend({
 
     this.composeWith('ngwebapp:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('ngwebapp:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
+  },
+
+  reporting: function() {
+    var templates = {
+      data: JSON.stringify(this.config.getAll())
+    };
+
+    this.fs.copyTpl(
+      this.templatePath('_report.html'),
+      this.destinationPath('report.html'),
+      templates
+    );
   },
 
   install: function () {
