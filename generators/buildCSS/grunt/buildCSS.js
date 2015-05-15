@@ -7,7 +7,7 @@ module.exports = function() {
     var templates = gen.config.getAll();
 
     //gen.log(templates);
-    console.log(templates.buildCSS);
+    //console.log(templates.buildCSS);
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntBuildCSS.js'),
       gen.destinationPath('config/grunt/buildCSS.js'),

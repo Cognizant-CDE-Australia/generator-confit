@@ -16,6 +16,7 @@ module.exports = function(generator, genName) {
   var parentConfig = gen.config.get(name);
 
   if (!parentConfig) {
+    //gen.log(name + ' has no existing config!');
     gen.config.set(name, {});
     parentConfig = gen.config.get(name);
   }
@@ -55,6 +56,10 @@ module.exports = function(generator, genName) {
 
 
   function getConfig(childKey) {
+    // If there is no childKey, return the parentConfig
+    if (!childKey) {
+      return parentConfig;
+    }
     return _.get(parentConfig, childKey);   // Supports getConfig('key.a.b');
   }
 
@@ -102,6 +107,7 @@ module.exports = function(generator, genName) {
     getBuildTool: getBuildTool,
     getConfig: getConfig,
     generateObjFromAnswers: generateObjFromAnswers,
-    setConfig: setConfig
+    setConfig: setConfig,
+    versionProperty: GEN_VERSION_PROP
   };
 };

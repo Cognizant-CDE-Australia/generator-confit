@@ -111,7 +111,7 @@ module.exports = yeoman.generators.Base.extend({
           this.answers.externalCSSDir = CSSfilesArr;
         }
 
-        this.log(this.answers);
+        //this.log(this.answers);
 
       }
 
