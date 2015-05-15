@@ -48,6 +48,7 @@ module.exports = yeoman.generators.Base.extend({
 
 
     this.log(welcome);
+    this.log(chalk.underline.bold.green('Confit App Generator'));
 
     if (this.hasExistingConfig) {
       var done = this.async();
@@ -71,7 +72,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   promptForEverything: function() {
-    this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
+    //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
 
     // Bail out if we just want to rebuild from the configuration file
     if (this.rebuildFromConfig) {
@@ -112,8 +113,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: function() {
-    this.log('writing');
-
     // Common files (independent of the build-tool) to write
     this.fs.copy(
       this.templatePath('_package.json'),
@@ -124,7 +123,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('bower.json')
     );
 
-    if (this.answers.editorConfig) {
+    if (common.getConfig('editorConfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
