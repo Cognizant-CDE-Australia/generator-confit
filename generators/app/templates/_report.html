@@ -5,7 +5,7 @@
   <style>
     body { font-family: helvetica, 'sans serif'; font-size: 14px; color: #555555; background-color: #efefef;  }
     #main { width: 100%; max-width: 960px; margin: 30px auto; border-bottom: 1px solid #b3b3b3; }
-    #main > div { border-top: 1px solid #b3b3b3; padding: 20px 0;  }
+    #main > div { border-top: 1px solid #b3b3b3; padding: 0 0 10px;  }
     #main ul ul { margin-bottom: 10px; }
     #head { width: 665px; margin: 0 auto; }
     pre span { color: #ffff4f }
@@ -40,35 +40,38 @@
     var $main = $('#main');
 
     var updateDom = function(id, data) {
-      var domObj = $('<div id="'+ id +'">' + id + '<ul></ul></div>');
+      var domObj = $('<div id="'+ id +'"><h2>' + id + '</h2><ul></ul></div>');
       $.each(data, function( key, value ) {
         if (typeof(value) !== 'object') {
-          domObj.find('ul').append('<li>' + key + ' - ' + value + '</li>');
+          domObj.find('ul').append('<li><strong>' + key + '</strong> - ' + value + '</li>');
         } else {
           var subDomObj = $('<ul></ul>');
 
           $.each(value, function(key, value) {
             subDomObj.append('<li>' + key + ' - ' + value + '</li>');
           });
-          domObj.find('ul').append('<li>' + key + '</li>');
+          domObj.find('ul').append('<li><strong>' + key + '</strong></li>');
           domObj.find('li:last').append(subDomObj);
         }
       });
       $main.append(domObj);
     };
 
-    $.each(data, function( key, value ) {
-      if (typeof(value) !== 'object') {
-        $main.append('<div id="'+ key +'">' + key + ' ' + value  + '</div>');
-      } else {
-        subData[key] = value;
-      }
-    });
-
-    $.each(subData, function(key, value) {
+    $.each(data, function(key, value) {
       updateDom(key, value);
     });
   });
+
+//  start no jquery implementation
+//  var keys = Object.keys(data);
+//  var keyDom = [];
+//
+//  for(var i = 0; i < keys.length; i++) {
+//    var heading = document.createElement('H2');
+//    var headingText = document.createTextNode(keys[i]);
+//
+//    keyDom.push(heading.appendChild(headingText));
+//  }
 
 </script>
 </body>
