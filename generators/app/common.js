@@ -13,12 +13,10 @@ module.exports = function(generator, genName) {
   var genCheckSum = '';
 
   var genFileName = __dirname + '/../' + name + '/index.js';
-  var parentConfig = gen.config.get(name);
 
-  if (!parentConfig) {
+  if (!gen.config.get(name)) {
     //gen.log(name + ' has no existing config!');
     gen.config.set(name, {});
-    parentConfig = gen.config.get(name);
   }
 
   var done = gen.async();
@@ -58,10 +56,11 @@ module.exports = function(generator, genName) {
 
   function getConfig(childKey) {
     // If there is no childKey, return the parentConfig
+    var config = gen.config.get(name);
     if (!childKey) {
-      return parentConfig;
+      return config;
     }
-    return _.get(parentConfig, childKey);   // Supports getConfig('key.a.b');
+    return _.get(config, childKey);   // Supports getConfig('key.a.b');
   }
 
   function generateObjFromAnswers(answers) {
@@ -97,6 +96,8 @@ module.exports = function(generator, genName) {
     obj[name][GEN_VERSION_PROP] = genCheckSum;
 
     gen.config.set(obj);
+
+    //gen.log(gen.config.get(name));
     return obj;
   }
 
