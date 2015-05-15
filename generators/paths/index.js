@@ -247,7 +247,7 @@ module.exports = yeoman.generators.Base.extend({
     var srcTmpDir = '../templates/src/';
     var moduleDir = srcTmpDir + 'modules/demoModule/';
 
-    gen.fs.copy(gen.templatePath(srcTmpDir + 'index.html'), config.input.srcDir + 'index.html');
-    gen.fs.copy(gen.templatePath(moduleDir + 'assets/*'), config.input.modulesDir + 'demoModule/' + config.input.assetsDir);
+    this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), this.answers.input.srcDir + 'index.html');
+    this.fs.copy(this.templatePath(moduleDir + 'assets/*'), this.answers.input.modulesDir + 'demoModule/' + this.answers.input.assetsDir);
   }
 });
