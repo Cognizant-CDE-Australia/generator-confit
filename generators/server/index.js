@@ -136,8 +136,8 @@ module.exports = yeoman.generators.Base.extend({
         existingServers.push(serverName);
         existingServers = _.unique(existingServers);
 
-        console.log(gen.answers);
-        console.log(existingServers);
+        //console.log(gen.answers);
+        //console.log(existingServers);
 
         // Loop, if required
         if (props.configureAnother === true) {
@@ -163,8 +163,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.log('install');
-
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install']
