@@ -19,11 +19,11 @@ module.exports = yeoman.generators.Base.extend({
 
   prompting: function () {
     // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig || this.useDefaults) {
+    if (this.rebuildFromConfig) {
       return;
     }
 
-    this.log(chalk.underline.bold.green('Project BuildCSS Generator'));
+    this.log(chalk.underline.bold.green('Build CSS Generator'));
 
     var self = this;
     var done = this.async();

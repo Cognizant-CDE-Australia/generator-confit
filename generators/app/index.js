@@ -144,14 +144,13 @@ module.exports = yeoman.generators.Base.extend({
       );
     }
 
+    // Build-tool specific files
     buildTool.write(this, common);
 
     // Now call the other generators
     this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
-    // buildCSS seems to be causing an infinite generator loop
     this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-
     this.composeWith('confit:buildJS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});

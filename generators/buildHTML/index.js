@@ -23,7 +23,7 @@ module.exports = yeoman.generators.Base.extend({
       return;
     }
 
-    this.log(chalk.underline.bold.green('Project build html generator'));
+    this.log(chalk.underline.bold.green('Build HTML Generator'));
 
     var done = this.async();
     var prompts = [

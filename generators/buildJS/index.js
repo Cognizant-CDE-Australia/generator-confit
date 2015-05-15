@@ -14,7 +14,6 @@ module.exports = yeoman.generators.Base.extend({
       buildTool = common.getBuildTool();
     },
     init: function() {
-      this.log(chalk.green('Project buildJS generator'));
 
       // Check if this component has an existing config.
       this.hasExistingConfig = common.hasExistingConfig();
@@ -42,6 +41,8 @@ module.exports = yeoman.generators.Base.extend({
     if (this.rebuildFromConfig) {
       return;
     }
+
+    this.log(chalk.underline.bold.green('Build JS Generator'));
 
     var done = this.async();
     var defaultVendorBowerScripts = common.getConfig('vendorBowerScripts') || [];

@@ -2,8 +2,6 @@ module.exports = function() {
   'use strict';
 
   function write(gen, common) {
-    gen.log('Writing grunt serve options');
-
     var templates = gen.config.getAll();
 
     // Generate a file in %configDir/grunt called "gruntBuildHTML.js", if it doesn't already exist
