@@ -40,20 +40,24 @@
     var $main = $('#main');
 
     var updateDom = function(id, data) {
-      var domObj = $('<div id="'+ id +'"><h2>' + id + '</h2><ul></ul></div>');
+      var domObj = $('<div id="'+ id +'"><h2>' + id + '</h2><ul class="data"></ul></div>');
+
+
       $.each(data, function( key, value ) {
         if (typeof(value) !== 'object') {
-          domObj.find('ul').append('<li><strong>' + key + '</strong> - ' + value + '</li>');
+          domObj.find('.data').append('<li><strong>' + key + '</strong> - ' + value + '</li>');
         } else {
-          var subDomObj = $('<ul></ul>');
+          var subDomObj = $('<ul class="sub"></ul>');
 
-          $.each(value, function(key, value) {
-            subDomObj.append('<li>' + key + ' - ' + value + '</li>');
+          $.each(value, function(keyA, valueA) {
+            subDomObj.append('<li><strong>' + keyA + '</strong> -- ' + valueA + '</li>');
           });
-          domObj.find('ul').append('<li><strong>' + key + '</strong></li>');
-          domObj.find('li:last').append(subDomObj);
+
+          domObj.find('.data').append('<li><strong>' + key + '</strong></li>');
+          domObj.find('ul > li:last').append(subDomObj);
         }
       });
+
       $main.append(domObj);
     };
 

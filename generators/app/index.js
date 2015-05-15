@@ -121,14 +121,21 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function() {
     // Common files (independent of the build-tool) to write
-    this.fs.copy(
-      this.templatePath('_package.json'),
-      this.destinationPath('package.json')
-    );
-    this.fs.copy(
-      this.templatePath('_bower.json'),
-      this.destinationPath('bower.json')
-    );
+    var packageJSON = this.destinationPath('package.json');
+    if (!this.fs.exists(packageJSON)) {
+      this.fs.copy(
+        this.templatePath('_package.json'),
+        packageJSON
+      );
+    }
+
+    var bowerJSON = this.destinationPath('bower.json');
+    if (!this.fs.exists(bowerJSON)) {
+      this.fs.copy(
+        this.templatePath('_bower.json'),
+        bowerJSON
+      );
+    }
 
     if (common.getConfig('editorConfig')) {
       this.fs.copy(
@@ -145,6 +152,7 @@ module.exports = yeoman.generators.Base.extend({
     // buildCSS seems to be causing an infinite generator loop
     this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
+    this.composeWith('confit:buildJS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },

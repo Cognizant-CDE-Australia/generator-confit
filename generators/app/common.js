@@ -45,6 +45,7 @@ module.exports = function(generator, genName) {
   function hasExistingConfig() {
     var genConfigVersion = getConfig(GEN_VERSION_PROP) || '';
     //gen.log('Existing config version = ' + genConfigVersion);
+    //gen.log('Checksum config version = ' + genCheckSum);
     return genConfigVersion === genCheckSum;
   }
 
