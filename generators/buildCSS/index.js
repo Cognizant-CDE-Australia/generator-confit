@@ -32,7 +32,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'confirm',
         name: 'includeOlderBrowsers',
-        message: 'Supports older browsers (i.e. <IE10)? (y/n)',
+        message: 'Supports older browsers (i.e. less than IE10)? (y/n)',
         default: false
       },
       {
@@ -76,7 +76,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         type: 'input',
         name: 'externalCSSDir',
-        message: 'Path to external CSS directory(s) to copy? (comma separated list, or "none")',
+        message: 'Path to external CSS file(s) to copy? (comma separated list, or "none")',
         default: this.config.get('externalCSSDir') || 'none'
       },
       {
@@ -84,7 +84,7 @@ module.exports = yeoman.generators.Base.extend({
         name: 'rootCSSFiles',
         message: 'Path to root CSS file(s) (comma separated list, or "none")',
         default: this.config.get('rootCSSFiles') || 'none'
-      }    
+      }
     ];
 
     this.prompt(prompts, function (props) {
@@ -95,14 +95,14 @@ module.exports = yeoman.generators.Base.extend({
         delete props.useDefaults;   // We don't want to store this in our config
         this.answers = common.generateObjFromAnswers(props);
 
-        if(this.answers.rootCSSFiles != 'none'){ 
+        if(this.answers.rootCSSFiles != 'none'){
         var CSSfilesArr = this.answers.rootCSSFiles.split(',');
         for (var i = 0; i < CSSfilesArr.length; i++){
           CSSfilesArr[i] = CSSfilesArr[i].trim();
         }
         this.answers.rootCSSFiles = CSSfilesArr;
         }
-        
+
         if(this.answers.externalCSSDir != 'none'){
           CSSfilesArr = this.answers.externalCSSDir.split(',');
           for (var i = 0; i < CSSfilesArr.length; i++){
