@@ -18,6 +18,8 @@ module.exports = yeoman.generators.Base.extend({
         desc: 'The sub-generator name'
       });
 
+      this.specialServer = this.options.specialServer
+
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasExistingConfig = common.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
@@ -25,10 +27,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   prompting: function() {
-    //this.log('Server: rebuildFromConfig = ' + this.rebuildFromConfig);
+    this.log('Server: specialServer = ' + this.specialServer);
 
     // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig && !this.name) {
+    if (this.rebuildFromConfig && !this.name || this.specialServer) {
       return;
     }
 
@@ -156,7 +158,29 @@ module.exports = yeoman.generators.Base.extend({
     // If we have new answers, then change the config
     if (this.answers) {
       common.setConfig(this.answers);
+    } else if (!this.rebuildFromConfig && this.specialServer) {
+      var config = common.getConfig();
+
+      var devServer = {
+        name: 'dev',
+        baseDir: common.getGlobalConfig().paths.output.devDir,
+        port: 3000,
+        hostname: 'localhost',
+        protocol: 'https'
+      };
+
+      var prodServer = {
+        name: 'prod',
+        baseDir: common.getGlobalConfig().paths.output.prodDir,
+        port: 3000,
+        hostname: 'localhost',
+        protocol: 'https'
+      };
+
+      config[this.specialServer] = (this.specialServer === 'PROD') ? prodServer : devServer;
+      common.setConfig(config);
     }
+
   },
 
   writing: function () {
