@@ -1,10 +1,10 @@
 module.exports = function() {
   'use strict';
 
-  function write(gen, common) {
+  function write(gen) {
     gen.log('Writing grunt path options');
 
-    var config = common.getConfig();
+    var config = gen.getConfig();
 
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntPaths.js'),

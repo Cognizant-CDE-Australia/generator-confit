@@ -1,16 +1,11 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var _ = require('lodash');
-var common;
-var buildTool;
 
-module.exports = yeoman.generators.Base.extend({
+
+module.exports = confitGen.create({
   initializing: {
-    preInit: function() {
-      common = require('../app/common')(this, 'server');
-      buildTool = common.getBuildTool();
-    },
     init: function() {
       this.argument('name', {
         required: false,
@@ -21,8 +16,8 @@ module.exports = yeoman.generators.Base.extend({
       this.specialServer = this.options.specialServer
 
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
-      this.hasExistingConfig = common.hasExistingConfig();
-      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+      this.hasConfig = this.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
     }
   },
 
@@ -40,11 +35,11 @@ module.exports = yeoman.generators.Base.extend({
     }
 
     // Check the existing config, and list the existing servers. Once selected, you can edit or delete.
-    this.answers = common.getConfig();
+    this.answers = this.getConfig();
     var existingServers = [];
 
     for (var i in this.answers) {
-      if (i !== common.versionProperty) {
+      if (i !== this.versionProperty) {
         existingServers.push(i);
       }
     }
@@ -86,7 +81,7 @@ module.exports = yeoman.generators.Base.extend({
         name: 'baseDir',
         message: 'Server base directory',
         default: function(answers) {
-          return common.getConfig(answers.selectedServer + '.baseDir') || 'src'
+          return self.getConfig(answers.selectedServer + '.baseDir') || 'src'
         }
       },
       {
@@ -94,7 +89,7 @@ module.exports = yeoman.generators.Base.extend({
         name: 'port',
         message: 'Server port',
         default: function(answers) {
-        return common.getConfig(answers.selectedServer + '.port') || '3000'
+        return self.getConfig(answers.selectedServer + '.port') || '3000'
       }
       },
       {
@@ -102,7 +97,7 @@ module.exports = yeoman.generators.Base.extend({
         name: 'hostname',
         message: 'Server hostname',
         default: function(answers) {
-          return common.getConfig(answers.selectedServer + '.hostname') || 'localhost'
+          return self.getConfig(answers.selectedServer + '.hostname') || 'localhost'
         }
       },
       {
@@ -114,7 +109,7 @@ module.exports = yeoman.generators.Base.extend({
           'https'
         ],
         default: function(answers) {
-          return common.getConfig(answers.selectedServer + '.protocol') || 'https'
+          return self.getConfig(answers.selectedServer + '.protocol') || 'https'
         }
       },
       {
@@ -127,7 +122,7 @@ module.exports = yeoman.generators.Base.extend({
 
     function ask(gen, prompts, callback) {
       gen.prompt(prompts, function(props) {
-        var serverAnswers = common.generateObjFromAnswers(props);
+        var serverAnswers = self.generateObjFromAnswers(props);
         var serverName = gen.name || serverAnswers.name || serverAnswers.selectedServer;
 
         serverAnswers.name = serverName;  // Make sure we have a name, even if we don't ask the question
@@ -157,13 +152,13 @@ module.exports = yeoman.generators.Base.extend({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      common.setConfig(this.answers);
+      this.setConfig(this.answers);
     } else if (!this.rebuildFromConfig && this.specialServer) {
-      var config = common.getConfig();
+      var config = this.getConfig();
 
       var devServer = {
         name: 'dev',
-        baseDir: common.getGlobalConfig().paths.output.devDir,
+        baseDir: this.getGlobalConfig().paths.output.devDir,
         port: 3000,
         hostname: 'localhost',
         protocol: 'https'
@@ -171,26 +166,27 @@ module.exports = yeoman.generators.Base.extend({
 
       var prodServer = {
         name: 'prod',
-        baseDir: common.getGlobalConfig().paths.output.prodDir,
+        baseDir: this.getGlobalConfig().paths.output.prodDir,
         port: 3000,
         hostname: 'localhost',
         protocol: 'https'
       };
 
       config[this.specialServer] = (this.specialServer === 'PROD') ? prodServer : devServer;
-      common.setConfig(config);
+      this.setConfig(config);
     }
 
   },
 
   writing: function () {
-    buildTool.write(this, common);
+    this.buildTool.write(this);
   },
 
   install: function () {
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
-      skipInstall: this.options['skip-install']
+      skipInstall: this.options['skip-install'],
+      skipMessage: true
     });
   }
 });

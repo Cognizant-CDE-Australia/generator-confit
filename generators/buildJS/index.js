@@ -1,29 +1,22 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var fs = require('fs');
 var _ = require('lodash');
-var common;
-var buildTool;
 var vendorBowerScripts = {};
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = confitGen.create({
   initializing: {
-    preInit: function() {
-      common = require('../app/common')(this, 'buildJS');
-      buildTool = common.getBuildTool();
-    },
     init: function() {
-
       // Check if this component has an existing config.
-      this.hasExistingConfig = common.hasExistingConfig();
-      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+      this.hasConfig = this.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
 
       // Must only check for bower components if bower.json exists.
       var bowerJSON = this.destinationPath('bower.json');
 
       // Check the real file system for bower.json, not the mem-fs version.
-      if(fs.existsSync(bowerJSON)) {
+      if (fs.existsSync(bowerJSON)) {
         // Produce this.answers.vendorScripts array from this.answers.vendorBowerJS
         // Read vendorBowerJS package name, find package.json, main prop, only grab *.js
         _.forEach(require('main-bower-files')('**/*.js'), function(script) {
@@ -45,7 +38,7 @@ module.exports = yeoman.generators.Base.extend({
     this.log(chalk.underline.bold.green('Build JS Generator'));
 
     var done = this.async();
-    var defaultVendorBowerScripts = common.getConfig('vendorBowerScripts') || [];
+    var defaultVendorBowerScripts = this.getConfig('vendorBowerScripts') || [];
 
     var prompts = [
       {
@@ -55,7 +48,7 @@ module.exports = yeoman.generators.Base.extend({
         choices: [
           'none'
         ],
-        default: common.getConfig('framework') || 'none'
+        default: this.getConfig('framework') || 'none'
       },
       {
         type: 'checkbox',
@@ -79,7 +72,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'list',
         name: 'lintJS',
         message: 'JavaScript linting',
-        default: common.getConfig('lintJS') || 'jshint',
+        default: this.getConfig('lintJS') || 'jshint',
         choices: [
           'none',
           'jshint',
@@ -109,7 +102,7 @@ module.exports = yeoman.generators.Base.extend({
     ];
 
     this.prompt(prompts, function (props) {
-      this.answers = common.generateObjFromAnswers(props);
+      this.answers = this.generateObjFromAnswers(props);
 
       done();
     }.bind(this));
@@ -118,21 +111,20 @@ module.exports = yeoman.generators.Base.extend({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      common.setConfig(this.answers);
+      this.setConfig(this.answers);
     }
   },
 
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-    buildTool.write(this, common);
+    this.buildTool.write(this);
   },
 
   install: function () {
-    this.log('install');
-
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
-      skipInstall: this.options['skip-install']
+      skipInstall: this.options['skip-install'],
+      skipMessage: true
     });
   }
 });
