@@ -1,7 +1,7 @@
 module.exports = function() {
   'use strict';
 
-  function write(gen, commonLib) {
+  function write(gen) {
     //gen.log('Writing "app" using GruntJS');
 
     gen.fs.copy(
@@ -16,7 +16,7 @@ module.exports = function() {
     );
 
     // Add the NPM dev dependencies
-    commonLib.addNpmDevDependencies({
+    gen.addNpmDevDependencies({
       'time-grunt': '*',
       'grunt-extend-config': '*',
       'load-grunt-tasks': '*'

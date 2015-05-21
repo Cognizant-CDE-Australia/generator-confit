@@ -1,32 +1,21 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
-var yosay = require('yosay');
-var common; // Need to wait until we initialise the generator before we can use this.
-var buildTool;
-
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
-// This generator is a shell to call other generators. It doesn't do much other work.
+// This generator is a shell to call other generators and setup global config.
+// It doesn't do much other work.
 
-
-module.exports = yeoman.generators.Base.extend({
+module.exports = confitGen.create({
   initializing: {
-    preInit: function() {
-      common = require('./common')(this, 'app');
-      buildTool = common.getBuildTool();
-    },
     init: function() {
       this.rebuildFromConfig = false;
-      this.hasExistingConfig = common.hasExistingConfig();
+      this.hasConfig = this.hasExistingConfig();
     }
   },
 
   promptForMode: function() {
-    // Have Yeoman greet the user.
-    //this.log(yosay(
-    //  'Welcome to the ultimate ' + chalk.red('Web App') + ' generator!'
-    //));
+    // Great the user
     var welcome =
       "\n" +
       chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
@@ -46,7 +35,7 @@ module.exports = yeoman.generators.Base.extend({
     this.log(welcome);
     this.log(chalk.underline.bold.green('Confit App Generator'));
 
-    if (this.hasExistingConfig) {
+    if (this.hasConfig) {
       var done = this.async();
 
       var modePrompt = [
@@ -90,12 +79,12 @@ module.exports = yeoman.generators.Base.extend({
         type: 'confirm',
         name: 'editorConfig',
         message: 'Use EditorConfig?',
-        default: common.getConfig('editorConfig') || true
+        default: this.getConfig('editorConfig') || true
       }
     ];
 
     this.prompt(prompts, function(props) {
-      this.answers = common.generateObjFromAnswers(props);
+      this.answers = this.generateObjFromAnswers(props);
 
       done();
     }.bind(this));
@@ -104,13 +93,13 @@ module.exports = yeoman.generators.Base.extend({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      common.setConfig(this.answers);
+      this.setConfig(this.answers);
     }
   },
 
   reporting: function() {
     var templates = {
-      data: JSON.stringify(this.config.getAll())
+      data: JSON.stringify(this.getGlobalConfig())
     };
     this.fs.copyTpl(
       this.templatePath('_report.html'),
@@ -137,7 +126,7 @@ module.exports = yeoman.generators.Base.extend({
       );
     }
 
-    if (common.getConfig('editorConfig')) {
+    if (this.getConfig('editorConfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
@@ -145,7 +134,7 @@ module.exports = yeoman.generators.Base.extend({
     }
 
     // Build-tool specific files
-    buildTool.write(this, common);
+    this.buildTool.write(this);
 
     // Now call the other generators
     this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
@@ -160,11 +149,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.log('install');
-
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
-      skipInstall: this.options['skip-install']
+      skipInstall: this.options['skip-install'],
+      skipMessage: true
     });
   }
 });

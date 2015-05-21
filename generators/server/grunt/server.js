@@ -3,12 +3,12 @@ module.exports = function() {
 
   var _ = require('lodash');
 
-  function write(gen, common) {
-    var config = common.getConfig();  // Gets the entire config
+  function write(gen) {
+    var config = gen.getConfig();  // Gets the entire config
 
     // Convert the config into an array of servers, to make it easier to generate the template
     var servers = _.values(config).filter(function(value) {
-      return (typeof value === 'object');   // We only want objects
+      return (typeof value === 'object');   // We only want objects, not strings or version numbers
     });
 
     var configObj = {
@@ -23,7 +23,7 @@ module.exports = function() {
     );
 
     // Modify Package JSON
-    common.addNpmDevDependencies({
+    gen.addNpmDevDependencies({
       'grunt-contrib-watch': '*',
       'grunt-contrib-connect': '*'
     });

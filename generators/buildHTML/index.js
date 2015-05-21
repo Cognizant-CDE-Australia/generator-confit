@@ -1,20 +1,13 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
-var common;
-var buildTool;
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = confitGen.create({
   initializing: {
-
-    preInit: function() {
-      common = require('../app/common')(this, 'buildHTML');
-      buildTool = common.getBuildTool();
-    },
     init: function() {
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
-      this.hasExistingConfig = common.hasExistingConfig();
-      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+      this.hasConfig = this.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
     }
   },
 
@@ -37,12 +30,12 @@ module.exports = yeoman.generators.Base.extend({
           '.jade',
           '.shtml'
         ],
-        default: this.config.get('extension') || '.html'
+        default: this.getConfig('extension') || '.html'
       }
     ];
 
     this.prompt(prompts, function (props) {
-      this.answers = common.generateObjFromAnswers(props);
+      this.answers = this.generateObjFromAnswers(props);
       done();
     }.bind(this));
   },
@@ -50,20 +43,19 @@ module.exports = yeoman.generators.Base.extend({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      common.setConfig(this.answers);
+      this.setConfig(this.answers);
     }
   },
 
   writing: function () {
-    buildTool.write(this, common);
+    this.buildTool.write(this);
   },
 
   install: function () {
-    this.log('install');
-
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
-      skipInstall: this.options['skip-install']
+      skipInstall: this.options['skip-install'],
+      skipMessage: true
     });
   }
 });

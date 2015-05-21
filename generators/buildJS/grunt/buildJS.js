@@ -13,8 +13,8 @@ module.exports = function() {
     }
   };
 
-  function copyLintDependencies(lintJS, gen, common) {
-    common.addNpmDevDependencies(lintJS.dependency);
+  function copyLintDependencies(lintJS, gen) {
+    gen.addNpmDevDependencies(lintJS.dependency);
 
     gen.fs.copy(
       gen.templatePath(lintJS.config),
@@ -22,20 +22,20 @@ module.exports = function() {
     );
   }
 
-  function write(gen, common) {
+  function write(gen) {
     gen.log('Writing grunt buildJS options');
 
     var config = gen.config.getAll(),
         buildJS = config.buildJS;
 
-    common.addNpmDevDependencies({
+    gen.addNpmDevDependencies({
       'grunt-contrib-watch': '*',
       'grunt-contrib-clean': '*',
       'grunt-contrib-copy': '*'
     });
 
     if (buildJS.lintJS) {
-      copyLintDependencies(lintOptions[buildJS.lintJS], gen, common);
+      copyLintDependencies(lintOptions[buildJS.lintJS], gen);
     }
 
     if (buildJS.vendorBowerScripts) {

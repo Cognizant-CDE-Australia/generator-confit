@@ -1,19 +1,13 @@
 'use strict';
-var yeoman = require('yeoman-generator');
+var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
-var common;
-var buildTool;
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = confitGen.create({
   initializing: {
-    preInit: function() {
-      common = require('../app/common')(this, 'paths');
-      buildTool = common.getBuildTool();
-    },
     init: function() {
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
-      this.hasExistingConfig = common.hasExistingConfig();
-      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+      this.hasConfig = this.hasExistingConfig();
+      this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
     }
   },
 
@@ -28,24 +22,24 @@ module.exports = yeoman.generators.Base.extend({
     // Defaults object
     this.defaults = {
       input: {
-        srcDir: common.getConfig('input.srcDir') || 'src/',
-        modulesSubDir: common.getConfig('input.modulesSubDir') || 'modules/',
-        assetsDir: common.getConfig('input.assetsDir') || 'assets',
-        includesDir: common.getConfig('input.includesDir') || 'includes',
-        viewsDir: common.getConfig('input.viewsDir') || 'views',
-        stylesDir: common.getConfig('input.stylesDir') || 'styles',
-        templateDir: common.getConfig('input.templateDir') || 'template',
-        unitTestDir: common.getConfig('input.unitTestDir') || 'unitTest',
-        e2eTestDir: common.getConfig('input.e2eTestDir') || 'e2eTest'
+        srcDir: this.getConfig('input.srcDir') || 'src/',
+        modulesSubDir: this.getConfig('input.modulesSubDir') || 'modules/',
+        assetsDir: this.getConfig('input.assetsDir') || 'assets',
+        includesDir: this.getConfig('input.includesDir') || 'includes',
+        viewsDir: this.getConfig('input.viewsDir') || 'views',
+        stylesDir: this.getConfig('input.stylesDir') || 'styles',
+        templateDir: this.getConfig('input.templateDir') || 'template',
+        unitTestDir: this.getConfig('input.unitTestDir') || 'unitTest',
+        e2eTestDir: this.getConfig('input.e2eTestDir') || 'e2eTest'
       },
       output: {
-        devDir: common.getConfig('output.devDir') || 'dev/',
-        prodDir: common.getConfig('output.prodDir') || 'prod',
-        assetsSubDir: common.getConfig('output.assetsSubDir') || 'assets/',
-        cssSubDir: common.getConfig('output.cssSubDir') || 'css/',
-        jsSubDir: common.getConfig('output.jsSubDir') || 'js/',
-        vendorJSSubDir: common.getConfig('output.vendorJSSubDir') || 'vendor/',
-        viewsSubDir: common.getConfig('output.viewsSubDir') || 'views/'
+        devDir: this.getConfig('output.devDir') || 'dev/',
+        prodDir: this.getConfig('output.prodDir') || 'prod/',
+        assetsSubDir: this.getConfig('output.assetsSubDir') || 'assets/',
+        cssSubDir: this.getConfig('output.cssSubDir') || 'css/',
+        jsSubDir: this.getConfig('output.jsSubDir') || 'js/',
+        vendorJSSubDir: this.getConfig('output.vendorJSSubDir') || 'vendor/',
+        viewsSubDir: this.getConfig('output.viewsSubDir') || 'views/'
       }
     };
 
@@ -210,7 +204,7 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'output.reportDir',
         message: 'Path to  (relative to the current directory)',
-        default: common.getConfig('output.reportDir') || 'bin/'
+        default: this.getConfig('output.reportDir') || 'bin/'
       }*/
     ];
 
@@ -218,10 +212,10 @@ module.exports = yeoman.generators.Base.extend({
     this.prompt(prompts, function (props) {
       if (props.useDefaults === true) {
         this.useDefaults = true;
-        this.answers = common.generateObjFromAnswers(this.defaults);
+        this.answers = this.generateObjFromAnswers(this.defaults);
       } else {
         delete props.useDefaults;   // We don't want to store this in our config
-        this.answers = common.generateObjFromAnswers(props);
+        this.answers = this.generateObjFromAnswers(props);
       }
 
       done();
@@ -234,19 +228,19 @@ module.exports = yeoman.generators.Base.extend({
       // Generate this variable to maintain compatibility with existing build-code
       this.answers.input.modulesDir = this.answers.input.srcDir + this.answers.input.modulesSubDir;
 
-      common.setConfig(this.answers);
+      this.setConfig(this.answers);
     }
   },
 
 
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-    buildTool.write(this, common);
+    this.buildTool.write(this);
 
     // Create the directory structure from the config
     var srcTmpDir = '../templates/src/';
     var moduleDir = srcTmpDir + 'modules/demoModule/';
-    var inputConfig = common.getConfig('input');
+    var inputConfig = this.getConfig('input');
 
     this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), inputConfig.srcDir + 'index.html');
     this.fs.copy(this.templatePath(moduleDir + 'assets/*'), inputConfig.modulesDir + 'demoModule/' + inputConfig.assetsDir);
