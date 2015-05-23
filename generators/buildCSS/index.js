@@ -27,7 +27,7 @@ module.exports = confitGen.create({
       {
         type: 'confirm',
         name: 'includeOlderBrowsers',
-        message: 'Supports older browsers (i.e. less than IE10)? (y/n)',
+        message: 'Supports older browsers (i.e. less than IE10)?',
         default: false
       },
       {
@@ -67,7 +67,7 @@ module.exports = confitGen.create({
       {
         type: 'confirm',
         name: 'autoprefixer',
-        message: 'Autoprefixer? (y/n)',
+        message: 'Use Autoprefixer?',
         default: true
       },
       {
@@ -84,31 +84,24 @@ module.exports = confitGen.create({
       }
     ];
 
+
     this.prompt(prompts, function (props) {
-      if (props.useDefaults === true) {
-        this.useDefaults = true;
-        this.answers = this.generateObjFromAnswers(this.defaults);
-      } else {
-        delete props.useDefaults;   // We don't want to store this in our config
-        this.answers = this.generateObjFromAnswers(props);
+      this.answers = this.generateObjFromAnswers(props);
 
-        if (this.answers.rootCSSFiles != 'none') {
-          var CSSfilesArr = this.answers.rootCSSFiles.split(',');
-          for (var i = 0; i < CSSfilesArr.length; i++){
-            CSSfilesArr[i] = CSSfilesArr[i].trim();
-          }
-          this.answers.rootCSSFiles = CSSfilesArr;
+      if (this.answers.rootCSSFiles != 'none') {
+        var CSSfilesArr = this.answers.rootCSSFiles.split(',');
+        for (var i = 0; i < CSSfilesArr.length; i++){
+          CSSfilesArr[i] = CSSfilesArr[i].trim();
         }
+        this.answers.rootCSSFiles = CSSfilesArr;
+      }
 
-        if (this.answers.externalCSSDir != 'none') {
-          CSSfilesArr = this.answers.externalCSSDir.split(',');
-          for (var i = 0; i < CSSfilesArr.length; i++){
-            CSSfilesArr[i] = CSSfilesArr[i].trim();
-          }
-          this.answers.externalCSSDir = CSSfilesArr;
+      if (this.answers.externalCSSDir != 'none') {
+        CSSfilesArr = this.answers.externalCSSDir.split(',');
+        for (var i = 0; i < CSSfilesArr.length; i++){
+          CSSfilesArr[i] = CSSfilesArr[i].trim();
         }
-
-        //this.log(this.answers);
+        this.answers.externalCSSDir = CSSfilesArr;
       }
       done();
     }.bind(this));
@@ -130,7 +123,7 @@ module.exports = confitGen.create({
       var srcTmpDir = '../templates/src/';
       var stylesDir = srcTmpDir + 'modules/demoModule/styles/';
       var CSSfile = 'app.css';
-      var paths = this.config.getAll().paths;
+      var paths = this.getGlobalConfig().paths;
 
       if (this.getConfig('cssCompiler') === 'stylus') {
         CSSfile = 'app.styl';
@@ -138,7 +131,7 @@ module.exports = confitGen.create({
       else if (this.getConfig('cssCompiler') === 'sass') {
         CSSfile = 'app.scss';
       }
-      this.fs.copy(this.templatePath(stylesDir + CSSfile), paths.input.modulesDir + 'demoModule/' + paths.input.stylesDir + '/' + CSSfile);
+      this.fs.copy(this.templatePath(stylesDir + CSSfile), paths.input.modulesDir + 'demoModule/' + paths.input.stylesDir + CSSfile);
     }
   }
 
