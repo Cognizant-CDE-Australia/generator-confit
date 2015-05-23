@@ -154,5 +154,8 @@ module.exports = confitGen.create({
       skipInstall: this.options['skip-install'],
       skipMessage: true
     });
+
+    // Lastly, run the 'dev' command to start everything
+    this.buildTool.beginDevelopment(this);
   }
 });
