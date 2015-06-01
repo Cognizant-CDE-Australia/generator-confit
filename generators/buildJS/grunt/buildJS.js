@@ -13,13 +13,16 @@ module.exports = function() {
     }
   };
 
-  function copyLintDependencies(lintJS, gen) {
-    gen.addNpmDevDependencies(lintJS.dependency);
+  function copyLintDependencies(linter, gen) {
+    gen.setNpmDevDependencies({'grunt-contrib-jshint': '*'}, linter === 'jshint');
+    gen.setNpmDevDependencies({'gruntify-eslint': '*'}, linter === 'eslint');
 
-    gen.fs.copy(
-      gen.templatePath(lintJS.config),
-      gen.destinationPath('.' + lintJS.config)
-    );
+    if (linter) {
+      gen.fs.copy(
+        gen.templatePath(lintOptions[linter].config),
+        gen.destinationPath('.' + lintOptions[linter].config)
+      );
+    }
   }
 
   function write(gen) {
@@ -28,15 +31,14 @@ module.exports = function() {
     var config = gen.config.getAll(),
         buildJS = config.buildJS;
 
-    gen.addNpmDevDependencies({
+    gen.setNpmDevDependencies({
       'grunt-contrib-watch': '*',
       'grunt-contrib-clean': '*',
       'grunt-contrib-copy': '*'
     });
 
-    if (buildJS.lintJS) {
-      copyLintDependencies(lintOptions[buildJS.lintJS], gen);
-    }
+    copyLintDependencies(buildJS.lintJS, gen);
+
 
     if (buildJS.vendorBowerScripts) {
       /*

@@ -23,7 +23,7 @@ module.exports = function() {
     );
 
     // Modify Package JSON
-    gen.addNpmDevDependencies({
+    gen.setNpmDevDependencies({
       'grunt-contrib-watch': '*',
       'grunt-contrib-connect': '*'
     });

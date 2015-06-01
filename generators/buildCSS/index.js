@@ -14,17 +14,11 @@ module.exports = confitGen.create({
       this.compilerDB = {
         stylus: {
           ext: 'styl',
-          template: 'app.styl',
-          gruntPackage: {
-            'grunt-contrib-stylus': '*'
-          }
+          template: 'app.styl'
         },
         sass: {
           ext: 'sass',
-          template: 'app.sass',
-          gruntPackage: {
-            'grunt-contrib-sass': '*'
-          }
+          template: 'app.sass'
         },
         none: {
           ext: 'css',

@@ -13,14 +13,10 @@ module.exports = function() {
     );
 
     // Modify Package JSON
-    var compilerConfig = gen.compilerDB[config.buildCSS.cssCompiler];
-    if (compilerConfig.gruntPackage) {
-      gen.addNpmDevDependencies(compilerConfig.gruntPackage);
-    }
-
-    if (config.buildCSS.autoprefixer === true) {
-      gen.addNpmDevDependencies({'grunt-autoprefixer': '*'});
-    }
+    var compiler = config.buildCSS.cssCompiler;
+    gen.setNpmDevDependencies({'grunt-contrib-stylus': '*'}, compiler === 'stylus');
+    gen.setNpmDevDependencies({'grunt-contrib-sass': '*'}, compiler === 'sass');
+    gen.setNpmDevDependencies({'grunt-autoprefixer': '*'}, config.buildCSS.autoprefixer === true);
   }
 
 
