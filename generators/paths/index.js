@@ -24,13 +24,13 @@ module.exports = confitGen.create({
       input: {
         srcDir: this.getConfig('input.srcDir') || 'src/',
         modulesSubDir: this.getConfig('input.modulesSubDir') || 'modules/',
-        assetsDir: this.getConfig('input.assetsDir') || 'assets',
-        includesDir: this.getConfig('input.includesDir') || 'includes',
-        viewsDir: this.getConfig('input.viewsDir') || 'views',
-        stylesDir: this.getConfig('input.stylesDir') || 'styles',
-        templateDir: this.getConfig('input.templateDir') || 'template',
-        unitTestDir: this.getConfig('input.unitTestDir') || 'unitTest',
-        e2eTestDir: this.getConfig('input.e2eTestDir') || 'e2eTest'
+        assetsDir: this.getConfig('input.assetsDir') || 'assets/',
+        includesDir: this.getConfig('input.includesDir') || 'includes/',
+        viewsDir: this.getConfig('input.viewsDir') || 'views/',
+        stylesDir: this.getConfig('input.stylesDir') || 'styles/',
+        templateDir: this.getConfig('input.templateDir') || 'template/',
+        unitTestDir: this.getConfig('input.unitTestDir') || 'unitTest/',
+        e2eTestDir: this.getConfig('input.e2eTestDir') || 'e2eTest/'
       },
       output: {
         devDir: this.getConfig('output.devDir') || 'dev/',
@@ -239,10 +239,10 @@ module.exports = confitGen.create({
 
     // Create the directory structure from the config
     var srcTmpDir = '../templates/src/';
-    var moduleDir = srcTmpDir + 'modules/demoModule/';
+    var moduleDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir;
     var inputConfig = this.getConfig('input');
 
     this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), inputConfig.srcDir + 'index.html');
-    this.fs.copy(this.templatePath(moduleDir + 'assets/*'), inputConfig.modulesDir + 'demoModule/' + inputConfig.assetsDir);
+    this.fs.copy(this.templatePath(moduleDir + 'assets/*'), inputConfig.modulesDir + this.demoOutputModuleDir + inputConfig.assetsDir);
   }
 });

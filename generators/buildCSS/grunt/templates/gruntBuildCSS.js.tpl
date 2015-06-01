@@ -16,9 +16,9 @@ module.exports = function(grunt) {
       target: {
         files: [
           {
-            expand: true, 
-            cwd: '<%= paths.output.devDir %>css', 
-            src: '*.css', 
+            expand: true,
+            cwd: '<%= paths.output.devDir %>css',
+            src: '*.css',
             dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>'
           }
         ]
@@ -31,8 +31,8 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            flatten: true,             
-            src:  ['<%= buildCSS.externalCSSDir %>'],
+            flatten: true,
+            src:  ['<%= buildCSS.externalCSSFiles %>'],
             dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>'
           }
         ]
@@ -45,14 +45,14 @@ module.exports = function(grunt) {
         options: {
           compress: false
         },
-        sourceDirs: '<%= paths.input.modulesDir %><%= paths.input.stylesDir %>',  // Stylus-specific property
+        paths: '<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>',  // Stylus-specific property
         files: [
           {
-            expand: true, 
-            flatten: true, 
-            cwd: '<%= paths.input.modulesDir %>', 
-            src: ['<%= buildCSS.rootCSSFiles %>'], 
-            dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>', 
+            expand: true,
+            flatten: true,
+            cwd: '<%= paths.input.modulesDir %>',
+            src: ['**/<%= paths.input.stylesDir %><%= buildCSS.rootCSSFiles %>'],
+            dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>',
             ext: '.css'
           }
         ]
@@ -64,11 +64,11 @@ module.exports = function(grunt) {
       compile: {
         files: [
           {
-            expand: true, 
-            flatten: true, 
-            cwd: '<%= paths.input.modulesDir %>', 
-            src: ['<%= buildCSS.rootCSSFiles %>'], 
-            dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>', 
+            expand: true,
+            flatten: true,
+            cwd: '<%= paths.input.modulesDir %>',
+            src: ['**/<%= paths.input.stylesDir %><%= buildCSS.rootCSSFiles %>'],
+            dest: '<%= paths.output.devDir %><%= paths.output.cssSubDir %>',
             ext: '.css'
           }
         ]
@@ -78,18 +78,17 @@ module.exports = function(grunt) {
     watch: {
       compileCss: {
         <% if (buildCSS.cssCompiler === 'stylus') { %>
-        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>/*.styl']
+        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>*.styl']
         <% } else if (buildCSS.cssCompiler === 'sass') { %>
-        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>/*.scss', '<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>/*.sass']
+        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>*.scss', '<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>/*.sass']
         <% } else { %>
-        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>/*.css']
+        files: ['<%= paths.input.modulesDir %>**/<%= paths.input.stylesDir %>*.css']
         <% } %>
       }
     }
   });
 
-  grunt.registerTask('mpBuildCSS', function() {
-    grunt.log.writeln(this.target + ': ' + this.data);
-    grunt.task.run(this.data);
+  grunt.registerTask('buildCSS', function() {
+    grunt.task.run('<%= buildCSS.cssCompiler %>'<% if (buildCSS.autoprefixer) {%>, 'autoprefixer'<%}%>, 'copy:externalCSS');
   });
 };

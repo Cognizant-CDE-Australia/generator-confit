@@ -12,8 +12,8 @@ module.exports = function(grunt) {
       templateHTMLFiles: ['**/<%= paths.input.templateDir %>/*.html']
   };
 
-  grunt.initConfig({
-    //todo, these arrays should be part of yo-rc?
+  grunt.extendConfig({
+    //todo, these arrays should be part of confit.json? BU: Yes, so this config should not be necessary soon.
     modularProject: {
       buildHTML: {
         compiledCSSFiles: [],
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
     var fileSpec = grunt.config(configPropertyName),
         files = [],
         outputDirPath = (outputDirPrefix) ? grunt.config(outputDirPrefix) : '';
-    
+
     //grunt.log.ok('tagType = ' + tagNamePrefix);
     //grunt.log.ok('tagName = ' + tagName);
     //grunt.log.ok('fileType = ' + fileType); // Can be 'script' or 'link'
