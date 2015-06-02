@@ -2,13 +2,13 @@ module.exports = function() {
   'use strict';
 
   function write(gen) {
-    var templates = gen.config.getAll();
+    var config = gen.getGlobalConfig();
 
     // Generate a file in %configDir/grunt called "gruntBuildHTML.js", if it doesn't already exist
     gen.fs.copyTpl(
       gen.templatePath('../grunt/templates/gruntBuildHTML.js.tpl'),
       gen.destinationPath('config/grunt/buildHTML.js'),
-      templates
+      config
     );
 
     // Modify Package JSON

@@ -136,7 +136,7 @@ module.exports = confitGen.create({
   writing: function () {
     this.buildTool.write(this);
 
-    //insert a CSScompiler file in stylesDir
+    //insert a CSS-source file in stylesDir
     var srcTmpDir = '../templates/src/';
     var paths = this.getGlobalConfig().paths;
     var compiler = this.getConfig('cssCompiler');

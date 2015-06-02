@@ -106,12 +106,32 @@ module.exports = function(grunt) {
   });
 
 
+  grunt.registerTask('mpSetHTMLTagForCSS', function (tagNamePrefix, tagName, fileType) {
+      var fileSpec = {
+        cwd: grunt.config('confit.paths.output.devDir'),
+        src: grunt.config('confit.paths.output.cssSubDir') + '**/*.css'
+      };
+      var files = [];
+
+      grunt.log.ok('fileSpec = ' + JSON.stringify(fileSpec));
+
+      if (fileSpec.cwd) {
+        files = grunt.file.expand({cwd: fileSpec.cwd}, fileSpec.src);
+      } else {
+        files = grunt.file.expand(fileSpec.src || fileSpec);
+      }
+      grunt.log.ok('{{' + tagName + '}}:\n' + files.join('\n'));
+
+      grunt.config.set('targethtml.' + tagNamePrefix + '.options.curlyTags.' + tagName, util.generateHTMLTags(fileType, files, ''));
+    });
+
+
   // This tasks creates the {{ }} tags for the 'targethtml' task to replace
   grunt.registerTask('mpBuildHTMLUnoptimisedTags', [
-    'mpSetHTMLTag:modularProject.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:<%= paths.output.vendorJSSubDir %>',
-    'mpSetHTMLTag:modularProject.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:<%= paths.output.vendorJSSubDir %>',
-    'mpSetHTMLTag:modularProject.buildHTML.compiledCSSFileSpec:unoptimised:cssFiles:link',
-    'mpSetHTMLTag:modularProject.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
+    //'mpSetHTMLTag:confit.buildHTML.compilableVendorJSFiles:unoptimised:vendorScripts:script:<%= paths.output.vendorJSSubDir %>',
+    //'mpSetHTMLTag:confit.buildHTML.nonCompilableVendorJSFiles:unoptimised:externalScripts:script:<%= paths.output.vendorJSSubDir %>',
+    'mpSetHTMLTagForCSS:unoptimised:cssFiles:link',
+    //'mpSetHTMLTag:confit.buildJS.compiledAppJSFiles:unoptimised:appScripts:script'
   ]);
 
   grunt.registerTask('buildHTML', ['copy:html', 'copy:moduleAssets', 'mpBuildHTMLUnoptimisedTags', 'targethtml:unoptimised']);
