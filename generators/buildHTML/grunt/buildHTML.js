@@ -6,7 +6,7 @@ module.exports = function() {
 
     // Generate a file in %configDir/grunt called "gruntBuildHTML.js", if it doesn't already exist
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntBuildHTML.js'),
+      gen.templatePath('../grunt/templates/gruntBuildHTML.js.tpl'),
       gen.destinationPath('config/grunt/buildHTML.js'),
       templates
     );

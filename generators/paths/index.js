@@ -40,6 +40,9 @@ module.exports = confitGen.create({
         jsSubDir: this.getConfig('output.jsSubDir') || 'js/',
         vendorJSSubDir: this.getConfig('output.vendorJSSubDir') || 'vendor/',
         viewsSubDir: this.getConfig('output.viewsSubDir') || 'views/'
+      },
+      config: {
+        configDir: this.getConfig('config.configDir') || 'config/'
       }
     };
 
@@ -196,6 +199,15 @@ module.exports = confitGen.create({
         when: function(answers) {
           return !answers.useDefaults;
         }
+      },
+      {
+        type: 'input',
+        name: 'config.configDir',
+        message: chalk.cyan('Config path\n') + 'Path to CONFIG directory (relative to the current directory)',
+        default: this.defaults.config.configDir,
+        when: function(answers) {
+          return !answers.useDefaults;
+        }
       }/*
 
       // We will ask for the reporting directory in the test-generator
@@ -227,7 +239,6 @@ module.exports = confitGen.create({
     if (this.answers) {
       // Generate this variable to maintain compatibility with existing build-code
       this.answers.input.modulesDir = this.answers.input.srcDir + this.answers.input.modulesSubDir;
-
       this.setConfig(this.answers);
     }
   },

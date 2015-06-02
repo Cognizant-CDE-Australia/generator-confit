@@ -89,12 +89,6 @@ module.exports = confitGen.create({
       //   default: this.config.get('CSSlibrary') || 'bootstrap'
       // },
       {
-        type: 'confirm',
-        name: 'autoprefixer',
-        message: 'Use Autoprefixer?',
-        default: true
-      },
-      {
         type: 'input',
         name: 'externalCSSFiles',
         message: 'Path to external CSS file(s) to include? (comma separated list, or "none")',
@@ -131,6 +125,9 @@ module.exports = confitGen.create({
     // If we have new answers, then change the config
     if (this.answers) {
       // Replace the <stylesDir> tag inside the rootCSSFiles
+
+      // Add an answer for a question we will never ask... spooky! Default to true
+      this.answers.autoprefixer = !(this.getConfig('autoprefixer') === false);
 
       this.setConfig(this.answers);
     }

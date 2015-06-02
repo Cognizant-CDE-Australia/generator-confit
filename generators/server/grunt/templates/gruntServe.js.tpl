@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         <% if (i !== '_version') { %>
       '<%= servers[i].name %>': {
         options: {
-          open: true,
+          open: grunt.option('url') ? '<%= servers[i].protocol %>://<%= servers[i].hostname %>:<%= servers[i].port %>/' + grunt.option('url') : false,
           base: '<%= servers[i].baseDir %>',
           port: '<%= servers[i].port %>',
           hostname: '<%= servers[i].hostname %>',

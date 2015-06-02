@@ -98,12 +98,15 @@ module.exports = confitGen.create({
   },
 
   reporting: function() {
+    var config = this.getGlobalConfig();
+
     var templates = {
-      data: JSON.stringify(this.getGlobalConfig())
+      data: JSON.stringify(config)
     };
+
     this.fs.copyTpl(
       this.templatePath('_report.html'),
-      this.destinationPath('report.html'),
+      this.destinationPath(config.paths.input.srcDir + 'confitReport.html'),
       templates
     );
   },
@@ -142,6 +145,7 @@ module.exports = confitGen.create({
     this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:buildJS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:build', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     // Create two *special* servers - dev & prod
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
@@ -152,10 +156,18 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      callback: function() {
+        // Emit a new event - dependencies installed
+        this.emit('dependenciesInstalled');
+      }.bind(this)
     });
 
     // Lastly, run the 'dev' command to start everything
-    this.buildTool.beginDevelopment(this);
+    // Now you can bind to the dependencies installed event
+    this.on('dependenciesInstalled', function() {
+      this.buildTool.beginDevelopment(this);
+    });
+
   }
 });
