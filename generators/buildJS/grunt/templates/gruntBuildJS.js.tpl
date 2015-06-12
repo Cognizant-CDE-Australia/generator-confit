@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
   grunt.extendConfig({
     clean: {
-      buildJS: ['<%= paths.output.vendorJSSubDir %>', '<%= paths.output.jsSubDir %>']
+      buildJS: ['<%= paths.output.devDir + paths.output.vendorJSSubDir %>', '<%= paths.output.devDir + paths.output.jsSubDir %>']
     },
     copy: {<% if(buildJS.vendorBowerScripts) { %>
       vendorJS: {

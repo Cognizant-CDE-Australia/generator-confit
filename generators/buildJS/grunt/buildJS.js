@@ -2,31 +2,9 @@
 var _ = require('lodash');
 
 module.exports = function() {
-  var lintOptions = {
-    jshint: {
-      dependency: {'grunt-contrib-jshint': '*'},
-      config: 'jshintrc'
-    },
-    eslint: {
-      dependency: {'gruntify-eslint': '*'},
-      config: 'eslintrc'
-    }
-  };
 
-  function copyLintDependencies(linter, gen) {
-    gen.setNpmDevDependencies({'grunt-contrib-jshint': '*'}, linter === 'jshint');
-    gen.setNpmDevDependencies({'gruntify-eslint': '*'}, linter === 'eslint');
-
-    if (linter) {
-      gen.fs.copy(
-        gen.templatePath(lintOptions[linter].config),
-        gen.destinationPath('.' + lintOptions[linter].config)
-      );
-    }
-  }
-
-  function write(gen) {
-    gen.log('Writing grunt buildJS options');
+    function write(gen) {
+    gen.log('Writing Grunt buildJS options');
 
     var config = gen.config.getAll(),
         buildJS = config.buildJS;
@@ -36,9 +14,6 @@ module.exports = function() {
       'grunt-contrib-clean': '*',
       'grunt-contrib-copy': '*'
     });
-
-    copyLintDependencies(buildJS.lintJS, gen);
-
 
     if (buildJS.vendorBowerScripts) {
       /*
@@ -65,7 +40,7 @@ module.exports = function() {
     }
 
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntBuildJS.tpl'),
+      gen.templatePath('../grunt/templates/gruntBuildJS.js.tpl'),
       gen.destinationPath('config/grunt/buildJS.js'),
       config
     );

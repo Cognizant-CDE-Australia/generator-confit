@@ -1,0 +1,10 @@
+{
+    "preset": "airbnb",
+    "requirePaddingNewLinesBeforeLineComments": null,
+    "requirePaddingNewLinesAfterBlocks": null,
+    "maximumLineLength" : 10000,
+    "disallowMultipleLineBreaks": null,
+    "disallowMultipleVarDecl": null,
+    "validateLineBreaks": null,
+    "safeContextKeyword": ["vm", "_this"]
+}

@@ -147,6 +147,8 @@ module.exports = confitGen.create({
     this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:build', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
+    this.composeWith('confit:verify', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+
     // Create two *special* servers - dev & prod
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'PROD'}});

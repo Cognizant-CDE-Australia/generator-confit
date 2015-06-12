@@ -42,13 +42,14 @@ module.exports = confitGen.create({
 
     var prompts = [
       {
-        type: 'list',
+        type: 'checkbox',
         name: 'framework',
         message: 'JavaScript Framework',
         choices: [
-          'none'
+          'AngularJS 1.x',
+          'AngularJS 2.x'
         ],
-        default: this.getConfig('framework') || 'none'
+        default: this.getConfig('framework') || []
       },
       {
         type: 'checkbox',
@@ -67,37 +68,6 @@ module.exports = confitGen.create({
         when: function() {
           return _.keys(vendorBowerScripts).length > 0;
         }
-      },
-      {
-        type: 'list',
-        name: 'lintJS',
-        message: 'JavaScript linting',
-        default: this.getConfig('lintJS') || 'jshint',
-        choices: [
-          'none',
-          'jshint',
-          'eslint'
-        ]
-      },
-      {
-        type: 'input',
-        name: 'lintConfig',
-        message: 'JavaScript linting configuration',
-        default: function(answers) {
-          // Default based on previous prompt
-          // Never pull it back from config as it could have changed depending
-          // on the lintJS answer.
-          if (answers.lintJS === 'jshint') {
-            return 'jshintrc';
-          }
-
-          if (answers.lintJS === 'eslint') {
-            return 'eslintrc';
-          }
-        },
-        when: function(answers) {
-          return answers.lintJS !== 'none';
-        }
       }
     ];
 
@@ -111,7 +81,7 @@ module.exports = confitGen.create({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      this.setConfig(this.answers);
+         this.setConfig(this.answers);
     }
   },
 

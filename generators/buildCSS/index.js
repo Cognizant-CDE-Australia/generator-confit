@@ -11,7 +11,7 @@ module.exports = confitGen.create({
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
 
       // Data that we need for this generator
-      this.compilerDB = {
+      this.cssCompilerConfig = {
         stylus: {
           ext: 'styl',
           template: 'app.styl'
@@ -63,11 +63,7 @@ module.exports = confitGen.create({
         type: 'list',
         name: 'cssCompiler',
         message: 'Choose a CSS compiler',
-        choices: [
-          'stylus',
-          'sass',
-          'none'
-        ],
+        choices: Object.keys(this.cssCompilerConfig),
         default: this.getConfig('cssCompiler') || 'stylus'
       },
       {
@@ -75,7 +71,7 @@ module.exports = confitGen.create({
         name: 'rootCSSFiles',   // Change to "rootSourceFiles"?
         message: 'Name of root CSS file(s) (comma separated list)',
         default: function(answers) {
-          return self.getConfig('rootCSSFiles') || 'app.' + self.compilerDB[answers.cssCompiler].ext;
+          return self.getConfig('rootCSSFiles') || 'app.' + self.cssCompilerConfig[answers.cssCompiler].ext;
         }
       },
       // {
@@ -142,7 +138,7 @@ module.exports = confitGen.create({
     var compiler = this.getConfig('cssCompiler');
     var srcStylesDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir + 'styles/';
 
-    var CSSFile = this.compilerDB[compiler].template;
+    var CSSFile = this.cssCompilerConfig[compiler].template;
 
     this.fs.copy(this.templatePath(srcStylesDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
 
