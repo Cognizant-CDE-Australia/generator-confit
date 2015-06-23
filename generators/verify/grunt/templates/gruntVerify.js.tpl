@@ -3,59 +3,58 @@ module.exports = function(grunt) {
 
   var config = grunt.config.get('modularProject.verify');
 
+  <%
+  // Common file config for verify
+  verifyFileConfig = "" +
+    "all: {\n" +
+    "        files: [{expand: true, cwd: '" + paths.input.modulesDir + "', src: ['**/*.js']}]\n" +
+    "      },\n" +
+    "      src: {\n" +
+    "        files: [{expand: true, cwd: '" + paths.input.modulesDir + "', src: ['**/*.js', '!**/*.spec.js']}]\n" +
+    "      },\n" +
+    "      test: {\n" +
+    "        files: [{expand: true, cwd: '" + paths.input.modulesDir + "', src: ['**/*.spec.js']}]\n" +
+    "      }";
+  %>
+
+
   grunt.extendConfig({
-    mpVerify: {
-      all: config.tasks.allJS,
-      src: config.tasks.srcJS,
-      test: config.tasks.testJS,
-      ci: config.tasks.allJSForCI,
-      allNewer: config.tasks.allNewerJS
-    },
-    <% if (verify.jsLinter.indexOf('jscs')) { %>
+    <% if (verify.jsLinter.indexOf('jscs') > -1) { %>
     //jscs, check for code style errors
     jscs: {
       options: {
         config: '<%= verify.jsLintConfig.jscs.dest %>',
         reporter: 'text'
       },
-      all: config.allFiles,
-      src: config.srcFiles,
-      test: config.testFiles,
-      ci: {
-        options: {
-          config: config.jscs.CIConfig,
-          reporter: 'junit',
-          reporterOutput: config.reportDir + 'jscs.xml'
-        },
-        files: config.allFiles.files
-      }
+      <%= verifyFileConfig %>
     },
     <% } %>
+    <% if (verify.jsLinter.indexOf('jshint') > -1) { %>
     jshint: {
       options: {
-        jshintrc: config.jshint.baseConfig,
+        jshintrc: '<%= verify.jsLintConfig.jshint.dest %>',
         reporter: require('jshint-stylish')
       },
-      all: config.allFiles,
-      src: config.srcFiles,
-      test: {
-        options: {
-          jshintrc: config.jshint.testConfig
-        },
-        files: config.testFiles.files
+      <%= verifyFileConfig %>
+    },
+    <% } %>
+    <% if (verify.jsLinter.indexOf('eslint') > -1) { %>
+    eslint: {
+      options: {
+        config: '<%= verify.jsLintConfig.eslint.dest %>'
       },
-      ci: {
-        options: {
-          jshintrc: config.jshint.CIConfig,
-          reporter: require('jshint-junit-reporter'),
-          reporterOutput: config.reportDir + 'jshint.xml'
-        },
-        files: config.srcFiles.files
-      }
+      <%= verifyFileConfig %>
+    },
+    <% } %>
+    verify: {
+      all: [<%= verify.jsLinter.map(function(val) { return '\'' + val + ':all\''; }) %>],
+      src: [<%= verify.jsLinter.map(function(val) { return '\'' + val + ':src\''; }) %>],
+      test: [<%= verify.jsLinter.map(function(val) { return '\'' + val + ':test\''; }) %>],
+      allNewer: [<%= verify.jsLinter.map(function(val) { return '\'newer:' + val + ':all\''; }) %>]
     }
   });
 
-  grunt.registerMultiTask('mpVerify', 'Verify Javascript syntax and style', function () {
+  grunt.registerMultiTask('verify', 'Verify JavaScript syntax and style', function () {
     grunt.log.writeln(this.target + ': ' + this.data);
 
     // Execute each task
