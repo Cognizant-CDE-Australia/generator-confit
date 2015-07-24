@@ -72,14 +72,20 @@ module.exports = confitGen.create({
         type: 'list',
         name: 'buildTool',
         message: 'Choose a build-tool for your project',
-        choices: ['grunt'],
-        store: true
+        choices: ['grunt', 'webPack'],
+        store: true     // Use this as the default value next time
       },
       {
         type: 'confirm',
         name: 'editorConfig',
         message: 'Use EditorConfig?',
         default: this.getConfig('editorConfig') || true
+      },
+      {
+        type: 'confirm',
+        name: 'createScaffoldProject',
+        message: 'Create sample project?',
+        default: this.getConfig('createScaffoldProject') || true
       }
     ];
 

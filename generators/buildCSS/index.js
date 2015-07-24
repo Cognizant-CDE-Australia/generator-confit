@@ -66,6 +66,7 @@ module.exports = confitGen.create({
         choices: Object.keys(this.cssCompilerConfig),
         default: this.getConfig('cssCompiler') || 'stylus'
       },
+      // This question is related to the number of modules/code-splitting
       {
         type: 'input',
         name: 'rootCSSFiles',   // Change to "rootSourceFiles"?
@@ -132,16 +133,19 @@ module.exports = confitGen.create({
   writing: function () {
     this.buildTool.write(this);
 
-    //insert a CSS-source file in stylesDir
-    var srcTmpDir = '../templates/src/';
-    var paths = this.getGlobalConfig().paths;
-    var compiler = this.getConfig('cssCompiler');
-    var srcStylesDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir + 'styles/';
+    var createSampleCode = this.getGlobalConfig().app.createScaffoldProject;
 
-    var CSSFile = this.cssCompilerConfig[compiler].template;
+    if (createSampleCode) {
+      //insert a CSS-source file in stylesDir
+      var srcTmpDir = '../templates/src/';
+      var paths = this.getGlobalConfig().paths;
+      var compiler = this.getConfig('cssCompiler');
+      var srcStylesDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir + 'styles/';
 
-    this.fs.copy(this.templatePath(srcStylesDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
+      var CSSFile = this.cssCompilerConfig[compiler].template;
 
+      this.fs.copy(this.templatePath(srcStylesDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
+    }
   },
 
   install: function () {

@@ -22,27 +22,33 @@ module.exports = function(grunt) {
             ],
             dest: '<%= paths.output.vendorJSSubDir %>'}
         ]
-      },<% } %>
+      }<% } %>
+    },
+    concat: {
       moduleJS: {
         files: [
           {
             expand: true,
-            flatten: false,
-            src: [
-              '<%= paths.input.modulesDir %>**/*.js',
-              '!<%= paths.input.modulesDir %>**/*.spec.js'
-            ],
-            dest: '<%= paths.output.jsSubDir %>'
+            <% if (buildJS.isAngular1) {%>
+            cwd: '.tmp/js/',  // This should be the src/modules/js dir, unless we are using Angular templates OR include-replace
+            <% } else { %>
+            cwd: '<%= paths.input.modulesDir %>',
+            <% } %>
+            src: ['**/_*.js', '**/*.js', '!**/*.spec.js', '!**/*.e2e.js'], // Concat files starting with '_' first, ignore test specs
+            dest: '<%= paths.output.devDir + paths.output.jsSubDir %>',
+            rename: function (dest, src) {
+              // Use the source directory(s) to create the destination file name
+              // e.g. ui/common/icon.js -> ui/common.js
+              //      ui/special/foo.js -> ui/special.js
+              //grunt.log.writeln('Concat: ' + src);
+              //grunt.log.writeln('------->: ' + src.substring(0, src.lastIndexOf('/')));
+
+              return dest + src.substring(0, src.lastIndexOf('/')) + '.js';
+            }
           }
         ]
       }
-    },<%if(buildJS.lintJS) {%>
-    <%=buildJS.lintJS%>: {
-      options: {
-        config: '../../.<%= buildJS.lintConfig %>'
-      },
-      src: ['src/**/*.js']
-    },<% } %>
+    },
     watch: {
       buildJS: {
         files: ['**/*.js'],
@@ -54,9 +60,9 @@ module.exports = function(grunt) {
   grunt.registerTask('buildJS', function() {
     grunt.task.run([
       'clean:buildJS',
-      '<%= buildJS.lintJS %>',<% if (buildJS.vendorBowerScripts) { %>
-      'copy:vendorJS',<% } %>
-      'copy:moduleJS'
+      <% if (buildJS.vendorBowerScripts) { %>'copy:vendorJS',<% } %>
+      <% if (buildJS.isAngular1) { %>'buildAngularTemplates',<% } %>
+      'concat:moduleJS'
     ]);
   });
 };

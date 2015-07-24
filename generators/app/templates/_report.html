@@ -10,7 +10,7 @@
     pre span { color: #ffff4f }
     pre span span { color: orangered; }
 
-    h2 { border-bottom: 1px solid #b3b3b3; padding: 10px 0; }
+    h2 { border-bottom: 1px solid #b3b3b3; padding: 10px 0; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -43,15 +43,21 @@
     }
   };
 
-  var createHeading = function(data, text, id, type) {
+  var createHeading = function(data, key, id, type) {
     var elem = document.getElementById(id),
       heading = document.createElement(type),
-      headingText = document.createTextNode(text);
+      headingText = document.createTextNode(key); // The key is also the heading label
+
+    // Toggle the heading and version information, if it exists
+    if (data[key]._version) {
+      heading.setAttribute('onclick', 'this.innerHTML = (this.innerHTML === "' + key + '") ? "' + key + ', version: ' + data[key]._version + '" : "' + key + '"');
+      heading.setAttribute('title', data[key]._version);
+    }
 
     heading.appendChild(headingText);
     elem.appendChild(heading);
 
-    createList(data, text, id);
+    createList(data, key, id);
   };
 
   //create a wrapper
@@ -60,7 +66,7 @@
       var list = document.createElement('ul'),
         wrapper = document.getElementById(id);
 
-      list.setAttribute("id", key);
+      list.setAttribute('id', key);
       wrapper.appendChild(list);
       appendToList(object[key], key);
     }
@@ -71,10 +77,13 @@
     var itemKeys = Object.keys(item);
 
     for(var i = 0; i < itemKeys.length; i++) {
-      if (typeof item[itemKeys[i]] !== 'object') {
+      if (itemKeys[i] === '_version') {
+        // don't show the version
+      }
+      else if (typeof item[itemKeys[i]] !== 'object') {
         var list = document.getElementById(id),
           listItem = document.createElement('li'),
-          listItemText = document.createTextNode(itemKeys[i] + ' ' + item[itemKeys[i]]);
+          listItemText = document.createTextNode(itemKeys[i] + ': ' + item[itemKeys[i]]);
 
         listItem.appendChild(listItemText);
         list.appendChild(listItem);

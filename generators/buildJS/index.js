@@ -39,15 +39,51 @@ module.exports = confitGen.create({
 
     var done = this.async();
     var defaultVendorBowerScripts = this.getConfig('vendorBowerScripts') || [];
+    var self = this;
 
     var prompts = [
+      {
+        type: 'list',
+        name: 'outputFormat',
+        message: 'Target output language',
+        choices: [
+          'ES3',
+          'ES5',
+          'ES6'
+        ],
+        default: this.getConfig('jsOutputFormat') || 'ES5'
+      },
+      {
+        type: 'confirm',
+        name: 'codeSplitting',
+        message: 'Do you wish to use code-splitting (lazy-load modules)?' + chalk.dim.green('\nNote: Code-splitting is not necessary for HTTP2 applications.'),
+        default: this.getConfig('codeSplitting') || false
+      },
+      {
+        type: 'checkbox',
+        name: 'bundles',
+        message: 'Files per compilation-bundle (edit in confit.json):',
+        choices: function() {
+          var items = self.getConfig('bundle') || [['app.js']];
+          var cbItems = items.map(function(bundle, index) {
+            return {
+              name: (index + 1) + ': ' + bundle.join(', '),
+              disabled: '(read-only)',
+              checked: true
+            };
+          });
+          cbItems.unshift('Bundles');   // Stick this onto the front of the list to allow the spacebar to be pressed without causing an exception
+          return cbItems;
+        }
+      },
       {
         type: 'checkbox',
         name: 'framework',
         message: 'JavaScript Framework',
         choices: [
           'AngularJS 1.x',
-          'AngularJS 2.x'
+          'AngularJS 2.x',
+          'React 0.x'
         ],
         default: this.getConfig('framework') || []
       },
@@ -81,7 +117,10 @@ module.exports = confitGen.create({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-         this.setConfig(this.answers);
+      // Remove the "bundles" key, as it is read-only
+      delete this.answers.bundles;
+
+      this.setConfig(this.answers);
     }
   },
 

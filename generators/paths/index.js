@@ -42,7 +42,8 @@ module.exports = confitGen.create({
         viewsSubDir: this.getConfig('output.viewsSubDir') || 'views/'
       },
       config: {
-        configDir: this.getConfig('config.configDir') || 'config/'
+        configDir: this.getConfig('config.configDir') || 'config/',
+        tempDir: this.getConfig('config.tempDir') || '.tmp/'
       }
     };
 
@@ -239,6 +240,9 @@ module.exports = confitGen.create({
     if (this.answers) {
       // Generate this variable to maintain compatibility with existing build-code
       this.answers.input.modulesDir = this.answers.input.srcDir + this.answers.input.modulesSubDir;
+
+      // Add answers for questions we will never ask... spooky!
+      this.answers.config.tempDir = this.getConfig('config.tempDir') || this.defaults.config.tempDir;
       this.setConfig(this.answers);
     }
   },
