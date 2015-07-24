@@ -5,13 +5,13 @@ module.exports = function() {
     //gen.log('Writing "app" using GruntJS');
 
     gen.fs.copy(
-      gen.templatePath('../grunt/templates/_Gruntfile.js'),
+      gen.toolTemplatePath('_Gruntfile.js'),
       gen.destinationPath('Gruntfile.js')
     );
 
     //copy utils file for grunt projects
     gen.fs.copy(
-      gen.templatePath('../grunt/templates/_utils.js'),
+      gen.toolTemplatePath('_utils.js'),
       gen.destinationPath('config/grunt/lib/utils.js')
     );
 

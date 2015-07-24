@@ -53,7 +53,7 @@ function write(gen) {
   buildJS.isAngular1 = isAngular1(buildJS.framework);
 
   gen.fs.copyTpl(
-    gen.templatePath('../grunt/templates/gruntBuildJS.js.tpl'),
+    gen.toolTemplatePath('gruntBuildJS.js.tpl'),
     gen.destinationPath('config/grunt/buildJS.js'),
     config
   );
@@ -69,7 +69,7 @@ function write(gen) {
     buildJS.templateHTMLFiles = '**/' + config.paths.input.moduleTemplates + '*.html';
 
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntBuildAngularTemplates.js.tpl'),
+      gen.toolTemplatePath('gruntBuildAngularTemplates.js.tpl'),
       gen.destinationPath('config/grunt/buildAngularTemplates.js'),
       config
     );

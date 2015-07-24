@@ -7,7 +7,7 @@ module.exports = function() {
     var config = gen.getConfig();
 
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntPaths.js.tpl'),
+      gen.toolTemplatePath('gruntPaths.js.tpl'),
       gen.destinationPath('config/grunt/paths.js'),
       config
     );

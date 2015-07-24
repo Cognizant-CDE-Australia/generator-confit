@@ -9,8 +9,6 @@ module.exports = function() {
     gen.setNpmDevDependencies({'gruntify-eslint': '*'}, linter.indexOf('eslint') !== -1);
     gen.setNpmDevDependencies({'grunt-jscs': '*'}, linter.indexOf('jscs') !== -1);
 
-
-
     for (var i = 0; i < linter.length; i++) {
       gen.fs.copy(
         gen.templatePath(jsLintConfig[linter[i]].src),
@@ -28,7 +26,7 @@ module.exports = function() {
     copyLintDependencies(verify.jsLinter, verify.jsLintConfig, gen);
 
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntVerify.js.tpl'),
+      gen.toolTemplatePath('gruntVerify.js.tpl'),
       gen.destinationPath('config/grunt/verify.js'),
       config
     );

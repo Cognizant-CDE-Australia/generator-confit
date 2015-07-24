@@ -17,7 +17,7 @@ module.exports = function() {
 
     // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
     gen.fs.copyTpl(
-      gen.templatePath('../grunt/templates/gruntServe.js.tpl'),
+      gen.toolTemplatePath('gruntServe.js.tpl'),
       gen.destinationPath('config/grunt/serve.js'),
       configObj
     );
