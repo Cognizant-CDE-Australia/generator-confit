@@ -24,7 +24,7 @@ module.exports = function(grunt) {
          files: [
            {
              cwd: '<%= buildJS.tempTemplateDir %>',  // Using this shortens the URL-key of the template name in the $templateCache
-             moduleName: '^(.*)\/<%= paths.input.moduleTemplates %>',    // Use the captured group as the module name
+             moduleName: '^(.*)\/<%= paths.input.templateDir %>',    // Use the captured group as the module name
              src: '<%= buildJS.templateHTMLFiles %>',   // The HTML template files
              dest: '<%= buildJS.tempJSDir %>'        // Base destination directory
            }
@@ -48,8 +48,8 @@ module.exports = function(grunt) {
       // The prepareNGTemplate task generates the config for ngTemplates, using the module-folder hierarchy
       // See prepareNGTemplate config (above)
       //      'ui.accessible.controls.tooltip.template': {
-      //        src: 'cfg.dest.partialsDir **/ui/accessible/template/AccessibleTooltipTemplate.html',
-      //        dest: ' cfg.dest.jsDir ui/ui.accessible.controls.tooltip.template.js',
+      //        src: '<cfg.dest.partialsDir>**/ui/accessible/template/AccessibleTooltipTemplate.html',
+      //        dest: '<cfg.dest.jsDir>ui/ui.accessible.controls.tooltip.template.js',
       //        options: {
       //          standalone: true
       //        }
@@ -84,10 +84,11 @@ module.exports = function(grunt) {
           moduleName = srcFile,
           templateName = templatePath;
 
-        //grunt.log.writeln('First line: ' + firstLine);
-
-        //grunt.log.writeln('Module name: ' + moduleName);
-        //grunt.log.writeln('Dest path: ' + fileSet.dest + templateName + '/' + moduleName + '.js');
+        //grunt.log.writeln(srcFile);
+        //grunt.log.writeln('Module name: ' + fileSet.moduleName);
+        //grunt.log.writeln('templateName: ' + templatePath);
+        //grunt.log.writeln('regex: ' + srcFile.match(fileSet.moduleName));
+        //grunt.log.writeln('Dest path: ' + fileSet.dest + templateName + '/' + moduleName.replace(/\//g, '_') + '.js');
 
         //grunt.log.writeln('fs: ' + fileSet.dest);
         var newConfig = {
@@ -98,7 +99,7 @@ module.exports = function(grunt) {
             standalone: true
           }
         };
-        moduleConfigs[moduleName] = newConfig;
+        moduleConfigs[srcFile] = newConfig;
       });
     });
 

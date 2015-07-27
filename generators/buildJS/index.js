@@ -3,6 +3,7 @@ var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var fs = require('fs');
 var _ = require('lodash');
+var path = require('path');
 var vendorBowerScripts = {};
 
 module.exports = confitGen.create({
@@ -17,14 +18,25 @@ module.exports = confitGen.create({
 
       // Check the real file system for bower.json, not the mem-fs version.
       if (fs.existsSync(bowerJSON)) {
-        // Produce this.answers.vendorScripts array from this.answers.vendorBowerJS
-        // Read vendorBowerJS package name, find package.json, main prop, only grab *.js
-        _.forEach(require('main-bower-files')('**/*.js'), function(script) {
-          var paths = script.split('/');
-          var packageName = paths[paths.indexOf('bower_components') + 1];
+        var mainJSBowerFiles = require('main-bower-files')('**/*.js');
 
-          vendorBowerScripts[packageName] = (vendorBowerScripts[packageName] || []).concat([script]);
+        mainJSBowerFiles.forEach(function(script) {
+          var paths = script.split('/');
+          var packageName = paths[paths.indexOf('bower_components') + 1]; // The package name is the directory AFTER bower_components
+          //console.log(typeof script);
+          var relativeScriptPath = path.relative(process.cwd(), script);
+
+          vendorBowerScripts[packageName] = (vendorBowerScripts[packageName] || []).concat([relativeScriptPath]);
         });
+
+        //// Produce this.answers.vendorScripts array from this.answers.vendorBowerJS
+        //// Read vendorBowerJS package name, find package.json, main prop, only grab *.js
+        //_.forEach(require('main-bower-files')('**/*.js'), function(script) {
+        //  var paths = script.split('/');
+        //  var packageName = paths[paths.indexOf('bower_components') + 1]; // The package name is the directory AFTER bower_components
+        //
+        //  vendorBowerScripts[packageName] = (vendorBowerScripts[packageName] || []).concat([script]);
+        //});
       }
     }
   },
@@ -64,15 +76,18 @@ module.exports = confitGen.create({
         name: 'bundles',
         message: 'Files per compilation-bundle (edit in confit.json):',
         choices: function() {
-          var items = self.getConfig('bundle') || [['app.js']];
+          var items = self.getConfig('bundles');
+          if (!items || !items.length) {
+            items = [{src: ['source.js'], dest: 'app.js'}];
+          }
           var cbItems = items.map(function(bundle, index) {
             return {
-              name: (index + 1) + ': ' + bundle.join(', '),
+              name: (index + 1) + ': ' + bundle.dest + ' <- ' + bundle.src.join(', '),
               disabled: '(read-only)',
               checked: true
             };
           });
-          cbItems.unshift('Bundles');   // Stick this onto the front of the list to allow the spacebar to be pressed without causing an exception
+          cbItems.unshift('Bundles');   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
           return cbItems;
         }
       },
@@ -117,9 +132,6 @@ module.exports = confitGen.create({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      // Remove the "bundles" key, as it is read-only
-      delete this.answers.bundles;
-
       this.setConfig(this.answers);
     }
   },

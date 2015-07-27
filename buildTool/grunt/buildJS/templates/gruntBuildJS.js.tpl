@@ -18,9 +18,9 @@ module.exports = function(grunt) {
             flatten: false,
             cwd: 'bower_components',
             src: [
-              <%= buildJS.vendorBowerScripts.join(',\n              ') %>
+              '<%= buildJS.vendorBowerScripts.join(',') %>'
             ],
-            dest: '<%= paths.output.vendorJSSubDir %>'}
+            dest: '<%= paths.output.devDir + paths.output.vendorJSSubDir %>'}
         ]
       }<% } %>
     },
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             <% if (buildJS.isAngular1) {%>
-            cwd: '.tmp/js/',  // This should be the src/modules/js dir, unless we are using Angular templates OR include-replace
+            cwd: '.tmp/js/',
             <% } else { %>
             cwd: '<%= paths.input.modulesDir %>',
             <% } %>
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
     },
     watch: {
       buildJS: {
-        files: ['**/*.js'],
+        files: ['<%= paths.input.modulesDir %>**/*.js'],
         tasks: ['buildJS']
       }
     }

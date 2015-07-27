@@ -251,13 +251,5 @@ module.exports = confitGen.create({
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
     this.buildTool.write(this);
-
-    // Create the directory structure from the config
-    var srcTmpDir = '../templates/src/';
-    var moduleDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir;
-    var inputConfig = this.getConfig('input');
-
-    this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), inputConfig.srcDir + 'index.html');
-    this.fs.copy(this.templatePath(moduleDir + 'assets/*'), inputConfig.modulesDir + this.demoOutputModuleDir + inputConfig.assetsDir);
   }
 });

@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           hostname: '<%= servers[i].hostname %>',
           protocol: '<%= servers[i].protocol %>',
           livereload: 35729,
-          keepalive: true
+          keepalive: <%= servers[i].keepalive %>
         }
       }<% if (i < servers.length - 1) { %>,<% } %>
         <% } %>

@@ -74,7 +74,7 @@ module.exports = confitGen.create({
       // Note that this replacement will normally only occur once. So if the configDir is changed,
       // you would need to change the verify section in "confit.json" as well... :(
       var linters = this.answers.jsLintConfig;
-      this.log(linters);
+      //this.log(linters);
       var configDir = this.getGlobalConfig().paths.config.configDir;
       for (var linter in linters) {
         linters[linter].dest = linters[linter].dest.replace('{configDir}', configDir);

@@ -4,6 +4,9 @@ module.exports = function() {
   function write(gen) {
     var config = gen.getGlobalConfig();
 
+    config.buildHTML.assetFiles = '**/' + config.paths.input.assetsDir + '**/*';
+    config.buildHTML.htmlFiles = ['**/*' + config.buildHTML.extension, '!**/' + config.paths.input.templateDir + '**/*' ];
+
     // Generate a file in %configDir/grunt called "gruntBuildHTML.js", if it doesn't already exist
     gen.fs.copyTpl(
       gen.toolTemplatePath('gruntBuildHTML.js.tpl'),

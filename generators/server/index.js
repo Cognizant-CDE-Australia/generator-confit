@@ -13,7 +13,7 @@ module.exports = confitGen.create({
         desc: 'The sub-generator name'
       });
 
-      this.specialServer = this.options.specialServer
+      this.specialServer = this.options.specialServer;
 
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasConfig = this.hasExistingConfig();
@@ -114,6 +114,14 @@ module.exports = confitGen.create({
       },
       {
         type: 'confirm',
+        name: 'keepalive',
+        message: 'Keep the server alive forever?',
+        default: function(answers) {
+          return self.getConfig(answers.selectedServer + '.keepalive') || false
+        }
+      },
+      {
+        type: 'confirm',
         name: 'configureAnother',
         message: 'Configure another server?',
         default: false
@@ -161,7 +169,8 @@ module.exports = confitGen.create({
         baseDir: this.getGlobalConfig().paths.output.devDir,
         port: 3000,
         hostname: 'localhost',
-        protocol: 'https'
+        protocol: 'https',
+        keepalive: false
       };
 
       var prodServer = {
@@ -169,7 +178,8 @@ module.exports = confitGen.create({
         baseDir: this.getGlobalConfig().paths.output.prodDir,
         port: 3000,
         hostname: 'localhost',
-        protocol: 'https'
+        protocol: 'https',
+        keepalive: true
       };
 
       config[this.specialServer] = (this.specialServer === 'PROD') ? prodServer : devServer;
