@@ -6,7 +6,7 @@ module.exports = function() {
   function copyLintDependencies(linter, jsLintConfig, gen) {
     gen.log('linter' + linter);
     gen.setNpmDevDependencies({'grunt-contrib-jshint': '*', 'jshint-stylish': '*'}, linter.indexOf('jshint') !== -1);
-    gen.setNpmDevDependencies({'gruntify-eslint': '*'}, linter.indexOf('eslint') !== -1);
+    gen.setNpmDevDependencies({'grunt-eslint': '*'}, linter.indexOf('eslint') !== -1);
     gen.setNpmDevDependencies({'grunt-jscs': '*'}, linter.indexOf('jscs') !== -1);
 
     for (var i = 0; i < linter.length; i++) {

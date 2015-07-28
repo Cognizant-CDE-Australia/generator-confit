@@ -1,8 +1,6 @@
 module.exports = function(grunt) {
   'use strict';
 
-  var config = grunt.config.get('modularProject.verify');
-
   <%
   // Common file config for verify
   verifyFileConfig = "" +
@@ -41,7 +39,7 @@ module.exports = function(grunt) {
     <% if (verify.jsLinter.indexOf('eslint') > -1) { %>
     eslint: {
       options: {
-        config: '<%= verify.jsLintConfig.eslint.dest %>'
+        configFile: '<%= verify.jsLintConfig.eslint.dest %>'
       },
       <%= verifyFileConfig %>
     },
