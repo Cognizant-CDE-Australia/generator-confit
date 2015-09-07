@@ -1,0 +1,15 @@
+For Client Demo:
++ BuildCSS: Don't ask for external CSS files list.
++ Extract the bundling-code into it's own builder
++ Change buildCSS and buildJS to not-ask for their entry-point, but that is defined in the bundler generator
++ Ensure this works with GruntJS
++ When running the site, make it load index.html not the confit.html
+- Ensure this works with Webpack
+
+Beyond Client Demo:
+- BuildJS: Ask for source-code format (ES5, ES6, <CoffeeScript>), then output format. If ES6 -> ES5 - Babel. ES6 -> ES6 - Nothing. ES5 -> ES5 - Nothing. CoffeeScript -> X - coffeescript
+- Get WebPack fully working with a sample project
+
+- Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format.
+  - Need a template README.md
+  - Need to be able to use a project's existing README.md and add/replace relevant sections

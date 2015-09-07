@@ -2,6 +2,7 @@
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 
+
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
 // This generator is a shell to call other generators and setup global config.
 // It doesn't do much other work.
@@ -11,6 +12,9 @@ module.exports = confitGen.create({
     init: function() {
       this.rebuildFromConfig = false;
       this.hasConfig = this.hasExistingConfig();
+
+      // Avoid http://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
+      this.env.sharedFs.setMaxListeners(20);
     }
   },
 
@@ -72,7 +76,7 @@ module.exports = confitGen.create({
         type: 'list',
         name: 'buildTool',
         message: 'Choose a build-tool for your project',
-        choices: ['grunt', 'webPack'],
+        choices: ['grunt', 'webpack'],
         store: true     // Use this as the default value next time
       },
       {
@@ -118,6 +122,9 @@ module.exports = confitGen.create({
   },
 
   writing: function() {
+    // Re-set the buildTool property, in case it has been changed
+    this.buildTool = this.getBuildTool();
+
     // Common files (independent of the build-tool) to write
     var packageJSON = this.destinationPath('package.json');
     if (!this.fs.exists(packageJSON)) {
@@ -127,6 +134,7 @@ module.exports = confitGen.create({
       );
     }
 
+    // TODO: Why is bower here?
     var bowerJSON = this.destinationPath('bower.json');
     if (!this.fs.exists(bowerJSON)) {
       this.fs.copy(
@@ -147,6 +155,7 @@ module.exports = confitGen.create({
 
     // Now call the other generators
     this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:entryPoint', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
     this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
     this.composeWith('confit:buildJS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
@@ -158,6 +167,9 @@ module.exports = confitGen.create({
     // Create two *special* servers - dev & prod
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
     this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'PROD'}});
+
+    // This is guaranteed to be the last thing to run
+    this.composeWith('confit:zzfinish', {options: {rebuildFromConfig: this.rebuildFromConfig}});
   },
 
   install: function () {

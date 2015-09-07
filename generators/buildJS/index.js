@@ -65,32 +65,12 @@ module.exports = confitGen.create({
         ],
         default: this.getConfig('jsOutputFormat') || 'ES5'
       },
-      {
-        type: 'confirm',
-        name: 'codeSplitting',
-        message: 'Do you wish to use code-splitting (lazy-load modules)?' + chalk.dim.green('\nNote: Code-splitting is not necessary for HTTP2 applications.'),
-        default: this.getConfig('codeSplitting') || false
-      },
-      {
-        type: 'checkbox',
-        name: 'bundles',
-        message: 'Files per compilation-bundle (edit in confit.json):',
-        choices: function() {
-          var items = self.getConfig('bundles');
-          if (!items || !items.length) {
-            items = [{src: ['source.js'], dest: 'app.js'}];
-          }
-          var cbItems = items.map(function(bundle, index) {
-            return {
-              name: (index + 1) + ': ' + bundle.dest + ' <- ' + bundle.src.join(', '),
-              disabled: '(read-only)',
-              checked: true
-            };
-          });
-          cbItems.unshift('Bundles');   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
-          return cbItems;
-        }
-      },
+      //{
+      //  type: 'confirm',
+      //  name: 'codeSplitting',
+      //  message: 'Do you wish to use code-splitting (lazy-load modules)?' + chalk.dim.green('\nNote: Code-splitting is not necessary for HTTP/2 applications.'),
+      //  default: this.getConfig('codeSplitting') || false
+      //},
       {
         type: 'checkbox',
         name: 'framework',
@@ -105,7 +85,7 @@ module.exports = confitGen.create({
       {
         type: 'checkbox',
         name: 'vendorBowerScripts',
-        message: 'Select Bower dependencies that have JS',
+        message: 'Select Bower JavaScript dependencies',
         default: defaultVendorBowerScripts,
         choices: function() {
           return _.map(vendorBowerScripts || [], function(scripts, packageName) {
@@ -113,7 +93,11 @@ module.exports = confitGen.create({
               name: packageName,
               scripts: scripts
             };
-            return {name: packageName, value: packageValue, checked: !!defaultVendorBowerScripts[packageName]};
+            return {
+              name: packageName,
+              value: packageValue,
+              checked: _.findIndex(defaultVendorBowerScripts, packageValue) > -1
+            };
           });
         },
         when: function() {

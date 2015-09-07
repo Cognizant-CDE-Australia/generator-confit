@@ -67,10 +67,9 @@ module.exports = function(grunt) {
     var files = [];
     var htmlTagName = tagName.replace(/\./g, '_');  // Convert names containing '.' to '_'
 
-    //grunt.log.ok('tagType = ' + tagNamePrefix);
-    //grunt.log.ok('tagName = ' + htmlTagName);
-    //grunt.log.ok('elementType = ' + elementType); // Can be 'script' or 'link'
-    //grunt.log.ok('fileSpec = ' + JSON.stringify(fileSpec));
+    grunt.log.ok('tagType = ' + tagNamePrefix);
+    grunt.log.ok('tagName = ' + htmlTagName);
+    grunt.log.ok('fileSpec = ' + JSON.stringify(fileSpec));
 
     if (fileSpec.cwd) {
       files = grunt.file.expand({cwd: fileSpec.cwd}, fileSpec.src);
@@ -108,9 +107,9 @@ module.exports = function(grunt) {
     // Generate config buy looking at the bundles
     mpSetHTMLLinkTag('unoptimised', 'cssFiles');
 
-    var bundles = grunt.config('confit.buildJS.bundles');
-    for (var i = 0; i < bundles.length; i++) {
-      renderJSBundle('unoptimised', bundles[i].dest, bundles[i].src);
+    var entryPoints = grunt.config('confit.entryPoint.entryPoints');
+    for (var key in entryPoints) {
+      renderJSBundle('unoptimised', key, entryPoints[key]);
     }
   });
 

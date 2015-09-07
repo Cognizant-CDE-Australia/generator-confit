@@ -21,7 +21,7 @@ function write(gen) {
     'grunt-concurrent': '*'
   });
 
-
+  // Flatten the vendor scripts into an array
   if (buildJS.vendorBowerScripts) {
     /*
      Take buildJS.vendorBowerScripts, which looks like this:
@@ -40,11 +40,12 @@ function write(gen) {
     buildJS.vendorBowerScripts = _.flatten(_.map(buildJS.vendorBowerScripts, function(packageObject) {
       return _.map(packageObject.scripts, function(scriptPath) {
         return scriptPath.substr(
-            scriptPath.indexOf(bowerDir) + bowerDir.length,
-            scriptPath.length);
+          scriptPath.indexOf(bowerDir) + bowerDir.length,
+          scriptPath.length);
       });
     }));
   }
+
 
   // If we are not using ES6 modules, we must use include-replace (or maybe browserfy) to include static content
   // TODO: Ask a question about how you wish to include files
@@ -66,28 +67,7 @@ function write(gen) {
     // Set some temporary variables
     buildJS.tempJSDir = '.tmp/js/';
     buildJS.tempTemplateDir = '.tmp/' + config.paths.input.templateDir;
-
     buildJS.templateHTMLFiles = '**/' + config.paths.input.templateDir + '*.html';
-
-    // If we are creating the scaffold project, create the bundle
-    if (config.app.createScaffoldProject) {
-      // Update the scaffold-bundle to include the vendor files (normally a human would write the bundle-parameter)
-      //gen.log(buildJS.vendorBowerScripts);
-      var vendorFiles = (buildJS.vendorBowerScripts || []).map(function(val) {
-        return config.paths.output.vendorJSSubDir + val;
-      });
-
-      buildJS.bundles = [
-        {
-          src: vendorFiles.concat(['js/demoModule.js']),
-          dest: 'app.js'
-        }
-      ];
-      gen.log('Updating buildJS config with scaffold bundle: ', buildJS.bundles);
-      var updatedConfig = gen.getConfig();
-      updatedConfig.bundles = buildJS.bundles;
-      gen.setConfig(updatedConfig);
-    }
 
     gen.fs.copyTpl(
       gen.toolTemplatePath('gruntBuildAngularTemplates.js.tpl'),

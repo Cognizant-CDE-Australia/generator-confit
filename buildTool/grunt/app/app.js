@@ -26,7 +26,7 @@ module.exports = function() {
   function beginDevelopment(gen) {
     // This command is meant to start the development environment after installation has completed.
     if (!gen.options['skip-run']) {
-      gen.spawnCommand('grunt', ['dev', '--url=confitReport.html']);
+      gen.spawnCommand('grunt', ['dev', '--url=index.html']);
     }
   }
 
