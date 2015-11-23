@@ -7,6 +7,7 @@ For Client Demo:
 - Ensure this works with Webpack
 
 Beyond Client Demo:
+- If the user presses "spacebar" on the entry-points, it puts an invalid value into the field
 - BuildJS: Ask for source-code format (ES5, ES6, <CoffeeScript>), then output format. If ES6 -> ES5 - Babel. ES6 -> ES6 - Nothing. ES5 -> ES5 - Nothing. CoffeeScript -> X - coffeescript
 - Get WebPack fully working with a sample project
 
