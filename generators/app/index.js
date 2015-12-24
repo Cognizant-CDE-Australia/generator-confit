@@ -1,6 +1,8 @@
 'use strict';
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
+var _ = require('lodash');
+var MAX_EVENT_LISTENERS = 20;
 
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
@@ -14,7 +16,7 @@ module.exports = confitGen.create({
       this.hasConfig = this.hasExistingConfig();
 
       // Avoid http://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
-      this.env.sharedFs.setMaxListeners(20);
+      this.env.sharedFs.setMaxListeners(MAX_EVENT_LISTENERS);
     }
   },
 
@@ -46,7 +48,7 @@ module.exports = confitGen.create({
         {
           type: 'confirm',
           name: 'rebuildFromConfig',
-          message: 'Would you like to rebuild from the existing configuration in .yo-rc.json?',
+          message: 'Would you like to rebuild from the existing configuration in confit.json?',
           default: true
         }
       ];
@@ -68,34 +70,52 @@ module.exports = confitGen.create({
       return;
     }
 
+    var self = this;
     var done = this.async();
+
+    // Sort out the build profiles
+    var buildProfiles = this.getBuildProfiles();
+    var profileDescriptions = buildProfiles.map(function(profile) {
+      return profile.name + ' - ' + profile.description;
+    });
+
 
     // Ask everything...
     var prompts = [
       {
         type: 'list',
-        name: 'buildTool',
-        message: 'Choose a build-tool for your project',
-        choices: ['grunt', 'webpack'],
-        store: true     // Use this as the default value next time
+        name: 'buildProfile',
+        message: 'Choose a build-profile for your project',
+        choices: profileDescriptions,
+        default: function() {
+          var existingProfileName = self.getConfig('buildProfile');
+          var existingProfileDesc = '';
+          if (existingProfileName) {
+            buildProfiles.forEach(function(profile, index) {
+              if (profile.name === existingProfileName) {
+                existingProfileDesc = profile.name + ' - ' + profile.description;
+              }
+            });
+          }
+          return existingProfileDesc;
+        },
+        filter: function(answer) {
+          var profile = buildProfiles.filter(function(profile) {
+            return (profile.name + ' - ' + profile.description) === answer;
+          });
+          return profile[0].name;
+        }
       },
       {
         type: 'confirm',
         name: 'editorConfig',
         message: 'Use EditorConfig?',
         default: this.getConfig('editorConfig') || true
-      },
-      {
-        type: 'confirm',
-        name: 'createScaffoldProject',
-        message: 'Create sample project?',
-        default: this.getConfig('createScaffoldProject') || true
       }
     ];
 
     this.prompt(prompts, function(props) {
       this.answers = this.generateObjFromAnswers(props);
-
       done();
     }.bind(this));
   },
@@ -153,29 +173,41 @@ module.exports = confitGen.create({
     // Build-tool specific files
     this.buildTool.write(this);
 
+    var subGenOptions = {
+      rebuildFromConfig: this.rebuildFromConfig,
+      'skip-install': this.options['skip-install']
+    };
+
     // Now call the other generators
-    this.composeWith('confit:paths', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('confit:entryPoint', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:paths', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});
 
-    this.composeWith('confit:buildCSS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('confit:buildJS', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('confit:buildHTML', {options: {rebuildFromConfig: this.rebuildFromConfig}});
-    this.composeWith('confit:build', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    this.composeWith('confit:buildAssets', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:buildCSS', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:buildJS', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:buildHTML', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
+    //// Create two *special* servers - dev & prod
+    //this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
+    //this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'PROD'}});
 
-    this.composeWith('confit:verify', {options: {rebuildFromConfig: this.rebuildFromConfig}});
 
-    // Create two *special* servers - dev & prod
-    this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
-    this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'PROD'}});
+    //
+    //this.composeWith('confit:verify', {options: _.merge({}, subGenOptions)});
+    // Release
+    // Doc Gen
 
-    // This is guaranteed to be the last thing to run
-    this.composeWith('confit:zzfinish', {options: {rebuildFromConfig: this.rebuildFromConfig}});
+    //
+    //// This is guaranteed to be the last thing to run
+    this.composeWith('confit:sampleApp', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:zzfinish', {options: _.merge({}, subGenOptions)});
   },
 
   install: function () {
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
-      skipInstall: this.options['skip-install'],
+      skipInstall: this.options['skip-install'],    //--skip-install
+      skipRun: this.options['skip-run'],
       skipMessage: true,
       callback: function() {
         // Emit a new event - dependencies installed
@@ -183,11 +215,16 @@ module.exports = confitGen.create({
       }.bind(this)
     });
 
-    // Lastly, run the 'dev' command to start everything
-    // Now you can bind to the dependencies installed event
-    this.on('dependenciesInstalled', function() {
+    // If we skip installation, we still want to begin development
+    if (this.options['skip-install']) {
       this.buildTool.beginDevelopment(this);
-    });
-
+    } else {
+      // Lastly, run the 'dev' command to start everything
+      // Now you can bind to the dependencies installed event
+      this.on('dependenciesInstalled', function() {
+        this.buildTool.beginDevelopment(this);
+      });
+    }
   }
 });
+

@@ -1,20 +1,9 @@
 'use strict';
 
-var webpackConfigurator = require('../webpackConfigurator');
-
 module.exports = function() {
 
   function write(gen) {
     gen.log('Writing "app" using Webpack');
-
-    // We need to create:
-    //  - an in-memory config object
-    //  - an in-memory list of things to require()
-    //
-    webpackConfigurator.require({
-      webpack: 'webpack'
-    });
-
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
@@ -27,7 +16,7 @@ module.exports = function() {
     });
 
     var configDir = gen.getGlobalConfig().paths.config.configDir;
-    gen.setPackageKey('scripts.start', 'node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --config ' + configDir + 'webpack/webpack.config.js --hot');
+    gen.setPackageKey('scripts.start', 'node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --config ' + configDir + 'webpack/dev.webpack.config.js --hot');
   }
 
   function beginDevelopment(gen) {

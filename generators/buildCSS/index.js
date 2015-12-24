@@ -76,33 +76,15 @@ module.exports = confitGen.create({
   },
 
   writeConfig: function() {
-    // If we have new answers, then change the config
     if (this.answers) {
-      // Replace the <stylesDir> tag inside the rootCSSFiles
-
       // Add an answer for a question we will never ask... spooky! Default to true
       this.answers.autoprefixer = !(this.getConfig('autoprefixer') === false);
-
       this.setConfig(this.answers);
     }
   },
 
   writing: function () {
     this.buildTool.write(this);
-
-    var createSampleCode = this.getGlobalConfig().app.createScaffoldProject;
-
-    if (createSampleCode) {
-      //insert a CSS-source file in stylesDir
-      var srcTmpDir = '../templates/src/';
-      var paths = this.getGlobalConfig().paths;
-      var compiler = this.getConfig('cssCompiler');
-      var srcStylesDir = srcTmpDir + 'modules/' + this.demoOutputModuleDir + 'styles/';
-
-      var CSSFile = this.cssCompilerConfig[compiler].template;
-
-      this.fs.copy(this.templatePath(srcStylesDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
-    }
   },
 
   install: function () {

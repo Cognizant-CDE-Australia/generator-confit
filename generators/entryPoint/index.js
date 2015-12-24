@@ -30,11 +30,6 @@ module.exports = confitGen.create({
         message: 'Entry-points for the application' + chalk.bold.green('(edit in confit.json)') + ':',
         choices: function() {
           var map = self.getConfig('entryPoints');
-          // If there are no keys in the map, we have a blank object
-          if (_.keys(map).length === 0) {
-            map = {app: ['app.js']};
-          }
-
           var cbItems = [];
           var index = 0;
           for (var key in map) {
@@ -45,8 +40,18 @@ module.exports = confitGen.create({
               checked: true
             });
           }
-          cbItems.unshift('Entry Points');   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
+
+          var headerLabel = (_.keys(map).length) ? 'Entry Points' : '(No entry points defined - generate a sample app)';
+
+          cbItems.unshift(headerLabel);   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
           return cbItems;
+        },
+        // Use the original answer, or generate a default one
+        filter: function() {
+          if (!self.getConfig('entryPoints')) {
+            return {};
+          }
+          return self.getConfig('entryPoints');
         }
       }
     ];
@@ -59,11 +64,17 @@ module.exports = confitGen.create({
   },
 
   writeConfig: function() {
+    // If no entry point has been defined, AND we want to create a scaffold project, update the config using (temporary) data set by <sampleApp>
+    var sampleAppConfig = this.getGlobalConfig().sampleApp;
+    var createSampleApp = sampleAppConfig.createScaffoldProject;
+
+    // TODO: This will over-write the entryPoints if we want to generate a sampleApp! Is that ok?
+    if (this.answers && createSampleApp) {
+      this.answers.entryPoints = sampleAppConfig.sampleAppEntryPoint;
+    }
+
     // If we have new answers, then change the config
     if (this.answers) {
-      if (this.answers.entryPoints.length === 0) {
-        this.answers.entryPoints = {app: ['app.js']};
-      }
       this.setConfig(this.answers);
     }
   },

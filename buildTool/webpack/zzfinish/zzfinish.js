@@ -1,26 +1,22 @@
 'use strict';
 
-var _ = require('lodash');
-var webpackConfigurator = require('../webpackConfigurator');
-
 module.exports = function() {
 
   function write(gen) {
-    gen.log('Generate webpack config');
+    gen.log('Writing "zzfinish" using Webpack');
 
     var config = gen.getGlobalConfig();
     var outputDir = config.paths.config.configDir;
 
-    var webpackConfig = {};
-    _.assign(webpackConfig, {webpack: webpackConfigurator.getConfig()}, config);
+    // Add the NPM dev dependencies
+    gen.setNpmDevDependencies({
+      'lodash': '*'
+    });
 
-    gen.fs.copyTpl(
-      gen.toolTemplatePath('webpack.config.js.tpl'),
-      gen.destinationPath(outputDir + 'webpack/webpack.config.js'),
-      webpackConfig
-    );
+    gen.fs.copy(gen.toolTemplatePath('webpack.config.js'), gen.destinationPath(outputDir + 'webpack/webpack.config.js'));
+    gen.fs.copy(gen.toolTemplatePath('dev.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/dev.webpack.config.js'));
+    gen.fs.copy(gen.toolTemplatePath('prod.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/prod.webpack.config.js'));
   }
-
 
   return {
     write: write

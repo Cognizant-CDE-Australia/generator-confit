@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-strict-di ng-controller="AppController as app">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <base href="/">
+  <title ng-bind="appName"></title>
+
+  <!--(if target unoptimised || optimised)>
+    {{cssFiles}}
+  <!(endif)-->
+</head>
+
+<body ng-cloak class="{{bodyClass}}">
+
+  <h1>{{app.appName}}</h1>
+  <my-component></my-component>
+
+  <img src="assets/demoModule/blank-logo.png">
+
+
+<!--(if target unoptimised || optimised)>
+  {{vendor}}
+  {{app}}
+<!(endif)-->
+</body>
+</html>

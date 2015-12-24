@@ -75,31 +75,11 @@ function write(gen) {
       config
     );
   }
-
-  //
-  buildExample(gen, buildJS);
 }
-
-
-function buildExample(gen, buildJS) {
-  if (!gen.getGlobalConfig().app.createScaffoldProject) {
-    return;
-  }
-
-  var paths = gen.getGlobalConfig().paths;
-
-  if (buildJS.isAngular1) {
-    gen.fs.copy(gen.toolTemplatePath('src/indexAngular1.html'), paths.input.srcDir + 'index.html');
-    gen.fs.copy(gen.toolTemplatePath('src/modules/demoAngular1Module/_myApp.js'), paths.input.modulesDir + gen.demoOutputModuleDir + '_myApp.js');
-    gen.fs.copy(gen.toolTemplatePath('src/modules/demoAngular1Module/myComponent.js'), paths.input.modulesDir + gen.demoOutputModuleDir + 'myComponent.js');
-    gen.fs.copy(gen.toolTemplatePath('src/modules/demoAngular1Module/template/myComponentTemplate.html'), paths.input.modulesDir + gen.demoOutputModuleDir + paths.input.templateDir + 'myComponentTemplate.html');
-  }
-}
-
 
 
 module.exports = function() {
-    return {
+  return {
     write: write
   };
 };

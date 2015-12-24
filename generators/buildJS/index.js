@@ -56,6 +56,16 @@ module.exports = confitGen.create({
     var prompts = [
       {
         type: 'list',
+        name: 'sourceFormat',
+        message: 'Source code language',
+        choices: [
+          'ES5',
+          'ES6'
+        ],
+        default: this.getConfig('sourceFormat') || 'ES6'
+      },
+      {
+        type: 'list',
         name: 'outputFormat',
         message: 'Target output language',
         choices: [
@@ -63,7 +73,7 @@ module.exports = confitGen.create({
           'ES5',
           'ES6'
         ],
-        default: this.getConfig('jsOutputFormat') || 'ES5'
+        default: this.getConfig('outputFormat') || 'ES5'
       },
       //{
       //  type: 'confirm',
@@ -74,18 +84,18 @@ module.exports = confitGen.create({
       {
         type: 'checkbox',
         name: 'framework',
-        message: 'JavaScript Framework',
+        message: 'JavaScript Framework (optional)',
         choices: [
           'AngularJS 1.x',
           'AngularJS 2.x',
-          'React 0.x'
+          'React 0.x',
         ],
         default: this.getConfig('framework') || []
       },
       {
         type: 'checkbox',
         name: 'vendorBowerScripts',
-        message: 'Select Bower JavaScript dependencies',
+        message: 'Select Bower JS dependencies',
         default: defaultVendorBowerScripts,
         choices: function() {
           return _.map(vendorBowerScripts || [], function(scripts, packageName) {

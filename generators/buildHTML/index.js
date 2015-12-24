@@ -49,18 +49,6 @@ module.exports = confitGen.create({
 
   writing: function () {
     this.buildTool.write(this);
-
-    var createSampleCode = this.getGlobalConfig().app.createScaffoldProject;
-
-    if (createSampleCode) {
-      // Create the directory structure from the config
-      var srcTmpDir = '../templates/src/';
-      var moduleDir = srcTmpDir + 'modules/demoModule/';
-      var paths = this.getGlobalConfig().paths;
-
-      //this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), paths.input.srcDir + 'index.html');
-      this.fs.copy(this.templatePath(moduleDir + 'assets/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.assetsDir);
-    }
   },
 
   install: function () {
