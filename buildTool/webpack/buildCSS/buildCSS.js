@@ -14,17 +14,11 @@ module.exports = function() {
 
     var config = gen.getGlobalConfig();
     var compiler = config.buildCSS.cssCompiler;
-    var outputDir = config.paths.config.configDir;
 
     gen.setNpmDevDependencies({'stylus-loader': '*'}, compiler === 'stylus');
     gen.setNpmDevDependencies({'sass-loader': '*'}, compiler === 'sass');
     gen.setNpmDevDependencies({'node-sass': '*'}, compiler === 'sass');
     gen.setNpmDevDependencies({'autoprefixer-loader': '*'}, config.buildCSS.autoprefixer === true);
-
-    gen.fs.copy(
-      gen.toolTemplatePath('webpack.buildCSS.config.js'),
-      gen.destinationPath(outputDir + 'webpack/webpack.buildCSS.config.js')
-    );
   }
 
   return {

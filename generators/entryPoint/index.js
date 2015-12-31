@@ -56,7 +56,6 @@ module.exports = confitGen.create({
       }
     ];
 
-
     this.prompt(prompts, function (props) {
       this.answers = this.generateObjFromAnswers(props);
       done();
@@ -68,8 +67,9 @@ module.exports = confitGen.create({
     var sampleAppConfig = this.getGlobalConfig().sampleApp;
     var createSampleApp = sampleAppConfig.createScaffoldProject;
 
-    // TODO: This will over-write the entryPoints if we want to generate a sampleApp! Is that ok?
-    if (this.answers && createSampleApp) {
+    // Always use the sampleAppEntryPoint if directed to
+    if (createSampleApp) {
+      this.answers = {};
       this.answers.entryPoints = sampleAppConfig.sampleAppEntryPoint;
     }
 

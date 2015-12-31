@@ -88,7 +88,7 @@ module.exports = confitGen.create({
         choices: [
           'AngularJS 1.x',
           'AngularJS 2.x',
-          'React 0.x',
+          'React 0.x'
         ],
         default: this.getConfig('framework') || []
       },

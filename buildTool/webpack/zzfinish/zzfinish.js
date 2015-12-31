@@ -10,10 +10,12 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
-      'lodash': '*'
+      'webpack': '*',
+      'webpack-dev-server': '*',
+      'extract-text-webpack-plugin': '*'
     });
 
-    gen.fs.copy(gen.toolTemplatePath('webpack.config.js'), gen.destinationPath(outputDir + 'webpack/webpack.config.js'));
+    gen.fs.copyTpl(gen.toolTemplatePath('webpack.config.js.tpl'), gen.destinationPath(outputDir + 'webpack/webpack.config.js'), config);
     gen.fs.copy(gen.toolTemplatePath('dev.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/dev.webpack.config.js'));
     gen.fs.copy(gen.toolTemplatePath('prod.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/prod.webpack.config.js'));
   }

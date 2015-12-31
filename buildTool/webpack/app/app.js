@@ -8,15 +8,12 @@ module.exports = function() {
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
       'webpack': '*',
-      'webpack-dev-server': '*',
-      'extract-text-webpack-plugin': '*',
-      'on-build-webpack': '*',
-      'file-loader': '*',
-      'url-loader': '*'
+      'webpack-dev-server': '*'
     });
 
     var configDir = gen.getGlobalConfig().paths.config.configDir;
     gen.setPackageKey('scripts.start', 'node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --config ' + configDir + 'webpack/dev.webpack.config.js --hot');
+    gen.setPackageKey('scripts.build', 'node_modules/webpack/bin/webpack.js -p --progress --config ' + configDir + 'webpack/prod.webpack.config.js');
   }
 
   function beginDevelopment(gen) {

@@ -46,9 +46,6 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "yeoman-generator": "^0.18.0"
-  },
-  "peerDependencies": {
-    "yo": ">=1.0.0"
+    "yeoman-generator": "0.22.2"
   }
 }

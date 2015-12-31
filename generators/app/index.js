@@ -178,9 +178,9 @@ module.exports = confitGen.create({
       'skip-install': this.options['skip-install']
     };
 
+
     // Now call the other generators
     this.composeWith('confit:paths', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});
 
     this.composeWith('confit:buildAssets', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:buildCSS', {options: _.merge({}, subGenOptions)});
@@ -200,6 +200,7 @@ module.exports = confitGen.create({
     //
     //// This is guaranteed to be the last thing to run
     this.composeWith('confit:sampleApp', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it must be run afterwards
     this.composeWith('confit:zzfinish', {options: _.merge({}, subGenOptions)});
   },
 

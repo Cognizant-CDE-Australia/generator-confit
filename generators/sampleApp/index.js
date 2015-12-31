@@ -8,12 +8,13 @@ module.exports = confitGen.create({
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasExistingConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
+      this.demoOutputModuleDir = 'demoModule/';
     }
   },
 
   prompting: function () {
     // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig) {
+    if (this.rebuildFromConfig && this.getConfig('createScaffoldProject') === false) {
       return;
     }
 
@@ -33,18 +34,6 @@ module.exports = confitGen.create({
 
     this.prompt(prompts, function (props) {
       this.answers = this.generateObjFromAnswers(props);
-
-      // Special case - in order to tell <entryPoint> that we are using a sample project,
-      // we need to write some TEMPORARY config IN THIS STAGE, then removing the config in the writeConfig stage.
-
-      // Write temporary config
-      if (this.answers.createScaffoldProject) {
-        this.answers.sampleAppEntryPoint = {
-          app: ['app.js']
-        };
-      }
-      this.setConfig(this.answers);
-
       done();
     }.bind(this));
   },
@@ -52,16 +41,17 @@ module.exports = confitGen.create({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      delete this.answers.sampleAppEntryPoint;  // T
+      createEntryPointSampleAppConfig(this);
+      this.buildTool.writeConfig(this);
       this.setConfig(this.answers);
     }
   },
 
   writing: function () {
+    removeEntryPointSampleAppConfig(this);
+
     // Determine which sample app to create, based on the project config
     var createSampleApp = this.getConfig().createScaffoldProject;
-
-    console.log('create sample app', createSampleApp);
 
     if (!createSampleApp) {
       return;
@@ -90,12 +80,18 @@ module.exports = confitGen.create({
     this.fs.copy(this.templatePath(cssTemplateDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
 
 
-    //if (buildJS.isAngular1) {
-    //  gen.fs.copy(gen.toolTemplatePath('es6Angular1.x/indexAngular1.html'), paths.input.srcDir + 'index.html');
-    //  gen.fs.copy(gen.toolTemplatePath('es6Angular1.x/modules/demoAngular1Module/_myApp.js'), paths.input.modulesDir + gen.demoOutputModuleDir + '_myApp.js');
-    //  gen.fs.copy(gen.toolTemplatePath('es6Angular1.x/modules/demoAngular1Module/myComponent.js'), paths.input.modulesDir + gen.demoOutputModuleDir + 'myComponent.js');
-    //  gen.fs.copy(gen.toolTemplatePath('es6Angular1.x/modules/demoAngular1Module/template/myComponentTemplate.html'), paths.input.modulesDir + gen.demoOutputModuleDir + paths.input.templateDir + 'myComponentTemplate.html');
-    //}
+    // Copy JS files
+    var buildJS = config.buildJS;
+    var jsDirConfig = {
+      '': 'es6/',
+      'AngularJS 1.x': 'es6ng1/',
+      'AngularJS 2.x': 'es6ng2/',   // Not yet implemented
+      'React 0.x': 'es6/'           // Not yet implemented
+    };
+    var selectedFrameWorkDir = jsDirConfig[buildJS.framework[0] || ''];
+    this.fs.copy(this.templatePath(selectedFrameWorkDir + '*.html'), paths.input.srcDir); // index.html file (root file) - do we need to do this here, or should it be in the tool-specific sample app?
+    this.fs.copy(this.templatePath(selectedFrameWorkDir + this.demoOutputModuleDir), paths.input.modulesDir + this.demoOutputModuleDir);
+
     this.buildTool.write(this);
   },
 
@@ -107,3 +103,27 @@ module.exports = confitGen.create({
     });
   }
 });
+
+
+// Special case - in order to tell <entryPoint> that we are using a sample project,
+// we need to write some TEMPORARY config IN THIS STAGE, then remove the config in the next stage.
+// Additionally, createEntryPointSampleAppConfig() must be called AFTER <paths>, so that the paths config can be found
+function createEntryPointSampleAppConfig(gen) {
+  // Write temporary config
+  if (gen.answers.createScaffoldProject) {
+    var config = gen.getGlobalConfig();
+    var modulesDir = config.paths.input.modulesSubDir;
+
+    gen.answers.sampleAppEntryPoint = {
+      app: [modulesDir + gen.demoOutputModuleDir + 'app.js']
+    };
+  }
+}
+
+
+function removeEntryPointSampleAppConfig(gen) {
+  if (gen.answers) {
+    delete gen.answers.sampleAppEntryPoint;  // T
+    gen.setConfig(gen.answers);
+  }
+}

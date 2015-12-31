@@ -2,6 +2,17 @@
 
 module.exports = function() {
 
+  function writeConfig(gen) {
+    // Generate a Webpack-specific version of the sample entry points
+    var config = gen.getGlobalConfig();
+    var modulesDir = config.paths.input.modulesSubDir;
+
+    gen.answers.sampleAppEntryPoint = {
+      app: ['./' + modulesDir + gen.demoOutputModuleDir + 'app.js']
+    };
+  }
+
+
   function write(gen) {
     gen.log('Writing "sampleApp" using Webpack');
 
@@ -18,6 +29,7 @@ module.exports = function() {
   }
 
   return {
+    writeConfig: writeConfig,
     write: write
   };
 };
