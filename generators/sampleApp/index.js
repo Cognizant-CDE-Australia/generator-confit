@@ -76,8 +76,11 @@ module.exports = confitGen.create({
       sass: 'app.sass',
       stylus: 'app.styl'
     };
-    var CSSFile = cssCompilerConfig[compiler];
-    this.fs.copy(this.templatePath(cssTemplateDir + CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + CSSFile);
+
+    // Make CSSFile a member property so that the build tool can use it too
+    this.CSSFile = cssCompilerConfig[compiler];
+    this.fs.copy(this.templatePath(cssTemplateDir + this.CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + this.CSSFile);
+    this.fs.copy(this.templatePath(cssTemplateDir + 'iconFont.css'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + 'iconFont.css');
 
 
     // Copy JS files
@@ -88,9 +91,11 @@ module.exports = confitGen.create({
       'AngularJS 2.x': 'es6ng2/',   // Not yet implemented
       'React 0.x': 'es6/'           // Not yet implemented
     };
-    var selectedFrameWorkDir = jsDirConfig[buildJS.framework[0] || ''];
-    this.fs.copy(this.templatePath(selectedFrameWorkDir + '*.html'), paths.input.srcDir); // index.html file (root file) - do we need to do this here, or should it be in the tool-specific sample app?
-    this.fs.copy(this.templatePath(selectedFrameWorkDir + this.demoOutputModuleDir), paths.input.modulesDir + this.demoOutputModuleDir);
+
+    // Make selectedJSFrameworkDir a member of the generator, so the build-tool can use it too
+    this.selectedJSFrameworkDir = jsDirConfig[buildJS.framework[0] || ''];
+    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + '*.html'), paths.input.srcDir); // index.html file (root file) - do we need to do this here, or should it be in the tool-specific sample app?
+    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + this.demoOutputModuleDir), paths.input.modulesDir + this.demoOutputModuleDir);
 
     this.buildTool.write(this);
   },

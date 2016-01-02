@@ -17,7 +17,8 @@ module.exports = function() {
     gen.log('Writing "sampleApp" using Webpack');
 
     var config = gen.getGlobalConfig();
-    var outputDir = config.paths.input.srcDir;
+    var paths = config.paths;
+    var outputDir = paths.input.srcDir;
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
@@ -26,6 +27,10 @@ module.exports = function() {
 
     // Web-pack specific index.html template
     gen.fs.copy(gen.toolTemplatePath('index-template.html'), gen.destinationPath(outputDir + 'index-template.html'));
+
+    // Copy the Webpack-specific, JS-framework-specific samples directory
+    config.$CSSFilePath = paths.input.stylesDir + gen.CSSFile;
+    gen.fs.copyTpl(gen.toolTemplatePath(gen.selectedJSFrameworkDir + gen.demoOutputModuleDir), paths.input.modulesDir + gen.demoOutputModuleDir, config);
   }
 
   return {

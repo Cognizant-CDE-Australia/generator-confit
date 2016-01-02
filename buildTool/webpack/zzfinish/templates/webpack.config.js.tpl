@@ -36,5 +36,7 @@ var config = {
 <%- include('../../buildAssets/templates/webpack.buildAssets.config.js.tpl') %>
 <%- include('../../buildCSS/templates/webpack.buildCSS.config.js.tpl') %>
 <%- include('../../buildHTML/templates/webpack.buildHTML.config.js.tpl') %>
+<%- include('../../serverDev/templates/webpack.serverDev.config.js.tpl') %>
+
 
 module.exports = config;

@@ -2,6 +2,7 @@
 
 export default {
   gotoPage: function(pageName) {
-    window.location.href = pageName + '.html';
+    // TODO: Use config paths here instead of 'modules/demoModule'
+    document.getElementById('content').innerHTML = window[pageName];
   }
 };

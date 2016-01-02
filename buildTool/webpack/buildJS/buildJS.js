@@ -10,7 +10,6 @@ module.exports = function() {
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
       'bower-webpack-plugin': '*',
-      'lodash': '*',
 
       // TODO: Make this optional: For converting ES6 to ES5:
       'babel-core': '*',
