@@ -27,7 +27,7 @@ module.exports = confitGen.create({
       {
         type: 'checkbox',
         name: 'entryPoints',
-        message: 'Entry-points for the application' + chalk.bold.green('(edit in confit.json)') + ':',
+        message: 'Entry-points for the application ' + chalk.bold.green('(edit in ' + self.configFile + ')') + ':',
         choices: function() {
           var map = self.getConfig('entryPoints');
           var cbItems = [];

@@ -48,7 +48,7 @@ module.exports = confitGen.create({
         {
           type: 'confirm',
           name: 'rebuildFromConfig',
-          message: 'Would you like to rebuild from the existing configuration in confit.json?',
+          message: 'Would you like to rebuild from the existing configuration in ' + this.configFile + '?',
           default: true
         }
       ];
@@ -175,7 +175,8 @@ module.exports = confitGen.create({
 
     var subGenOptions = {
       rebuildFromConfig: this.rebuildFromConfig,
-      'skip-install': this.options['skip-install']
+      'skip-install': this.options['skip-install'],
+      configFile: this.configFile
     };
 
 
@@ -188,8 +189,8 @@ module.exports = confitGen.create({
     this.composeWith('confit:buildHTML', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
     //// Create two *special* servers - dev & prod
-    //this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'DEV'}});
-    //this.composeWith('confit:server', {options: {rebuildFromConfig: this.rebuildFromConfig, specialServer: 'PROD'}});
+    this.composeWith('confit:server', {options: _.merge({}, subGenOptions, {specialServer: 'DEV'})});
+    this.composeWith('confit:server', {options: _.merge({}, subGenOptions, {specialServer: 'PROD'})});
 
 
     //
