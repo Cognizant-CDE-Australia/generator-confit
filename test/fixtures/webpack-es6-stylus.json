@@ -45,8 +45,6 @@
         "srcDir": "src/",
         "modulesSubDir": "modules/",
         "assetsDir": "assets/",
-        "includesDir": "includes/",
-        "viewsDir": "views/",
         "stylesDir": "styles/",
         "templateDir": "template/",
         "unitTestDir": "unitTest/",
@@ -66,7 +64,7 @@
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "082b2430485240d611dd39dcbb20440f780c720f"
+      "_version": "cb1b4caf47fbf79849092de78174a49c75352691"
     },
     "build": {},
     "verify": {
@@ -93,7 +91,7 @@
     "zzfinish": {},
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "9d8d2ab6b6f1ed1fc77a94f0f54cce79dc1383ba"
+      "_version": "12fdf71328dc5120e814eb31140327d80c21b8b5"
     },
     "buildAssets": {},
     "entryPoint": {

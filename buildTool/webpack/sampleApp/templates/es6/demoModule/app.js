@@ -9,8 +9,8 @@ require('./<%= $CSSFilePath %>');
 window.gotoPage = demoModule.gotoPage;
 
 // Require the HTML files explicitly so that they are in the Webpack dependency tree
-window.page1 = require('./page1.html');
-window.page2 = require('./page2.html');
+window.page1 = require('./template/page1.html');
+window.page2 = require('./template/page2.html');
 
 // Go to the first page immediately
 demoModule.gotoPage('page1');

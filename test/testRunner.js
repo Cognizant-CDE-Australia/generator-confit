@@ -3,7 +3,7 @@
 var childProc = require('child_process');
 var fs = require('fs-extra');
 var path = require('path');
-var colours = require('colors');
+require('colors');
 
 var PROTRACTOR_CMD = 'node_modules/protractor/bin/protractor';
 
@@ -31,7 +31,7 @@ function main() {
       if (procComplete === procCount) {
         console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
         process.exit(0);
-      }s
+      }
     });
   });
 }

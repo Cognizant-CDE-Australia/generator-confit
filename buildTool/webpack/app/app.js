@@ -11,9 +11,11 @@ module.exports = function() {
       'webpack-dev-server': '*'
     });
 
-    var configDir = gen.getGlobalConfig().paths.config.configDir;
+    var paths = gen.getGlobalConfig().paths;
+    var configDir = paths.config.configDir;
     gen.setPackageKey('scripts.start', 'node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --config ' + configDir + 'webpack/dev.webpack.config.js --hot');
-    gen.setPackageKey('scripts.build', 'node_modules/webpack/bin/webpack.js -p --progress --config ' + configDir + 'webpack/prod.webpack.config.js');
+    gen.setPackageKey('scripts.clean', 'rm -rf ' + paths.output.prodDir);
+    gen.setPackageKey('scripts.build', 'npm run clean && node_modules/webpack/bin/webpack.js -p --progress --config ' + configDir + 'webpack/prod.webpack.config.js');
 
     // Things to do one-time - preinstall
     gen.setPackageKey('scripts.postinstall', 'npm run fixDistDebugRef');

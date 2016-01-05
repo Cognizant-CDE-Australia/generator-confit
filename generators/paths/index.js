@@ -25,8 +25,6 @@ module.exports = confitGen.create({
         srcDir: this.getConfig('input.srcDir') || 'src/',
         modulesSubDir: this.getConfig('input.modulesSubDir') || 'modules/',
         assetsDir: this.getConfig('input.assetsDir') || 'assets/',
-        includesDir: this.getConfig('input.includesDir') || 'includes/',
-        viewsDir: this.getConfig('input.viewsDir') || 'views/',
         stylesDir: this.getConfig('input.stylesDir') || 'styles/',
         templateDir: this.getConfig('input.templateDir') || 'template/',
         unitTestDir: this.getConfig('input.unitTestDir') || 'unitTest/',
@@ -80,24 +78,6 @@ module.exports = confitGen.create({
         name: 'input.assetsDir',
         message: 'Name of module ASSETS directory (for images, fonts)',
         default: this.defaults.input.assetsDir,
-        when: function(answers) {
-          return !answers.useDefaults;
-        }
-      },
-      {
-        type: 'input',
-        name: 'input.includesDir',
-        message: 'Name of module INCLUDES directory (for compile-time including of files)',
-        default: this.defaults.input.includesDir,
-        when: function(answers) {
-          return !answers.useDefaults;
-        }
-      },
-      {
-        type: 'input',
-        name: 'input.viewsDir',
-        message: 'Name of module VIEWS directory (for HTML fragments)',
-        default: this.defaults.input.viewsDir,
         when: function(answers) {
           return !answers.useDefaults;
         }
@@ -194,31 +174,19 @@ module.exports = confitGen.create({
       },
       {
         type: 'input',
-        name: 'output.viewsSubDir',
-        message: 'Path to VIEWS sub-directory (relative to OUTPUT directory)',
-        default: this.defaults.output.viewsSubDir,
-        when: function(answers) {
-          return !answers.useDefaults;
-        }
-      },
-      {
-        type: 'input',
         name: 'config.configDir',
         message: chalk.cyan('Config path\n') + 'Path to CONFIG directory (relative to the current directory)',
         default: this.defaults.config.configDir,
         when: function(answers) {
           return !answers.useDefaults;
         }
-      }/*
-
-      // We will ask for the reporting directory in the test-generator
-      ,
+      },
       {
         type: 'input',
         name: 'output.reportDir',
-        message: 'Path to  (relative to the current directory)',
-        default: this.getConfig('output.reportDir') || 'bin/'
-      }*/
+        message: 'Path to TEST REPORTS directory (relative to the current directory)',
+        default: this.getConfig('output.reportDir') || 'reports/'
+      }
     ];
 
 

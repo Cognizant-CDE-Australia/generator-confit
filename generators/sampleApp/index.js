@@ -83,7 +83,6 @@ module.exports = confitGen.create({
     this.fs.copy(this.templatePath(cssTemplateDir + 'iconFont.css'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + 'iconFont.css');
 
 
-    // Copy JS files
     var buildJS = config.buildJS;
     var jsDirConfig = {
       '': 'es6/',
@@ -92,10 +91,14 @@ module.exports = confitGen.create({
       'React 0.x': 'es6/'           // Not yet implemented
     };
 
-    // Make selectedJSFrameworkDir a member of the generator, so the build-tool can use it too
+    // Make this.selectedJSFrameworkDir a property of the generator, so the build-tool can use it too
     this.selectedJSFrameworkDir = jsDirConfig[buildJS.framework[0] || ''];
-    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + '*.html'), paths.input.srcDir); // index.html file (root file) - do we need to do this here, or should it be in the tool-specific sample app?
-    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + this.demoOutputModuleDir), paths.input.modulesDir + this.demoOutputModuleDir);
+
+    // Copy JS files
+    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + this.demoOutputModuleDir + '*.js'), paths.input.modulesDir + this.demoOutputModuleDir);
+
+    // Copy TEMPLATE HTML files
+    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir  + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
 
     this.buildTool.write(this);
   },

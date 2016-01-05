@@ -1,4 +1,4 @@
-- Place HTML files that are in sample project into paths.output.views/template directory
+- Document the NPM commands in Readme
 
 - Ensure this works with Webpack
   + Get HTML into the right spot
