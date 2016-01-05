@@ -26,10 +26,12 @@
     }
   ],
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.x"
   },
   "scripts": {
-    "test": "mocha"
+    "postinstall": "npm run installWebDriver",
+    "installWebDriver": "node_modules/protractor/bin/webdriver-manager update",
+    "test": "node_modules/protractor/bin/protractor test/protractor.conf.js --params.fixture=webpack-sass-es6.json"
   },
   "files": [
     "generators"
@@ -45,7 +47,11 @@
     "yosay": "^0.3.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "yeoman-generator": "0.22.2"
+    "fs-extra": "^0.26.3",
+    "jasmine-reporters": "^2.1.1",
+    "jasmine-spec-reporter": "^2.4.0",
+    "protractor": "^3.0.0",
+    "yeoman-generator": "0.22.2",
+    "yeoman-test": "^1.0.0"
   }
 }

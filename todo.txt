@@ -1,8 +1,8 @@
 - Ensure this works with Webpack
-  - Get HTML into the right spot
+  + Get HTML into the right spot
   - Get WebPack fully working with a sample project
-    - Get sample project 'app.js' into the right spot, and loading the correct code
-    - For Plain ES6
+    + Get sample project 'app.js' into the right spot, and loading the correct code
+    + For Plain ES6
     - For Angular 1.x ES6
     - For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
 

@@ -13,7 +13,4 @@ config.plugins.push(new webpack.DefinePlugin({
   __PROD__: false
 }));
 
-console.info('DEV CONFIG:');
-console.log(config);
-
 module.exports = config;

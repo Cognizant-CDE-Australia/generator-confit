@@ -7,7 +7,6 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
-      'extract-text-webpack-plugin': '*',
       'css-loader': '*',
       'style-loader': '*'
     });

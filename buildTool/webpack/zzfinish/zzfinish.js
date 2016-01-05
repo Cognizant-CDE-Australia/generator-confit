@@ -12,7 +12,7 @@ module.exports = function() {
     gen.setNpmDevDependencies({
       'webpack': '*',
       'webpack-dev-server': '*',
-      'extract-text-webpack-plugin': '*'
+      'extract-text-webpack-plugin': '0.9.1' // latest version (1.0.0) is missing a dependency. Revert to earlier version
     });
 
     gen.fs.copyTpl(gen.toolTemplatePath('webpack.config.js.tpl'), gen.destinationPath(outputDir + 'webpack/webpack.config.js'), config);

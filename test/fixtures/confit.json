@@ -1,0 +1,116 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Default",
+      "editorConfig": true,
+      "_version": "efbfa728f6328bb15706ddeb5bea16eae3f5d059"
+    },
+    "buildJS": {
+      "sourceFormat": "ES6",
+      "outputFormat": "ES5",
+      "framework": [],
+      "vendorBowerScripts": [
+        {
+          "name": "angularjs",
+          "scripts": [
+            "bower_components/angularjs/angular.js"
+          ]
+        }
+      ],
+      "_version": "989c21dd1572d5bef3241bcbc642771bab8b71c4"
+    },
+    "buildHTML": {
+      "extension": ".html",
+      "_version": "e71d3045ca1a9dd5dec54a994686c035c1969da9"
+    },
+    "server": {
+      "DEV": {
+        "name": "dev",
+        "baseDir": "dev/",
+        "port": 3000,
+        "hostname": "localhost",
+        "protocol": "https",
+        "keepalive": false
+      },
+      "_version": "81556189e72e3e2cca484865a83c9aa0b1a11ccb",
+      "PROD": {
+        "name": "prod",
+        "baseDir": "prod/",
+        "port": 3000,
+        "hostname": "localhost",
+        "protocol": "https",
+        "keepalive": true
+      }
+    },
+    "buildCSS": {
+      "includeOlderBrowsers": false,
+      "cssCompiler": "stylus",
+      "autoprefixer": true,
+      "_version": "b5dbad6bbf0400f22e0a80da411b0b64030b2e54"
+    },
+    "paths": {
+      "input": {
+        "srcDir": "src/",
+        "modulesSubDir": "modules/",
+        "assetsDir": "assets/",
+        "includesDir": "includes/",
+        "viewsDir": "views/",
+        "stylesDir": "styles/",
+        "templateDir": "template/",
+        "unitTestDir": "unitTest/",
+        "e2eTestDir": "e2eTest/",
+        "modulesDir": "src/modules/"
+      },
+      "output": {
+        "devDir": "dev/",
+        "prodDir": "prod/",
+        "assetsSubDir": "assets/",
+        "cssSubDir": "css/",
+        "jsSubDir": "js/",
+        "vendorJSSubDir": "vendor/",
+        "viewsSubDir": "views/"
+      },
+      "config": {
+        "configDir": "config/",
+        "tempDir": ".tmp/"
+      },
+      "_version": "082b2430485240d611dd39dcbb20440f780c720f"
+    },
+    "build": {},
+    "verify": {
+      "jsLinter": [
+        "eslint",
+        "jscs"
+      ],
+      "jsLintConfig": {
+        "eslint": {
+          "src": "eslintrc",
+          "dest": "config/jslint/.eslintrc"
+        },
+        "jshint": {
+          "src": "jshintrc",
+          "dest": "config/jslint/.jshintrc"
+        },
+        "jscs": {
+          "src": "jscsrc",
+          "dest": "config/jslint/.jscsrc"
+        }
+      },
+      "_version": "b8cf4fda1533c97d8f2d75c06b048adaf59f4425"
+    },
+    "zzfinish": {},
+    "sampleApp": {
+      "createScaffoldProject": true,
+      "_version": "9d8d2ab6b6f1ed1fc77a94f0f54cce79dc1383ba"
+    },
+    "buildAssets": {},
+    "entryPoint": {
+      "entryPoints": {
+        "app": [
+          "./modules/demoModule/app.js"
+        ]
+      },
+      "_version": "680b8a8f99654ec244c95cbb727f74c234c8f70f"
+    }
+  }
+}
