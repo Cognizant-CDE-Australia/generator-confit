@@ -1,3 +1,5 @@
+- Get the test runner to run tests in parallel, with nice console output and junit output
+
 - Ensure this works with Webpack
   + Get HTML into the right spot
   - Get WebPack fully working with a sample project

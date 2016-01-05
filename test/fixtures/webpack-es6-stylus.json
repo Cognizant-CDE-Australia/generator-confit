@@ -9,15 +9,7 @@
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
-      "vendorBowerScripts": [
-        {
-          "name": "angularjs",
-          "scripts": [
-            "bower_components/angularjs/angular.js"
-          ]
-        }
-      ],
-      "_version": "989c21dd1572d5bef3241bcbc642771bab8b71c4"
+      "_version": "71f16a46949b5ba22bcd0a056d604d97cfe137a0"
     },
     "buildHTML": {
       "extension": ".html",

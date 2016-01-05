@@ -31,7 +31,7 @@
   "scripts": {
     "postinstall": "npm run installWebDriver",
     "installWebDriver": "node_modules/protractor/bin/webdriver-manager update",
-    "test": "node_modules/protractor/bin/protractor test/protractor.conf.js --params.fixture=webpack-sass-es6.json"
+    "test": "node test/testRunner.js"
   },
   "files": [
     "generators"
@@ -47,6 +47,7 @@
     "yosay": "^0.3.0"
   },
   "devDependencies": {
+    "colors": "^1.1.2",
     "fs-extra": "^0.26.3",
     "jasmine-reporters": "^2.1.1",
     "jasmine-spec-reporter": "^2.4.0",

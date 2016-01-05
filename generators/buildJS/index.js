@@ -15,9 +15,10 @@ module.exports = confitGen.create({
 
       // Must only check for bower components if bower.json exists.
       var bowerJSON = this.destinationPath('bower.json');
+      var bowerDir = this.destinationPath('bower_components');
 
       // Check the real file system for bower.json, not the mem-fs version.
-      if (fs.existsSync(bowerJSON)) {
+      if (fs.existsSync(bowerJSON) && fs.existsSync(bowerDir)) {
         var mainJSBowerFiles = require('main-bower-files')('**/*.js');
 
         mainJSBowerFiles.forEach(function(script) {

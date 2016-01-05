@@ -40,7 +40,7 @@ exports.config = {
       var JasmineReporters = require('jasmine-reporters');
       jasmine.getEnv().addReporter(new JasmineReporters.JUnitXmlReporter({
         savePath:'../reports/e2e',
-        filePrefix: 'junit-' + confitFixtureFileName,
+        filePrefix: 'junit-' + confitFixtureFileName.replace('.json', '-'),
         consolidateAll: false
       }));
     },
