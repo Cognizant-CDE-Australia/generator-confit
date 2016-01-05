@@ -19,7 +19,7 @@
       "DEV": {
         "name": "dev",
         "baseDir": "dev/",
-        "port": 3000,
+        "port": 3001,
         "hostname": "localhost",
         "protocol": "https",
         "keepalive": false

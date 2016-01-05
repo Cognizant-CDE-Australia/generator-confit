@@ -5,19 +5,33 @@ var fs = require('fs-extra');
 var path = require('path');
 var colours = require('colors');
 
-var PROTRACTOR_CMD = 'node_modules/protractor/bin/protractor test/protractor.conf.js ';
+var PROTRACTOR_CMD = 'node_modules/protractor/bin/protractor';
 
 
 function main() {
   var fixtures = getFixtures(path.join(__dirname, 'fixtures/'));
+  var procCount = 0;
+  var procComplete = 0;
+  var procSuccess = 0;
 
   // Now, for each fixture file, run protractor
-  //node_modules/protractor/bin/protractor test/protractor.conf.js --params.fixture=webpack-sass-es6.json
-
   fixtures.forEach(function(fixture) {
     console.info('\n' + ('CONFIT: '.bold + 'Running test for ' + fixture.bold).green.underline.bgBlack);
-    childProc.execSync(PROTRACTOR_CMD + ' --params.fixture=' + fixture, {
+    var proc = childProc.spawn(PROTRACTOR_CMD, ['test/protractor.conf.js', '--params.fixture=' + fixture], {
       stdio: 'inherit'    // send the child console output to the parent process (us)
+    });
+    procCount++;
+
+    proc.on('close', function(code) {
+      procComplete++;
+      var isSuccess = (code === 0);
+      procSuccess += (code === 0) ? 1 : 0;
+      console.info('\n' + ('CONFIT'.green.underline + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+
+      if (procComplete === procCount) {
+        console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+        process.exit(0);
+      }s
     });
   });
 }

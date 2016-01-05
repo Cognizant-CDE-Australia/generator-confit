@@ -3,6 +3,8 @@
 var helpers = require('yeoman-test');
 var path = require('path');
 var fs = require('fs-extra');
+var del = require('del');
+var wrench = require('wrench');
 
 // Global data
 var testDirName = '';
@@ -16,6 +18,7 @@ function install(resolve, reject) {
   var destConfitConfigPath = path.join(testDir, destFixtureFile);
   var srcNodeModuleDir = path.join(__dirname, '../', TEMP_NODE_MODULE_DIRNAME);
   var destNodeModuleDir = path.join(testDir, 'node_modules');
+
 
   // This turns off the "May <packageName> ... insights?" prompt. See https://github.com/yeoman/insight/blob/master/lib/index.js#L106
   process.env.CI = true;
@@ -63,8 +66,9 @@ function install(resolve, reject) {
         };
 
         console.log('Saving updated node_modules to cache...');
-        fs.emptyDirSync(srcNodeModuleDir);
-        fs.copySync(destNodeModuleDir, srcNodeModuleDir);
+
+        // This method handles symlinks better than fs.copySync().
+        wrench.copyDirSyncRecursive(destNodeModuleDir, srcNodeModuleDir, {forceDelete: true});
 
         resolve(result);
       });

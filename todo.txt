@@ -1,4 +1,4 @@
-- Get the test runner to run tests in parallel, with nice console output and junit output
+- Place HTML files that are in sample project into paths.output.views/template directory
 
 - Ensure this works with Webpack
   + Get HTML into the right spot

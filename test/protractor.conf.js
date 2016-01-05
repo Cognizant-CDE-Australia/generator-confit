@@ -39,8 +39,8 @@ exports.config = {
     function jUnitReporter(confitFixtureFileName) {
       var JasmineReporters = require('jasmine-reporters');
       jasmine.getEnv().addReporter(new JasmineReporters.JUnitXmlReporter({
-        savePath:'../reports/e2e',
-        filePrefix: 'junit-' + confitFixtureFileName.replace('.json', '-'),
+        savePath: __dirname + '/../reports/e2e',
+        filePrefix: 'junit-' + confitFixtureFileName + '-',
         consolidateAll: false
       }));
     },
@@ -61,21 +61,24 @@ exports.config = {
     // Run confit generator...
     var installer = require('./runConfit');
     var confitFixtureFileName = browser.params.fixture;
+    var confitFixtureName = confitFixtureFileName.replace('.json', '');
+    var tempTestDir = TEMP_TEST_DIR + '/' + confitFixtureName + '/';
+
     server = require('./server');
 
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters
       config.reportWriters.forEach(function(fn) {
-        fn.call(null, confitFixtureFileName);
+        fn.call(null, confitFixtureName);
       });
 
-      return installer.run(TEMP_TEST_DIR, confitFixtureFileName).then(function(confitResult) {
+      return installer.run(tempTestDir, confitFixtureFileName).then(function(confitResult) {
         //console.log(confitResult);
         // Update the baseUrl based on the server settings
         browser.baseUrl = confitResult.baseUrl;
 
         // Now we can start the web server - wait up to 20 seconds (but will start faster than that, normally)
-        return server.start(TEMP_TEST_DIR, 20000);
+        return server.start(tempTestDir, 20000);
       });
     });
   },
