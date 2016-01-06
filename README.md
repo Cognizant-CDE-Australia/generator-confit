@@ -1,9 +1,17 @@
+# Confit
+
+> Creates the development process, tools and a sample project for current-generation web applications, as a Yeoman plugin.
+
+[![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)
+[![badge 1](https://img.shields.io/badge/follows-npm%20checklist-brightgreen.svg)](CHECKLIST.md)
+[![Build Status](https://travis-ci.org/odecee/generator-confit.svg)](https://travis-ci.org/odecee/generator-confit)
+
+
 [See CONTRIBUTING.md](CONTRIBUTING.md)
 
-# generator-confit 
+## Install
 
-> [Yeoman](http://yeoman.io) generator
-
+    npm install -g generator-confit
 
 ## Getting Started
 
