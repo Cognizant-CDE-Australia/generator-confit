@@ -1,20 +1,23 @@
 {
   "name": "generator-confit",
   "version": "0.0.0",
-  "description": "Yeoman generator for build web development ecosystem",
-  "license": "None",
+  "description": "Yeoman generator for creating the development process, tools and a sample project for current-generation web applications",
+  "license": "Apache-2.0",
   "main": "generators/app/index.js",
-  "repository": "https://stash.odecee.com.au/scm/in/generator-confit.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odecee/generator-confit.git"
+  },
   "contributors": [
-    {
-      "name": "Michael Richardson",
-      "email": "michael@mjrichardson.com.au",
-      "url": "https://github.com/mikrich"
-    },
     {
       "name": "Brett Uglow",
       "email": "buglow@odecee.com.au",
       "url": "https://github.com/uglow"
+    },
+    {
+      "name": "Michael Richardson",
+      "email": "michael@mjrichardson.com.au",
+      "url": "https://github.com/mikrich"
     },
     {
       "name": "Tim Weightman",
@@ -40,21 +43,28 @@
     "build-system yeoman-generator"
   ],
   "dependencies": {
-    "chalk": "^0.5.0",
-    "checksum": "^0.1.1",
-    "lodash": "^3.7.0",
-    "main-bower-files": "^2.7.1",
-    "yosay": "^0.3.0"
+    "chalk": "0.5.0",
+    "checksum": "0.1.1",
+    "lodash": "3.7.0",
+    "main-bower-files": "2.7.1",
+    "yosay": "0.3.0"
   },
   "devDependencies": {
-    "colors": "^1.1.2",
-    "del": "^2.2.0",
-    "fs-extra": "^0.26.3",
-    "jasmine-reporters": "^2.1.1",
-    "jasmine-spec-reporter": "^2.4.0",
-    "protractor": "^3.0.0",
-    "wrench": "^1.5.8",
+    "colors": "1.1.2",
+    "exact-semver": "1.2.0",
+    "fs-extra": "0.26.3",
+    "ghooks": "1.0.1",
+    "jasmine-reporters": "2.1.1",
+    "jasmine-spec-reporter": "2.4.0",
+    "npm-module-checklist": "1.6.0",
+    "protractor": "3.0.0",
+    "wrench": "1.5.8",
     "yeoman-generator": "0.22.2",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "1.0.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "exact-semver"
+    }
   }
 }
