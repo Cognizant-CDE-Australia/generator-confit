@@ -1,7 +1,7 @@
-~~watch the [egghead.io][egghead] series [How to Write an Open Source JavaScript Library][egghead series];
-it is extremely useful for any NPM project (OSS or closed-sourced).~~
+- [ ] watch the [egghead.io][egghead] series [How to Write an Open Source JavaScript Library][egghead series];
+it is extremely useful for any NPM project (OSS or closed-sourced).
 
-- [ ] start unit testing right away, [pick your unit testing framework][pick testing framework]
+- [x] start unit testing right away, [pick your unit testing framework][pick testing framework]
 
 - [ ] start linting code to prevent obvious problems, like misspelled variable.
 [eslint][eslint], [jshint][jshint], [jscs][jscs] or all of them together
@@ -12,15 +12,15 @@ it is extremely useful for any NPM project (OSS or closed-sourced).~~
 - [ ] validate commit message using [pre-git][pre-git] or [commitizen][commitizen] with [validate-commit-msg][validate-commit-msg]. This
 enables other tools, like intelligent release notes.
 
-- [ ] show the project's GitHub open issues on demand or on commit using [git-issues][git-issues]
+<!--- [ ] show the project's GitHub open issues on demand or on commit using [git-issues][git-issues]-->
 
 - [ ] setup continuous integration server, like [TravisCI][travis] or [CircleCI][circle] (or wait until you set up [semantic-release][semantic-release] which will set up [TravisCI][travis] for you).
 
 - [ ] [add badges][badges] to the README to make broken unit tests or out of date dependencies visible
-  * ci server badge
-  * published NPM package info [NodeICO][nodeico]
-  * production and dev dependencies being out of date [david-dm][david-dm]
-  * semantic release badge
+  - [ ] ci server badge
+  - [ ] published NPM package info [NodeICO][nodeico]
+  - [x] production and dev dependencies being out of date [david-dm][david-dm]
+  - [x] semantic release badge
 
 - [ ] check module published size and white list only necessary files, [tutorial][module size]
 
@@ -28,7 +28,7 @@ enables other tools, like intelligent release notes.
 and avoid breaking [semver][semver]. This is [important][semver important],
 but is currently [broken][broken semver] in too many projects. Even this checklist is using semver!
 
-- [ ] avoid surprizes by using exact versions of the top level dependencies.
+- [x] avoid surprises by using exact versions of the top level dependencies.
 Use [save-exact][save-exact] NPM setting and [exact-semver][exact-semver] to enforce it.
 
 - [ ] setup a script to reliably update out of date dependencies using [next-update][next-update install]
