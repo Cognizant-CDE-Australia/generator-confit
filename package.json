@@ -64,7 +64,7 @@
   },
   "config": {
     "ghooks": {
-      "pre-commit": "exact-semver"
+      "pre-commit": "node_modules/.bin/exact-semver"
     }
   }
 }
