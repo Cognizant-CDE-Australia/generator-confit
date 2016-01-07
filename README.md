@@ -31,9 +31,16 @@ tune correctly, into a 5 minute step.
 
 
 ##Development Tasks
+<!--- 
+[name]
+--> <%= name %> <!---
+[]
+-->
 
-# <!--[name]--><%= name %><!--[]-->
-> <!--[description]--><%= description %><!--[]-->
+# <!--- [name]--><%= name %><!---[]-->
+> <!--- [description]--><%= description %><!---[]-->
+
+
 
 ##Install
 
