@@ -13,6 +13,14 @@
 ## Using Confit
 
     yo confit
+    
+## Sponsors
+
+These are the companies that are sponsoring the development of Confit:
+
+[![NAB logo](http://developer.nab.com.au/images/5a2a9621.nab-logo-horizontal.png)](https://www.nab.com.au)
+[![Odecee](http://odecee.com.au/wp-content/themes/odecee/library/images/logo.svg)](http://www.odecee.com.au)
+
 
 ## What is Confit?
 
