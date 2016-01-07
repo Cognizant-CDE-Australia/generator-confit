@@ -5,7 +5,7 @@ var autoprefixLoader = buildCSS.autoprefixer ? '!autoprefixer-loader?browsers=la
 if (buildCSS.cssCompiler === 'sass') { %>
 config.module.loaders.push({
   test: /\.(sass|scss)$/,
-  loader: ExtractTextPlugin.extract('style-loader', 'css-loader<%= autoprefixLoader %>!sass-loader')
+  loader: ExtractTextPlugin.extract('style-loader', 'css-loader<%= autoprefixLoader %>!sass-loader?indentedSyntax=true')
 });<%
 
 } else if (buildCSS.cssCompiler === 'stylus') {

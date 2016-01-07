@@ -1,22 +1,26 @@
-'use strict';
-
 module.exports = function() {
+  'use strict';
 
   function write(gen) {
-    gen.log('Writing "app" using Webpack');
+    //gen.log('Writing "app" using GruntJS');
+
+    gen.fs.copy(
+      gen.toolTemplatePath('../../app/templates/_Gruntfile.js'),
+      gen.destinationPath('Gruntfile.js')
+    );
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
-      'webpack': '*',
-      'webpack-dev-server': '*'
+      'time-grunt': '*',
+      'grunt-extend-config': '*',
+      'load-grunt-tasks': '*'
     });
   }
-
 
   function beginDevelopment(gen) {
     // This command is meant to start the development environment after installation has completed.
     if (!gen.options['skip-run']) {
-      gen.spawnCommand('npm', ['start']);
+      gen.spawnCommand('grunt', ['dev', '--url=index.html']);
     }
   }
 

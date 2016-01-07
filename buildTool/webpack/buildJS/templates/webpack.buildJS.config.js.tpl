@@ -23,6 +23,6 @@ config.module.loaders.push({
     cacheDirectory: true,
     presets: ['es2015']
   }
-}); <%
+});<%
 }
 %>

@@ -1,11 +1,8 @@
-# Confit
+# Confit [![badge 1](https://img.shields.io/badge/follows-npm%20checklist-brightgreen.svg)](CHECKLIST.md) [![Build Status](https://travis-ci.org/odecee/generator-confit.svg)](https://travis-ci.org/odecee/generator-confit) [![Dependencies status](https://david-dm.org/odecee/generator-confit/status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=dependencies) [![Dev Dependencies status](https://david-dm.org/odecee/generator-confit/dev-status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=devDependencies)
 
-> Creates the development process, tools and a sample project for current-generation web applications, as a Yeoman plugin.
+> Yeoman generator for creating the development process, tools and a sample project for current-generation web applications.
 
 [![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)
-[![badge 1](https://img.shields.io/badge/follows-npm%20checklist-brightgreen.svg)](CHECKLIST.md)
-[![Build Status](https://travis-ci.org/odecee/generator-confit.svg)](https://travis-ci.org/odecee/generator-confit)
-
 
 [See CONTRIBUTING.md](CONTRIBUTING.md)
 
@@ -15,7 +12,7 @@
 
 ## Getting Started
 
-### What is Confit?
+## What is Confit?
 
 Confit is web development-tool generator that is designed to evolve as web technologies change. This allows your project's 
 build processes to stay up-to-date so you can take advantage of new technology once it becomes mainstream. 

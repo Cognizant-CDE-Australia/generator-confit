@@ -1,21 +1,46 @@
-- Document the NPM commands in Readme
++ Get the Verify step working (3 hours)
+  + JS Linting
+  + CSS Linting (based on chosen CSS compiler)
 
-- Ensure this works with Webpack
-  + Get HTML into the right spot
-  - Get WebPack fully working with a sample project
-    + Get sample project 'app.js' into the right spot, and loading the correct code
-    + For Plain ES6
-    - For Angular 1.x ES6
-    - For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
-
-
-- Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format.
-  - Need a template README.md
+- Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format. (3 hours)
+  - Need a template README.md.
+  - Surround dynamic bits with comments.
+  - Before using template, check if existing readme exists. If so, use that as a template (and hopefully is still has the dynamic comments).
   - Need to be able to use a project's existing README.md and add/replace relevant sections
 
+- Refactor Protractor testing to execute Confit build BEFORE executing Protractor (1 hour)
+
+- Verify linting works. After running runConit.js to run generator, can run 'npm run verify', then change a file an re-run (3 hours)
+  - Eslint test
+  - JSHint test
+  - JSCS test
+  - SASSLint test
+  - Stylint test
+
+- Get unit-testing working (and add to readme) (2 hours)
+  - For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
+  - Write sample unit tests
+
+- Get component-testing working (and add to readme)  (3 hours)
+  - Write sample unit tests
+
+- Ensure this works with Webpack
+  - For Angular 1.x ES6 (3 hours)
+  - For Angular 2 & Typescript (5 hours)
+
+- Rename the project (Confit is already taken) (2 hours)
+  - Change ASCII art
+
+- Release to the public! (happening in parallel with other tasks + 2 hours)
+  - Add NAB Sponsorship information
+  - Complete documentation and licencing (see https://odecee.atlassian.net/wiki/display/ILAB/Open+Source+Project+Status)
+
+
+Backlog
++ investigate removing need for fixDebugDir / bower_webpack script
 
 - Look at Kent Dodds list of things to implement on a project (ghooks, semver etc, commitizen) and see what can be incorporated into
-  <release> step and other generators
+  <release> step and other generators (https://github.com/bahmutov/npm-module-checklist)
 
 - 'Library' mode?
   - Uses Webpack library flag to output into a certain format

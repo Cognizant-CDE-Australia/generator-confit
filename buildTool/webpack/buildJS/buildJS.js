@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
-
 module.exports = function() {
 
   function write(gen) {
@@ -9,7 +7,8 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     gen.setNpmDevDependencies({
-      'bower-webpack-plugin': '*',
+      'bower-webpack-plugin': '*',      // TODO: See if removing this and following instructions at http://stackoverflow.com/questions/34549508/webpack-dev-server-error-with-hot-module-replacement
+                                        // Means we can remove the fixDistDebugRef npm script
 
       // TODO: Make this optional: For converting ES6 to ES5:
       'babel-core': '*',
@@ -18,7 +17,6 @@ module.exports = function() {
       'babel-preset-es2015': '6.1.18'
     });
   }
-
 
   return {
     write: write

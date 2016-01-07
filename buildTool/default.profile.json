@@ -12,7 +12,8 @@
     "paths": "",
     "release": "grunt",
     "sampleApp": "webpack",
-    "server": "grunt",
+    "serverDev": "webpack",
+    "serverProd": "grunt",
     "unitTest": "webpack",
     "verify": "grunt",
     "zzfinish": "webpack"

@@ -60,7 +60,7 @@
     "protractor": "3.0.0",
     "wrench": "1.5.8",
     "yeoman-generator": "0.22.2",
-    "yeoman-test": "^1.0.0"
+    "yeoman-test": "1.0.0"
   },
   "config": {
     "ghooks": {

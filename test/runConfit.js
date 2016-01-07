@@ -3,7 +3,6 @@
 var helpers = require('yeoman-test');
 var path = require('path');
 var fs = require('fs-extra');
-var del = require('del');
 var wrench = require('wrench');
 
 // Global data
@@ -45,8 +44,9 @@ function install(resolve, reject) {
         path.join(__dirname, '../generators/entryPoint'),
         path.join(__dirname, '../generators/paths'),
         path.join(__dirname, '../generators/sampleApp'),
-        path.join(__dirname, '../generators/server'),
-        //path.join(__dirname, '../generators/verify'),
+        path.join(__dirname, '../generators/serverDev'),
+        path.join(__dirname, '../generators/serverProd'),
+        path.join(__dirname, '../generators/verify'),
         path.join(__dirname, '../generators/zzfinish')
       ])
       .withOptions({
@@ -60,7 +60,7 @@ function install(resolve, reject) {
       })
       .on('end', function() {
         var config = require(destConfitConfigPath)['generator-confit'];
-        var server = config.server.DEV;
+        var server = config.serverDev;
         var result = {
           baseUrl: [server.protocol, '://', server.hostname, ':', server.port].join('')
         };

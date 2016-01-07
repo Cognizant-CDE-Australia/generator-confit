@@ -170,6 +170,9 @@ module.exports = confitGen.create({
       );
     }
 
+
+    this.setNpmDevDependencies({'npm-run-all': '1.4.0'});
+
     // Build-tool specific files
     this.buildTool.write(this);
 
@@ -188,20 +191,18 @@ module.exports = confitGen.create({
     this.composeWith('confit:buildJS', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:buildHTML', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
-    //// Create two *special* servers - dev & prod
-    this.composeWith('confit:server', {options: _.merge({}, subGenOptions, {specialServer: 'DEV'})});
-    this.composeWith('confit:server', {options: _.merge({}, subGenOptions, {specialServer: 'PROD'})});
-
+    this.composeWith('confit:serverDev', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:serverProd', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:verify', {options: _.merge({}, subGenOptions)});
 
     //
-    //this.composeWith('confit:verify', {options: _.merge({}, subGenOptions)});
     // Release
     // Doc Gen
 
     //
     //// This is guaranteed to be the last thing to run
     this.composeWith('confit:sampleApp', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it must be run afterwards
+    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it MUST be run afterwards
     this.composeWith('confit:zzfinish', {options: _.merge({}, subGenOptions)});
   },
 

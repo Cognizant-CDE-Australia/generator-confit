@@ -23,12 +23,10 @@ module.exports = confitGen.create({
       {
         type: 'list',
         name: 'extension',
-        message: 'HTML source files?',
+        message: 'HTML source file extension?',
         choices: [
           '.html',
-          '.htm',
-          '.jade',
-          '.shtml'
+          '.htm'
         ],
         default: this.getConfig('extension') || '.html'
       }

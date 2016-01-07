@@ -37,7 +37,8 @@ module.exports = confitGen.create({
         cssSubDir: this.getConfig('output.cssSubDir') || 'css/',
         jsSubDir: this.getConfig('output.jsSubDir') || 'js/',
         vendorJSSubDir: this.getConfig('output.vendorJSSubDir') || 'vendor/',
-        viewsSubDir: this.getConfig('output.viewsSubDir') || 'views/'
+        viewsSubDir: this.getConfig('output.viewsSubDir') || 'views/',
+        reportDir: this.getConfig('output.reportDir') || 'reports/'
       },
       config: {
         configDir: this.getConfig('config.configDir') || 'config/',
@@ -185,7 +186,10 @@ module.exports = confitGen.create({
         type: 'input',
         name: 'output.reportDir',
         message: 'Path to TEST REPORTS directory (relative to the current directory)',
-        default: this.getConfig('output.reportDir') || 'reports/'
+        default: this.defaults.output.reportDir,
+        when: function(answers) {
+          return !answers.useDefaults;
+        }
       }
     ];
 

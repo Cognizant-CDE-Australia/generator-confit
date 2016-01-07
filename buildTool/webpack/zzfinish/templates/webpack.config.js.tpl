@@ -9,20 +9,25 @@ var projectPaths = confitConfig.paths;
 var basePath = process.cwd() + '/';
 
 var config = {
-   /**
+  /**
    * Devtool
    * Reference: http://webpack.github.io/docs/configuration.html#devtool
    * Type of sourcemap to use per build type
    */
   devtool: 'source-map',
-  <%- include('../../entryPoint/templates/webpack.entryPoint.config.js.tpl') %>,
-  <%- include('../../build/templates/webpack.build.config.js.tpl') %>,
+<%- include('../../entryPoint/templates/webpack.entryPoint.config.js.tpl') %>
+<%- include('../../build/templates/webpack.build.config.js.tpl') %>
   module: {
     loaders: []
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(true)
   ],
+
+  //https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
+  resolve: {
+    modulesDirectories: ['node_modules', 'bower_components']
+  },
 
   // Output stats to provide more feedback when things go wrong:
   stats: {
