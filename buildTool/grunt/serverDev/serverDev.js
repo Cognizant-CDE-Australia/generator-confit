@@ -25,7 +25,7 @@ module.exports = function() {
     );
 
 
-    gen.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect');
+    gen.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**');
   }
 
   return {

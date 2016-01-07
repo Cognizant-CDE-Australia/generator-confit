@@ -1,8 +1,17 @@
-# <%= package.name %>
-> <%= package.description %>
+<!--[name]-->
+<%- name %>
+<!--[]-->
+<!--[description]-->
+<%- description %>
+<!--[]-->
 
 ##Install
 
-    npm install -g <%= package.name %>
-    
-##Build pipeline    
+<pre>npm install -g <!--[name]--><%- name %><!--[]--></pre>
+
+##Development Tasks
+
+<!--[taskDefinition]-->
+<%- taskDefinition %>
+
+<!--[]-->

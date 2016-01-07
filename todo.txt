@@ -3,10 +3,10 @@
   + CSS Linting (based on chosen CSS compiler)
 
 - Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format. (3 hours)
-  - Need a template README.md.
-  - Surround dynamic bits with comments.
-  - Before using template, check if existing readme exists. If so, use that as a template (and hopefully is still has the dynamic comments).
-  - Need to be able to use a project's existing README.md and add/replace relevant sections
+  + Need a template README.md.
+  + Surround dynamic bits with comments.
+  + Before using template, check if existing readme exists. If so, use that as a template (and hopefully is still has the dynamic comments).
+  + Need to be able to use a project's existing README.md and add/replace relevant sections
 
 - Refactor Protractor testing to execute Confit build BEFORE executing Protractor (1 hour)
 

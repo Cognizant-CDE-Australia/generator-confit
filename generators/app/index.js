@@ -148,11 +148,16 @@ module.exports = confitGen.create({
     // Common files (independent of the build-tool) to write
     var packageJSON = this.destinationPath('package.json');
     if (!this.fs.exists(packageJSON)) {
-      this.fs.copy(
+      this.fs.copyTpl(
         this.templatePath('_package.json'),
-        packageJSON
+        packageJSON,
+        {
+          name: this.appname
+        }
       );
     }
+    console.warn(this.appname);
+
 
     // TODO: Why is bower here?
     var bowerJSON = this.destinationPath('bower.json');

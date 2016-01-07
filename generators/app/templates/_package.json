@@ -1,5 +1,5 @@
 {
-  "name": "my-awesome-package",
+  "name": "<%= name %>",
   "description": "A description of my awesome package",
   "version": "0.0.0",
   "repository": {
