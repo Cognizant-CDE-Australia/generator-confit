@@ -1,13 +1,18 @@
-<!--[name]-->
-<%- name %>
+<!--[nameHeading]-->
+<%- nameHeading %>
+
 <!--[]-->
 <!--[description]-->
 <%- description %>
+
 <!--[]-->
 
 ##Install
 
-<pre>npm install -g <!--[name]--><%- name %><!--[]--></pre>
+<!--[install]-->
+<%- install %>
+
+<!--[]-->
 
 ##Development Tasks
 

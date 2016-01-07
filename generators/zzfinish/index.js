@@ -1,7 +1,7 @@
 'use strict';
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
-var fs = require('fs');
+var _ = require('lodash');
 var ejs = require('ejs');
 
 module.exports = confitGen.create({
@@ -38,15 +38,16 @@ function generateReadmeFile() {
   // Generate a README, or update the existing README.md
   var readmeFile = this.destinationPath('README.md');
   var packageJSON = this.readPackageJson();
-  var templateData = {};
-
-  //console.log(packageJSON.config.readme);
+  var templateData = _.merge({}, packageJSON);
 
   // We have to put some formatting into our data, to allow the README.md file to be updated continuously :(
   // All due to GitHub's handling of HTML comments in markdown.
-  templateData.name = '# ' + packageJSON.name;
-  templateData.description = '> ' + packageJSON.name;
+  templateData.nameHeading = '# ' + packageJSON.name;
+  templateData.install = '    npm install ' + packageJSON.name;
+  templateData.description = '> ' + packageJSON.description;
   templateData.taskDefinition = generateDevTasks(packageJSON.config.readme).join('\n');
+
+  console.log(templateData);
 
   // Remove the config.readme from the packageJSON, before writing it back to disk
   delete packageJSON.config.readme;
@@ -56,7 +57,7 @@ function generateReadmeFile() {
   if (this.fs.exists(readmeFile)) {
     // We need to read & write the existing file, replacing the actual values with the template values, ready to re-insert the template values
     var existingData = this.fs.read(readmeFile);
-    existingData = existingData.replace(/<!--\[([\w.:\[\]']+)\]-->\n(.*?\n)+?<!--\[\]-->/g, '<!--[$1]-->\n<%= $1 %>\n<!--[]-->\n');
+    existingData = existingData.replace(/<!--\[([\w.:\[\]']+)\]-->\n(.*?\n)+?<!--\[\]-->/g, '<!--[$1]-->\n<%- $1 %>\n\n<!--[]-->');
     // Use EJS directly because we are changing the existing file (and Yeoman is getting confused).
     //fs.writeFileSync(readmeFile, ejs.render(existingData, packageJSON));
     this.fs.write(readmeFile, ejs.render(existingData, templateData));
@@ -76,6 +77,6 @@ function generateDevTasks(parentKey) {
   });
 
   return tasks.map(function(task) {
-    return '- `npm run ' + task + '`: ' + parentKey[task];
+    return '- `' + parentKey[task].command + '`: ' + parentKey[task].description;
   });
 }

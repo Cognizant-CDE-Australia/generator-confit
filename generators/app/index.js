@@ -151,20 +151,19 @@ module.exports = confitGen.create({
       this.fs.copyTpl(
         this.templatePath('_package.json'),
         packageJSON,
-        {
-          name: this.appname
-        }
+        { name: this.appPackageName }
       );
     }
-    console.warn(this.appname);
+
 
 
     // TODO: Why is bower here?
     var bowerJSON = this.destinationPath('bower.json');
     if (!this.fs.exists(bowerJSON)) {
-      this.fs.copy(
+      this.fs.copyTpl(
         this.templatePath('_bower.json'),
-        bowerJSON
+        bowerJSON,
+        { name: this.appPackageName }
       );
     }
 
