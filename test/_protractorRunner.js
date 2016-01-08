@@ -3,34 +3,23 @@
 var childProc = require('child_process');
 var fs = require('fs-extra');
 var path = require('path');
-var _ = require('lodash');
 require('colors');
 
-var CMD = 'node_modules/.bin/mocha';
-var CMD_PARAMS = ['--no-timeouts', 'test/spec/confit.spec.js'];
-var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
-var TEST_DIR = path.join(__dirname, '../temp-test');
+var PROTRACTOR_CMD = 'node_modules/protractor/bin/protractor';
 
 
 function main() {
-  var fixtures = getFixtures(FIXTURE_PATH);
+  var fixtures = getFixtures(path.join(__dirname, 'fixtures/'));
   var procCount = 0;
   var procComplete = 0;
   var procSuccess = 0;
 
-  // Now, for each fixture file, run the command
+  // Now, for each fixture file, run protractor
   fixtures.forEach(function(fixture) {
     console.info('\n' + ('CONFIT: '.bold + 'Running test for ' + fixture.bold).green.underline.bgBlack);
-    var proc = childProc.spawn(CMD, CMD_PARAMS, {
-      stdio: 'inherit',    // send the child console output to the parent process (us)
-      // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
-      env: _.merge({}, process.env, {
-        FIXTURE: fixture,
-        FIXTURE_DIR: FIXTURE_PATH,
-        TEST_DIR: path.join(TEST_DIR, fixture.replace('.json', ''), '/')
-      })
+    var proc = childProc.spawn(PROTRACTOR_CMD, ['test/protractor.conf.js', '--params.fixture=' + fixture], {
+      stdio: 'inherit'    // send the child console output to the parent process (us)
     });
-
     procCount++;
 
     proc.on('close', function(code) {
@@ -64,3 +53,9 @@ function getFixtures(dir) {
 
 
 main();
+
+/**
+ * We want to change the test runner so that it is running inside of jasmine, and dynamically adding tests forEach fxiture found.
+ *
+ * This is completely doable.
+ */

@@ -3,9 +3,9 @@
 ## Getting Started
 
 ```console
-npm install -g yo     // Install Yeoman globally, if you haven't done so already
 cd path/to/this/repo
 npm link
+npm install -g npm-cache    # Used by 'npm test' to reduce test-times significantly
 
 # Now test it in a new folder
 cd ..

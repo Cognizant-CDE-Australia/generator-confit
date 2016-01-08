@@ -34,8 +34,7 @@
   "scripts": {
     "postinstall": "npm run installWebDriver",
     "installWebDriver": "node_modules/protractor/bin/webdriver-manager update",
-    "test-old": "node test/testRunner.js",
-    "test": "mocha --timeout 0 test/spec/*.spec.js"
+    "test": "node test/testRunner.js"
   },
   "files": [
     "generators"
