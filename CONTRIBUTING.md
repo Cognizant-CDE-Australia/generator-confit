@@ -5,7 +5,6 @@
 ```console
 cd path/to/this/repo
 npm link
-npm install -g npm-cache    # Used by 'npm test' to reduce test-times significantly
 
 # Now test it in a new folder
 cd ..
