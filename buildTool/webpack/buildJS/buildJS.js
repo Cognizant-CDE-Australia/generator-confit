@@ -2,14 +2,11 @@
 
 module.exports = function() {
 
-  function write(gen) {
-    gen.log('Writing Webpack buildJS options');
+  function write() {
+    this.log('Writing Webpack buildJS options');
 
     // Add the NPM dev dependencies
-    gen.setNpmDevDependencies({
-      'bower-webpack-plugin': '*',      // TODO: See if removing this and following instructions at http://stackoverflow.com/questions/34549508/webpack-dev-server-error-with-hot-module-replacement
-                                        // Means we can remove the fixDistDebugRef npm script
-
+    this.setNpmDevDependencies({
       // TODO: Make this optional: For converting ES6 to ES5:
       'babel-core': '*',
       'babel-runtime': '*',

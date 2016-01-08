@@ -3,42 +3,23 @@
     "app": {
       "buildProfile": "Default",
       "editorConfig": true,
-      "_version": "efbfa728f6328bb15706ddeb5bea16eae3f5d059"
+      "_version": "d421169cfb2440b08f192a1f66eaa1329b6e2263"
     },
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
-      "_version": "71f16a46949b5ba22bcd0a056d604d97cfe137a0"
+      "_version": "f53836ab37812410824d598dd8d639ebd9af0660"
     },
     "buildHTML": {
       "extension": ".html",
-      "_version": "e71d3045ca1a9dd5dec54a994686c035c1969da9"
-    },
-    "server": {
-      "DEV": {
-        "name": "dev",
-        "baseDir": "dev/",
-        "port": 3000,
-        "hostname": "localhost",
-        "protocol": "https",
-        "keepalive": false
-      },
-      "_version": "81556189e72e3e2cca484865a83c9aa0b1a11ccb",
-      "PROD": {
-        "name": "prod",
-        "baseDir": "prod/",
-        "port": 3000,
-        "hostname": "localhost",
-        "protocol": "https",
-        "keepalive": true
-      }
+      "_version": "45d2725e6c36ad1c872c5b30ea62098c6a6f7281"
     },
     "buildCSS": {
       "includeOlderBrowsers": false,
       "cssCompiler": "sass",
       "autoprefixer": true,
-      "_version": "b5dbad6bbf0400f22e0a80da411b0b64030b2e54"
+      "_version": "77dd34d1cc606e0719319ce29ad6efaf186522d9"
     },
     "paths": {
       "input": {
@@ -58,13 +39,14 @@
         "cssSubDir": "css/",
         "jsSubDir": "js/",
         "vendorJSSubDir": "vendor/",
-        "viewsSubDir": "views/"
+        "viewsSubDir": "views/",
+        "reportDir": "reports/"
       },
       "config": {
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "cb1b4caf47fbf79849092de78174a49c75352691"
+      "_version": "b754c2d28e9d59e92e23bce13cb90fcb02e849fc"
     },
     "build": {},
     "verify": {
@@ -72,26 +54,12 @@
         "eslint",
         "jscs"
       ],
-      "jsLintConfig": {
-        "eslint": {
-          "src": "eslintrc",
-          "dest": "config/jslint/.eslintrc"
-        },
-        "jshint": {
-          "src": "jshintrc",
-          "dest": "config/jslint/.jshintrc"
-        },
-        "jscs": {
-          "src": "jscsrc",
-          "dest": "config/jslint/.jscsrc"
-        }
-      },
-      "_version": "b8cf4fda1533c97d8f2d75c06b048adaf59f4425"
+      "_version": "d98586603567e4cc0334cd3c63ef4c9616866bf8"
     },
     "zzfinish": {},
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "12fdf71328dc5120e814eb31140327d80c21b8b5"
+      "_version": "7a17b2bb4b137f97953469d8b02ccf4869782ab4"
     },
     "buildAssets": {},
     "entryPoint": {
@@ -100,7 +68,21 @@
           "./modules/demoModule/app.js"
         ]
       },
-      "_version": "680b8a8f99654ec244c95cbb727f74c234c8f70f"
+      "_version": "578589638cf98a8fb0ae0e527a7f036b0f909bee"
+    },
+    "serverDev": {
+      "baseDir": "dev/",
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "69a75528b2887dccabb2b9c1c9a833cd03545d60"
+    },
+    "serverProd": {
+      "baseDir": "prod/",
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "42630efb7e3ad52f907f45342084caf4ce47c87b"
     }
   }
 }

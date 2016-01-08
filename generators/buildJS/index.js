@@ -133,7 +133,7 @@ module.exports = confitGen.create({
 
   writing: function () {
     // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
   },
 
   install: function () {

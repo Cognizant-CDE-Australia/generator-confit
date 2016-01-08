@@ -4,28 +4,28 @@ module.exports = function() {
   var _ = require('lodash');
   var gruntApp = require('./../app/app')();
 
-  function write(gen) {
-    gruntApp.write(gen); // Make sure we have a Gruntfile.js
+  function write() {
+    gruntApp.write.apply(this); // Make sure we have a Gruntfile.js
 
-    gen.log('Writing Grunt "serverDev" options');
+    this.log('Writing Grunt serverDev options');
 
-    var config = gen.getConfig();
+    var config = this.getConfig();
 
     // Modify Package JSON
-    gen.setNpmDevDependencies({
+    this.setNpmDevDependencies({
       'grunt-contrib-watch': '*',
       'grunt-contrib-connect': '*'
     });
 
-    // Generate a file in %configDir/grunt called "serve.js", if it doesn't already exist
-    gen.fs.copyTpl(
-      gen.toolTemplatePath('serverDev.js.tpl'),
-      gen.destinationPath('config/grunt/serverDev.js'),
+    // this.rate a file in %configDir/grunt called "serve.js", if it doesn't already exist
+    this.fs.copyTpl(
+      this.toolTemplatePath('serverDev.js.tpl'),
+      this.destinationPath('config/grunt/serverDev.js'),
       config
     );
 
 
-    gen.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**');
+    this.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**');
   }
 
   return {

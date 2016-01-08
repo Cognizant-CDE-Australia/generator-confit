@@ -80,7 +80,7 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
   },
 
   install: function () {

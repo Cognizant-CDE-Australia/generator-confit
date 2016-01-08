@@ -34,7 +34,8 @@
   "scripts": {
     "postinstall": "npm run installWebDriver",
     "installWebDriver": "node_modules/protractor/bin/webdriver-manager update",
-    "test": "node test/testRunner.js"
+    "test-old": "node test/testRunner.js",
+    "test": "mocha --timeout 0 test/spec/*.spec.js"
   },
   "files": [
     "generators"
@@ -57,6 +58,7 @@
     "ghooks": "1.0.1",
     "jasmine-reporters": "2.1.1",
     "jasmine-spec-reporter": "2.4.0",
+    "mocha": "2.3.4",
     "npm-module-checklist": "1.6.0",
     "protractor": "3.0.0",
     "wrench": "1.5.8",

@@ -70,7 +70,7 @@ module.exports = confitGen.create({
       this.destinationPath(outputDir + 'verify/.' + config.buildCSS.cssCompiler + 'rc')
     );
 
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
   },
 
   install: function () {

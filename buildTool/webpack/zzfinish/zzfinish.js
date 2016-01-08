@@ -2,22 +2,22 @@
 
 module.exports = function() {
 
-  function write(gen) {
-    gen.log('Writing "zzfinish" using Webpack');
+  function write() {
+    this.log('Writing Webpack finish options');
 
-    var config = gen.getGlobalConfig();
+    var config = this.getGlobalConfig();
     var outputDir = config.paths.config.configDir;
 
     // Add the NPM dev dependencies
-    gen.setNpmDevDependencies({
+    this.setNpmDevDependencies({
       'webpack': '*',
       'webpack-dev-server': '*',
       'extract-text-webpack-plugin': '0.9.1' // latest version (1.0.0) is missing a dependency. Revert to earlier version
     });
 
-    gen.fs.copyTpl(gen.toolTemplatePath('webpack.config.js.tpl'), gen.destinationPath(outputDir + 'webpack/webpack.config.js'), config);
-    gen.fs.copy(gen.toolTemplatePath('dev.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/dev.webpack.config.js'));
-    gen.fs.copy(gen.toolTemplatePath('prod.webpack.config.js'), gen.destinationPath(outputDir + 'webpack/prod.webpack.config.js'));
+    this.fs.copyTpl(this.toolTemplatePath('webpack.config.js.tpl'), this.destinationPath(outputDir + 'webpack/webpack.config.js'), config);
+    this.fs.copy(this.toolTemplatePath('dev.webpack.config.js'), this.destinationPath(outputDir + 'webpack/dev.webpack.config.js'));
+    this.fs.copy(this.toolTemplatePath('prod.webpack.config.js'), this.destinationPath(outputDir + 'webpack/prod.webpack.config.js'));
   }
 
   return {

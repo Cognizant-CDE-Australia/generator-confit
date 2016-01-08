@@ -6,7 +6,7 @@ var ejs = require('ejs');
 
 module.exports = confitGen.create({
   writing: function() {
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
 
     var config = this.getGlobalConfig();
     var paths = config.paths;
@@ -46,8 +46,6 @@ function generateReadmeFile() {
   templateData.install = '    npm install ' + packageJSON.name;
   templateData.description = '> ' + packageJSON.description;
   templateData.taskDefinition = generateDevTasks(packageJSON.config.readme).join('\n');
-
-  console.log(templateData);
 
   // Remove the config.readme from the packageJSON, before writing it back to disk
   delete packageJSON.config.readme;

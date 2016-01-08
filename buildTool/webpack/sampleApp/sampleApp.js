@@ -2,35 +2,35 @@
 
 module.exports = function() {
 
-  function writeConfig(gen) {
+  function writeConfig() {
     // Generate a Webpack-specific version of the sample entry points
-    var config = gen.getGlobalConfig();
+    var config = this.getGlobalConfig();
     var modulesDir = config.paths.input.modulesSubDir;
 
-    gen.answers.sampleAppEntryPoint = {
-      app: ['./' + modulesDir + gen.demoOutputModuleDir + 'app.js']
+    this.answers.sampleAppEntryPoint = {
+      app: ['./' + modulesDir + this.demoOutputModuleDir + 'app.js']
     };
   }
 
 
-  function write(gen) {
-    gen.log('Writing "sampleApp" using Webpack');
+  function write() {
+    this.log('Writing Webpack sampleApp options');
 
-    var config = gen.getGlobalConfig();
+    var config = this.getGlobalConfig();
     var paths = config.paths;
     var outputDir = paths.input.srcDir;
 
     // Add the NPM dev dependencies
-    gen.setNpmDevDependencies({
+    this.setNpmDevDependencies({
       'lodash': '*'
     });
 
     // Web-pack specific index.html template
-    gen.fs.copy(gen.toolTemplatePath('index-template.html'), gen.destinationPath(outputDir + 'index-template.html'));
+    this.fs.copy(this.toolTemplatePath('index-template.html'), this.destinationPath(outputDir + 'index-template.html'));
 
     // Copy the Webpack-specific, JS-framework-specific samples directory
-    config.$CSSFilePath = paths.input.stylesDir + gen.CSSFile;
-    gen.fs.copyTpl(gen.toolTemplatePath(gen.selectedJSFrameworkDir + gen.demoOutputModuleDir), paths.input.modulesDir + gen.demoOutputModuleDir, config);
+    config.$CSSFilePath = paths.input.stylesDir + this.CSSFile;
+    this.fs.copyTpl(this.toolTemplatePath(this.selectedJSFrameworkDir + this.demoOutputModuleDir), paths.input.modulesDir + this.demoOutputModuleDir, config);
   }
 
   return {

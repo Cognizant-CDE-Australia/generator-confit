@@ -41,14 +41,14 @@ module.exports = confitGen.create({
   writeConfig: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      createEntryPointSampleAppConfig(this);
-      this.buildTool.writeConfig(this);
+      createEntryPointSampleAppConfig.apply(this);
+      this.buildTool.writeConfig.apply(this);
       this.setConfig(this.answers);
     }
   },
 
   writing: function () {
-    removeEntryPointSampleAppConfig(this);
+    removeEntryPointSampleAppConfig.apply(this);
 
     // Determine which sample app to create, based on the project config
     var createSampleApp = this.getConfig().createScaffoldProject;
@@ -100,7 +100,7 @@ module.exports = confitGen.create({
     // Copy TEMPLATE HTML files
     this.fs.copy(this.templatePath(this.selectedJSFrameworkDir  + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
 
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
   },
 
   install: function () {
@@ -116,22 +116,22 @@ module.exports = confitGen.create({
 // Special case - in order to tell <entryPoint> that we are using a sample project,
 // we need to write some TEMPORARY config IN THIS STAGE, then remove the config in the next stage.
 // Additionally, createEntryPointSampleAppConfig() must be called AFTER <paths>, so that the paths config can be found
-function createEntryPointSampleAppConfig(gen) {
+function createEntryPointSampleAppConfig() {
   // Write temporary config
-  if (gen.answers.createScaffoldProject) {
-    var config = gen.getGlobalConfig();
+  if (this.answers.createScaffoldProject) {
+    var config = this.getGlobalConfig();
     var modulesDir = config.paths.input.modulesSubDir;
 
-    gen.answers.sampleAppEntryPoint = {
-      app: [modulesDir + gen.demoOutputModuleDir + 'app.js']
+    this.answers.sampleAppEntryPoint = {
+      app: [modulesDir + this.demoOutputModuleDir + 'app.js']
     };
   }
 }
 
 
-function removeEntryPointSampleAppConfig(gen) {
-  if (gen.answers) {
-    delete gen.answers.sampleAppEntryPoint;  // T
-    gen.setConfig(gen.answers);
+function removeEntryPointSampleAppConfig() {
+  if (this.answers) {
+    delete this.answers.sampleAppEntryPoint;  // T
+    this.setConfig(this.answers);
   }
 }

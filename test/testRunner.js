@@ -53,3 +53,9 @@ function getFixtures(dir) {
 
 
 main();
+
+/**
+ * We want to change the test runner so that it is running inside of jasmine, and dynamically adding tests forEach fxiture found.
+ *
+ * This is completely doable.
+ */

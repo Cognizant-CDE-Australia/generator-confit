@@ -35,6 +35,7 @@ function install(resolve, reject) {
         fs.ensureDirSync(srcNodeModuleDir);
         fs.copySync(srcNodeModuleDir, destNodeModuleDir);
       })
+      .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withGenerators([
         path.join(__dirname, '../generators/build'),
         path.join(__dirname, '../generators/buildAssets'),
@@ -72,6 +73,7 @@ function install(resolve, reject) {
 
         resolve(result);
       });
+
   } catch(err) {
     //console.error('Installation failed.');
     reject(err);

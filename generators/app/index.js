@@ -142,9 +142,6 @@ module.exports = confitGen.create({
   },
 
   writing: function() {
-    // Re-set the buildTool property, in case it has been changed
-    this.buildTool = this.getBuildTool();
-
     // Common files (independent of the build-tool) to write
     var packageJSON = this.destinationPath('package.json');
     if (!this.fs.exists(packageJSON)) {
@@ -178,7 +175,7 @@ module.exports = confitGen.create({
     this.setNpmDevDependencies({'npm-run-all': '1.4.0'});
 
     // Build-tool specific files
-    this.buildTool.write(this);
+    this.buildTool.write.apply(this);
 
     var subGenOptions = {
       rebuildFromConfig: this.rebuildFromConfig,
@@ -224,12 +221,12 @@ module.exports = confitGen.create({
 
     // If we skip installation, we still want to begin development
     if (this.options['skip-install']) {
-      this.buildTool.beginDevelopment(this);
+      this.buildTool.beginDevelopment.apply(this);
     } else {
       // Lastly, run the 'dev' command to start everything
       // Now you can bind to the dependencies installed event
       this.on('dependenciesInstalled', function() {
-        this.buildTool.beginDevelopment(this);
+        this.buildTool.beginDevelopment.apply(this);
       });
     }
   }

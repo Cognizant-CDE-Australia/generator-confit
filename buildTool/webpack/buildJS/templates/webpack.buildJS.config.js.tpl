@@ -1,7 +1,4 @@
-var BowerWebpackPlugin = require('bower-webpack-plugin');
-// For loading files from Bower
-config.plugins.push(new BowerWebpackPlugin());
-
+/** JS START */
 <%
 // Update entry point with vendor-key, if one does not already exist.
 if (!entryPoint.entryPoints.vendor && buildJS.vendorBowerScripts) { %>
@@ -26,3 +23,4 @@ config.module.loaders.push({
 });<%
 }
 %>
+/* **/
