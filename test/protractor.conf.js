@@ -1,8 +1,5 @@
 'use strict';
 
-var server;
-var TEMP_TEST_DIR = 'temp-test';
-
 exports.config = {
   // ChromeDriver location is used to help the standalone Selenium Server
   // find the chromedriver binary. This will be passed to the Selenium jar as
@@ -32,7 +29,7 @@ exports.config = {
   // --suite=smoke,full only the patterns matched by the specified suites will
   // run.
   suites: {
-    app: 'spec/testApp.spec.js'
+    app: 'protractorSpec/testApp.spec.js'
   },
 
   reportWriters: [
@@ -58,27 +55,10 @@ exports.config = {
     // Turn off the angular-sync part-of-protractor, as we are using protractor in a generic way
     browser.ignoreSynchronization = true;
 
-    // Run confit generator...
-    var installer = require('./runConfit');
-    var confitFixtureFileName = browser.params.fixture;
-    var confitFixtureName = confitFixtureFileName.replace('.json', '');
-    var tempTestDir = TEMP_TEST_DIR + '/' + confitFixtureName + '/';
-
-    server = require('./server');
-
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters
       config.reportWriters.forEach(function(fn) {
-        fn.call(null, confitFixtureName);
-      });
-
-      return installer.run(tempTestDir, confitFixtureFileName).then(function(confitResult) {
-        //console.log(confitResult);
-        // Update the baseUrl based on the server settings
-        browser.baseUrl = confitResult.baseUrl;
-
-        // Now we can start the web server - wait up to 20 seconds (but will start faster than that, normally)
-        return server.start(tempTestDir, 20000);
+        fn.call(null, process.env.FIXTURE);
       });
     });
   },
@@ -87,9 +67,6 @@ exports.config = {
   onComplete: function() {
     // At this point, tests will be done but global objects will still be
     // available.
-
-    // Close the web server
-    server.stop();
   },
 
   // A callback function called once the tests have finished running and

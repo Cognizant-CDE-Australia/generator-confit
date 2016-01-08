@@ -32,6 +32,7 @@ function runGenerator(testDir, srcConfitFilename, useExistingNodeModules) {
 
 function install(resolve, reject) {
   var destConfitConfigPath = path.join(testDirName, CONFIT_FILE_NAME);
+  var previousCWD = process.cwd();  // Remember this, so we can return to this directory later
 
   // This turns off the "May <packageName> ... insights?" prompt. See https://github.com/yeoman/insight/blob/master/lib/index.js#L106
   process.env.CI = true;
@@ -87,11 +88,12 @@ function install(resolve, reject) {
         // Create a confit.json.previous file, to help us speed up installation next time.
         // Next run, look for this file. If it exists, don't do an install
         fs.copySync(destConfitConfigPath, destConfitConfigPath + '.previous');
-
+        process.chdir(previousCWD);
         resolve(result);
       });
 
   } catch(err) {
+    process.chdir(previousCWD);
     reject(err);
   }
 }

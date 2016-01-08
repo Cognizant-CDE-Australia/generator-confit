@@ -14,18 +14,21 @@ var child;
  * @param serverStartTimeout  The amount of time to wait before returning control to the parent program. Usually allow enough time
  * @returns {Promise}         Promise that is fullfilled once the server has started
  */
-function startServer(testDir, serverStartTimeout) {
+function startServer(testDir, confitServerToStart, serverStartTimeout) {
   var SERVER_STARTED_RE = /webpack: bundle is now VALID\.\n$/;    // A string to search for in the stdout, which indicates the server has started.
   var resolveFn, rejectFn;
-  var serverPort;
 
   getFreePort().then(function(port) {
-    serverPort = port;
-
     // Once we have the port, modify the confit.serverDEV configuration, then start the server
     var confitJson = fs.readJsonSync(testDir + 'confit.json');
-    confitJson['generator-confit'].serverDev.port = port;
+    var server = confitJson['generator-confit'][confitServerToStart];
+    server.port = port;
     fs.writeJsonSync(testDir + 'confit.json', confitJson);
+
+    var result = {
+      baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
+      details: server
+    };
 
     child = spawn('npm',['start'], {
       cwd: testDir,
@@ -46,7 +49,7 @@ function startServer(testDir, serverStartTimeout) {
       var dataStr = '' + data;
       if (dataStr.match(SERVER_STARTED_RE)) {
         console.log('Server started!');
-        resolveFn(serverPort);
+        resolveFn(result);
       }
     });
 
@@ -71,8 +74,10 @@ function startServer(testDir, serverStartTimeout) {
 
 
 function stopServer() {
+  console.log('Stopping server...');
   // Kills ALL CHILD PROCESSES (the only page on the internet that talks about this: http://azimi.me/2014/12/31/kill-child_process-node-js.html)
   process.kill(-child.pid);
+  console.log('...stopped');
 }
 
 

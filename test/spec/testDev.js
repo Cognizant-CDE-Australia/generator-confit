@@ -3,26 +3,38 @@
 var assert = require('assert');
 var server = require('./../server');
 var tempTestDir = process.env.TEST_DIR;
+var childProc = require('child_process');
+
+var PROTRACTOR_CMD = 'node_modules/.bin/protractor test/protractor.conf.js ';
+
+
+function runProtractor(baseUrl) {
+  console.log('Protractor baseUrl is ', baseUrl);
+  var result = childProc.execSync(PROTRACTOR_CMD + '--baseUrl ' + baseUrl, {
+    stdio: 'inherit'
+  });
+}
+
 
 module.exports = function() {
 
   describe('npm run dev', function() {
 
-    before(function() {
-      // Start up the confit webserver
-      return server.start(tempTestDir, 10000).then(function success(port) {
-        console.log('My port is ', port);
+    var baseUrl;
 
-        // Now start protractor with the baseUrl that matches the port
+    before(function() {
+      // Start up the confit DEV webserver
+      return server.start(tempTestDir, 'serverDev', 10000).then(function success(result) {
+        baseUrl = result.baseUrl;
       });
+    });
+
+    it('should start a webserver and build the sampleApp correctly', function() {
+      runProtractor(baseUrl);
     });
 
     after(function() {
       server.stop();
-    });
-
-    it('be basic is true', function() {
-      assert.equal(10, 5 + 5);
     });
   });
 };
