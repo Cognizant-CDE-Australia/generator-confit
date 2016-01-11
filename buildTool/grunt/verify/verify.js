@@ -42,9 +42,7 @@ module.exports = function() {
   function setLintDependencies(linters) {
     this.setNpmDevDependencies({'grunt': '0.4.5'});
     this.setNpmDevDependencies({'grunt-newer': '*'}, linters.length > 0);
-    this.setNpmDevDependencies({'grunt-contrib-jshint': '*', 'jshint-stylish': '*'}, linters.indexOf('jshint') !== -1);
-    this.setNpmDevDependencies({'grunt-eslint': '*'}, linters.indexOf('eslint') !== -1);
-    this.setNpmDevDependencies({'grunt-jscs': '*'}, linters.indexOf('jscs') !== -1);
+    this.setNpmDevDependencies({'grunt-eslint': '*', 'eslint-config-airbnb': '*'}, linters.indexOf('eslint') !== -1);
     this.setNpmDevDependencies({'grunt-sass-lint': '*'}, linters.indexOf('sasslint') !== -1);
     this.setNpmDevDependencies({'grunt-stylint': '*'}, linters.indexOf('stylint') !== -1);
   }

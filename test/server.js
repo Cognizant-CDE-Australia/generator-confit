@@ -30,6 +30,7 @@ function startServer(testDir, confitServerToStart, serverStartTimeout) {
       details: server
     };
 
+    // TODO: Need to inject these parameters so that we can start a prod server or a dev server
     child = spawn('npm',['start'], {
       cwd: testDir,
       detached: true

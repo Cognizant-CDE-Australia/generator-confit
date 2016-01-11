@@ -1,7 +1,6 @@
-module.exports = function() {
+module.exports = function () {
   'use strict';
 
-  var _ = require('lodash');
   var gruntApp = require('./../app/app')();
 
   function write() {

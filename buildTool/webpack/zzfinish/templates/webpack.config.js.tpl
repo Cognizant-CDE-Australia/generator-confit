@@ -24,7 +24,7 @@ var config = {
     new webpack.optimize.OccurenceOrderPlugin(true)
   ],
 
-  //https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
+  // https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
   resolve: {
     modulesDirectories: ['node_modules', 'bower_components']
   },

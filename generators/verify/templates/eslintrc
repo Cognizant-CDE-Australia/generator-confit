@@ -1,14 +1,13 @@
 {
-    "rules": {
-        "indent": [2, 2],
-        "quotes": [2, "single"],
-        "linebreak-style": [2, "unix"],
-        "semi": [2, "always"]
-    },
-    "env": {
-        "browser": true
-    },
-    "ecmaFeatures": {
-      "modules": true
-    }
+  "extends": "airbnb/base",
+  "rules": {
+    "comma-dangle": 0,
+    "max-len": [2, 200, 4],
+    "no-var": 0,
+    "func-names": 0,
+    "object-shorthand": 0,
+    "no-multiple-empty-lines": 0,
+    "vars-on-top": 0
+  }
+
 }

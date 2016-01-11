@@ -1,30 +1,7 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   grunt.extendConfig({
-<% if (verify.jsLinter.indexOf('jscs') > -1) { -%>
-    //jscs, check for code style errors
-    jscs: {
-      options: {
-        config: '<%= paths.config.configDir %>verify/.jscsrc',
-        reporter: 'text'
-      },
-      all: {
-        src: ['<%= paths.input.srcDir %>**/*.js', '<%= paths.config.configDir %>**/*.js']
-      }
-    },
-<% } -%>
-<% if (verify.jsLinter.indexOf('jshint') > -1) { -%>
-    jshint: {
-      options: {
-        jshintrc: '<%= paths.config.configDir %>verify/.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: {
-        src: ['<%= paths.input.srcDir %>**/*.js', '<%= paths.config.configDir %>**/*.js']
-      }
-    },
-<% } -%>
 <% if (verify.jsLinter.indexOf('eslint') > -1) { -%>
     eslint: {
       options: {

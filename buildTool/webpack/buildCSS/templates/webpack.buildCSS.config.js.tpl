@@ -26,5 +26,5 @@ config.module.loaders.push({
 } -%>
 
 // For any entry-point CSS file definitions, extract them as text files as well
-config.plugins.push(new ExtractTextPlugin('css/[name].[contenthash:8].css', {allChunks: true}));
+config.plugins.push(new ExtractTextPlugin('css/[name].[contenthash:8].css', { allChunks: true }));
 /* **/

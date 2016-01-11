@@ -2,15 +2,18 @@
 
 var assert = require('assert');
 var server = require('./../server');
-var tempTestDir = process.env.TEST_DIR;
 var childProc = require('child_process');
+var tempTestDir = process.env.TEST_DIR;
+
 
 var PROTRACTOR_CMD = 'node_modules/.bin/protractor test/protractor.conf.js ';
 
 
 function runProtractor(baseUrl) {
   console.log('Protractor baseUrl is ', baseUrl);
-  var result = childProc.execSync(PROTRACTOR_CMD + '--baseUrl ' + baseUrl, {
+
+  // If there is an error, an exception will be thrown
+  childProc.execSync(PROTRACTOR_CMD + '--baseUrl ' + baseUrl, {
     stdio: 'inherit'
   });
 }
@@ -30,7 +33,7 @@ module.exports = function() {
     });
 
     it('should start a webserver and build the sampleApp correctly', function() {
-      runProtractor(baseUrl);
+      assert.doesNotThrow(function() {runProtractor(baseUrl);});
     });
 
     after(function() {

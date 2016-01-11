@@ -79,17 +79,12 @@ function install(resolve, reject) {
       })
       .on('end', function() {
         var config = require(destConfitConfigPath)['generator-confit'];
-        var server = config.serverDev;
-
-        var result = {
-          baseUrl: [server.protocol, '://', server.hostname, ':', server.port].join('')
-        };
 
         // Create a confit.json.previous file, to help us speed up installation next time.
         // Next run, look for this file. If it exists, don't do an install
         fs.copySync(destConfitConfigPath, destConfitConfigPath + '.previous');
         process.chdir(previousCWD);
-        resolve(result);
+        resolve(config);
       });
 
   } catch(err) {
@@ -100,7 +95,6 @@ function install(resolve, reject) {
 
 
 function clean(dir, cleanEverything) {
-
   fs.ensureDirSync(dir);
 
   if (cleanEverything) {
@@ -121,7 +115,7 @@ function clean(dir, cleanEverything) {
 
 
 function isConfigIdentical(newConfigName) {
-  var oldConfigName = newConfigName + '.previous'
+  var oldConfigName = newConfigName + '.previous';
 
   try {
     fs.statSync(oldConfigName).isFile();    // Produces an error if the file does not exist

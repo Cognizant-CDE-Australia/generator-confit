@@ -7,7 +7,7 @@ var _ = require('lodash');
 require('colors');
 
 var CMD = 'node_modules/.bin/mocha';
-var CMD_PARAMS = ['--no-timeouts', 'test/spec/confit.spec.js'];
+var CMD_PARAMS = ['--reporter list', '--no-timeouts', '--delay', 'test/spec/confit.spec.js'];
 var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
 var TEST_DIR = path.join(__dirname, '../temp-test');
 
@@ -48,16 +48,16 @@ function main() {
 }
 
 /**
- * Get a list of fixture files from a directory that do NOT start with _ but end with '.json'
+ * Get a list of fixture files from a directory that do NOT start with x but end with '.json'
  *
  * @param dir                 The directory to search
  * @returns {Array.<String>}  The list of files found that match the criteria
  */
 function getFixtures(dir) {
-  // Get a list of files that end in '.json' from the directory, that do not start with '_'
+  // Get a list of files that end in '.json' from the directory, that do not start with 'x'
   var files = fs.readdirSync(dir)
     .filter(function(file) {
-      return fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^_]+\.json$/) !== null);
+      return fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null);
     });
   return files;
 }

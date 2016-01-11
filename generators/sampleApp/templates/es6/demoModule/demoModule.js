@@ -5,11 +5,11 @@ function gotoPage(pageName, addToHistory) {
   // TODO: Use config paths here instead of 'modules/demoModule'
   window.document.getElementById('content').innerHTML = window[pageName];
   if (addToHistory !== false) {
-    window.history.pushState({isPushState: true, url: pageName}, pageName, pageName);
+    window.history.pushState({ isPushState: true, url: pageName }, pageName, pageName);
   }
 }
 
-window.onpopstate = function(event) {
+window.onpopstate = function (event) {
   if (event.state && event.state.isPushState) {
     gotoPage(event.state.url, false);
   }

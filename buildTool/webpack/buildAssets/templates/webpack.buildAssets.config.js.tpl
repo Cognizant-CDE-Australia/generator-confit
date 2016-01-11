@@ -1,4 +1,4 @@
-//** Assets START **/
+/** Assets START **/
 var assetsDir = projectPaths.input.assetsDir.replace(/\//g, '\\/');
 var fontsRegEx = new RegExp(assetsDir + 'font\/.*\.(eot|otf|svg|ttf|woff|woff2)$');
 config.module.loaders.push({

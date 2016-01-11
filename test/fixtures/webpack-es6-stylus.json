@@ -51,10 +51,9 @@
     "build": {},
     "verify": {
       "jsLinter": [
-        "eslint",
-        "jscs"
+        "eslint"
       ],
-      "_version": "d98586603567e4cc0334cd3c63ef4c9616866bf8"
+      "_version": "00ca7d8399ecc9b08e1688b3f55310da969ebb6e"
     },
     "zzfinish": {},
     "sampleApp": {

@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   'use strict';
 
   var sslKey = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString();

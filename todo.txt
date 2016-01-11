@@ -12,8 +12,6 @@
 
 - Verify linting works. After running runConit.js to run generator, can run 'npm run verify', then change a file an re-run (3 hours)
   - Eslint test
-  - JSHint test
-  - JSCS test
   - SASSLint test
   - Stylint test
 

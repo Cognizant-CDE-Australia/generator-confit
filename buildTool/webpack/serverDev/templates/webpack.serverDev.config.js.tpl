@@ -6,9 +6,9 @@ config.devServer = {
   port: confitConfig.serverDev.port,
   https: confitConfig.serverDev.protocol === 'https',
   colors: true,
-  //hot: true,    // Pass this from the command line as '--hot', which sets up the HotModuleReplacementPlugin automatically
+  // hot: true,    // Pass this from the command line as '--hot', which sets up the HotModuleReplacementPlugin automatically
   inline: true,
-  // CORS settings
+  // CORS settings:
   headers: {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',

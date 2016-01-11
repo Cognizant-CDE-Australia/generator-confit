@@ -30,7 +30,7 @@ module.exports = confitGen.create({
         name: 'jsLinter',
         message: 'JavaScript linting',
         default: this.getConfig('jsLinter') || 'eslint',
-        choices: ['eslint', 'jscs', 'jshint']
+        choices: ['eslint']
       }
     ];
 
@@ -56,6 +56,7 @@ module.exports = confitGen.create({
     var jsLinters = this.getConfig('jsLinter');
     var gen = this;
 
+    // TODO: Need to consider different linting options for ES5 vs ES6 source code?!? OR do we deprectate ES5?
     jsLinters.forEach(function(linter) {
       gen.fs.copy(
         gen.templatePath(linter + 'rc'),
