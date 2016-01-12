@@ -17,7 +17,7 @@
     yo confit [--skip-install] [--skip-run]
     
 - `--skip-install` skips the installation of NPM and Bower dependencies
-- `--skip-run` skips the run command (which normally starts the build tool in develop mode (`npm run dev`)
+- `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
     
 ## Sponsors
 
