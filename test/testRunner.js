@@ -31,7 +31,7 @@ function main() {
     procComplete++;
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
-    console.info('\n' + ('CONFIT'.green.underline + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+    console.info('\n' + ('CONFIT'.green.underline.bold + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
 
     if (procComplete === procCount) {
       console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
@@ -41,8 +41,7 @@ function main() {
 
   // Now, for each fixture file, run the command
   fixtures.forEach(function(fixture) {
-    console.log('is TTY', process.stdin.isTTY);
-    console.info('\n' + ('CONFIT: '.bold + 'Running test for ' + fixture.bold).green.underline.bgBlack);
+    console.info('\n' + ('CONFIT'.bold + ': Running test for ' + fixture.bold).green.underline.bgBlack);
     var proc = childProc[processRunner](CMD, CMD_PARAMS, {
       stdio: 'pipe',    // send the child console output to the parent process (us)
       // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it

@@ -6,16 +6,19 @@ var childProc = require('child_process');
 var tempTestDir = process.env.TEST_DIR;
 
 
-var PROTRACTOR_CMD = 'node_modules/.bin/protractor test/protractor.conf.js ';
+var CMD = 'protractor';
+var CMD_PARAMS = ['test/protractor.conf.js'];
 
 
 function runProtractor(baseUrl) {
-  console.log('Protractor baseUrl is ', baseUrl);
+  console.log('Protractor baseUrl is', baseUrl);
 
   // If there is an error, an exception will be thrown
-  childProc.execSync(PROTRACTOR_CMD + '--baseUrl ' + baseUrl, {
-    stdio: 'inherit'
+  var proc = childProc.spawnSync(CMD, CMD_PARAMS.concat(['--baseUrl', baseUrl]), {
+    stdio: 'pipe'
   });
+
+  console.log(proc.stdout.toString());
 }
 
 
