@@ -7,7 +7,7 @@ var _ = require('lodash');
 require('colors');
 
 var CMD = 'node_modules/.bin/mocha';
-var CMD_PARAMS = ['--reporter list', '--no-timeouts', '--delay', 'test/spec/confit.spec.js'];
+var CMD_PARAMS = ['--reporter list', '--no-timeouts', /*'--delay',*/ 'test/spec/test.spec.js'];
 var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
 var TEST_DIR = path.join(__dirname, '../temp-test');
 
@@ -43,7 +43,7 @@ function main() {
   fixtures.forEach(function(fixture) {
     console.info('\n' + ('CONFIT'.bold + ': Running test for ' + fixture.bold).green.underline.bgBlack);
     var proc = childProc[processRunner](CMD, CMD_PARAMS, {
-      stdio: 'pipe',    // send the child console output to the parent process (us)
+      stdio: 'inherit',    // send the child console output to the parent process (us)
       // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
       env: _.merge({}, process.env, {
         FIXTURE: fixture,
@@ -57,7 +57,7 @@ function main() {
       proc.on('close', processResults);
     } else {
       procCount = fixtures.length;  // A fixed value
-      console.log(proc.stdout.toString());
+      //console.log(proc.stdout.toString());
       processResults(proc.status);
     }
   });
