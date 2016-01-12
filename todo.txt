@@ -15,15 +15,16 @@
   - SASSLint test
   - Stylint test
 
-- Get unit-testing working (and add to readme) (2 hours)
-  - For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
-  - Write sample unit tests
++ Get unit-testing working (and add to readme) (2 hours)
+  + For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
+  + Write sample unit tests
+  + Add Confit test of 'npm run test:once'
 
 - Ensure this works with Webpack
   - For Angular 1.x ES6 (3 hours)
   - For Angular 2 & Typescript (5 hours)
 
-- Add method addReadmeDoc('subkey', doc), to allow the documentation of extension points within the add
++ Add method addReadmeDoc('subkey', doc), to allow the documentation of extension points within the add
 
 - Get component-testing working (and add to readme)  (3 hours)
   - Write sample unit tests

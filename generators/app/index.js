@@ -20,111 +20,113 @@ module.exports = confitGen.create({
     }
   },
 
-  promptForMode: function() {
-    // Great the user
-    var welcome =
-      "\n" +
-      chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
-      chalk.cyan.bold("\n                                                                 ")+ chalk.white.bold("╗╣╣╣╣╣╣╣╗") +
-      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╗╗╗") +
-      chalk.cyan.bold("\n                                                                ")+ chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╣╣╣╝") +
-      chalk.cyan.bold("\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ")+ chalk.white.bold("╣╣╗      ╙╣╣╣╣╣╣╣╣╜") +
-      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ") +
-      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╗╗ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕") +
-      chalk.cyan.bold("\n ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣") +
-      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
-      chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
-      chalk.cyan.bold("\n └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        ") + chalk.white.bold("╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙ ") +
-      "\n" +
-      "\n";
+  prompting: {
+    promptForMode: function() {
+      // Great the user
+      var welcome =
+        "\n" +
+        chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
+        chalk.cyan.bold("\n                                                                 ") + chalk.white.bold("╗╣╣╣╣╣╣╣╗") +
+        chalk.cyan.bold("\n                                                                ") + chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╗╗╗") +
+        chalk.cyan.bold("\n                                                                ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╣╣╣╝") +
+        chalk.cyan.bold("\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ") + chalk.white.bold("╣╣╗      ╙╣╣╣╣╣╣╣╣╜") +
+        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ") +
+        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╗╗ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕") +
+        chalk.cyan.bold("\n ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣") +
+        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
+        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
+        chalk.cyan.bold("\n └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        ") + chalk.white.bold("╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙ ") +
+        "\n" +
+        "\n";
 
-    this.log(welcome);
-    this.log(chalk.underline.bold.green('Confit App Generator'));
+      this.log(welcome);
+      this.log(chalk.underline.bold.green('Confit App Generator'));
 
-    if (this.hasConfig) {
+      if (this.hasConfig) {
+        var done = this.async();
+
+        var modePrompt = [
+          {
+            type: 'confirm',
+            name: 'rebuildFromConfig',
+            message: 'Would you like to rebuild from the existing configuration in ' + this.configFile + '?',
+            default: true
+          }
+        ];
+
+        this.prompt(modePrompt, function(props) {
+          // Build site, skip to configuring
+          this.rebuildFromConfig = props.rebuildFromConfig;
+
+          done();
+        }.bind(this));
+      }
+    },
+
+    promptForEverything: function() {
+      //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
+
+      // Bail out if we just want to rebuild from the configuration file
+      // But is we don't have a build tool, we need some answers!
+      if (this.rebuildFromConfig && !this.buildTool.isNull) {
+        return;
+      }
+
+      var self = this;
       var done = this.async();
 
-      var modePrompt = [
+      // Sort out the build profiles
+      var buildProfiles = this.getBuildProfiles();
+      var profileDescriptions = buildProfiles.map(function(profile) {
+        return profile.name + ' - ' + profile.description;
+      });
+
+      // Ask everything...
+      var prompts = [
+        {
+          type: 'list',
+          name: 'buildProfile',
+          message: 'Choose a build-profile for your project',
+          choices: profileDescriptions,
+          default: function() {
+            var existingProfileName = self.getConfig('buildProfile');
+            var existingProfileDesc = '';
+
+            buildProfiles.forEach(function(profile) {
+              if (profile.name === existingProfileName) {
+                existingProfileDesc = profile.name + ' - ' + profile.description;
+              }
+            });
+
+            // If we still don't have a profile description (because our profile name changed, for instance), use the first one.
+            if (!existingProfileDesc) {
+              existingProfileDesc = profileDescriptions[0];
+            }
+            return existingProfileDesc;
+          },
+          filter: function(answer) {
+            var profile = buildProfiles.filter(function(profile) {
+              return (profile.name + ' - ' + profile.description) === answer;
+            });
+            return profile[0].name;
+          }
+        },
         {
           type: 'confirm',
-          name: 'rebuildFromConfig',
-          message: 'Would you like to rebuild from the existing configuration in ' + this.configFile + '?',
-          default: true
+          name: 'editorConfig',
+          message: 'Use EditorConfig?',
+          default: this.getConfig('editorConfig') || true
         }
       ];
 
-      this.prompt(modePrompt, function(props) {
-        // Build site, skip to configuring
-        this.rebuildFromConfig = props.rebuildFromConfig;
-
+      this.prompt(prompts, function(props) {
+        this.answers = this.generateObjFromAnswers(props);
         done();
       }.bind(this));
     }
   },
 
-  promptForEverything: function() {
-    //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
-
-    // Bail out if we just want to rebuild from the configuration file
-    // But is we don't have a build tool, we need some answers!
-    if (this.rebuildFromConfig && !this.buildTool.isNull) {
-      return;
-    }
-
-    var self = this;
-    var done = this.async();
-
-    // Sort out the build profiles
-    var buildProfiles = this.getBuildProfiles();
-    var profileDescriptions = buildProfiles.map(function(profile) {
-      return profile.name + ' - ' + profile.description;
-    });
-
-    // Ask everything...
-    var prompts = [
-      {
-        type: 'list',
-        name: 'buildProfile',
-        message: 'Choose a build-profile for your project',
-        choices: profileDescriptions,
-        default: function() {
-          var existingProfileName = self.getConfig('buildProfile');
-          var existingProfileDesc = '';
-
-          buildProfiles.forEach(function(profile) {
-            if (profile.name === existingProfileName) {
-              existingProfileDesc = profile.name + ' - ' + profile.description;
-            }
-          });
-
-          // If we still don't have a profile description (because our profile name changed, for instance), use the first one.
-          if (!existingProfileDesc) {
-            existingProfileDesc = profileDescriptions[0];
-          }
-          return existingProfileDesc;
-        },
-        filter: function(answer) {
-          var profile = buildProfiles.filter(function(profile) {
-            return (profile.name + ' - ' + profile.description) === answer;
-          });
-          return profile[0].name;
-        }
-      },
-      {
-        type: 'confirm',
-        name: 'editorConfig',
-        message: 'Use EditorConfig?',
-        default: this.getConfig('editorConfig') || true
-      }
-    ];
-
-    this.prompt(prompts, function(props) {
-      this.answers = this.generateObjFromAnswers(props);
-      done();
-    }.bind(this));
-  },
-
-  writeConfig: function() {
+  configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
       this.setConfig(this.answers);
@@ -132,20 +134,6 @@ module.exports = confitGen.create({
       // Update our buildtool, as it may have changed
       this.updateBuildTool();
     }
-  },
-
-  reporting: function() {
-    var config = this.getGlobalConfig();
-
-    var templates = {
-      data: JSON.stringify(config)
-    };
-
-    this.fs.copyTpl(
-      this.templatePath('_report.html'),
-      this.destinationPath(config.paths.input.srcDir + 'confitReport.html'),
-      templates
-    );
   },
 
   writing: function() {
@@ -158,7 +146,6 @@ module.exports = confitGen.create({
         { name: this.appPackageName }
       );
     }
-
 
 
     // TODO: Why is bower here?

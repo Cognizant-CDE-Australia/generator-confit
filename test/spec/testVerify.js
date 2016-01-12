@@ -7,7 +7,7 @@ var VERIFY_CMD = 'npm run verify';
 
 // Pass the confit config to this module... (use module.exports
 
-function runVerify() {
+function runCommand() {
   // If there is an error, an exception will be thrown
   childProc.execSync(VERIFY_CMD, {
     stdio: 'inherit',
@@ -21,7 +21,7 @@ module.exports = function(confitConfig) {
   describe('npm run verify', function() {
 
     it('should not find errors in the sampleApp code', function() {
-      assert.doesNotThrow(runVerify);
+      assert.doesNotThrow(runCommand);
     });
 
 
@@ -31,7 +31,7 @@ module.exports = function(confitConfig) {
 
         before(function() {
           // Check the confit config. If verify.jsLinter.indexOf('eslint')
-          fs.copySync(process.env.FIXTURE_DIR + '/verify/eslint-fail.js', destFixtureFile);
+          fs.copySync(process.env.FIXTURE_DIR + 'verify/eslint-fail.js', destFixtureFile);
         });
 
         after(function() {
@@ -39,8 +39,8 @@ module.exports = function(confitConfig) {
         });
 
 
-        it('should show an eslint error when required', function() {
-          assert.throws(runVerify, Error);
+        it('should throw an error when the code fails to lint', function() {
+          assert.throws(runCommand, Error);
         });
       });
     }

@@ -207,7 +207,7 @@ module.exports = confitGen.create({
     }.bind(this));
   },
 
-  writeConfig: function() {
+  configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
       // Generate this variable to maintain compatibility with existing build-code

@@ -2,7 +2,7 @@
 
 module.exports = function() {
 
-  function writeConfig() {
+  function configuring() {
     // Generate a Webpack-specific version of the sample entry points
     var config = this.getGlobalConfig();
     var modulesDir = config.paths.input.modulesSubDir;
@@ -34,7 +34,7 @@ module.exports = function() {
   }
 
   return {
-    writeConfig: writeConfig,
+    configure: configuring,
     write: write
   };
 };

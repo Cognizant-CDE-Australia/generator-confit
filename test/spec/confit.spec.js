@@ -24,6 +24,7 @@ installConfit().then(function(confitConfig) {
     // The actual tests
     require('./testDev')(confitConfig);
     require('./testVerify')(confitConfig);
+    require('./testUnitTest')(confitConfig);
   });
 
   // The mocha --delay flag provides a root-level run() callback, signifying that we have finished the initial asynchronous processing

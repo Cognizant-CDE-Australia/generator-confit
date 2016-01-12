@@ -62,7 +62,7 @@ module.exports = confitGen.create({
     }.bind(this));
   },
 
-  writeConfig: function() {
+  configuring: function() {
     // If no entry point has been defined, AND we want to create a scaffold project, update the config using (temporary) data set by <sampleApp>
     var sampleAppConfig = this.getGlobalConfig().sampleApp;
     var createSampleApp = sampleAppConfig.createScaffoldProject;

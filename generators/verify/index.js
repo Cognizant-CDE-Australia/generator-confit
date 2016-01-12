@@ -41,7 +41,7 @@ module.exports = confitGen.create({
     }.bind(this));
   },
 
-  writeConfig: function() {
+  configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
       this.setConfig(this.answers);

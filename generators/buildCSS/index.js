@@ -75,7 +75,7 @@ module.exports = confitGen.create({
     }.bind(this));
   },
 
-  writeConfig: function() {
+  configuring: function() {
     if (this.answers) {
       // Add an answer for a question we will never ask... spooky! Default to true
       this.answers.autoprefixer = !(this.getConfig('autoprefixer') === false);

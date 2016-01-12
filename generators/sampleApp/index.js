@@ -38,11 +38,11 @@ module.exports = confitGen.create({
     }.bind(this));
   },
 
-  writeConfig: function() {
+  configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
       createEntryPointSampleAppConfig.apply(this);
-      this.buildTool.writeConfig.apply(this);
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },
