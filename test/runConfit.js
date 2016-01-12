@@ -6,11 +6,12 @@ var fs = require('fs-extra');
 var _ = require('lodash');
 
 // Global data
-var testDirName = '';
-var srcFixtureFile = '';
-var cleanTestDir = false;
 var CONFIT_FILE_NAME = 'confit.json';
 
+var testDirName = process.env.TEST_DIR;
+var srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
+var useExistingNodeModules = true;    // Try to preserve node_modules between test runs
+var cleanTestDir = !(useExistingNodeModules || true);
 
 /**
  * Runs the confit:app generator
@@ -20,14 +21,9 @@ var CONFIT_FILE_NAME = 'confit.json';
  * @param useExistingNodeModules Boolean to indicate whether to try to re-use any existing node_modules directory (default: true)
  * @returns {Promise}
  */
-function runGenerator(testDir, srcConfitFilename, useExistingNodeModules) {
-  testDirName = testDir;
-  srcFixtureFile = srcConfitFilename;
-  cleanTestDir = !(useExistingNodeModules || true);
-
+function runGenerator() {
   return new Promise(install);
 }
-
 
 
 function install(resolve, reject) {
@@ -127,7 +123,4 @@ function isConfigIdentical(newConfigName) {
   return _.isEqual(fs.readJsonSync(oldConfigName), fs.readJsonSync(newConfigName));
 }
 
-
-module.exports = {
-  run: runGenerator
-};
+runGenerator();

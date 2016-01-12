@@ -17,6 +17,7 @@ var child;
 function startServer(testDir, confitServerToStart, serverStartTimeout) {
   var SERVER_STARTED_RE = /webpack: bundle is now VALID\.\n$/;    // A string to search for in the stdout, which indicates the server has started.
   var resolveFn, rejectFn;
+  var result = {};
 
   getFreePort().then(function(port) {
     // Once we have the port, modify the confit.serverDEV configuration, then start the server
@@ -25,7 +26,7 @@ function startServer(testDir, confitServerToStart, serverStartTimeout) {
     server.port = port;
     fs.writeJsonSync(testDir + 'confit.json', confitJson);
 
-    var result = {
+    result = {
       baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
       details: server
     };
@@ -68,7 +69,7 @@ function startServer(testDir, confitServerToStart, serverStartTimeout) {
     rejectFn = reject;
     setTimeout(function() {
       console.log('Server: returning to parent...');
-      resolveFn(serverPort);
+      resolveFn(result);
     }, serverStartTimeout);
   });
 }

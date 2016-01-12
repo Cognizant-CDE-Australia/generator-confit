@@ -6,11 +6,13 @@ var path = require('path');
 var _ = require('lodash');
 var chalk = require('chalk');
 
-var CMD = 'node_modules/.bin/mocha';
-var CMD_PARAMS = ['--reporter list', '--no-timeouts', /*'--delay',*/ 'test/spec/test.spec.js'];
-var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
-var TEST_DIR = path.join(__dirname, '../temp-test');
+var CONFIT_CMD = 'node';
+var CONFIT_PARAMS = ['test/runConfit.js'];
+var MOCHA_CMD = 'mocha';
+var MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/confit.spec.js'];
 
+var FIXTURE_DIR = path.join(__dirname, 'fixtures/');
+var TEST_DIR = path.join(__dirname, '../temp-test');
 
 var LABEL_CONFIT = chalk.green.underline.bold('CONFIT');
 var LABEL_SUCCESS = chalk.green.bold('SUCCESS');
@@ -18,14 +20,16 @@ var LABEL_FAILED = chalk.red.bold('FAILED');
 var BLACK_START = chalk.styles.bgBlack.open;
 var BLACK_END = chalk.styles.bgBlack.close;
 
+
+
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
  *
  * node testRunner.js [--sequence]
  */
 function main() {
-  var fixtures = getFixtures(FIXTURE_PATH);
-  var procCount = 0;
+  var fixtures = getFixtures(FIXTURE_DIR);
+  var procCount = fixtures.length;
   var procComplete = 0;
   var procSuccess = 0;
 
@@ -33,39 +37,71 @@ function main() {
   var processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
 
 
+  function promiseRunner(cmd, cmdParams, envData) {
+    return new Promise(function(resolve, reject) {
+
+      var proc = childProc[processRunner](cmd, cmdParams, {
+        stdio: 'inherit',    // send the child console output to the parent process (us)
+        // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
+        env: _.merge({}, process.env, envData)
+      });
+
+      if (!runInSequence) {
+        proc.on('close', function(code) {
+          (code === 0) ? resolve(code) : reject(code);
+        });
+      } else {
+        (proc.status === 0) ? resolve(proc.status) : reject(proc.status);
+      }
+    });
+  }
+
+  function runConfit(fixtureDir, fixture, testDir) {
+    return promiseRunner(CONFIT_CMD, CONFIT_PARAMS, {
+      FIXTURE: fixture,
+      FIXTURE_DIR: fixtureDir,
+      TEST_DIR: testDir
+    });
+  }
+
+
+  function runMocha(fixtureDir, fixture, testDir) {
+    return promiseRunner(MOCHA_CMD, MOCHA_PARAMS, {
+      FIXTURE: fixture,
+      FIXTURE_DIR: fixtureDir,
+      TEST_DIR: testDir
+    });
+  }
+
+
   function processResults(code) {
     procComplete++;
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
-    console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white('Executed', procComplete, 'of', procCount,'specs'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
+
+    confitMsg(chalk.white('Executed', procComplete, 'of', procCount, 'specs'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
 
     if (procComplete === procCount) {
-      console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white.bold('Test Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
+      confitMsg(chalk.white.bold('Test Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
       process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
 
-  // Now, for each fixture file, run the command
+  // Now, for each fixture file, run the command(s)
   fixtures.forEach(function(fixture) {
-    console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white('Running test for'), chalk.white.bold(fixture), BLACK_END);
-    var proc = childProc[processRunner](CMD, CMD_PARAMS, {
-      stdio: 'inherit',    // send the child console output to the parent process (us)
-      // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
-      env: _.merge({}, process.env, {
-        FIXTURE: fixture,
-        FIXTURE_DIR: FIXTURE_PATH,
-        TEST_DIR: path.join(TEST_DIR, fixture.replace('.json', ''), '/')
-      })
-    });
+    confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
+    var testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/')
 
-    if (!runInSequence) {
-      procCount++;
-      proc.on('close', processResults);
-    } else {
-      procCount = fixtures.length;  // A fixed value
-      //console.log(proc.stdout.toString());
-      processResults(proc.status);
-    }
+    // Install Confit first, wait for it to complete, then start the Mocha spec
+    confitMsg(chalk.white('Running Confit generator...'));
+
+    runConfit(FIXTURE_DIR, fixture, testDir).then(function success() {
+      confitMsg(chalk.white('... finished running Confit generator.'));
+
+      confitMsg(chalk.white('Running Mocha for', fixture, '...'));
+      return runMocha(FIXTURE_DIR, fixture, testDir);
+
+    }).then(function success(code) { processResults(code); }, function failure(code) { processResults(code); });
   });
 }
 
@@ -84,5 +120,9 @@ function getFixtures(dir) {
   return files;
 }
 
+
+function confitMsg() {
+  console.info.apply(this, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
+}
 
 main();
