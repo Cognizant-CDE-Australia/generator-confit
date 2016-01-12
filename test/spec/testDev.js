@@ -11,14 +11,14 @@ var CMD_PARAMS = ['test/protractor.conf.js'];
 
 
 function runProtractor(baseUrl) {
-  console.log('Protractor baseUrl is', baseUrl);
+  console.info('Protractor baseUrl is', baseUrl);
 
   // If there is an error, an exception will be thrown
   var proc = childProc.spawnSync(CMD, CMD_PARAMS.concat(['--baseUrl', baseUrl]), {
     stdio: 'pipe'
   });
 
-  console.log(proc.stdout.toString());
+  console.info(proc.stdout.toString());
 }
 
 
