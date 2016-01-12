@@ -11,7 +11,6 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     this.setNpmDevDependencies({
-      'time-grunt': '*',
       'grunt-extend-config': '*',
       'load-grunt-tasks': '*'
     });
