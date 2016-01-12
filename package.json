@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/odecee/generator-confit.git"
   },
+  "bugs": {
+    "url": "https://github.com/odecee/generator-confit/issues"
+  },
   "contributors": [
     {
       "name": "Brett Uglow",
@@ -38,7 +41,11 @@
     "test:seq": "node test/testRunner.js --sequence"
   },
   "files": [
-    "generators"
+    "buildTool",
+    "generators",
+    "lib",
+    "test",
+    "*.md"
   ],
   "keywords": [
     "build-system",
