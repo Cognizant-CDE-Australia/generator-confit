@@ -60,7 +60,7 @@
     "lodash": "3.7.0",
     "main-bower-files": "2.7.1",
     "protractor": "3.0.0",
-    "yosay": "0.3.0"
+    "yeoman-generator": "0.22.2"
   },
   "devDependencies": {
     "colors": "1.1.2",
@@ -71,7 +71,7 @@
     "jasmine-spec-reporter": "2.4.0",
     "mocha": "2.3.4",
     "npm-module-checklist": "1.6.0",
-    "yeoman-generator": "0.22.2",
+
     "yeoman-test": "1.0.0"
   },
   "config": {
