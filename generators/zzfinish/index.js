@@ -64,7 +64,7 @@ function generateReadmeFile() {
     this.fs.write(readmeFile, ejs.render(existingData, templateData));
   } else {
     // Use the baseline template
-    this.fs.copyTpl(this.templatePath('_readme.md'), this.destinationPath('README.md'), templateData);
+    this.fs.copyTpl(this.templatePath('_README.md'), this.destinationPath('README.md'), templateData);
   }
 }
 
