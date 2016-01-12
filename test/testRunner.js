@@ -35,7 +35,7 @@ function main() {
 
     if (procComplete === procCount) {
       console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
-      process.exit(0);
+      process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
 
