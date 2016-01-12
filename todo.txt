@@ -2,16 +2,16 @@
   + JS Linting
   + CSS Linting (based on chosen CSS compiler)
 
-- Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format. (3 hours)
++ Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format. (3 hours)
   + Need a template README.md.
   + Surround dynamic bits with comments.
   + Before using template, check if existing readme exists. If so, use that as a template (and hopefully is still has the dynamic comments).
   + Need to be able to use a project's existing README.md and add/replace relevant sections
 
-- Refactor Protractor testing to execute Confit build BEFORE executing Protractor (1 hour)
++ Refactor Protractor testing to execute Confit build BEFORE executing Protractor (1 hour)
 
 - Verify linting works. After running runConit.js to run generator, can run 'npm run verify', then change a file an re-run (3 hours)
-  - Eslint test
+  + Eslint test
   - SASSLint test
   - Stylint test
 
@@ -19,15 +19,14 @@
   - For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
   - Write sample unit tests
 
-- Get component-testing working (and add to readme)  (3 hours)
-  - Write sample unit tests
-
 - Ensure this works with Webpack
   - For Angular 1.x ES6 (3 hours)
   - For Angular 2 & Typescript (5 hours)
 
-- Rename the project (Confit is already taken) (2 hours)
-  - Change ASCII art
+- Add method addReadmeDoc('subkey', doc), to allow the documentation of extension points within the add
+
+- Get component-testing working (and add to readme)  (3 hours)
+  - Write sample unit tests
 
 - Release to the public! (happening in parallel with other tasks + 2 hours)
   - Add NAB Sponsorship information

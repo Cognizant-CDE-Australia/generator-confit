@@ -65,6 +65,7 @@ function install(resolve, reject) {
         path.join(__dirname, '../generators/sampleApp'),
         path.join(__dirname, '../generators/serverDev'),
         path.join(__dirname, '../generators/serverProd'),
+        path.join(__dirname, '../generators/testUnit'),
         path.join(__dirname, '../generators/verify'),
         path.join(__dirname, '../generators/zzfinish')
       ])

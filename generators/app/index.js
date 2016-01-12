@@ -66,7 +66,8 @@ module.exports = confitGen.create({
     //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
 
     // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig) {
+    // But is we don't have a build tool, we need some answers!
+    if (this.rebuildFromConfig && !this.buildTool.isNull) {
       return;
     }
 
@@ -79,7 +80,6 @@ module.exports = confitGen.create({
       return profile.name + ' - ' + profile.description;
     });
 
-
     // Ask everything...
     var prompts = [
       {
@@ -90,12 +90,16 @@ module.exports = confitGen.create({
         default: function() {
           var existingProfileName = self.getConfig('buildProfile');
           var existingProfileDesc = '';
-          if (existingProfileName) {
-            buildProfiles.forEach(function(profile, index) {
-              if (profile.name === existingProfileName) {
-                existingProfileDesc = profile.name + ' - ' + profile.description;
-              }
-            });
+
+          buildProfiles.forEach(function(profile) {
+            if (profile.name === existingProfileName) {
+              existingProfileDesc = profile.name + ' - ' + profile.description;
+            }
+          });
+
+          // If we still don't have a profile description (because our profile name changed, for instance), use the first one.
+          if (!existingProfileDesc) {
+            existingProfileDesc = profileDescriptions[0];
           }
           return existingProfileDesc;
         },
@@ -124,6 +128,9 @@ module.exports = confitGen.create({
     // If we have new answers, then change the config
     if (this.answers) {
       this.setConfig(this.answers);
+
+      // Update our buildtool, as it may have changed
+      this.updateBuildTool();
     }
   },
 
@@ -194,6 +201,7 @@ module.exports = confitGen.create({
     this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:serverDev', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:serverProd', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:testUnit', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:verify', {options: _.merge({}, subGenOptions)});
 
     //

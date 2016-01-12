@@ -34,8 +34,8 @@ module.exports = function() {
     );
 
     // Define the verify tasks
-    this.defineNpmTask('verify', ['grunt verify'], 'Verifies JS & CSS style and syntax');
-    this.defineNpmTask('verify:watch', ['grunt watch:verify'], 'Runs verify task whenever JS or CSS code changes');
+    this.defineNpmTask('verify', ['grunt verify'], 'Verify JS & CSS code style and syntax');
+    this.defineNpmTask('verify:watch', ['grunt watch:verify'], 'Run verify task whenever JS or CSS code changes');
   }
 
 

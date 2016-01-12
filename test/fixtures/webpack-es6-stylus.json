@@ -1,9 +1,9 @@
 {
   "generator-confit": {
     "app": {
-      "buildProfile": "Default",
+      "buildProfile": "Webpack",
       "editorConfig": true,
-      "_version": "d421169cfb2440b08f192a1f66eaa1329b6e2263"
+      "_version": "3bf4805139484a2834f7df3ec25a63509f6fc874"
     },
     "buildJS": {
       "sourceFormat": "ES6",
@@ -58,7 +58,7 @@
     "zzfinish": {},
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "7a17b2bb4b137f97953469d8b02ccf4869782ab4"
+      "_version": "8c85dc8198145d57c6df36f6d6adeae661c074b6"
     },
     "buildAssets": {},
     "entryPoint": {
@@ -82,6 +82,7 @@
       "hostname": "localhost",
       "protocol": "https",
       "_version": "42630efb7e3ad52f907f45342084caf4ce47c87b"
-    }
+    },
+    "testUnit": {}
   }
 }

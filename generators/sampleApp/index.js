@@ -100,6 +100,10 @@ module.exports = confitGen.create({
     // Copy TEMPLATE HTML files
     this.fs.copy(this.templatePath(this.selectedJSFrameworkDir  + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
 
+
+    // Copy unit test(s)
+    this.fs.copy(this.templatePath('unitTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);
+
     this.buildTool.write.apply(this);
   },
 

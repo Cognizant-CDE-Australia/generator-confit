@@ -10,9 +10,9 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     this.setNpmDevDependencies({
-      'webpack': '*',
-      'webpack-dev-server': '*',
-      'extract-text-webpack-plugin': '0.9.1' // latest version (1.0.0) is missing a dependency. Revert to earlier version
+      'webpack': '1.12.10',
+      'webpack-dev-server': '1.14.0',
+      'extract-text-webpack-plugin': '1.0.1' // latest version (1.0.0) is missing a dependency. Revert to earlier version
     });
 
     this.fs.copyTpl(this.toolTemplatePath('webpack.config.js.tpl'), this.destinationPath(outputDir + 'webpack/webpack.config.js'), config);

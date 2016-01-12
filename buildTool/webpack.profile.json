@@ -1,6 +1,6 @@
 {
-  "name": "Alternate",
-  "description": "for testing",
+  "name": "Webpack",
+  "description": "Webpack-based build profile (23 Dec 2015)",
   "toolMap": {
     "app": "webpack",
     "build": "webpack",
@@ -10,11 +10,11 @@
     "buildJS": "webpack",
     "entryPoint": "webpack",
     "paths": "",
-    "release": "~grunt",
+    "release": "grunt",
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "grunt",
-    "unitTest": "webpack",
+    "testUnit": "webpack",
     "verify": "grunt",
     "zzfinish": "webpack"
   }

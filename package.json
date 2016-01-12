@@ -34,7 +34,8 @@
   "scripts": {
     "postinstall": "npm run installWebDriver",
     "installWebDriver": "node_modules/protractor/bin/webdriver-manager update",
-    "test": "node test/testRunner.js"
+    "test": "node test/testRunner.js",
+    "test:seq": "node test/testRunner.js --sequence"
   },
   "files": [
     "generators"

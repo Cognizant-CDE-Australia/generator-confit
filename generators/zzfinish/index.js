@@ -13,9 +13,11 @@ module.exports = confitGen.create({
 
     // Global task-wiring, independent of any particular tool (although there is some knowledge that the child-tasks MUST exist, and how they should be run together).
     this.defineNpmTask('start', ['npm run dev'], 'Alias for `npm run dev` task');
-    this.defineNpmTask('dev', ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev'], 'Run project in development mode. Verifies code, creates dev build into **' + paths.output.devDir + '** folder, serves on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**, watches for changes and updates the browser automatically');
+    this.defineNpmTask('dev', ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev'], 'Run project in development mode (verify code, create dev build into **' + paths.output.devDir + '** folder, serve on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**, watch for changes and reload the browser automatically)');
     this.defineNpmTask('build', ['clean:prod', 'build:prod'], 'Generate production build into **' + paths.output.prodDir + '** folder');
     this.defineNpmTask('build:serve', ['build', 'serve:prod'], 'Generate production build and serve on **' + config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port + '**');
+
+    this.addReadmeDoc('extensionPoint.start', '`npm start` can be extended by modifying **' + paths.config.configDir + 'webpack/dev.webpack.config.js** and **' + paths.config.configDir + 'webpack/prod.webpack.config.js**');
 
     // Low-level tasks
     this.defineNpmTask('clean:dev', ['rm -rf ' + paths.output.devDir]);
@@ -45,7 +47,8 @@ function generateReadmeFile() {
   templateData.nameHeading = '# ' + packageJSON.name;
   templateData.install = '    npm install ' + packageJSON.name;
   templateData.description = '> ' + packageJSON.description;
-  templateData.taskDefinition = generateDevTasks(packageJSON.config.readme).join('\n');
+  templateData.taskDefinition = generateDevTasks(packageJSON.config.readme.buildTask).join('\n');
+  templateData.extensionPoints = '- ' + _.values(packageJSON.config.readme.extensionPoint).join('\n- ');
 
   // Remove the config.readme from the packageJSON, before writing it back to disk
   delete packageJSON.config.readme;

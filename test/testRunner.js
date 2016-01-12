@@ -12,16 +12,37 @@ var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
 var TEST_DIR = path.join(__dirname, '../temp-test');
 
 
+/**
+ * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
+ *
+ * node testRunner.js [--sequence]
+ */
 function main() {
   var fixtures = getFixtures(FIXTURE_PATH);
   var procCount = 0;
   var procComplete = 0;
   var procSuccess = 0;
 
+  var runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
+  var processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
+
+
+  function processResults(code) {
+    procComplete++;
+    var isSuccess = (code === 0);
+    procSuccess += (code === 0) ? 1 : 0;
+    console.info('\n' + ('CONFIT'.green.underline + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+
+    if (procComplete === procCount) {
+      console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+      process.exit(0);
+    }
+  }
+
   // Now, for each fixture file, run the command
   fixtures.forEach(function(fixture) {
     console.info('\n' + ('CONFIT: '.bold + 'Running test for ' + fixture.bold).green.underline.bgBlack);
-    var proc = childProc.spawn(CMD, CMD_PARAMS, {
+    var proc = childProc[processRunner](CMD, CMD_PARAMS, {
       stdio: 'inherit',    // send the child console output to the parent process (us)
       // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
       env: _.merge({}, process.env, {
@@ -31,19 +52,13 @@ function main() {
       })
     });
 
-    procCount++;
-
-    proc.on('close', function(code) {
-      procComplete++;
-      var isSuccess = (code === 0);
-      procSuccess += (code === 0) ? 1 : 0;
-      console.info('\n' + ('CONFIT'.green.underline + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
-
-      if (procComplete === procCount) {
-        console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
-        process.exit(0);
-      }
-    });
+    if (!runInSequence) {
+      procCount++;
+      proc.on('close', processResults);
+    } else {
+      procCount = fixtures.length;  // A fixed value
+      processResults(proc.status);
+    }
   });
 }
 

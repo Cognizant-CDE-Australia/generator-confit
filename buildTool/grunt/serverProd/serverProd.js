@@ -24,7 +24,7 @@ module.exports = function () {
     );
 
 
-    this.defineNpmTask('serve:prod', ['grunt connect:prod'], 'Runs a production server using grunt-connect on **' + config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port + '**');
+    this.defineNpmTask('serve:prod', ['grunt connect:prod'], 'Run a production server using grunt-connect on **' + config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port + '**');
   }
 
   return {
