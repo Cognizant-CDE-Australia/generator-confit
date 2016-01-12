@@ -63,8 +63,8 @@
     "yeoman-generator": "0.22.2"
   },
   "devDependencies": {
-    "colors": "1.1.2",
     "exact-semver": "1.2.0",
+    "freeport": "1.0.5",
     "fs-extra": "0.26.3",
     "ghooks": "1.0.1",
     "jasmine-reporters": "2.1.1",

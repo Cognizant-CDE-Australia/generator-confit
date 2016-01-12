@@ -4,13 +4,19 @@ var childProc = require('child_process');
 var fs = require('fs-extra');
 var path = require('path');
 var _ = require('lodash');
-require('colors');
+var chalk = require('chalk');
 
 var CMD = 'node_modules/.bin/mocha';
 var CMD_PARAMS = ['--reporter list', '--no-timeouts', /*'--delay',*/ 'test/spec/test.spec.js'];
 var FIXTURE_PATH = path.join(__dirname, 'fixtures/');
 var TEST_DIR = path.join(__dirname, '../temp-test');
 
+
+var LABEL_CONFIT = chalk.green.underline.bold('CONFIT');
+var LABEL_SUCCESS = chalk.green.bold('SUCCESS');
+var LABEL_FAILED = chalk.red.bold('FAILED');
+var BLACK_START = chalk.styles.bgBlack.open;
+var BLACK_END = chalk.styles.bgBlack.close;
 
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
@@ -31,17 +37,17 @@ function main() {
     procComplete++;
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
-    console.info('\n' + ('CONFIT'.green.underline.bold + (': Executed ' + procComplete + ' of ' + procCount + ' specs ').white + (isSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+    console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white('Executed', procComplete, 'of', procCount,'specs'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
 
     if (procComplete === procCount) {
-      console.info('\n' + ('CONFIT Test Result:'.green.underline + ' ' + (procCount === procSuccess ? 'SUCCESS'.green.bold : 'FAILED'.red.bold)).bgBlack);
+      console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white.bold('Test Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
       process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
 
   // Now, for each fixture file, run the command
   fixtures.forEach(function(fixture) {
-    console.info('\n' + ('CONFIT'.bold + ': Running test for ' + fixture.bold).green.underline.bgBlack);
+    console.info('\n', BLACK_START, LABEL_CONFIT, chalk.white('Running test for'), chalk.white.bold(fixture), BLACK_END);
     var proc = childProc[processRunner](CMD, CMD_PARAMS, {
       stdio: 'inherit',    // send the child console output to the parent process (us)
       // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it

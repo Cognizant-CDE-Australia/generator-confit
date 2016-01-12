@@ -27,7 +27,7 @@ var tempTestDir = process.env.TEST_DIR;
     });
 
     it('should fail, man', function() {
-      assert.equal(2 + 2, 10);
+      assert.equal(2 + 2, 4);
     });
 
     after(function() {
