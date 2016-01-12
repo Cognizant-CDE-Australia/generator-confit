@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)
 
-[![terminal](terminal.gif)]
+![terminal](terminal.gif)
 
 
 ## Install
