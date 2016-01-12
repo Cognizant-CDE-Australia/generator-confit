@@ -41,9 +41,10 @@ function main() {
 
   // Now, for each fixture file, run the command
   fixtures.forEach(function(fixture) {
+    console.log('is TTY', process.stdin.isTTY);
     console.info('\n' + ('CONFIT: '.bold + 'Running test for ' + fixture.bold).green.underline.bgBlack);
     var proc = childProc[processRunner](CMD, CMD_PARAMS, {
-      stdio: 'inherit',    // send the child console output to the parent process (us)
+      stdio: 'pipe',    // send the child console output to the parent process (us)
       // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
       env: _.merge({}, process.env, {
         FIXTURE: fixture,
@@ -57,6 +58,7 @@ function main() {
       proc.on('close', processResults);
     } else {
       procCount = fixtures.length;  // A fixed value
+      console.log(proc.stdout.toString());
       processResults(proc.status);
     }
   });
