@@ -19,6 +19,7 @@
   + For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
   + Write sample unit tests
   + Add Confit test of 'npm run test:once'
+  + Travis CI working (4 hours)
 
 - Ensure this works with Webpack
   - For Angular 1.x ES6 (3 hours)
