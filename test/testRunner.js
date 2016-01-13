@@ -46,12 +46,12 @@ function main() {
         env: _.merge({}, process.env, envData)
       });
 
-      if (!runInSequence) {
+      if (runInSequence) {
+        (proc.status === 0) ? resolve(proc.status) : reject(proc.status);
+      } else {
         proc.on('close', function(code) {
           (code === 0) ? resolve(code) : reject(code);
         });
-      } else {
-        (proc.status === 0) ? resolve(proc.status) : reject(proc.status);
       }
     });
   }

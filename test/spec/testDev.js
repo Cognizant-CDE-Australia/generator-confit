@@ -15,10 +15,12 @@ function runProtractor(baseUrl) {
 
   // If there is an error, an exception will be thrown
   var proc = childProc.spawnSync(CMD, CMD_PARAMS.concat(['--baseUrl', baseUrl]), {
-    stdio: 'pipe'
+    stdio: 'inherit'
   });
 
-  console.info(proc.stdout.toString());
+  if (proc.status !== 0) {
+    throw new Error('' + proc.error);
+  }
 }
 
 
