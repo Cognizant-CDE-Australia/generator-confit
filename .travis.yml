@@ -3,9 +3,10 @@ language: node_js
 node_js:
   - 5.4.0
 
+addons:
+  firefox: "latest"
 
 before_script:
-  - export CHROME_BIN=chromium-browser    # Tell Travis that we have Chrome installed (Chromium) http://swizec.com/blog/how-to-run-javascript-tests-in-chrome-on-travis/swizec/6647
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start

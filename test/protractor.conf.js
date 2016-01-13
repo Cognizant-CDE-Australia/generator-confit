@@ -9,10 +9,7 @@ exports.config = {
   directConnect: true,
 
   capabilities: {
-    browserName: 'chrome',
-    'chromeOptions': {
-      args: ['--no-sandbox']
-    }
+    browserName: 'firefox'
   },
 
   framework: 'jasmine2',
@@ -57,8 +54,6 @@ exports.config = {
   onPrepare: function() {
     // Turn off the angular-sync part-of-protractor, as we are using protractor in a generic way
     browser.ignoreSynchronization = true;
-
-    console.log(process.env);
 
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters

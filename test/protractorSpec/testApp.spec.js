@@ -27,7 +27,10 @@ describe('Verify App build', function() {
     expect(page2.heading.getText()).toEqual('This is page 2');
 
     // If the button width is 83px, it means that the icon font has been loaded
-    expect(page2.linkToPage1.getCssValue('width')).toEqual('83px');
+    page2.linkToPage1.getCssValue('width').then(function (value) {
+      expect(parseInt(value, 10)).toBeGreaterThan(83);
+    });
+
 
 
     // Go back to page 1
