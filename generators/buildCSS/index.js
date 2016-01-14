@@ -2,7 +2,6 @@
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 
-
 module.exports = confitGen.create({
   initializing: {
     init: function() {
@@ -21,7 +20,7 @@ module.exports = confitGen.create({
     this.log(chalk.underline.bold.green('Build CSS Generator'));
 
     var done = this.async();
-    var cssCompilerConfig = require('../../lib/cssConfig.json');
+    var cssCompilerConfig = this.getResources().css;
 
     var prompts = [
       {
@@ -63,6 +62,7 @@ module.exports = confitGen.create({
     if (this.answers) {
       // Add an answer for a question we will never ask... spooky! Default to true
       this.answers.autoprefixer = !(this.getConfig('autoprefixer') === false);
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },

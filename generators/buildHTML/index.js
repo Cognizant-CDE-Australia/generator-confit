@@ -41,6 +41,7 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },

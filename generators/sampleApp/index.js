@@ -64,14 +64,13 @@ module.exports = confitGen.create({
 
     // Copy Assets
     var assetsTemplateDir = '../templates/assets/';
-    //this.fs.copy(this.templatePath(srcTmpDir + 'index.html'), paths.input.srcDir + 'index.html');
     this.fs.copy(this.templatePath(assetsTemplateDir + '**/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.assetsDir);
 
 
     // Copy compiler-specific CSS
     var cssTemplateDir = '../templates/css/';
     var compiler = config.buildCSS.cssCompiler;
-    var cssConfig = require('../../lib/cssConfig.json');
+    var cssConfig = this.getResources().css;
 
     // Make CSSFile a member property so that the build tool can use it too
     this.CSSFile = cssConfig[compiler].sampleAppFilename;

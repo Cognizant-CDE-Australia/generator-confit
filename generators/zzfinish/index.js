@@ -5,6 +5,11 @@ var _ = require('lodash');
 var ejs = require('ejs');
 
 module.exports = confitGen.create({
+
+  configuring: function() {
+    this.buildTool.configure.apply(this);
+  },
+
   writing: function() {
     this.buildTool.write.apply(this);
 
@@ -40,15 +45,16 @@ function generateReadmeFile() {
   // Generate a README, or update the existing README.md
   var readmeFile = this.destinationPath('README.md');
   var packageJSON = this.readPackageJson();
-  var templateData = _.merge({}, packageJSON);
+  var readmeFragments = this.getResources().readme;
+  var templateData = _.merge({}, packageJSON, readmeFragments);
 
   // We have to put some formatting into our data, to allow the README.md file to be updated continuously :(
   // All due to GitHub's handling of HTML comments in markdown.
   templateData.nameHeading = '# ' + packageJSON.name;
   templateData.install = '    npm install ' + packageJSON.name;
   templateData.description = '> ' + packageJSON.description;
-  templateData.taskDefinition = generateDevTasks(packageJSON.config.readme.buildTask).join('\n');
-  templateData.extensionPoints = '- ' + _.values(packageJSON.config.readme.extensionPoint).join('\n- ');
+  templateData.developmentTasks = generateDevTasks(packageJSON.config.readme.buildTask);
+  templateData.extensionPoints = generateExtensionPoints(packageJSON.config.readme.extensionPoint);
   templateData.configFile = this.configFile;
 
   // Remove the config.readme from the packageJSON, before writing it back to disk
@@ -80,5 +86,13 @@ function generateDevTasks(parentKey) {
 
   return tasks.map(function(task) {
     return '- `' + parentKey[task].command + '`: ' + parentKey[task].description;
-  });
+  }).join('\n');
+}
+
+function generateExtensionPoints(parentKey) {
+  var items = _.values(parentKey);
+  var firstItem = ['The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.']
+  items = firstItem.concat(items);
+
+  return '- ' + items.join('\n- ');
 }

@@ -21,32 +21,21 @@ module.exports = confitGen.create({
 
     this.log(chalk.underline.bold.green('Production Server Generator'));
 
-    var server = {
-      baseDir: (this.getGlobalConfig().paths.output || {}).prodDir || 'prod/',
-      port: 3000,
-      hostname: 'localhost',
-      protocol: 'https'
-    };
+    var server = _.merge({}, this.getResources().serverDev.defaults, this.getConfig());
     var done = this.async();
 
     var prompts = [
       {
         type: 'input',
-        name: 'baseDir',
-        message: 'Server base directory',
-        default: this.getConfig('baseDir') || server.baseDir
-      },
-      {
-        type: 'input',
         name: 'port',
         message: 'Server port',
-        default: this.getConfig('port') || server.port
+        default: server.port
       },
       {
         type: 'input',
         name: 'hostname',
         message: 'Server hostname',
-        default: this.getConfig('hostname') || server.hostname
+        default: server.hostname
       },
       {
         type: 'list',
@@ -56,7 +45,7 @@ module.exports = confitGen.create({
           'http',
           'https'
         ],
-        default: this.getConfig('protocol') || server.protocol
+        default: server.protocol
       }
     ];
 
@@ -69,6 +58,7 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },

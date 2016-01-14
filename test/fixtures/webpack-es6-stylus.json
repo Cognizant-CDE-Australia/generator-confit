@@ -3,24 +3,24 @@
     "app": {
       "buildProfile": "Webpack",
       "editorConfig": true,
-      "_version": "2f41d1fb76325724de4742805a8facef56ed449b"
+      "_version": "18bf15c84ca512f225be3f7a3de1217477013e99"
     },
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "0b0c04d5397254a373bb7be3b144bb69389e1625"
+      "_version": "b188df4118f98dd19485f05bedd3648e79a51696"
     },
     "buildHTML": {
       "extension": ".html",
-      "_version": "75ecbf98c03dcf9e22e2470113538099925a0561"
+      "_version": "d592394d11b440626635b4e5e51261a13e185384"
     },
     "buildCSS": {
       "includeOlderBrowsers": false,
       "cssCompiler": "stylus",
       "autoprefixer": true,
-      "_version": "c1ddb4f7ff2b201824841a0f4ad719e83c9fd7d8"
+      "_version": "e93c9b801316ddc1c49d947ac050cb29bc372b44"
     },
     "paths": {
       "input": {
@@ -47,19 +47,19 @@
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "a8d8fe588f75322de67ae2cba42fc251a3a68bf8"
+      "_version": "44722728f4b6c74ee3cda113503a6162d62b7b01"
     },
     "build": {},
     "verify": {
       "jsLinter": [
         "eslint"
       ],
-      "_version": "74771a229a009e4b327d56e5307649d7aad1de9b"
+      "_version": "7d5fb05c2c8e62a1001d0c32b6b010e94a1e49f1"
     },
     "zzfinish": {},
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "fcaf2a743ea97a1760f7db4a5717914948977e0b"
+      "_version": "2cc6ec904ac474f5366ebd6e9f6f428e929e39c7"
     },
     "buildAssets": {},
     "entryPoint": {
@@ -68,21 +68,19 @@
           "./modules/demoModule/app.js"
         ]
       },
-      "_version": "089a634e65967c358da9665f7b8bea3f5155f92d"
+      "_version": "95750713603c56f5c39b54491bedf27668d30115"
     },
     "serverDev": {
-      "baseDir": "dev/",
       "port": 3001,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "6e4d829df7a44de74f56a14b64a814e2af273cdc"
+      "_version": "210b714c98c36aebc7e12922663aea924395983a"
     },
     "serverProd": {
-      "baseDir": "prod/",
       "port": 3001,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "e1583f18ba63975fe442709c610f8dfcb1db70a4"
+      "_version": "9be53bd867a9190651002d616ad9170a40a86462"
     },
     "testUnit": {}
   }

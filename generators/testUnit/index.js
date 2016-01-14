@@ -3,6 +3,11 @@ var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 
 module.exports = confitGen.create({
+
+  configuring: function() {
+    this.buildTool.configure.apply(this);
+  },
+
   writing: function () {
     this.buildTool.write.apply(this);
   },

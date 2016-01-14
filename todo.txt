@@ -1,6 +1,9 @@
-- Ensure this works with Webpack
++ Ensure this works with Webpack
   + For Angular 1.x ES6 (3 hours)
   - For Angular 2 & Typescript (5 hours)
+
++ Use Yaml store multi-line readme doc strings.
+  - Use it for other static configuration
 
 - Get component-testing working (and add to readme)  (3 hours)
   - Write sample unit tests
@@ -15,7 +18,16 @@
   - Stylint test
 
 Backlog
-- Use Yaml store multi-line readme doc strings, per build tool plus one for the generator. Use it like a language file
+- Make Webpack config LESS lively and MORE readable
+
+- Add tests:
+  - Unit test for paths (are the paths correct?)
+  - npm build:serve (run Protractor test again)
+
+
+- Make sure the readme lists the Features of the build (e.g. unit testing, code coverage, js linting, css linting, etc, with a nice 'tick' symbol if possible)
+
+- Create a TODO.md for the project, indicating next steps
 
 - Look at Kent Dodds list of things to implement on a project (ghooks, semver etc, commitizen) and see what can be incorporated into
   <release> step and other generators (https://github.com/bahmutov/npm-module-checklist)

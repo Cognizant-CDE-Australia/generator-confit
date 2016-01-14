@@ -145,6 +145,7 @@ module.exports = confitGen.create({
       // If the new framework is "react" and the user already had a "react" vendor script, we could still get a duplicate. So call uniq().
       this.answers.vendorScripts = _.uniq(activeFrameworkScripts.concat(vendorScripts));
 
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },
@@ -163,7 +164,7 @@ module.exports = confitGen.create({
     });
 
     this.addReadmeDoc('extensionPoint.buildJSVendorScripts', 'The `buildJS.vendorScripts` array in **' + this.configFile + '** is designed to be edited manually.' +
-      'This property should contain NPM module names and/or references to JavaScript files (which must start with `./`)');
+      'This property should contain NPM module names and/or references to JavaScript files (files must start with `./`)');
 
     this.buildTool.write.apply(this);
   },

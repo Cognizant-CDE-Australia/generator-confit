@@ -72,6 +72,7 @@ module.exports = confitGen.create({
 
     // If we have new answers, then change the config
     if (this.answers) {
+      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
   },
@@ -79,7 +80,7 @@ module.exports = confitGen.create({
   writing: function () {
     this.addReadmeDoc('extensionPoint.entryPoint', 'The `entryPoint.entryPoints` object in **' + this.configFile + '** is designed to be edited manually. ' +
       'It represents the starting-point(s) of the application (like a `main()` function). Normally an application has one entry point, but it is possible to have more than one. ' +
-      '`entryPoint.entryPoints` must have at-least property (e.g. `entryPointName: [file]`), where the `file` is a list of NPM module names and/or references to JavaScript files (which must start with `./`)');
+      '`entryPoint.entryPoints` must have at-least property (e.g. `entryPointName: [file]`), where the `file` is a list of NPM module names and/or references to JavaScript files (file references must start with `./`)');
 
     this.buildTool.write.apply(this);
   },

@@ -3,7 +3,7 @@
     "app": {
       "buildProfile": "Webpack",
       "editorConfig": true,
-      "_version": "2f41d1fb76325724de4742805a8facef56ed449b"
+      "_version": "18bf15c84ca512f225be3f7a3de1217477013e99"
     },
     "paths": {
       "input": {
@@ -30,14 +30,14 @@
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "a8d8fe588f75322de67ae2cba42fc251a3a68bf8"
+      "_version": "44722728f4b6c74ee3cda113503a6162d62b7b01"
     },
     "buildAssets": {},
     "buildCSS": {
       "includeOlderBrowsers": false,
       "cssCompiler": "stylus",
       "autoprefixer": true,
-      "_version": "f6ee23ea6dd2633eac2fdda17911772ad97b344c"
+      "_version": "e93c9b801316ddc1c49d947ac050cb29bc372b44"
     },
     "buildJS": {
       "sourceFormat": "ES6",
@@ -49,37 +49,35 @@
         "angular",
         "angular-route"
       ],
-      "_version": "15292fa7dde2cb0e7a609b97c49fca98e668101d"
+      "_version": "b188df4118f98dd19485f05bedd3648e79a51696"
     },
     "buildHTML": {
       "extension": ".html",
-      "_version": "75ecbf98c03dcf9e22e2470113538099925a0561"
+      "_version": "d592394d11b440626635b4e5e51261a13e185384"
     },
     "build": {},
     "serverDev": {
-      "baseDir": "dev/",
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "6e4d829df7a44de74f56a14b64a814e2af273cdc"
+      "_version": "210b714c98c36aebc7e12922663aea924395983a"
     },
     "serverProd": {
-      "baseDir": "prod/",
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "e1583f18ba63975fe442709c610f8dfcb1db70a4"
+      "_version": "9be53bd867a9190651002d616ad9170a40a86462"
     },
     "testUnit": {},
     "verify": {
       "jsLinter": [
         "eslint"
       ],
-      "_version": "8aea77ebd04577d6d176beddd36492c4099bc281"
+      "_version": "7d5fb05c2c8e62a1001d0c32b6b010e94a1e49f1"
     },
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "3e64d468028091ac4889feda2fa714b8bb0e32ec"
+      "_version": "2cc6ec904ac474f5366ebd6e9f6f428e929e39c7"
     },
     "entryPoint": {
       "entryPoints": {
@@ -87,7 +85,7 @@
           "./modules/demoModule/app.js"
         ]
       },
-      "_version": "b7b76e7b8644a4b92d1de91884908e4d9994c69e"
+      "_version": "95750713603c56f5c39b54491bedf27668d30115"
     },
     "zzfinish": {}
   }

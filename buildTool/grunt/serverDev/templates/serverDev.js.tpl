@@ -9,7 +9,7 @@ module.exports = function (grunt) {
       dev: {
         options: {
           open: grunt.option('url') ? '<%= serverDev.protocol %>://<%= serverDev.hostname %>:<%= serverDev.port %>/' + grunt.option('url') : false,
-          base: '<%= serverDev.baseDir %>',
+          base: '<%= paths.output.devDir %>',
           port: '<%= serverDev.port %>',
           hostname: '<%= serverDev.hostname %>',
           protocol: '<%= serverDev.protocol %>',
@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     },
     watch: {
       serverDev: {
-        files: '<%= serverDev.baseDir %>',
+        files: '<%= paths.output.devDir %>',
         options: {
           livereload: <% if(!serverDev.protocol === 'https') { %>true<% } else { %>{
             key: sslKey,

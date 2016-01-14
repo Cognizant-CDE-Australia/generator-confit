@@ -79,10 +79,10 @@ function main() {
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
 
-    confitMsg(chalk.white('Executed', procComplete, 'of', procCount, 'specs'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
+    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount, '. Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
 
     if (procComplete === procCount) {
-      confitMsg(chalk.white.bold('Test Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
+      confitMsg(chalk.white.bold('Overall Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
       process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
