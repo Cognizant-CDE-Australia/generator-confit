@@ -1,31 +1,6 @@
-+ Get the Verify step working (3 hours)
-  + JS Linting
-  + CSS Linting (based on chosen CSS compiler)
-
-+ Replace confitReport.html with a README.md file, which lists the commands you can use to build and the expected directory format. (3 hours)
-  + Need a template README.md.
-  + Surround dynamic bits with comments.
-  + Before using template, check if existing readme exists. If so, use that as a template (and hopefully is still has the dynamic comments).
-  + Need to be able to use a project's existing README.md and add/replace relevant sections
-
-+ Refactor Protractor testing to execute Confit build BEFORE executing Protractor (1 hour)
-
-- Verify linting works. After running runConit.js to run generator, can run 'npm run verify', then change a file an re-run (3 hours)
-  + Eslint test
-  - SASSLint test
-  - Stylint test
-
-+ Get unit-testing working (and add to readme) (2 hours)
-  + For unit test, re-attach the Babel-loader for 'test_index.js' (it was removed from webpack.buildJS.config.js)
-  + Write sample unit tests
-  + Add Confit test of 'npm run test:once'
-  + Travis CI working (4 hours)
-
 - Ensure this works with Webpack
-  - For Angular 1.x ES6 (3 hours)
+  + For Angular 1.x ES6 (3 hours)
   - For Angular 2 & Typescript (5 hours)
-
-+ Add method addReadmeDoc('subkey', doc), to allow the documentation of extension points within the add
 
 - Get component-testing working (and add to readme)  (3 hours)
   - Write sample unit tests
@@ -34,9 +9,13 @@
   - Add NAB Sponsorship information
   - Complete documentation and licencing (see https://odecee.atlassian.net/wiki/display/ILAB/Open+Source+Project+Status)
 
+- Verify linting works. After running runConit.js to run generator, can run 'npm run verify', then change a file an re-run (3 hours)
+  + Eslint test
+  - SASSLint test
+  - Stylint test
 
 Backlog
-+ investigate removing need for fixDebugDir / bower_webpack script
+- Use Yaml store multi-line readme doc strings, per build tool plus one for the generator. Use it like a language file
 
 - Look at Kent Dodds list of things to implement on a project (ghooks, semver etc, commitizen) and see what can be incorporated into
   <release> step and other generators (https://github.com/bahmutov/npm-module-checklist)

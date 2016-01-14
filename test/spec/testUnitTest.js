@@ -25,7 +25,7 @@ module.exports = function(confitConfig) {
     });
 
 
-    describe('test failure', function() {
+    describe('with a unit test that finds a failure', function() {
       var destFixtureFile = process.env.TEST_DIR + confitConfig.paths.input.modulesDir +
                             confitConfig.paths.input.unitTestDir + 'unitTest-fail.spec.js';
 

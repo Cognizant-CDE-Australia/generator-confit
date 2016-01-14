@@ -11,12 +11,15 @@ for (var key in entryPoint.entryPoints) {
 }
 var moduleEPs = eps.filter(function(file) { return file.indexOf('./') !== 0; });
 var sourceEPs = eps.filter(function(file) { return file.indexOf('./') === 0; });
+var vendorScripts = buildJS.vendorScripts || [];
 
+// Not entirely comfortable with this, but combine modules defined in the entryPoint with the vendorScripts
+// (ASSUMPTION: the vendorScripts are not already in the entryPoint!!!)
+vendorScripts = vendorScripts.concat(moduleEPs);
 %>
-// Test: <%- sourceEPs.join(',') -%>
 
 // Load the vendor(node) modules first<%
-moduleEPs.forEach(function(moduleName) { -%>
+vendorScripts.forEach(function(moduleName) { %>
 import '<%= moduleName -%>';
 <% }); -%>
 

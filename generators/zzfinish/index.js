@@ -49,6 +49,7 @@ function generateReadmeFile() {
   templateData.description = '> ' + packageJSON.description;
   templateData.taskDefinition = generateDevTasks(packageJSON.config.readme.buildTask).join('\n');
   templateData.extensionPoints = '- ' + _.values(packageJSON.config.readme.extensionPoint).join('\n- ');
+  templateData.configFile = this.configFile;
 
   // Remove the config.readme from the packageJSON, before writing it back to disk
   delete packageJSON.config.readme;

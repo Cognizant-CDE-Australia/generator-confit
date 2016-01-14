@@ -29,29 +29,26 @@ module.exports = confitGen.create({
         name: 'entryPoints',
         message: 'Entry-points for the application ' + chalk.bold.green('(edit in ' + self.configFile + ')') + ':',
         choices: function() {
-          var map = self.getConfig('entryPoints');
+          var entryPoints = self.getConfig('entryPoints');
           var cbItems = [];
           var index = 0;
-          for (var key in map) {
+          for (var key in entryPoints) {
             index++;
             cbItems.push({
-              name: (index) + ': ' + key + ' <- ' + map[key].join(', '),
+              name: (index) + ': ' + key + ' <- ' + entryPoints[key].join(', '),
               disabled: '(read-only)',
               checked: true
             });
           }
 
-          var headerLabel = (_.keys(map).length) ? 'Entry Points' : '(No entry points defined - generate a sample app)';
+          var headerLabel = (_.keys(entryPoints).length) ? 'Entry Points' : '(No entry points defined - generate a sample app)';
 
           cbItems.unshift(headerLabel);   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
           return cbItems;
         },
         // Use the original answer, or generate a default one
         filter: function() {
-          if (!self.getConfig('entryPoints')) {
-            return {};
-          }
-          return self.getConfig('entryPoints');
+          return self.getConfig('entryPoints') || {};
         }
       }
     ];
@@ -80,6 +77,10 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
+    this.addReadmeDoc('extensionPoint.entryPoint', 'The `entryPoint.entryPoints` object in **' + this.configFile + '** is designed to be edited manually. ' +
+      'It represents the starting-point(s) of the application (like a `main()` function). Normally an application has one entry point, but it is possible to have more than one. ' +
+      '`entryPoint.entryPoints` must have at-least property (e.g. `entryPointName: [file]`), where the `file` is a list of NPM module names and/or references to JavaScript files (which must start with `./`)');
+
     this.buildTool.write.apply(this);
   },
 

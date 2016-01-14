@@ -10,7 +10,7 @@ var Page1 = function() {
     body: element(by.css('body')),
     heading: element(by.css('h1')),
     logo: element(by.css('img')),
-    linkToPage2: element(by.css('button'))
+    linkToPage2: element(by.css('a'))
   };
   return page;
 };
@@ -25,7 +25,7 @@ var Page2 = function() {
 
     body: element(by.css('body')),
     heading: element(by.css('h2')),
-    linkToPage1: element(by.css('button'))
+    linkToPage1: element(by.css('a'))
   };
   return page;
 };

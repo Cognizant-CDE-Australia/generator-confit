@@ -9,22 +9,6 @@ module.exports = confitGen.create({
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasExistingConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-
-      // Data that we need for this generator
-      this.cssCompilerConfig = {
-        stylus: {
-          ext: 'styl',
-          template: 'app.styl'
-        },
-        sass: {
-          ext: 'sass',
-          template: 'app.sass'
-        },
-        none: {
-          ext: 'css',
-          template: 'app.css'
-        }
-      };
     }
   },
 
@@ -36,8 +20,8 @@ module.exports = confitGen.create({
 
     this.log(chalk.underline.bold.green('Build CSS Generator'));
 
-    var self = this;
     var done = this.async();
+    var cssCompilerConfig = require('../../lib/cssConfig.json');
 
     var prompts = [
       {
@@ -63,7 +47,7 @@ module.exports = confitGen.create({
         type: 'list',
         name: 'cssCompiler',
         message: 'Choose a CSS compiler',
-        choices: Object.keys(this.cssCompilerConfig),
+        choices: Object.keys(cssCompilerConfig),
         default: this.getConfig('cssCompiler') || 'stylus'
       }
     ];

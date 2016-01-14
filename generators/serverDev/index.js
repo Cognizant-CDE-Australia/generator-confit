@@ -22,7 +22,7 @@ module.exports = confitGen.create({
     this.log(chalk.underline.bold.green('Dev Server Generator'));
 
     var server = {
-      baseDir: this.getGlobalConfig().paths.output.devDir,
+      baseDir: (this.getGlobalConfig().paths.output || {}).devDir || 'dev/',
       port: 3000,
       hostname: 'localhost',
       protocol: 'https'

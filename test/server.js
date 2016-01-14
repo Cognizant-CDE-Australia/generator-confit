@@ -38,11 +38,11 @@ function startServer(testDir, confitServerToStart, serverStartTimeout) {
     });
 
     child.on('exit', function(reason) {
-      console.log('Server exited', reason);
+      console.log('Server exited:', reason);
     });
 
     child.on('error', function (err) {
-      console.log('Failed to start server process.', err);
+      console.log('Failed to start server process:', err);
     });
 
     child.stdout.on('data', function (data) {

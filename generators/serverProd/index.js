@@ -22,7 +22,7 @@ module.exports = confitGen.create({
     this.log(chalk.underline.bold.green('Production Server Generator'));
 
     var server = {
-      baseDir: this.getGlobalConfig().paths.output.prodDir,
+      baseDir: (this.getGlobalConfig().paths.output || {}).prodDir || 'prod/',
       port: 3000,
       hostname: 'localhost',
       protocol: 'https'

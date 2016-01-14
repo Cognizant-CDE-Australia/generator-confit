@@ -17,7 +17,7 @@ module.exports = function() {
       'karma-junit-reporter': '0.3.8',
       'karma-ng-html2js-preprocessor': '0.2.0',
       'karma-phantomjs-launcher': '0.2.3',
-      'karma-sourcemap-loader': '0.3.6',
+      'karma-sourcemap-loader': '0.3.7',
       'karma-spec-reporter': '0.0.23',
       'karma-threshold-reporter': '0.1.15',
       'karma-webpack': '1.7.0',

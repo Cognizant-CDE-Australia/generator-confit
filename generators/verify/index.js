@@ -2,8 +2,6 @@
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var fs = require('fs');
-var _ = require('lodash');
-var vendorBowerScripts = {};
 
 module.exports = confitGen.create({
   initializing: {
@@ -66,10 +64,12 @@ module.exports = confitGen.create({
 
 
     // CSS Linting should be added automagically based on the CSS compiler chosen
-    this.fs.copy(
-      this.templatePath(config.buildCSS.cssCompiler + 'rc'),
-      this.destinationPath(outputDir + 'verify/.' + config.buildCSS.cssCompiler + 'rc')
-    );
+    if (config.buildCSS.cssCompiler !== 'none') {
+      this.fs.copy(
+        this.templatePath(config.buildCSS.cssCompiler + 'rc'),
+        this.destinationPath(outputDir + 'verify/.' + config.buildCSS.cssCompiler + 'rc')
+      );
+    }
 
     this.buildTool.write.apply(this);
   },

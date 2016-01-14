@@ -28,7 +28,7 @@ describe('Verify App build', function() {
 
     // If the button width is 83px, it means that the icon font has been loaded
     page2.linkToPage1.getCssValue('width').then(function (value) {
-      expect(parseInt(value, 10)).toBeGreaterThan(83);
+      expect(parseInt(value, 10)).toBeGreaterThan(74);
     });
 
 

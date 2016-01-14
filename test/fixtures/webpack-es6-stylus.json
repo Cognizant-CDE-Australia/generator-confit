@@ -9,7 +9,8 @@
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
-      "_version": "a6170cc13c10957ab1cc148cf4fb62cb2f6989fa"
+      "vendorScripts": [],
+      "_version": "0b0c04d5397254a373bb7be3b144bb69389e1625"
     },
     "buildHTML": {
       "extension": ".html",
@@ -53,12 +54,12 @@
       "jsLinter": [
         "eslint"
       ],
-      "_version": "fbbd5ce218c4953df69b199ec4a5c8ab18d110c0"
+      "_version": "74771a229a009e4b327d56e5307649d7aad1de9b"
     },
     "zzfinish": {},
     "sampleApp": {
       "createScaffoldProject": true,
-      "_version": "92734316b1e191811a2f70bee4227499d214277f"
+      "_version": "fcaf2a743ea97a1760f7db4a5717914948977e0b"
     },
     "buildAssets": {},
     "entryPoint": {
@@ -67,21 +68,21 @@
           "./modules/demoModule/app.js"
         ]
       },
-      "_version": "03f1e6cfb680a4cbfadbb9c475b0c047295c2556"
+      "_version": "089a634e65967c358da9665f7b8bea3f5155f92d"
     },
     "serverDev": {
       "baseDir": "dev/",
       "port": 3001,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "bae6884830d9ad5ec2a95989c15f9a8a9678baaf"
+      "_version": "6e4d829df7a44de74f56a14b64a814e2af273cdc"
     },
     "serverProd": {
       "baseDir": "prod/",
       "port": 3001,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "89da1d24d41bc2005856d180bb19ea9e1e57f067"
+      "_version": "e1583f18ba63975fe442709c610f8dfcb1db70a4"
     },
     "testUnit": {}
   }

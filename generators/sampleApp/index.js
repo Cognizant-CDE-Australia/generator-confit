@@ -71,35 +71,15 @@ module.exports = confitGen.create({
     // Copy compiler-specific CSS
     var cssTemplateDir = '../templates/css/';
     var compiler = config.buildCSS.cssCompiler;
-    var cssCompilerConfig = {
-      css: 'app.css',
-      sass: 'app.sass',
-      stylus: 'app.styl'
-    };
+    var cssConfig = require('../../lib/cssConfig.json');
 
     // Make CSSFile a member property so that the build tool can use it too
-    this.CSSFile = cssCompilerConfig[compiler];
+    this.CSSFile = cssConfig[compiler].sampleAppFilename;
     this.fs.copy(this.templatePath(cssTemplateDir + this.CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + this.CSSFile);
     this.fs.copy(this.templatePath(cssTemplateDir + 'iconFont.css'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + 'iconFont.css');
 
 
-    var buildJS = config.buildJS;
-    var jsDirConfig = {
-      '': 'es6/',
-      'AngularJS 1.x': 'es6ng1/',
-      'AngularJS 2.x': 'es6ng2/',   // Not yet implemented
-      'React 0.x': 'es6/'           // Not yet implemented
-    };
-
-    // Make this.selectedJSFrameworkDir a property of the generator, so the build-tool can use it too
-    this.selectedJSFrameworkDir = jsDirConfig[buildJS.framework[0] || ''];
-
-    // Copy JS files
-    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir + this.demoOutputModuleDir + '*.js'), paths.input.modulesDir + this.demoOutputModuleDir);
-
-    // Copy TEMPLATE HTML files
-    this.fs.copy(this.templatePath(this.selectedJSFrameworkDir  + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
-
+    // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific code
 
     // Copy unit test(s)
     this.fs.copy(this.templatePath('unitTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);

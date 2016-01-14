@@ -10,8 +10,8 @@ module.exports = function() {
 
     // Add the NPM dev dependencies
     this.setNpmDevDependencies({
-      'webpack': '1.12.10',
-      'webpack-dev-server': '1.14.0',
+      'webpack': '1.12.11',
+      'webpack-dev-server': '1.14.1',
       'extract-text-webpack-plugin': '1.0.1' // latest version (1.0.0) is missing a dependency. Revert to earlier version
     });
 
