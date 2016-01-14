@@ -12,6 +12,28 @@ css:
     ext: styl
     sampleAppFilename: app.styl
 
+# Javascript config
+js:
+  frameworks:
+    AngularJS 1.x:
+      - angular: '*'
+    AngularJS 2.x:
+      - angular2: '*'
+    React (latest):
+      - react: '*'
+
+  sourceFormat:
+    options:
+      - ES5
+      - ES6
+    default: ES6
+
+  outputFormat:
+    options:
+      - ES5
+      - ES6
+    default: ES5
+
 # Path Defaults
 path:
   defaults:

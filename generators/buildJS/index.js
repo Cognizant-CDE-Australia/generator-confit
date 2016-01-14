@@ -6,22 +6,10 @@ var _ = require('lodash');
 var path = require('path');
 
 
-var frameworkScriptMap = {
-  'AngularJS 1.x': [
-    { angular: '*' },
-    { 'angular-route': '*' }
-  ],
-  'AngularJS 2.x': [
-    { angular2: '*' }
-  ],
-  'React (latest)': [
-    { react: '*' }
-  ]
-};
-var frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap));
-var frameworkScripts = _.flatten(frameworkScriptObjs.map(function(obj) {
-  return _.keys(obj);
-}));
+var frameworkScriptMap;
+var frameworkNames;       // The names of the frameworks ['frameworkName', ...]
+var frameworkScriptObjs;  // The framework script objects {name: 'version'}
+var frameworkScripts;     // The framework script names ['ModuleName', ...]
 
 module.exports = confitGen.create({
   initializing: {
@@ -29,6 +17,14 @@ module.exports = confitGen.create({
       // Check if this component has an existing config.
       this.hasConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
+
+      frameworkScriptMap = this.getResources().js.frameworks;
+      frameworkNames = _.keys(frameworkScriptMap);
+      console.dir(frameworkNames);
+      frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap));
+      frameworkScripts = _.flatten(frameworkScriptObjs.map(function(obj) {
+        return _.keys(obj);
+      }));
     }
   },
 
@@ -42,28 +38,22 @@ module.exports = confitGen.create({
 
     var done = this.async();
     var self = this;
+    var res = this.getResources().js;
 
     var prompts = [
       {
         type: 'list',
         name: 'sourceFormat',
         message: 'Source code language',
-        choices: [
-          'ES5',
-          'ES6'
-        ],
-        default: this.getConfig('sourceFormat') || 'ES6'
+        choices: res.sourceFormat.options,
+        default: this.getConfig('sourceFormat') || res.sourceFormat.default
       },
       {
         type: 'list',
         name: 'outputFormat',
         message: 'Target output language',
-        choices: [
-          'ES3',
-          'ES5',
-          'ES6'
-        ],
-        default: this.getConfig('outputFormat') || 'ES5'
+        choices: res.outputFormat.options,
+        default: this.getConfig('outputFormat') || res.outputFormat.default
       },
       //{
       //  type: 'confirm',
@@ -75,11 +65,7 @@ module.exports = confitGen.create({
         type: 'checkbox',
         name: 'framework',
         message: 'JavaScript Framework (optional)',
-        choices: [
-          'AngularJS 1.x',
-          'AngularJS 2.x',
-          'React (latest)'
-        ],
+        choices: frameworkNames,
         default: this.getConfig('framework') || []
       },
       {

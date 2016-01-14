@@ -4,6 +4,12 @@
 
 + Use Yaml store multi-line readme doc strings.
   - Use it for other static configuration
+  - Use it store questions
+  - Change addReadmeDoc to have a template-data parameter, to allow dynamic fields in resources.yml to be populated!
+  - add buildTool.getResources() method, to allow build tools to have their own configuration
+
+- change Sample app so that it ADDS a vendorScript to buildJS when the framework is Angular
+  - (it will need write-access to the global config do this!)
 
 - Get component-testing working (and add to readme)  (3 hours)
   - Write sample unit tests
