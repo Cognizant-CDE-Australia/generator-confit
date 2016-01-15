@@ -187,6 +187,7 @@ module.exports = confitGen.create({
     this.composeWith('confit:buildJS', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:buildHTML', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
+    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it MUST be run afterwards
     this.composeWith('confit:serverDev', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:serverProd', {options: _.merge({}, subGenOptions)});
     this.composeWith('confit:testUnit', {options: _.merge({}, subGenOptions)});
@@ -199,7 +200,6 @@ module.exports = confitGen.create({
     //
     //// This is guaranteed to be the last thing to run
     this.composeWith('confit:sampleApp', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it MUST be run afterwards
     this.composeWith('confit:zzfinish', {options: _.merge({}, subGenOptions)});
   },
 

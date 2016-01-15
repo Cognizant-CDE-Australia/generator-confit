@@ -3,9 +3,11 @@
 // Basic routing functions, in the absence of a "proper" router
 function gotoPage(pageName, addToHistory) {
   // TODO: Use config paths here instead of 'modules/demoModule'
-  window.document.getElementById('content').innerHTML = window[pageName];
+  window.document.getElementById('content').innerHTML = window[pageName.replace('#/', '')];
   if (addToHistory !== false) {
-    window.history.pushState({ isPushState: true, url: pageName }, pageName, pageName);
+    var title = pageName;
+    var url = '#/' + pageName;
+    window.history.pushState({ isPushState: true, url: url }, title, url);
   }
 }
 

@@ -72,7 +72,7 @@ function install(resolve, reject) {
       })
       .withPrompts({
         rebuildFromConfig: true,
-        createScaffoldProject: true
+        createSampleApp: true
       })
       .on('end', function() {
         var config = require(destConfitConfigPath)['generator-confit'];

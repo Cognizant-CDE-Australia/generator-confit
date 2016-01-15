@@ -60,16 +60,6 @@ module.exports = confitGen.create({
   },
 
   configuring: function() {
-    // If no entry point has been defined, AND we want to create a scaffold project, update the config using (temporary) data set by <sampleApp>
-    var sampleAppConfig = this.getGlobalConfig().sampleApp;
-    var createSampleApp = sampleAppConfig.createScaffoldProject;
-
-    // Always use the sampleAppEntryPoint if directed to
-    if (createSampleApp) {
-      this.answers = {};
-      this.answers.entryPoints = sampleAppConfig.sampleAppEntryPoint;
-    }
-
     // If we have new answers, then change the config
     if (this.answers) {
       this.buildTool.configure.apply(this);

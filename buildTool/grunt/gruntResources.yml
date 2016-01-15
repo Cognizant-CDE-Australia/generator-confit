@@ -1,0 +1,19 @@
+# sampleApp configuration
+sampleApp:
+  js:
+    framework:
+      '':
+        sampleDir: es6/
+        vendorScripts: []
+
+      AngularJS 1.x:
+        sampleDir: es6ng1/
+        vendorScripts:
+          - angular-route
+
+      AngularJS 2.x:
+        sampleDir: es6ng2/      # not yet implemented
+        vendorScripts: []
+
+      React (latest):
+        sampleDir: es6react/

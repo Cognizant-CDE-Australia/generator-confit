@@ -14,7 +14,7 @@ module.exports = confitGen.create({
 
   prompting: function () {
     // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig && this.getConfig('createScaffoldProject') === false) {
+    if (this.rebuildFromConfig && this.getConfig('createSampleApp') === false) {
       return;
     }
 
@@ -25,9 +25,9 @@ module.exports = confitGen.create({
     var prompts = [
       {
         type: 'confirm',
-        name: 'createScaffoldProject',
+        name: 'createSampleApp',
         message: 'Create a sample app?',
-        default: this.getConfig('createScaffoldProject') || true
+        default: this.getConfig('createSampleApp') || true
       }
     ];
 
@@ -41,22 +41,18 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      createEntryPointSampleAppConfig.apply(this);
-      this.buildTool.configure.apply(this);
+      // If we don't want to create a sample app,
+      if (this.answers.createSampleApp) {
+        this.buildTool.configure.apply(this);
+      }
       this.setConfig(this.answers);
     }
   },
 
   writing: function () {
-    removeEntryPointSampleAppConfig.apply(this);
-
-    // Determine which sample app to create, based on the project config
-    var createSampleApp = this.getConfig().createScaffoldProject;
-
-    if (!createSampleApp) {
+    if (!this.getConfig('createSampleApp')) {
       return;
     }
-
 
     // Write the basic demo project, but maybe a tool can overwrite it?...
     var config = this.getGlobalConfig();
@@ -78,7 +74,7 @@ module.exports = confitGen.create({
     this.fs.copy(this.templatePath(cssTemplateDir + 'iconFont.css'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + 'iconFont.css');
 
 
-    // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific code
+    // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific files to use
 
     // Copy unit test(s)
     this.fs.copy(this.templatePath('unitTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);
@@ -94,27 +90,3 @@ module.exports = confitGen.create({
     });
   }
 });
-
-
-// Special case - in order to tell <entryPoint> that we are using a sample project,
-// we need to write some TEMPORARY config IN THIS STAGE, then remove the config in the next stage.
-// Additionally, createEntryPointSampleAppConfig() must be called AFTER <paths>, so that the paths config can be found
-function createEntryPointSampleAppConfig() {
-  // Write temporary config
-  if (this.answers.createScaffoldProject) {
-    var config = this.getGlobalConfig();
-    var modulesDir = config.paths.input.modulesSubDir;
-
-    this.answers.sampleAppEntryPoint = {
-      app: [modulesDir + this.demoOutputModuleDir + 'app.js']
-    };
-  }
-}
-
-
-function removeEntryPointSampleAppConfig() {
-  if (this.answers) {
-    delete this.answers.sampleAppEntryPoint;  // T
-    this.setConfig(this.answers);
-  }
-}

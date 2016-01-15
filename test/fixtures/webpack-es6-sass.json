@@ -1,26 +1,9 @@
 {
   "generator-confit": {
     "app": {
-      "buildProfile": "Webpack",
+      "buildProfile": "Latest",
       "editorConfig": true,
-      "_version": "18bf15c84ca512f225be3f7a3de1217477013e99"
-    },
-    "buildJS": {
-      "sourceFormat": "ES6",
-      "outputFormat": "ES5",
-      "framework": [],
-      "vendorScripts": [],
-      "_version": "b188df4118f98dd19485f05bedd3648e79a51696"
-    },
-    "buildHTML": {
-      "extension": ".html",
-      "_version": "d592394d11b440626635b4e5e51261a13e185384"
-    },
-    "buildCSS": {
-      "includeOlderBrowsers": false,
-      "cssCompiler": "sass",
-      "autoprefixer": true,
-      "_version": "e93c9b801316ddc1c49d947ac050cb29bc372b44"
+      "_version": "f8765ce966baf06f283a56433a4387378d46bc94"
     },
     "paths": {
       "input": {
@@ -49,26 +32,28 @@
       },
       "_version": "44722728f4b6c74ee3cda113503a6162d62b7b01"
     },
-    "build": {},
-    "verify": {
-      "jsLinter": [
-        "eslint"
-      ],
-      "_version": "7d5fb05c2c8e62a1001d0c32b6b010e94a1e49f1"
-    },
-    "zzfinish": {},
-    "sampleApp": {
-      "createScaffoldProject": true,
-      "_version": "2cc6ec904ac474f5366ebd6e9f6f428e929e39c7"
-    },
     "buildAssets": {},
+    "buildCSS": {
+      "includeOlderBrowsers": false,
+      "cssCompiler": "sass",
+      "autoprefixer": true,
+      "_version": "e93c9b801316ddc1c49d947ac050cb29bc372b44"
+    },
+    "buildJS": {
+      "sourceFormat": "ES6",
+      "outputFormat": "ES5",
+      "framework": [],
+      "vendorScripts": [],
+      "_version": "620ff8d0d72cc4303d6bd7ee20b1e249ddc1f0cb"
+    },
+    "buildHTML": {
+      "extension": ".html",
+      "_version": "d592394d11b440626635b4e5e51261a13e185384"
+    },
+    "build": {},
     "entryPoint": {
-      "entryPoints": {
-        "app": [
-          "./modules/demoModule/app.js"
-        ]
-      },
-      "_version": "95750713603c56f5c39b54491bedf27668d30115"
+      "entryPoints": {},
+      "_version": "c6b6a154f450d08a1d71cfa0518bb906e0cb52c8"
     },
     "serverDev": {
       "port": 3000,
@@ -82,6 +67,15 @@
       "protocol": "https",
       "_version": "9be53bd867a9190651002d616ad9170a40a86462"
     },
-    "testUnit": {}
+    "testUnit": {},
+    "verify": {
+      "jsLinter": [],
+      "_version": "7d5fb05c2c8e62a1001d0c32b6b010e94a1e49f1"
+    },
+    "sampleApp": {
+      "createSampleApp": true,
+      "_version": "1156b82b98b307036574a5a32f4f264db3b5a95b"
+    },
+    "zzfinish": {}
   }
 }

@@ -20,11 +20,10 @@ module.exports = confitGen.create({
 
       frameworkScriptMap = this.getResources().js.frameworks;
       frameworkNames = _.keys(frameworkScriptMap);
-      console.dir(frameworkNames);
       frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap));
-      frameworkScripts = _.flatten(frameworkScriptObjs.map(function(obj) {
-        return _.keys(obj);
-      }));
+      frameworkScripts = frameworkScriptObjs.map(function(obj) {
+        return _.keys(obj)[0];    // There is only one key - the script name
+      });
     }
   },
 
