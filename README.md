@@ -23,7 +23,7 @@
 
 These are the companies that are sponsoring the development of Confit:
 
-[![NAB logo](http://developer.nab.com.au/images/5a2a9621.nab-logo-horizontal.png)](https://www.nab.com.au)
+<a href="https://www.nab.com.au"><img src="http://developer.nab.com.au/images/5a2a9621.nab-logo-horizontal.png" height="100"></a>
 [![Odecee](http://odecee.com.au/wp-content/themes/odecee/library/images/logo.svg)](http://www.odecee.com.au)
 
 
