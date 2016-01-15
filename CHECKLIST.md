@@ -14,15 +14,15 @@ enables other tools, like intelligent release notes.
 
 <!--- [ ] show the project's GitHub open issues on demand or on commit using [git-issues][git-issues]-->
 
-- [ ] setup continuous integration server, like [TravisCI][travis] or [CircleCI][circle] (or wait until you set up [semantic-release][semantic-release] which will set up [TravisCI][travis] for you).
+- [x] setup continuous integration server, like [TravisCI][travis] or [CircleCI][circle] (or wait until you set up [semantic-release][semantic-release] which will set up [TravisCI][travis] for you).
 
-- [ ] [add badges][badges] to the README to make broken unit tests or out of date dependencies visible
-  - [ ] ci server badge
-  - [ ] published NPM package info [NodeICO][nodeico]
+- [x] [add badges][badges] to the README to make broken unit tests or out of date dependencies visible
+  - [x] ci server badge
+  - [x] published NPM package info [NodeICO][nodeico]
   - [x] production and dev dependencies being out of date [david-dm][david-dm]
   - [x] semantic release badge
 
-- [ ] check module published size and white list only necessary files, [tutorial][module size]
+- [x] check module published size and white list only necessary files, [tutorial][module size]
 
 - [ ] setup [semantic-release][semantic-release] to automate publishing
 and avoid breaking [semver][semver]. This is [important][semver important],
@@ -40,18 +40,18 @@ Use [save-exact][save-exact] NPM setting and [exact-semver][exact-semver] to enf
 - [ ] catch missing or invalid `package.json` values using [grunt-nice-package][grunt-nice-package]
 or [fixpack][fixpack]
 
-- [ ] write simple installation commands for your module
+- [x] write simple installation commands for your module
 
 - [ ] write "quick intro" example showing the main feature of your module
 
-- [ ] add CONTRIBUTING.md file with clear guidelines how others can add new features or fix bugs
+- [x] add CONTRIBUTING.md file with clear guidelines how others can add new features or fix bugs
 in your module. [Atom editor][atom] and [lodash][lodash] have excellent examples to follow.
 When GitHub finds a CONTRIBUTING.md file it [shows a message][contributing] to anyone opening an issue.
 
 - [ ] generate documentation automatically. [xplain][xplain] is my own tool for JS to HTML/Markdown
 generation
 
-- [ ] place most of the public API documentation in README file for simple retrieval.
+- [x] place most of the public API documentation in README file for simple retrieval.
 This allows other developers to find relevant sections right from the command line [manpm][manpm]
 or by looking up `npm home package-name`
 
