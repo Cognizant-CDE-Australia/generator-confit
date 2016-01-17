@@ -29,9 +29,11 @@ module.exports = function() {
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
     var selectedFramework = config.buildJS.framework[0] || '';
     var vendorScripts = jsFrameworkConfig[selectedFramework].vendorScripts || [];
-    config.buildJS.vendorScripts = config.buildJS.vendorScripts.concat(vendorScripts.map(function(module) {
+    config.buildJS.vendorScripts = _.uniq(config.buildJS.vendorScripts.concat(vendorScripts.map(function(module) {
       return _.keys(module)[0];
-    }));
+    })));
+
+    // Deduplicate the array
 
     writeConfig.apply(this, [fullConfig]);
   }

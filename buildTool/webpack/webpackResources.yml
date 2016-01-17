@@ -1,3 +1,17 @@
+# README section for large blocks of static text
+readme:
+  extensionPoint:
+    start: |
+      `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
+      and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>'. Confit will attempt to overwrite the contents
+      files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
+    testUnit: |
+      `npm test:unit` can be extended by modifying
+       <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
+       <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
+      It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
+
+
 # sampleApp configuration
 sampleApp:
   js:

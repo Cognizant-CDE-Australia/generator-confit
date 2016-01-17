@@ -57,6 +57,7 @@
     "ejs": "2.3.4",
     "js-yaml": "3.5.2",
     "lodash": "3.7.0",
+    "lodash-deep": "1.6.0",
     "protractor": "3.0.0",
     "yeoman-generator": "0.22.2"
   },

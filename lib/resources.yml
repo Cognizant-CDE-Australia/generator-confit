@@ -62,18 +62,54 @@ path:
 
 # README section for large blocks of static text
 readme:
+  extensionPoint:   # Common extension point information
+    buildJSVendorScripts: >
+      The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
+      This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
+      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
+    entryPoint: >
+      The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
+      It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
+      one entry point, but it is possible to have more than one.
+      `entryPoint.entryPoints` must have at-least property (e.g. `property: [file]`), where `file` is a list
+      of NPM module names and/or references to JavaScript files (file references must start with `./`)');
+  RM_HEADING: '# <%- name %>'
+  RM_DESCRIPTION: '> <%- description %>'
+  RM_INSTALL: |
+    ##Install
 
-  changingBuildToolConfiguration: |
+        npm install <%- name %>
+
+  RM_DEVELOPMENT_TASKS: |
+    ##Development Tasks
+
+    <% objectValues(config.readme.buildTask).forEach(function(value) {
+    %>- `<%- value.command %>`: <%- value.description %>
+    <% }); %>
+
+  RM_CHANGING_BUILD_TOOL_CONFIG: |
     ##Changing build-tool configuration
 
-    There are 3 ways you can change the project build-tool configuration:
+    There are 3 ways you can change the build-tool configuration for this project:
 
-    1. BEST: Modify the Confit configuration file (usually **confit.json**) by hand, then re-run `yo confit` and tell it to use the existing configuration.
-    1. OK: Re-run `yo confit` and provide new answers to the questions. **Confit will attempt to overwrite your existing configuration, so make sure you have committed your code to a SCCS (e.g. git) first**.
-      There are certain configuration settings which can **only** be specified by hand, in which case the first option needs to be used.
+    1. BEST: Modify the Confit configuration file (<%= link(configFile) %>) by hand, then re-run `yo confit` and tell it to use the existing configuration.
+    1. OK: Re-run `yo confit` and provide new answers to the questions. **Confit will attempt to overwrite your existing configuration (it will prompt for confirmation), so make sure you have committed your code to a source control (e.g. git) first**.
+      There are certain configuration settings which can **only** be specified by hand, in which case the first approach is still necessary needs to be used.
     1. RISKY: Modify the generated build-tool config by hand. Be aware that if you re-run `yo confit` it will attempt to overwrite your changes. So commit your changes to source control first.
 
-    Additionally, the **currently generated** configuration can be extended in the following ways:
+    Additionally, the **currently-generated** configuration can be extended in the following ways:
+
+    - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
+    <% objectValues(merge(config.readme.extensionPoint, extensionPoint)).forEach(function(value) {
+    %>- <%- value -%>
+    <% }); %>
+
+  RM_BUILD_TOOL_FEATURES: |
+    ## Build Tool Features
+
+    <% objectValues(config.readme.buildToolFeature).forEach(function(value) {
+    %>- <%- value -%>
+    <% }); %>
 #
 
 # Server - Development

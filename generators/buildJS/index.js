@@ -143,13 +143,10 @@ module.exports = confitGen.create({
       return frameworkScriptMap[framework];
     }));
 
-    // Always add depndencies - it is hard to guess correctly when to remove a framework dependency
+    // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
     activeFrameworkScriptObjs.forEach(function(moduleObj) {
       self.setNpmDependencies(moduleObj);
     });
-
-    this.addReadmeDoc('extensionPoint.buildJSVendorScripts', 'The `buildJS.vendorScripts` array in **' + this.configFile + '** is designed to be edited manually.' +
-      'This property should contain NPM module names and/or references to JavaScript files (files must start with `./`)');
 
     this.buildTool.write.apply(this);
   },

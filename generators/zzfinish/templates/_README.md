@@ -1,32 +1,29 @@
-<!--[nameHeading]-->
-<%- nameHeading %>
+<!--[RM_HEADING]-->
+<%- RM_HEADING %>
 
 <!--[]-->
-<!--[description]-->
-<%- description %>
-
-<!--[]-->
-
-##Install
-
-<!--[install]-->
-<%- install %>
+<!--[RM_DESCRIPTION]-->
+<%- RM_DESCRIPTION %>
 
 <!--[]-->
 
-##Development Tasks
-
-<!--[developmentTasks]-->
-<%- developmentTasks %>
+<!--[RM_INSTALL]-->
+<%= RM_INSTALL %>
 
 <!--[]-->
 
-<!--[changingBuildToolConfiguration]-->
-<%- changingBuildToolConfiguration %>
+<!--[RM_DEVELOPMENT_TASKS]-->
+<%- RM_DEVELOPMENT_TASKS %>
 
 <!--[]-->
 
-<!--[extensionPoints]-->
-<%- extensionPoints %>
+<!--[RM_BUILD_TOOL_FEATURES]-->
+<%- RM_BUILD_TOOL_FEATURES %>
 
 <!--[]-->
+
+<!--[RM_CHANGING_BUILD_TOOL_CONFIG]-->
+<%- RM_CHANGING_BUILD_TOOL_CONFIG %>
+
+<!--[]-->
+

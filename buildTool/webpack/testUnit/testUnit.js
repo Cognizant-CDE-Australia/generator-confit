@@ -37,9 +37,7 @@ module.exports = function() {
     this.defineNpmTask('test:unit:once', ['karma start --singleRun=true ./' + outputDir + 'karma.conf.js'], 'Run unit tests once');
     this.defineNpmTask('test:unit:debug', ['karma start ./' + outputDir + 'karma.debug.conf.js'], 'Run unit tests in a browser to make debugging easier (no code coverage)');
 
-    this.addReadmeDoc('extensionPoint.testUnit', '`npm test:unit` can be extended by modifying **' + outputDir +
-      'karma.conf.js** and **' + outputDir + 'karma.common.js**. **' + outputDir +
-      'test.files.js** is generated from the entry points in the Confit configuration. It is best to modify the entry points in **confit.json**, then re-run `yo confit`.');
+    this.addReadmeDoc('extensionPoint.testUnit', this.buildTool.getResources().readme.extensionPoint.testUnit);
   }
 
   return {
