@@ -3,6 +3,9 @@ app:
     - name: grunt
       version: '0.4.5'
 
+    - name: grunt-cli
+      version: '0.1.13'
+
     - name: grunt-extend-config
       version: '*'
 

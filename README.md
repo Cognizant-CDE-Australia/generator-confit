@@ -2,13 +2,14 @@
 
 > Yeoman generator for creating the development process, tools and a sample project for current-generation web applications.
 
-[![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)
+<!--[![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)-->
 
-[![Checklist](https://img.shields.io/badge/follows-npm%20checklist-brightgreen.svg)](CHECKLIST.md)
+[![NPM Version](https://img.shields.io/npm/v/generator-confit.svg?style=flat-square)](http://npm.im/generator-confit)
 [![Build Status](https://travis-ci.org/odecee/generator-confit.svg)](https://travis-ci.org/odecee/generator-confit)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Dependencies status](https://david-dm.org/odecee/generator-confit/status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=dependencies)
 [![Dev Dependencies status](https://david-dm.org/odecee/generator-confit/dev-status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=devDependencies)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Checklist](https://img.shields.io/badge/follows-npm%20checklist-brightgreen.svg)](CHECKLIST.md)
 
 ![terminal](terminal.gif)
 
