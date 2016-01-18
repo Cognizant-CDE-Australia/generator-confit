@@ -157,8 +157,7 @@ module.exports = confitGen.create({
       );
     }
 
-
-    this.setNpmDevDependencies({'npm-run-all': '1.4.0'});
+    this.setNpmDevDependenciesFromArray(this.getResources().app.packages);
 
     // Build-tool specific files
     this.buildTool.write.apply(this);

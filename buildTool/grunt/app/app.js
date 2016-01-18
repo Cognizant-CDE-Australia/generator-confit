@@ -9,11 +9,7 @@ module.exports = function() {
       this.destinationPath('Gruntfile.js')
     );
 
-    // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      'grunt-extend-config': '*',
-      'load-grunt-tasks': '*'
-    });
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().app.packages);
   }
 
   function beginDevelopment() {

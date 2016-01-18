@@ -2,7 +2,7 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.extendConfig({
-<% if (verify.jsLinter.indexOf('eslint') > -1) { -%>
+<% if (verify.linters.indexOf('eslint') > -1) { -%>
     eslint: {
       options: {
         configFile: '<%= paths.config.configDir %>verify/.eslintrc'
@@ -12,19 +12,19 @@ module.exports = function (grunt) {
       }
     },
 <% } -%>
-<% if (buildCSS.cssCompiler.indexOf('sass') > -1) { -%>
+<% if (verify.linters.indexOf('sasslint') > -1) { -%>
     sasslint: {
       options: {
-        configFile: '<%= paths.config.configDir %>verify/.sassrc'
+        configFile: '<%= paths.config.configDir %>verify/.sasslintrc'
       },
       all: ['<%= paths.input.srcDir %>**/*.s+(a|c)ss']
     },
 <% } -%>
-<% if (buildCSS.cssCompiler.indexOf('stylus') > -1) { -%>
+<% if (verify.linters.indexOf('stylint') > -1) { -%>
     stylint: {
       all: {
         options: {
-          configFile: '<%= paths.config.configDir %>verify/.stylusrc'
+          configFile: '<%= paths.config.configDir %>verify/.stylintrc'
         },
         src: ['<%= paths.input.srcDir %>**/*.styl']
       }
@@ -35,16 +35,16 @@ module.exports = function (grunt) {
         options: {
           spawn: true
         },
-        files: [<%- verify.allLinters.map(function(linter) {
+        files: [<%- verify.linters.map(function(linter) {
           if (linter === 'sasslint')
             return '\'<' + '%= ' + linter + '.all %' + '>\'';
           else
             return '\'<' + '%= ' + linter + '.all.src %' + '>\'';
           }).join(', ');%>],
-        tasks: [<%- verify.allLinters.map(function(linter) {return '\'newer:' + linter + ':all\'';}).join(', '); %>]
+        tasks: [<%- verify.linters.map(function(linter) {return '\'newer:' + linter + ':all\'';}).join(', '); %>]
       }
     }
   });
 
-  grunt.registerTask('verify', 'Run all the verify tasks', [<%- verify.allLinters.map(function(linter) {return '\'' + linter + ':all\'';}).join(', '); %>]);
+  grunt.registerTask('verify', 'Run all the verify tasks', [<%- verify.linters.map(function(linter) {return '\'' + linter + ':all\'';}).join(', '); %>]);
 };

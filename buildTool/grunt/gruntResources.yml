@@ -1,3 +1,14 @@
+app:
+  packages:
+    - name: grunt
+      version: '0.4.5'
+
+    - name: grunt-extend-config
+      version: '*'
+
+    - name: load-grunt-tasks
+      version: '*'
+
 # sampleApp configuration
 sampleApp:
   js:
@@ -17,3 +28,41 @@ sampleApp:
 
       React (latest):
         sampleDir: es6react/
+
+serverDev:
+  packages:
+    - name: grunt-contrib-watch
+      version: '*'
+
+    - name: grunt-contrib-connect
+      version: '*'
+
+serverProd:
+  packages:
+    - name: grunt-contrib-watch
+      version: '*'
+
+    - name: grunt-contrib-connect
+      version: '*'
+
+verify:
+  packages:
+    - name: grunt-newer
+      version: '*'
+      criteria: this.config.verify.linters.length > 0
+
+    - name: grunt-eslint
+      version: '*'
+      criteria: this.config.verify.linters.indexOf('eslint') !== -1
+
+    - name: eslint-config-airbnb
+      version: '*'
+      criteria: this.config.verify.linters.indexOf('eslint') !== -1
+
+    - name: grunt-sass-lint
+      version: '*'
+      criteria: this.config.verify.linters.indexOf('sasslint') !== -1
+
+    - name: grunt-stylint
+      version: '*'
+      criteria: this.config.verify.linters.indexOf('stylint') !== -1

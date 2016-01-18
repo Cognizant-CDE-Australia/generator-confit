@@ -15,24 +15,31 @@ app:
     - confit:sampleApp
     - confit:zzfinish
 
+  packages:
+    - name: npm-run-all
+      version: '1.4.0'
+
 # CSS configuration
 css:
   none:
     ext: css
     sampleAppFilename: app.css
+    linter:
 
   sass:
     ext: sass
     sampleAppFilename: app.sass
+    linter: sasslint
 
   stylus:
     ext: styl
     sampleAppFilename: app.styl
+    linter: stylint
 
 # Javascript config
 js:
   frameworks:
-    AngularJS 1.x:
+    AngularJS 1.x:  #TODO: Convert this pacakge defintion format to the standard format
       - angular: '*'
     AngularJS 2.x:
       - angular2: '*'

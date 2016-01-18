@@ -13,19 +13,7 @@ module.exports = function() {
     var config = this.config.getAll();
     var outputDir = config.paths.config.configDir;
 
-    // Create a combined 'allLinters' array, to make the grunt template simpler to maintain
-    config.verify.allLinters = config.verify.jsLinter;
-
-    var cssLinters = {
-      sass: 'sasslint',
-      stylus: 'stylint'
-    };
-
-    if (cssLinters[config.buildCSS.cssCompiler]) {
-      config.verify.allLinters.push(cssLinters[config.buildCSS.cssCompiler]);
-    }
-
-    setLintDependencies.call(this, config.verify.allLinters);
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().verify.packages);
 
     this.fs.copyTpl(
       this.toolTemplatePath('gruntVerify.js.tpl'),
@@ -36,15 +24,6 @@ module.exports = function() {
     // Define the verify tasks
     this.defineNpmTask('verify', ['grunt verify'], 'Verify JS & CSS code style and syntax');
     this.defineNpmTask('verify:watch', ['grunt watch:verify'], 'Run verify task whenever JS or CSS code changes');
-  }
-
-
-  function setLintDependencies(linters) {
-    this.setNpmDevDependencies({'grunt': '0.4.5'});
-    this.setNpmDevDependencies({'grunt-newer': '*'}, linters.length > 0);
-    this.setNpmDevDependencies({'grunt-eslint': '*', 'eslint-config-airbnb': '*'}, linters.indexOf('eslint') !== -1);
-    this.setNpmDevDependencies({'grunt-sass-lint': '*'}, linters.indexOf('sasslint') !== -1);
-    this.setNpmDevDependencies({'grunt-stylint': '*'}, linters.indexOf('stylint') !== -1);
   }
 
   return {

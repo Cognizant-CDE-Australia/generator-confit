@@ -4,28 +4,10 @@ module.exports = function() {
 
   function write() {
     this.log('Writing Webpack unit-test options');
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().testUnit.packages);
 
     var config = this.getGlobalConfig();
     var outputDir = config.paths.config.configDir + 'testUnit/';
-
-    // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      karma: '0.13.19',
-      'karma-chrome-launcher': '0.2.2',
-      'karma-coverage': '0.5.3',
-      'karma-jasmine': '0.3.6',
-      'karma-junit-reporter': '0.3.8',
-      'karma-ng-html2js-preprocessor': '0.2.0',
-      'karma-phantomjs-launcher': '0.2.3',
-      'karma-sourcemap-loader': '0.3.7',
-      'karma-spec-reporter': '0.0.23',
-      'karma-threshold-reporter': '0.1.15',
-      'karma-webpack': '1.7.0',
-      'jasmine-core': '2.4.1',     // Peer dep of karma-jasmine
-      phantomjs: '1.9.19',          // Peer dep of karma-phantomjs-launcher
-      'phantomjs-polyfill': '0.0.1',
-      'isparta-loader': '1.0.0'
-    });
 
     this.fs.copy(this.toolTemplatePath('karma.conf.js'), this.destinationPath(outputDir + 'karma.conf.js'));
     this.fs.copy(this.toolTemplatePath('karma.debug.conf.js'), this.destinationPath(outputDir + 'karma.debug.conf.js'));

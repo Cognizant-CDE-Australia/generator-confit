@@ -4,12 +4,7 @@ module.exports = function() {
 
   function write() {
     this.log('Writing Webpack buildHTML options');
-
-    // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      'html-loader': '*',
-      'html-webpack-plugin': '*'
-    });
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().buildHTML.packages);
   }
 
   return {

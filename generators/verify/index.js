@@ -55,22 +55,26 @@ module.exports = confitGen.create({
     var jsLinters = this.getConfig('jsLinter');
     var gen = this;
 
-    // TODO: Need to consider different linting options for ES5 vs ES6 source code?!? OR do we deprectate ES5?
-    jsLinters.forEach(function(linter) {
+    // Create a "linters" property, which is a combination of ALL linters
+    var linters = [].concat(jsLinters);
+    var cssLinter = this.getResources().css[config.buildCSS.cssCompiler].linter;
+
+    if (cssLinter) {
+      linters.push(cssLinter);
+    }
+
+    var existingConfig = this.getConfig();
+    existingConfig.linters = linters;
+    this.setConfig(existingConfig);
+
+
+    // TODO: Need to consider different linting options for ES5 vs ES6 source code?!? OR do we deprecate ES5?
+    linters.forEach(function(linter) {
       gen.fs.copy(
         gen.templatePath(linter + 'rc'),
         gen.destinationPath(outputDir + 'verify/.' + linter + 'rc')
       );
     });
-
-
-    // CSS Linting should be added automagically based on the CSS compiler chosen
-    if (config.buildCSS.cssCompiler !== 'none') {
-      this.fs.copy(
-        this.templatePath(config.buildCSS.cssCompiler + 'rc'),
-        this.destinationPath(outputDir + 'verify/.' + config.buildCSS.cssCompiler + 'rc')
-      );
-    }
 
     this.buildTool.write.apply(this);
   },

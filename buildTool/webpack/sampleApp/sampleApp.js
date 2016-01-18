@@ -32,11 +32,11 @@ module.exports = function() {
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
     var selectedFramework = config.buildJS.framework[0] || '';
     var vendorScripts = jsFrameworkConfig[selectedFramework].vendorScripts || [];
+
+    // Deduplicate the array
     config.buildJS.vendorScripts = _.uniq(config.buildJS.vendorScripts.concat(vendorScripts.map(function(module) {
       return _.keys(module)[0];
     })));
-
-    // Deduplicate the array
 
     writeConfig.apply(this, [fullConfig]);
   }
@@ -51,9 +51,7 @@ module.exports = function() {
     var self = this;
 
     // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      'lodash': '*'
-    });
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
 
     // Read the framework config, as we need to know where the sample files for each framework live
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
@@ -77,7 +75,7 @@ module.exports = function() {
 
     vendorScripts.forEach(function(module) {
       self.setNpmDependencies(module);
-    })
+    });
   }
 
   return {

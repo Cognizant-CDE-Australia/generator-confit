@@ -4,12 +4,7 @@ module.exports = function() {
 
   function write() {
     this.log('Writing "app" using Webpack');
-
-    // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      'webpack': '*',
-      'webpack-dev-server': '*'
-    });
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().app.packages);
   }
 
 

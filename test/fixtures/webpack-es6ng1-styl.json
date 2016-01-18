@@ -3,7 +3,7 @@
     "app": {
       "buildProfile": "Latest",
       "editorConfig": true,
-      "_version": "0367646d562455f4ee8dbe0741d4ea4b721fd5fc"
+      "_version": "c75900938d7b71838289390e1366d83e085eac79"
     },
     "paths": {
       "input": {
@@ -73,8 +73,8 @@
     },
     "testUnit": {},
     "verify": {
-      "jsLinter": [],
-      "_version": "7d5fb05c2c8e62a1001d0c32b6b010e94a1e49f1"
+      "jsLinter": ["eslint"],
+      "_version": "53a65fd8c30a2917e56e4176e4d3fd9c307e51ce"
     },
     "sampleApp": {
       "createSampleApp": true,

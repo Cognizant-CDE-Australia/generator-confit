@@ -10,21 +10,15 @@ module.exports = function () {
 
     var config = this.getConfig();
 
-    // Modify Package JSON
-    this.setNpmDevDependencies({
-      'grunt-contrib-watch': '*',
-      'grunt-contrib-connect': '*'
-    });
-
-    // this.rate a file in %configDir/grunt called "serve.js", if it doesn't already exist
     this.fs.copyTpl(
       this.toolTemplatePath('serverDev.js.tpl'),
       this.destinationPath('config/grunt/serverDev.js'),
       config
     );
 
-
     this.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**');
+
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().serverDev.packages);
   }
 
   return {

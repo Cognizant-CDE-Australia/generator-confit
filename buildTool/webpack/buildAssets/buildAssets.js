@@ -4,11 +4,7 @@ module.exports = function() {
 
   function write() {
     this.log('Writing Webpack buildAssets options');
-
-    // Add the NPM dev dependencies
-    this.setNpmDevDependencies({
-      'file-loader': '*'
-    });
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().buildAssets.packages);
   }
 
   return {

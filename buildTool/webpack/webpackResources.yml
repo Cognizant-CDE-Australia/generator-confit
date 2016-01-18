@@ -1,11 +1,17 @@
 # app
 app:
-  packages:
+  packages: # TODO: Not sure if these should be here, or in zzfinish?
     - name: webpack
-      version: '*'
+      version: '1.12.11'
 
     - name: webpack-dev-server
+      version: '1.14.1'
+
+buildAssets:
+  packages:
+    - name: file-loader
       version: '*'
+
 
 buildCSS:
   packages:
@@ -31,6 +37,27 @@ buildCSS:
       version: '*'
       criteria: this.config.buildCSS.autoprefixer === true
 
+buildHTML:
+  packages:
+    - name: html-loader
+      version: '*'
+
+    - name: html-webpack-plugin
+      version: '*'
+
+buildJS:
+  packages: # TODO: Make these dependencies optional, based on JS output type & source Type (ES5, ES6, TypeScript)
+    - name: babel-core
+      version: '6.4.0'
+
+    - name: babel-runtime
+      version: '6.3.19'
+
+    - name: babel-loader
+      version: '6.2.1'
+
+    - name: babel-preset-es2015
+      version: '6.3.13'
 
 # README section for large blocks of static text
 readme:
@@ -56,7 +83,7 @@ sampleApp:
 
       AngularJS 1.x:
         sampleDir: es6ng1/
-        vendorScripts:
+        vendorScripts:  #TODO: Convert this module definition format to {name, version}, like everything else
           - angular-route: '*'
 
       AngularJS 2.x:
@@ -65,3 +92,60 @@ sampleApp:
 
       React (latest):
         sampleDir: es6react/
+
+  packages:
+    - name: lodash
+      version: '3.7.0'
+
+
+testUnit:
+  packages:
+    - name: karma
+      version: '0.13.19'
+
+    - name: karma-chrome-launcher
+      version: '0.2.2'
+
+    - name: karma-coverage
+      version: '0.5.3'
+
+    - name: karma-jasmine
+      version: '0.3.6'
+
+    - name: karma-junit-reporter
+      version: '0.3.8'
+
+    - name: karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional?
+      version: '0.2.0'
+
+    - name: karma-phantomjs-launcher
+      version: '0.2.3'
+
+    - name: karma-sourcemap-loader
+      version: '0.3.7'
+
+    - name: karma-spec-reporter
+      version: '0.0.23'
+
+    - name: karma-threshold-reporter
+      version: '0.1.15'
+
+    - name: karma-webpack
+      version: '1.7.0'
+
+    - name: jasmine-core
+      version: '2.4.1'
+
+    - name: phantomjs
+      version: '1.9.19'
+
+    - name: phantomjs-polyfill
+      version: '0.0.1'
+
+    - name: isparta-loader
+      version: '1.0.0'    #TODO: version 2 is out...
+
+zzfinish:
+  packages:
+    - name: extract-text-webpack-plugin
+      version: '1.0.1'
