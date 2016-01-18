@@ -1,12 +1,12 @@
 {
   "name": "generator-confit",
-  "version": "0.0.8",
+  "version": "0.0.0-semantically-released",
   "description": "Yeoman generator for creating the development process, tools and a sample project for current-generation web applications",
   "license": "Apache-2.0",
   "main": "generators/app/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/odecee/generator-confit.git"
+    "url": "https://github.com/odecee/generator-confit.git"
   },
   "bugs": {
     "url": "https://github.com/odecee/generator-confit/issues"
@@ -35,8 +35,10 @@
     "node": ">=4.x"
   },
   "scripts": {
+    "commit": "git-cz",
     "test": "node test/testRunner.js",
-    "test:seq": "node test/testRunner.js --sequence"
+    "test:seq": "node test/testRunner.js --sequence",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
     "buildTool",
@@ -62,6 +64,8 @@
     "yeoman-generator": "0.22.2"
   },
   "devDependencies": {
+    "commitizen": "2.5.0",
+    "cz-conventional-changelog": "1.1.5",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "fs-extra": "0.26.3",
@@ -70,11 +74,15 @@
     "jasmine-spec-reporter": "2.4.0",
     "mocha": "2.3.4",
     "npm-module-checklist": "1.6.0",
+    "semantic-release": "4.3.5",
     "yeoman-test": "1.0.0"
   },
   "config": {
     "ghooks": {
       "pre-commit": "exact-semver"
+    },
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
     }
   }
 }
