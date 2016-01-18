@@ -75,11 +75,13 @@
     "mocha": "2.3.4",
     "npm-module-checklist": "1.6.0",
     "semantic-release": "4.3.5",
+    "validate-commit-msg": "1.1.0",
     "yeoman-test": "1.0.0"
   },
   "config": {
     "ghooks": {
-      "pre-commit": "exact-semver"
+      "pre-commit": "exact-semver",
+      "commit-msg": "validate-commit-msg"
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
