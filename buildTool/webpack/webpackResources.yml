@@ -1,3 +1,37 @@
+# app
+app:
+  packages:
+    - name: webpack
+      version: '*'
+
+    - name: webpack-dev-server
+      version: '*'
+
+buildCSS:
+  packages:
+    - name: css-loader
+      version: '*'
+
+    - name: style-loader
+      version: '*'
+
+    - name: stylus-loader
+      version: '*'
+      criteria: this.config.buildCSS.cssCompiler === 'stylus'
+
+    - name: sass-loader
+      version: '*'
+      criteria: this.config.buildCSS.cssCompiler === 'sass'
+
+    - name: node-sass
+      version: '*'
+      criteria: this.config.buildCSS.cssCompiler === 'sass'
+
+    - name: autoprefixer-loader
+      version: '*'
+      criteria: this.config.buildCSS.autoprefixer === true
+
+
 # README section for large blocks of static text
 readme:
   extensionPoint:

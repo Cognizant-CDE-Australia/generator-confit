@@ -23,6 +23,8 @@ module.exports = confitGen.create({
     var cssCompilerConfig = this.getResources().css;
 
     var prompts = [
+      // These next too questions are a little hazy. How will they affect the build process?
+      // At the moment, nothing is affected. But Autoprefixer should be, and maybe the JS libraries.
       {
         type: 'confirm',
         name: 'includeOlderBrowsers',

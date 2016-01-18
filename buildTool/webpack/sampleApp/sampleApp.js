@@ -23,6 +23,9 @@ module.exports = function() {
     var modulesDir = config.paths.input.modulesSubDir;
 
     // Add a sampleApp entryPoint
+    if (!config.entryPoint.entryPoints) {
+      config.entryPoint.entryPoints = {};
+    }
     config.entryPoint.entryPoints.sampleApp = ['./' + modulesDir + this.demoOutputModuleDir + 'app.js'];
 
     // Add any vendor scripts to the config that the sampleApp for the selected framework needs

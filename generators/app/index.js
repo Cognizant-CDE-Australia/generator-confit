@@ -2,7 +2,7 @@
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var _ = require('lodash');
-var MAX_EVENT_LISTENERS = 20;
+const MAX_EVENT_LISTENERS = 20;
 
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
@@ -21,23 +21,24 @@ module.exports = confitGen.create({
   },
 
   prompting: {
+    // By splitting this run-context into 2 sub-contexts, they are guaranteed to run in sequence
     promptForMode: function() {
       // Great the user
       var welcome =
-        "\n" +
-        chalk.cyan.bold("\n                                                                      ") + chalk.white.bold("╓╗╗") +
-        chalk.cyan.bold("\n                                                                 ") + chalk.white.bold("╗╣╣╣╣╣╣╣╗") +
-        chalk.cyan.bold("\n                                                                ") + chalk.white.bold("╠╣╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╗╗╗") +
-        chalk.cyan.bold("\n                                                                ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣") + chalk.yellow.bold("╣╣╣╣╝") +
-        chalk.cyan.bold("\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ") + chalk.white.bold("╣╣╗      ╙╣╣╣╣╣╣╣╣╜") +
-        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ") +
-        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╗╗ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕") +
-        chalk.cyan.bold("\n ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣") +
-        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ") + chalk.white.bold("└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
-        chalk.cyan.bold("\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     ") + chalk.white.bold("╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝") +
-        chalk.cyan.bold("\n └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        ") + chalk.white.bold("╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙ ") +
-        "\n" +
-        "\n";
+        '\n' +
+        chalk.cyan.bold('\n                                                                      ') + chalk.white.bold('╓╗╗') +
+        chalk.cyan.bold('\n                                                                 ') + chalk.white.bold('╗╣╣╣╣╣╣╣╗') +
+        chalk.cyan.bold('\n                                                                ') + chalk.white.bold('╠╣╣╣╣╣╣╣╣╣') + chalk.yellow.bold('╣╗╗╗') +
+        chalk.cyan.bold('\n                                                                ') + chalk.white.bold('╚╣╣╣╣╣╣╣╣') + chalk.yellow.bold('╣╣╣╣╝') +
+        chalk.cyan.bold('\n ╓╣╣╣╣╣╣╣╗  ╔╣╣╣╣╣╣╣  ╞╣╣╣  ╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣ ╣╣╣╣╣╣╣╣╣ ') + chalk.white.bold('╣╣╗      ╙╣╣╣╣╣╣╣╣╜') +
+        chalk.cyan.bold('\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣ ╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ') + chalk.white.bold('╣╣╣╣╣╣╗╗╗╗╣╣╣╣╣╣╣╣╣╣╗ ') +
+        chalk.cyan.bold('\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╗╣╣╣  ╣╣╣╣╗╗╗ ╣╣╣╣   ╠╣╣╣   ') + chalk.white.bold('╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╕') +
+        chalk.cyan.bold('\n ╣╣╣╣       ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╣╣╣╣╣  ╣╣╣╣╣╣╣ ╣╣╣╣   ╠╣╣╣   ') + chalk.white.bold('╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣') +
+        chalk.cyan.bold('\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣╚╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣   ') + chalk.white.bold('└╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝') +
+        chalk.cyan.bold('\n ╣╣╣╣ ╠╣╣╣  ╣╣╣╣ ╣╣╣╣ ╞╣╣╣ ╣╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣     ') + chalk.white.bold('╚╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╣╝') +
+        chalk.cyan.bold('\n └╝╣╣╣╣╣╝   └╝╣╣╣╣╣╝  ╞╣╣╣ ╘╣╣╣  ╣╣╣╣    ╣╣╣╣   ╠╣╣╣        ') + chalk.white.bold('╙╝╣╣╣╣╣╣╣╣╣╣╣╝╙ ') +
+        '\n' +
+        '\n';
 
       this.log(welcome);
       this.log(chalk.underline.bold.green('Confit App Generator'));
@@ -148,18 +149,8 @@ module.exports = confitGen.create({
       );
     }
 
-
-    // TODO: Why is bower here?
-    var bowerJSON = this.destinationPath('bower.json');
-    if (!this.fs.exists(bowerJSON)) {
-      this.fs.copyTpl(
-        this.templatePath('_bower.json'),
-        bowerJSON,
-        { name: this.appPackageName }
-      );
-    }
-
-    if (this.getConfig('editorConfig')) {
+    // Don't overwrite an existing editorConfig - that would be bad manners.
+    if (this.getConfig('editorConfig') && !this.fs.exists('editorConfig')) {
       this.fs.copy(
         this.templatePath('editorconfig'),
         this.destinationPath('.editorconfig')
@@ -180,27 +171,9 @@ module.exports = confitGen.create({
 
 
     // Now call the other generators
-    this.composeWith('confit:paths', {options: _.merge({}, subGenOptions)});
-
-    this.composeWith('confit:buildAssets', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:buildCSS', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:buildJS', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:buildHTML', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:build', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:entryPoint', {options: _.merge({}, subGenOptions)});   // This generator reads data from the <sampleApp>, so it MUST be run afterwards
-    this.composeWith('confit:serverDev', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:serverProd', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:testUnit', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:verify', {options: _.merge({}, subGenOptions)});
-
-    //
-    // Release
-    // Doc Gen
-
-    //
-    //// This is guaranteed to be the last thing to run
-    this.composeWith('confit:sampleApp', {options: _.merge({}, subGenOptions)});
-    this.composeWith('confit:zzfinish', {options: _.merge({}, subGenOptions)});
+    this.getResources().app.subGenerators.forEach((subGeneratorName) => {
+      this.composeWith(subGeneratorName, {options: _.merge({}, subGenOptions)});
+    });
   },
 
   install: function () {

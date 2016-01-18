@@ -1,5 +1,6 @@
 /** CSS START **/
 <%
+// The css question around broswer support should change this variable
 var autoprefixLoader = buildCSS.autoprefixer ? '!autoprefixer-loader?browsers=last 2 versions' : '';
 
 if (buildCSS.cssCompiler === 'sass') { %>

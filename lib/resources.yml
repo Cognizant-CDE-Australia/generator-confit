@@ -1,3 +1,20 @@
+# App configuration
+app:
+  subGenerators:  # This is the order that the sub-generators should be executed in. Try not to couple these together
+    - confit:paths
+    - confit:buildAssets
+    - confit:buildCSS
+    - confit:buildJS
+    - confit:buildHTML
+    - confit:build
+    - confit:entryPoint
+    - confit:serverDev
+    - confit:serverProd
+    - confit:testUnit
+    - confit:verify
+    - confit:sampleApp
+    - confit:zzfinish
+
 # CSS configuration
 css:
   none:
