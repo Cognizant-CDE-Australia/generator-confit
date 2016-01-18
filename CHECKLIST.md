@@ -1,4 +1,4 @@
-- [ ] watch the [egghead.io][egghead] series [How to Write an Open Source JavaScript Library][egghead series];
+- [x] watch the [egghead.io][egghead] series [How to Write an Open Source JavaScript Library][egghead series];
 it is extremely useful for any NPM project (OSS or closed-sourced).
 
 - [x] start unit testing right away, [pick your unit testing framework][pick testing framework]
@@ -9,7 +9,7 @@ it is extremely useful for any NPM project (OSS or closed-sourced).
 
 - [ ] run linting and unit tests on each commit locally. [pre-git][pre-git], [ghooks][ghooks]
 
-- [ ] validate commit message using [pre-git][pre-git] or [commitizen][commitizen] with [validate-commit-msg][validate-commit-msg]. This
+- [x] validate commit message using [pre-git][pre-git] or [commitizen][commitizen] with [validate-commit-msg][validate-commit-msg]. This
 enables other tools, like intelligent release notes.
 
 <!--- [ ] show the project's GitHub open issues on demand or on commit using [git-issues][git-issues]-->
@@ -24,7 +24,7 @@ enables other tools, like intelligent release notes.
 
 - [x] check module published size and white list only necessary files, [tutorial][module size]
 
-- [ ] setup [semantic-release][semantic-release] to automate publishing
+- [x] setup [semantic-release][semantic-release] to automate publishing
 and avoid breaking [semver][semver]. This is [important][semver important],
 but is currently [broken][broken semver] in too many projects. Even this checklist is using semver!
 
