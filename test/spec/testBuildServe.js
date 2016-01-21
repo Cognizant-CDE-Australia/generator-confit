@@ -22,13 +22,13 @@ function runBrowserTest(baseUrl) {
 
 module.exports = function() {
 
-  describe('npm run dev', function() {
+  describe('npm run build:serve', function() {
 
     var baseUrl;
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, 10000).then(function success(result) {
+      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, 10000).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });

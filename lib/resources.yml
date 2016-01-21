@@ -90,7 +90,7 @@ path:
 
     output:
       devDir: dev/
-      prodDir: prod/
+      prodDir: dist/
       assetsSubDir: assets/
       cssSubDir: css/
       jsSubDir: js/

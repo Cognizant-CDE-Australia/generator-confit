@@ -113,7 +113,8 @@ function main() {
 }
 
 /**
- * Get a list of fixture files from a directory that do NOT start with x but end with '.json'
+ * Get a list of fixture files from a directory that do NOT start with x but end with '.json'.
+ * Additionally, if a fixture starts with '-' it is a 'solo' fixture... ONLY run this fixture.
  *
  * @param dir                 The directory to search
  * @returns {Array.<String>}  The list of files found that match the criteria
@@ -124,7 +125,13 @@ function getFixtures(dir) {
     .filter(function(file) {
       return fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null);
     });
-  return files;
+
+  // get a list of the files that start with '-'. If there are any return them, otherwise return everything
+  var soloFiles = files.filter(function(file) {
+    return file.charAt(0) === '-';
+  });
+
+  return (soloFiles.length) ? soloFiles : files;
 }
 
 

@@ -8,6 +8,7 @@ var confitConfig = require(testDir + 'confit.json')['generator-confit'];
 describe('test "' + fixtureFileName + '"', function () {
   // The actual tests...
   require('./testDev')(confitConfig);
+  require('./testBuildServe')(confitConfig);
   require('./testVerify')(confitConfig);
   require('./testUnitTest')(confitConfig);
 });

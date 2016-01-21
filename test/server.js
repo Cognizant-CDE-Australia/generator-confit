@@ -14,8 +14,8 @@ var child;
  * @param serverStartTimeout  The amount of time to wait before returning control to the parent program. Usually allow enough time
  * @returns {Promise}         Promise that is fullfilled once the server has started
  */
-function startServer(testDir, confitServerToStart, serverStartTimeout) {
-  var SERVER_STARTED_RE = /webpack: bundle is now VALID\.\n$/;    // A string to search for in the stdout, which indicates the server has started.
+function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateServerReady, serverStartTimeout) {
+  var SERVER_STARTED_RE = regExForStdioToIndicateServerReady;    // A string to search for in the stdout, which indicates the server has started.
   var resolveFn, rejectFn;
   var result = {};
 
@@ -31,8 +31,10 @@ function startServer(testDir, confitServerToStart, serverStartTimeout) {
       details: server
     };
 
-    // TODO: Need to inject these parameters so that we can start a prod server or a dev server
-    child = spawn('npm',['start'], {
+    var cmdParams = cmd.split(' ');
+    var mainCmd = cmdParams.shift();
+
+    child = spawn(mainCmd, cmdParams, {
       cwd: testDir,
       detached: true
     });

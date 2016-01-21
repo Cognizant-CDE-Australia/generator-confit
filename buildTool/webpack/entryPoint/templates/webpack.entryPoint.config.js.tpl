@@ -1,4 +1,4 @@
   /** Entry point config -- start **/
-  context: path.resolve(basePath + projectPaths.input.srcDir.substr(0, projectPaths.input.srcDir.length - 1)),   // The baseDir for resolving the Entry option
+  context: basePath + '<%= paths.input.srcDir.slice(0, -1) %>',  // The baseDir for resolving the Entry option and the HTML-Webpack-Plugin
   entry: confitConfig.entryPoint.entryPoints,
   /** Entry point config -- end **/

@@ -10,40 +10,40 @@ app:
 buildAssets:
   packages:
     - name: file-loader
-      version: '*'
+      version: '0.8.5'
 
 
 buildCSS:
   packages:
     - name: css-loader
-      version: '*'
+      version: '0.23.1'
 
     - name: style-loader
-      version: '*'
+      version: '0.13.0'
 
     - name: stylus-loader
-      version: '*'
+      version: '1.4.3'
       criteria: this.config.buildCSS.cssCompiler === 'stylus'
 
     - name: sass-loader
-      version: '*'
+      version: '3.1.2'
       criteria: this.config.buildCSS.cssCompiler === 'sass'
 
     - name: node-sass
-      version: '*'
+      version: '3.4.2'
       criteria: this.config.buildCSS.cssCompiler === 'sass'
 
-    - name: autoprefixer-loader
-      version: '*'
+    - name: autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
+      version: '3.2.0'
       criteria: this.config.buildCSS.autoprefixer === true
 
 buildHTML:
   packages:
     - name: html-loader
-      version: '*'
+      version: '0.4.0'
 
     - name: html-webpack-plugin
-      version: '*'
+      version: '2.7.1'
 
 buildJS:
   packages: # TODO: Make these dependencies optional, based on JS output type & source Type (ES5, ES6, TypeScript)

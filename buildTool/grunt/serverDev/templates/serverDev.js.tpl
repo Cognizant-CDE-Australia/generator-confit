@@ -1,6 +1,11 @@
 module.exports = function (grunt) {
   'use strict';
 
+  // We make this configuration lively so that we can change it at runtime (for testing purposes)
+  var path = require('path');
+  var confitConfig = require(path.join(process.cwd(), 'confit.json'))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
+
+
   var sslKey = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.key').toString();
   var cert = grunt.file.read('node_modules/grunt-contrib-connect/tasks/certs/server.crt').toString();
 
@@ -8,11 +13,11 @@ module.exports = function (grunt) {
     connect: {
       dev: {
         options: {
-          open: grunt.option('url') ? '<%= serverDev.protocol %>://<%= serverDev.hostname %>:<%= serverDev.port %>/' + grunt.option('url') : false,
-          base: '<%= paths.output.devDir %>',
-          port: '<%= serverDev.port %>',
-          hostname: '<%= serverDev.hostname %>',
-          protocol: '<%= serverDev.protocol %>',
+          open: grunt.option('url') ? ? confitConfig.serverDev.protocol + '://' + confitConfig.serverDev.hostname + ':' + confitConfig.serverDev.port + '/' + grunt.option('url') : false,
+          base: confitConfig.paths.output.devDir,
+          port: grunt.option('port') || confitConfig.serverDev.port,
+          hostname: confitConfig.serverDev.hostname,
+          protocol: confitConfig.serverDev.protocol,
           livereload: 35729,
           keepalive: false
         }
