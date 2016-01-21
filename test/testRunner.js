@@ -5,6 +5,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var _ = require('lodash');
 var chalk = require('chalk');
+var async = require('async');
 
 var CONFIT_CMD = 'node';
 var CONFIT_PARAMS = ['test/runConfit.js'];
@@ -35,6 +36,7 @@ function main() {
 
   var runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
   var processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
+  var asyncMethod = (runInSequence) ? 'waterfall' : 'parallel';
 
 
   function promiseRunner(cmd, cmdParams, envData) {
@@ -79,7 +81,7 @@ function main() {
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
 
-    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount, '. Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
+    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount + '.', 'Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
 
     if (procComplete === procCount) {
       confitMsg(chalk.white.bold('Overall Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
@@ -87,22 +89,27 @@ function main() {
     }
   }
 
-  // Now, for each fixture file, run the command(s)
-  fixtures.forEach(function(fixture) {
+
+  function testConfitFixture(fixture) {
     confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
     var testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/')
 
     // Install Confit first, wait for it to complete, then start the Mocha spec
     confitMsg(chalk.white('Running Confit generator...'));
 
-    runConfit(FIXTURE_DIR, fixture, testDir).then(function success() {
+    return runConfit(FIXTURE_DIR, fixture, testDir).then(function success() {
       confitMsg(chalk.white('... finished running Confit generator.'));
 
       confitMsg(chalk.white('Running Mocha for', fixture, '...'));
       return runMocha(FIXTURE_DIR, fixture, testDir);
 
     }).then(function success(code) { processResults(code); }, function failure(code) { processResults(code); });
-  });
+  }
+
+
+  async[asyncMethod](fixtures.map((fixture) => async.asyncify(function() {
+    testConfitFixture(fixture);
+  })));
 }
 
 /**

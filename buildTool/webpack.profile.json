@@ -14,6 +14,7 @@
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "grunt",
+    "testBrowser": "protractor",
     "testUnit": "webpack",
     "verify": "grunt",
     "zzfinish": "webpack"

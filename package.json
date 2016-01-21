@@ -58,12 +58,13 @@
     "checksum": "0.1.1",
     "ejs": "2.3.4",
     "js-yaml": "3.5.2",
-    "lodash": "3.7.0",
+    "lodash": "3.10.1",
     "lodash-deep": "1.6.0",
     "protractor": "3.0.0",
     "yeoman-generator": "0.22.2"
   },
   "devDependencies": {
+    "async": "1.5.2",
     "commitizen": "2.5.0",
     "cz-conventional-changelog": "1.1.5",
     "exact-semver": "1.2.0",

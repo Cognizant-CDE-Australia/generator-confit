@@ -148,6 +148,8 @@ module.exports = confitGen.create({
       self.setNpmDependencies(moduleObj);
     });
 
+    this.addReadmeDoc('extensionPoint.buildJSVendorScripts', this.getResources().buildJS.readme.extensionPoint);
+
     this.buildTool.write.apply(this);
   },
 
@@ -155,7 +157,8 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      bower: false
     });
   }
 });

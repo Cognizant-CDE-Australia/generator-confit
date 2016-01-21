@@ -89,9 +89,9 @@ module.exports = confitGen.create({
       },
       {
         type: 'input',
-        name: 'input.e2eTestDir',
+        name: 'input.browserTestDir',
         message: 'Name of module FUNCTIONAL TEST directory',
-        default: defaultPaths.input.e2eTestDir,
+        default: defaultPaths.input.browserTestDir,
         when: function(answers) {
           return !answers.useDefaults;
         }

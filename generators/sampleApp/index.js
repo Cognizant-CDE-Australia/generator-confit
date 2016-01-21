@@ -8,7 +8,7 @@ module.exports = confitGen.create({
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasExistingConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-      this.demoOutputModuleDir = 'demoModule/';
+      this.demoOutputModuleDir = this.getResources().sampleApp.demoModuleDir;
     }
   },
 
@@ -41,7 +41,7 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      // If we don't want to create a sample app,
+      // If we don't want to create a sample app, don't bother calling the buildTool.
       if (this.answers.createSampleApp) {
         this.buildTool.configure.apply(this);
       }
@@ -79,6 +79,9 @@ module.exports = confitGen.create({
     // Copy unit test(s)
     this.fs.copy(this.templatePath('unitTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);
 
+    // Copy browser test(s)
+    this.fs.copy(this.templatePath('browserTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.browserTestDir);
+
     this.buildTool.write.apply(this);
   },
 
@@ -86,7 +89,8 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      bower: false
     });
   }
 });

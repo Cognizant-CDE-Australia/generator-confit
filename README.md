@@ -41,10 +41,15 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 
 
 - Confit is a **web development-tool generator** that is designed to evolve as web technologies change.
-- Confit captures a project's build processes in a **build-tool-independent configuration file** (`confit.json`), so you can *migrate your configuration from older tools onto newer tools more-easily*.
+- Confit captures a project's build processes in a **build-tool-independent configuration file** (`confit.json`), so you can *migrate your configuration to use newer build-tools more-easily*.
 - Confit is **focused** on generating tools for single-page web applications (SPAs).
+- Confit is **opinionated**. For example, Confit does not advocate the use of BowerJS. If you need it, look elsewhere. (Or create an NPM module if one doesn't already exist for the Bower library you need).
 - Confit is **not** the solution for *every* kind of web application that exists. It is **not** going to support obscure features or exceptional cases. It is a web development-tool generator for what **the contributors** consider to be the *best setup for **most** people*
+- Having said that, Confit does permit **some** configuration (see the animated gif above for an idea).
 
+> Confit wants to capture the information about your project which **will not** change when your build-tooling changes.
+  This is the essence of Confit - decoupling your project configuration from the build-tool implementation of that configuration. 
+  
 
 ## Usage
 

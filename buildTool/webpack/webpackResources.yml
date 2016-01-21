@@ -48,7 +48,7 @@ buildHTML:
 buildJS:
   packages: # TODO: Make these dependencies optional, based on JS output type & source Type (ES5, ES6, TypeScript)
     - name: babel-core
-      version: '6.4.0'
+      version: '6.4.5'
 
     - name: babel-runtime
       version: '6.3.19'
@@ -60,18 +60,18 @@ buildJS:
       version: '6.3.13'
 
 # README section for large blocks of static text
+# TODO: Move these to appropriate tool sections (e.g. build, testUnit)
 readme:
   extensionPoint:
-    start: |
+    start: >
       `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
-      and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>'. Confit will attempt to overwrite the contents
+      and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
       files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
-    testUnit: |
+    testUnit: >
       `npm test:unit` can be extended by modifying
-       <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
-       <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
+      <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
+      <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
       It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
-
 
 # sampleApp configuration
 sampleApp:
@@ -95,7 +95,7 @@ sampleApp:
 
   packages:
     - name: lodash
-      version: '3.7.0'
+      version: '3.10.1'
 
 
 testUnit:

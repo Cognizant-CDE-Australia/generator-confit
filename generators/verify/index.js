@@ -2,6 +2,7 @@
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
 var fs = require('fs');
+var _ = require('lodash');
 
 module.exports = confitGen.create({
   initializing: {
@@ -21,14 +22,15 @@ module.exports = confitGen.create({
     this.log(chalk.underline.bold.green('Verify Generator'));
 
     var done = this.async();
+    var jsLinters = this.getResources().verify.jsLinters;
 
     var prompts = [
       {
         type: 'checkbox',
         name: 'jsLinter',
         message: 'JavaScript linting',
-        default: this.getConfig('jsLinter') || 'eslint',
-        choices: ['eslint']
+        default: this.getConfig('jsLinter') || jsLinters[0],
+        choices: jsLinters
       }
     ];
 
@@ -67,14 +69,20 @@ module.exports = confitGen.create({
     existingConfig.linters = linters;
     this.setConfig(existingConfig);
 
+    var linterFiles = this.getResources().verify.linterFiles; // A list of files to copy (src & dest) per linter
+    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this!  // TODO: Do this in the sample app?
 
     // TODO: Need to consider different linting options for ES5 vs ES6 source code?!? OR do we deprecate ES5?
     linters.forEach(function(linter) {
-      gen.fs.copy(
-        gen.templatePath(linter + 'rc'),
-        gen.destinationPath(outputDir + 'verify/.' + linter + 'rc')
-      );
+      linterFiles[linter].forEach(function (linterFile) {
+        gen.fs.copyTpl(
+          gen.templatePath(linterFile.src),
+          gen.destinationPath(linterFile.dest.replace('(configDir)', outputDir)),
+          _.merge({}, config, {demoModuleDir: demoModuleDir})
+        );
+      });
     });
+
 
     this.buildTool.write.apply(this);
   },
@@ -83,7 +91,8 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      bower: false
     });
   }
 });

@@ -181,6 +181,7 @@ module.exports = confitGen.create({
       skipInstall: this.options['skip-install'],    //--skip-install
       skipRun: this.options['skip-run'],
       skipMessage: true,
+      bower: false,
       callback: function() {
         // Emit a new event - dependencies installed
         this.emit('dependenciesInstalled');

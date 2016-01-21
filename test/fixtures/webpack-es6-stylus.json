@@ -3,7 +3,7 @@
     "app": {
       "buildProfile": "Latest",
       "editorConfig": true,
-      "_version": "c75900938d7b71838289390e1366d83e085eac79"
+      "_version": "7cf0048dcb4351708c748e9c6e60cc88e77daec1"
     },
     "paths": {
       "input": {
@@ -13,7 +13,7 @@
         "stylesDir": "styles/",
         "templateDir": "template/",
         "unitTestDir": "unitTest/",
-        "e2eTestDir": "e2eTest/",
+        "browserTestDir": "browserTest/",
         "modulesDir": "src/modules/"
       },
       "output": {
@@ -30,51 +30,52 @@
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "44722728f4b6c74ee3cda113503a6162d62b7b01"
+      "_version": "051e4b7307b0ddd05a6f9894e6ab41e42625aee1"
     },
     "buildAssets": {},
     "buildCSS": {
       "includeOlderBrowsers": false,
       "cssCompiler": "stylus",
       "autoprefixer": true,
-      "_version": "76ca2eadbeb4137b3851aa19aac9e8dd5754fc79"
+      "_version": "2e30ea2f5191d6d7d528f2d4a5823b57807644f1"
     },
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "3c25acf5a32e5986dbb13456072d3e429191d675"
+      "_version": "c336b21cd3bc899e7dc86516f07f2aca138bc4fc"
     },
     "buildHTML": {
       "extension": ".html",
-      "_version": "d592394d11b440626635b4e5e51261a13e185384"
+      "_version": "06b6d2f07f16df91852d082d0c314e9f51a0ee65"
     },
     "build": {},
     "entryPoint": {
       "entryPoints": {},
-      "_version": "f1d88d792523a782b13642871cdb602941d2f72c"
+      "_version": "666f5f0d167057ea62f753ca5e4030bbe783c0d5"
     },
     "serverDev": {
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "210b714c98c36aebc7e12922663aea924395983a"
+      "_version": "af27305fe9c2705b8899a19343a386b709389156"
     },
     "serverProd": {
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "9be53bd867a9190651002d616ad9170a40a86462"
+      "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
+    "testBrowser": {},
     "testUnit": {},
     "verify": {
       "jsLinter": ["eslint"],
-      "_version": "53a65fd8c30a2917e56e4176e4d3fd9c307e51ce"
+      "_version": "6e4bcaa21dcc26a4916b73413dad6eb411438afe"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "1156b82b98b307036574a5a32f4f264db3b5a95b"
+      "_version": "cd267300b8417fe684251fa8fcfb3aa8c1673a1b"
     },
     "zzfinish": {}
   }

@@ -5,7 +5,8 @@ module.exports = function (grunt) {
 <% if (verify.linters.indexOf('eslint') > -1) { -%>
     eslint: {
       options: {
-        configFile: '<%= paths.config.configDir %>verify/.eslintrc'
+        configFile: '<%= paths.config.configDir %>verify/eslint.json',
+        quiet: true // Report errors only
       },
       all: {
         src: ['<%= paths.input.srcDir %>**/*.js', '<%= paths.config.configDir %>**/*.js']

@@ -71,7 +71,8 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      bower: false
     });
   }
 });

@@ -22,6 +22,8 @@ var jsRE = new RegExp(projectPaths.input.modulesDir.replace(/\//g, '\\/') + '.*\
 config.module.loaders.push({
   test: jsRE,
   loader: 'babel-loader',
+  // TODO: Should we do this?
+  // exclude: [nodeModulesPath]
   query: {
     // https://github.com/babel/babel-loader#options
     cacheDirectory: true,

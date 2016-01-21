@@ -68,6 +68,7 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
+    this.addReadmeDoc('extensionPoint.entryPoint', this.getResources().entryPoint.readme.extensionPoint);
     this.buildTool.write.apply(this);
   },
 
@@ -75,7 +76,8 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      skipMessage: true
+      skipMessage: true,
+      bower: false
     });
   }
 });

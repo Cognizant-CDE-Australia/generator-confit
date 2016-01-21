@@ -70,7 +70,7 @@ module.exports = {
       // Obtained from http://stackoverflow.com/questions/32170176/getting-karma-code-coverage-for-pre-transpilation-souce-code
       preLoaders: [{
         test: /\.js$/,
-        exclude: /(<%- paths.input.unitTestDir.substr(0, paths.input.unitTestDir.length - 1) %>|<%- paths.input.e2eTestDir.substr(0, paths.input.e2eTestDir.length - 1) %>|node_modules|bower_components|<%- paths.config.configDir.substr(0, paths.config.configDir.length - 1) %>)\//,
+        exclude: /(<%- paths.input.unitTestDir.substr(0, paths.input.unitTestDir.length - 1) %>|<%- paths.input.browserTestDir.substr(0, paths.input.browserTestDir.length - 1) %>|node_modules|bower_components|<%- paths.config.configDir.substr(0, paths.config.configDir.length - 1) %>)\//,
         loader: 'isparta'
       }],
       loaders: webpackConfig.module.loaders

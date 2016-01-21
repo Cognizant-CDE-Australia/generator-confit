@@ -11,13 +11,22 @@ app:
     - confit:serverDev
     - confit:serverProd
     - confit:testUnit
+    - confit:testBrowser
     - confit:verify
     - confit:sampleApp
     - confit:zzfinish
 
   packages:
     - name: npm-run-all
-      version: '1.4.0'
+      version: '1.5.0'
+
+buildJS:
+  readme:
+    extensionPoint: >
+      The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
+      This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
+      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
+
 
 # CSS configuration
 css:
@@ -35,6 +44,15 @@ css:
     ext: styl
     sampleAppFilename: app.styl
     linter: stylint
+
+entryPoint:
+  readme:
+    extensionPoint: >
+      The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
+      It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
+      one entry point, but it is possible to have more than one.
+      `entryPoint.entryPoints` must have at-least property (e.g. `property: [file]`), where `file` is a list
+      of NPM module names and/or references to JavaScript files (file references must start with `./`);
 
 # Javascript config
 js:
@@ -68,7 +86,7 @@ path:
       stylesDir: styles/
       templateDir: template/
       unitTestDir: unitTest/
-      e2eTestDir: e2eTest/
+      browserTestDir: browserTest/
 
     output:
       devDir: dev/
@@ -84,19 +102,8 @@ path:
       configDir: config/
       tempDir: .tmp/
 
-# README section for large blocks of static text
+# README section for the template tags that will appear inside the README.md template
 readme:
-  extensionPoint:   # Common extension point information
-    buildJSVendorScripts: >
-      The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
-      This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
-    entryPoint: >
-      The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
-      It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
-      one entry point, but it is possible to have more than one.
-      `entryPoint.entryPoints` must have at-least property (e.g. `property: [file]`), where `file` is a list
-      of NPM module names and/or references to JavaScript files (file references must start with `./`)');
   RM_HEADING: '# <%- name %>'
   RM_DESCRIPTION: '> <%- description %>'
   RM_INSTALL: |
@@ -124,8 +131,9 @@ readme:
     Additionally, the **currently-generated** configuration can be extended in the following ways:
 
     - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
-    <% objectValues(merge(config.readme.extensionPoint, extensionPoint)).forEach(function(value) {
+    <% objectValues(config.readme.extensionPoint).forEach(function(value) {
     %>- <%- value -%>
+
     <% }); %>
 
   RM_BUILD_TOOL_FEATURES: |
@@ -134,7 +142,10 @@ readme:
     <% objectValues(config.readme.buildToolFeature).forEach(function(value) {
     %>- <%- value -%>
     <% }); %>
-#
+
+# Sample App
+sampleApp:
+  demoModuleDir: demoModule/
 
 # Server - Development
 serverDev:
@@ -148,3 +159,20 @@ serverProd:
     port: 3000
     hostname: localhost
     protocol: https
+
+verify:
+  jsLinters:
+    - eslint
+
+  linterFiles:
+    eslint:
+      - src: eslint.json
+        dest: (configDir)verify/eslint.json
+      - src: eslintignore.tpl
+        dest: .eslintignore
+    sasslint:
+      - src: sasslintrc
+        dest: (configDir)verify/.sasslintrc
+    stylint:
+      - src: stylintrc
+        dest: (configDir)verify/.stylintrc
