@@ -13,6 +13,7 @@
 
 ![terminal](terminal.gif)
 
+[Concept Video](https://vimeo.com/128842400)
 
 ## Install
 
