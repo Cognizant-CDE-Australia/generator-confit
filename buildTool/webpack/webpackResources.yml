@@ -84,7 +84,7 @@ sampleApp:
       AngularJS 1.x:
         sampleDir: es6ng1/
         vendorScripts:  #TODO: Convert this module definition format to {name, version}, like everything else
-          - angular-route: '*'
+          - angular-route: '1.4.9'
 
       AngularJS 2.x:
         sampleDir: es6ng2/      # not yet implemented

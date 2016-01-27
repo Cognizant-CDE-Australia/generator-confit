@@ -58,7 +58,7 @@ entryPoint:
 js:
   frameworks:
     AngularJS 1.x:  #TODO: Convert this pacakge defintion format to the standard format
-      - angular: '*'
+      - angular: '1.4.9'
     AngularJS 2.x:
       - angular2: '*'
     React (latest):
