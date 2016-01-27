@@ -68,6 +68,7 @@ js:
     options:
       - ES5
       - ES6
+      - TypeScript
     default: ES6
 
   outputFormat:

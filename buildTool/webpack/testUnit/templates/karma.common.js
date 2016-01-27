@@ -1,10 +1,13 @@
 // Global karma config
+'use strict';
+
+// START_CONFIT_GENERATED_CONTENT
 
 // We want to re-use the loaders from the dev.webpack.config
 var webpackConfig = require('./../webpack/dev.webpack.config.js');
 
 
-module.exports = {
+var karmaConfig = {
   autoWatch: true,
 
   // base path, that will be used to resolve files and exclude
@@ -83,6 +86,8 @@ module.exports = {
   },
 
   singleRun: false,
-
   colors: true
 };
+// END_CONFIT_GENERATED_CONTENT
+
+module.exports = karmaConfig;

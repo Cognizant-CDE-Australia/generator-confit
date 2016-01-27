@@ -1,8 +1,8 @@
 'use strict';
 
+// START_CONFIT_GENERATED_CONTENT
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 var path = require('path');
 var confitConfig = require(path.join(process.cwd(), 'confit.json'))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
 var projectPaths = confitConfig.paths;
@@ -43,6 +43,6 @@ var config = {
 <%- include('../../buildCSS/templates/webpack.buildCSS.config.js.tpl') %>
 <%- include('../../buildHTML/templates/webpack.buildHTML.config.js.tpl') %>
 <%- include('../../serverDev/templates/webpack.serverDev.config.js.tpl') %>
-
+// END_CONFIT_GENERATED_CONTENT
 
 module.exports = config;

@@ -1,3 +1,6 @@
+'use strict';
+
+// START_CONFIT_GENERATED_CONTENT
 import 'phantomjs-polyfill';
 
 <%
@@ -40,3 +43,4 @@ import '../../<%= paths.input.srcDir + file -%>';
 // Includes all *.spec.js files in the unitTest directory. The '../../' is the relative path from where Karma is (config/testUnit) to where the source folders are.
 var testsContext = require.context('../../<%- paths.input.modulesDir.substr(0, paths.input.modulesDir.length - 1) -%>', true, /<%- paths.input.unitTestDir.replace(/\//g, '\\/') %>.*spec\.js$/);
 testsContext.keys().forEach(testsContext);
+// END_CONFIT_GENERATED_CONTENT
