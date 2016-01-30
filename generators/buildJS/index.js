@@ -8,7 +8,7 @@ var path = require('path');
 
 var frameworkScriptMap;
 var frameworkNames;       // The names of the frameworks ['frameworkName', ...]
-var frameworkScriptObjs;  // The framework script objects {name: 'version'}
+var frameworkScriptObjs;  // The framework script objects {ModuleName: 'version'}
 var frameworkScripts;     // The framework script names ['ModuleName', ...]
 
 module.exports = confitGen.create({
@@ -20,10 +20,12 @@ module.exports = confitGen.create({
 
       frameworkScriptMap = this.getResources().js.frameworks;
       frameworkNames = _.keys(frameworkScriptMap);
-      frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap));
-      frameworkScripts = frameworkScriptObjs.map(function(obj) {
-        return _.keys(obj)[0];    // There is only one key - the script name
+      frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap)).map((obj) => {
+        var newObj = {};
+        newObj[obj.name] = obj.version;
+        return newObj;
       });
+      frameworkScripts = frameworkScriptObjs.map((pkg) => _.keys(pkg)[0]);
     }
   },
 
@@ -73,7 +75,7 @@ module.exports = confitGen.create({
         message: 'Vendor scripts OR module-names to include ' + chalk.bold.green('(edit in ' + self.configFile + ')') + ':',
         choices: function() {
           // Get a list of the "true" vendor scripts (not including the framework scripts)
-          var vendorScripts = (self.getConfig('vendorScripts') || []).filter(function(script) {
+          var vendorScripts = (self.getConfig('vendorScripts') || []).filter((script) => {
             return frameworkScripts.indexOf(script) === -1;
           });
           var cbItems = [];
@@ -113,19 +115,21 @@ module.exports = confitGen.create({
 
       // Re-add the magic answer
       var vendorScripts = this.getConfig('vendorScripts') || [];
+      var existingFramework = this.getConfig('framework') || [];
 
-      var oldFrameworkScripts = _.flatten(_.flatten((this.getConfig('framework') || []).map(function(framework) {
-        return frameworkScriptMap[framework].map(function(obj) { return _.keys(obj); });
-      })));
+      var getScriptsForFramework = function(framework) {
+        // Get the scripts that belong just to this old framework:
+        return frameworkScriptMap[framework].map((obj) => obj.name);
+      };
+
+      var oldFrameworkScripts = _.flatten(existingFramework.map(getScriptsForFramework));
 
       // Remove the old framework scripts from vendorScripts, by only keeping the scripts which are NOT in the oldVendorScripts
       vendorScripts = vendorScripts.filter(function(script) {
         return oldFrameworkScripts.indexOf(script) === -1;
       });
 
-      var activeFrameworkScripts = _.flatten(_.flatten(this.answers.framework.map(function(framework) {
-        return frameworkScriptMap[framework].map(function(obj) { return _.keys(obj); });
-      })));
+      var activeFrameworkScripts = _.flatten(_.flatten(this.answers.framework.map(getScriptsForFramework)));
 
       // If the new framework is "react" and the user already had a "react" vendor script, we could still get a duplicate. So call uniq().
       this.answers.vendorScripts = _.uniq(activeFrameworkScripts.concat(vendorScripts));
@@ -137,18 +141,26 @@ module.exports = confitGen.create({
 
   writing: function () {
     // Loop through the selected frameworks, and install the respective modules
-    var self = this;
     var frameworks = this.getConfig('framework') || [];
-    var activeFrameworkScriptObjs = _.flatten(frameworks.map(function(framework) {
-      return frameworkScriptMap[framework];
-    }));
+    var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) =>frameworkScriptMap[framework]));
+    var buildJsResources = this.getResources().buildJS;
 
     // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
-    activeFrameworkScriptObjs.forEach(function(moduleObj) {
-      self.setNpmDependencies(moduleObj);
+    this.setNpmDependenciesFromArray(activeFrameworkScriptObjs);
+
+    this.addReadmeDoc('extensionPoint.buildJSVendorScripts', buildJsResources.readme.extensionPoint);
+
+    // Copy any template files related directly to the sourceFormat
+    var sourceFormat = this.getConfig('sourceFormat');
+    var templateFiles = buildJsResources.templateFiles.sourceFormat[sourceFormat];
+    var config = this.getGlobalConfig();
+    templateFiles.forEach((file) => {
+      this.fs.copyTpl(this.templatePath(file.src), this.destinationPath(file.dest), config);
     });
 
-    this.addReadmeDoc('extensionPoint.buildJSVendorScripts', this.getResources().buildJS.readme.extensionPoint);
+    // Install any source-format related packages
+    var packages = buildJsResources.packages.sourceFormat[sourceFormat];
+    this.setNpmDevDependenciesFromArray(packages);
 
     this.buildTool.write.apply(this);
   },

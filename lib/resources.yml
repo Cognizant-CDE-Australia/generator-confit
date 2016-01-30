@@ -26,7 +26,24 @@ buildJS:
       The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
       This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
       For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
-
+  templateFiles:
+    sourceFormat:
+      ES5: []
+      ES6: []
+      TypeScript:
+        - src: tsconfig.json.tpl
+          dest: tsconfig.json
+        - src: typings.json
+          dest: typings.json
+  packages:
+    sourceFormat:
+      ES5: []
+      ES6: []
+      TypeScript:
+        - name: typescript
+          version: '1.7.3'
+        - name: typings
+          version: '0.6.3'
 
 # CSS configuration
 css:
@@ -57,12 +74,15 @@ entryPoint:
 # Javascript config
 js:
   frameworks:
-    AngularJS 1.x:  #TODO: Convert this pacakge defintion format to the standard format
-      - angular: '1.4.9'
+    AngularJS 1.x:
+      - name: angular
+        version: '1.4.9'
     AngularJS 2.x:
-      - angular2: '*'
+      - name: angular2
+        version: '*'
     React (latest):
-      - react: '*'
+      - name: react
+        version: '*'
 
   sourceFormat:
     options:
@@ -147,6 +167,10 @@ readme:
 # Sample App
 sampleApp:
   demoModuleDir: demoModule/
+  entryPointFileName:
+    ES5: 'app.js'
+    ES6: 'app.js'
+    TypeScript: 'app.ts'
 
 # Server - Development
 serverDev:

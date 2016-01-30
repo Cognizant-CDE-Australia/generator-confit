@@ -48,7 +48,7 @@
       "vendorScripts": [
         "angular"
       ],
-      "_version": "c336b21cd3bc899e7dc86516f07f2aca138bc4fc"
+      "_version": "1a2cd6ababeb31f841bc18532b9baa2ac84717b6"
     },
     "buildHTML": {
       "extension": ".html",
