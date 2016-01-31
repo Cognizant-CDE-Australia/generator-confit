@@ -22,11 +22,21 @@ module.exports = function() {
     var config = fullConfig[this.ROOT_GENERATOR_NAME];
     var modulesDir = config.paths.input.modulesSubDir;
 
+    this.log('sourceFormat: ' + config.buildJS.sourceFormat);
+
+    var appEntryFileName = config.buildJS.sourceFormat.toLowerCase().indexOf('jsx') >= 0 ?
+      'app.jsx' :
+      'app.js';
+
+    this.log('Entry point: ' + appEntryFileName);
+
     // Add a sampleApp entryPoint
     if (!config.entryPoint.entryPoints) {
       config.entryPoint.entryPoints = {};
     }
-    config.entryPoint.entryPoints.sampleApp = ['./' + modulesDir + this.demoOutputModuleDir + 'app.js'];
+    config.entryPoint.entryPoints.sampleApp = [
+      './' + modulesDir + this.demoOutputModuleDir + appEntryFileName
+    ];
 
     // Add any vendor scripts to the config that the sampleApp for the selected framework needs
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
@@ -60,12 +70,15 @@ module.exports = function() {
     var selectedFramework = config.buildJS.framework[0] || '';
     var selectedJSFrameworkDir = jsFrameworkConfig[selectedFramework].sampleDir;
     var vendorScripts = jsFrameworkConfig[selectedFramework].vendorScripts || [];
+    var jsFiles = config.buildJS.sourceFormat.toLowerCase().indexOf('jsx') >= 0 ?
+      '*.jsx' :
+      '*.js';
 
     // Add the CSSFile to the config, so that it can be require()'ed in Webpack
     config.$CSSFilePath = paths.input.stylesDir + this.CSSFile;
 
     // Copy JS files
-    this.fs.copyTpl(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*.js'), paths.input.modulesDir + this.demoOutputModuleDir, config);
+    this.fs.copyTpl(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + jsFiles), paths.input.modulesDir + this.demoOutputModuleDir, config);
 
     // Copy TEMPLATE HTML files
     this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);

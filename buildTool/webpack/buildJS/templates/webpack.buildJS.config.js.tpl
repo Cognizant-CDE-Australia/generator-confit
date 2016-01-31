@@ -18,7 +18,7 @@ var sourceFormat = buildJS.sourceFormat;
 var outputFormat = buildJS.outputFormat;
 
 if (sourceFormat !== outputFormat) { %>
-var jsRE = new RegExp(projectPaths.input.modulesDir.replace(/\//g, '\\/') + '.*\.js$');
+var jsRE = new RegExp(projectPaths.input.modulesDir.replace(/\//g, '\\/') + '.*\.jsx?$');
 config.module.loaders.push({
   test: jsRE,
   loader: 'babel-loader',
@@ -27,7 +27,7 @@ config.module.loaders.push({
   query: {
     // https://github.com/babel/babel-loader#options
     cacheDirectory: true,
-    presets: ['es2015']
+    presets: ['react','es2015']
   }
 });<%
 }
