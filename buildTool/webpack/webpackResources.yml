@@ -59,6 +59,9 @@ buildJS:
     - name: babel-preset-es2015
       version: '6.3.13'
 
+    - name: babel-preset-react
+      version: '6.3.13'
+
 # README section for large blocks of static text
 # TODO: Move these to appropriate tool sections (e.g. build, testUnit)
 readme:

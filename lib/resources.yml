@@ -63,11 +63,13 @@ js:
       - angular2: '*'
     React (latest):
       - react: '*'
+      - react-dom: '*'
 
   sourceFormat:
     options:
       - ES5
       - ES6
+      - JSX+ES6
     default: ES6
 
   outputFormat:
