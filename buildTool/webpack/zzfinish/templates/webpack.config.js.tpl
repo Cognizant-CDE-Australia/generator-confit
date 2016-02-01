@@ -24,9 +24,15 @@ var config = {
     new webpack.optimize.OccurenceOrderPlugin(true)
   ],
 
-  // https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
   resolve: {
-    modulesDirectories: ['node_modules', 'bower_components']
+    // https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
+    modulesDirectories: ['node_modules', 'bower_components'],
+
+    // https://webpack.github.io/docs/configuration.html#resolve-extensions
+    <% var extensions = ['', '.webpack.js', '.web.js', '.js'];
+    if (buildJS.sourceFormat === 'TypeScript') { extensions.push('.ts'); }
+    -%>
+    extensions: <%- JSON.stringify(extensions).replace(/"/g, '\'') %>
   },
 
   // Output stats to provide more feedback when things go wrong:

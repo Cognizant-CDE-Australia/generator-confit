@@ -3,7 +3,7 @@
     "app": {
       "buildProfile": "Latest",
       "editorConfig": true,
-      "_version": "7cf0048dcb4351708c748e9c6e60cc88e77daec1"
+      "_version": "b5a809fa571b3a2c61c6d3a0aae915758478a4df"
     },
     "paths": {
       "input": {
@@ -35,16 +35,20 @@
     "buildAssets": {},
     "buildCSS": {
       "includeOlderBrowsers": false,
-      "cssCompiler": "none",
+      "cssCompiler": "stylus",
       "autoprefixer": true,
       "_version": "2e30ea2f5191d6d7d528f2d4a5823b57807644f1"
     },
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
-      "framework": [],
-      "vendorScripts": [],
-      "_version": "1a2cd6ababeb31f841bc18532b9baa2ac84717b6"
+      "framework": [
+        "AngularJS 1.x"
+      ],
+      "vendorScripts": [
+        "angular"
+      ],
+      "_version": "75ad00d667bfe9ee9b76d8ff9b9b957d31620dd5"
     },
     "buildHTML": {
       "extension": ".html",
@@ -67,15 +71,15 @@
       "protocol": "https",
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
-    "testBrowser": {},
     "testUnit": {},
+    "testBrowser": {},
     "verify": {
-      "jsLinter": [],
+      "jsLinter": ["eslint"],
       "_version": "6e4bcaa21dcc26a4916b73413dad6eb411438afe"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "b2210cb8e07bc2eec9e16ca521e72c290feecbf5"
+      "_version": "2ca952a0feed6500264d6b2e69f0e710fc7d24e3"
     },
     "zzfinish": {}
   }

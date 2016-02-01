@@ -69,3 +69,9 @@ verify:
     - name: grunt-stylint
       version: '*'
       criteria: this.config.verify.linters.indexOf('stylint') !== -1
+
+
+zzfinish:
+  onEnd:
+    cmd: grunt
+    args: ['dev', '--url=index.html']

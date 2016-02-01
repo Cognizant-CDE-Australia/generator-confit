@@ -8,7 +8,7 @@ var path = require('path');
 
 var frameworkScriptMap;
 var frameworkNames;       // The names of the frameworks ['frameworkName', ...]
-var frameworkScriptObjs;  // The framework script objects {ModuleName: 'version'}
+var frameworkScriptObjs;  // The framework script packages {ModuleName: 'version'}
 var frameworkScripts;     // The framework script names ['ModuleName', ...]
 
 module.exports = confitGen.create({
@@ -18,13 +18,16 @@ module.exports = confitGen.create({
       this.hasConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasConfig;
 
-      frameworkScriptMap = this.getResources().js.frameworks;
+      frameworkScriptMap = this.getResources().buildJS.frameworks;
       frameworkNames = _.keys(frameworkScriptMap);
-      frameworkScriptObjs = _.flatten(_.values(frameworkScriptMap)).map((obj) => {
-        var newObj = {};
-        newObj[obj.name] = obj.version;
-        return newObj;
-      });
+
+      frameworkScriptObjs = _.flatten(_.flatten(_.values(frameworkScriptMap)).map((obj) => {
+        return obj.packages.map(pkg => {
+          var newObj = {};
+          newObj[pkg.name] = pkg.version;
+          return newObj;
+        });
+      }));
       frameworkScripts = frameworkScriptObjs.map((pkg) => _.keys(pkg)[0]);
     }
   },
@@ -39,22 +42,22 @@ module.exports = confitGen.create({
 
     var done = this.async();
     var self = this;
-    var res = this.getResources().js;
+    var res = this.getResources().buildJS;
 
     var prompts = [
       {
         type: 'list',
         name: 'sourceFormat',
         message: 'Source code language',
-        choices: res.sourceFormat.options,
-        default: this.getConfig('sourceFormat') || res.sourceFormat.default
+        choices: _.keys(res.sourceFormat),
+        default: this.getConfig('sourceFormat') || res.sourceFormatDefault
       },
       {
         type: 'list',
         name: 'outputFormat',
         message: 'Target output language',
-        choices: res.outputFormat.options,
-        default: this.getConfig('outputFormat') || res.outputFormat.default
+        choices: res.outputFormat,
+        default: this.getConfig('outputFormat') || res.outputFormatDefault
       },
       //{
       //  type: 'confirm',
@@ -119,7 +122,7 @@ module.exports = confitGen.create({
 
       var getScriptsForFramework = function(framework) {
         // Get the scripts that belong just to this old framework:
-        return frameworkScriptMap[framework].map((obj) => obj.name);
+        return frameworkScriptMap[framework].packages.map((obj) => obj.name);
       };
 
       var oldFrameworkScripts = _.flatten(existingFramework.map(getScriptsForFramework));
@@ -142,25 +145,29 @@ module.exports = confitGen.create({
   writing: function () {
     // Loop through the selected frameworks, and install the respective modules
     var frameworks = this.getConfig('framework') || [];
-    var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) =>frameworkScriptMap[framework]));
+    var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].packages));
     var buildJsResources = this.getResources().buildJS;
 
     // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
     this.setNpmDependenciesFromArray(activeFrameworkScriptObjs);
-
     this.addReadmeDoc('extensionPoint.buildJSVendorScripts', buildJsResources.readme.extensionPoint);
 
     // Copy any template files related directly to the sourceFormat
-    var sourceFormat = this.getConfig('sourceFormat');
-    var templateFiles = buildJsResources.templateFiles.sourceFormat[sourceFormat];
+    var sourceFormatBuildData = buildJsResources.sourceFormat[this.getConfig('sourceFormat')];
     var config = this.getGlobalConfig();
-    templateFiles.forEach((file) => {
+
+    sourceFormatBuildData.templates.forEach((file) => {
       this.fs.copyTpl(this.templatePath(file.src), this.destinationPath(file.dest), config);
     });
 
-    // Install any source-format related packages
-    var packages = buildJsResources.packages.sourceFormat[sourceFormat];
-    this.setNpmDevDependenciesFromArray(packages);
+    // Install any sourceFormat related packages
+    this.setNpmDevDependenciesFromArray(sourceFormatBuildData.packages);
+
+
+    // Install any sourceFormat related tasks
+    sourceFormatBuildData.tasks.forEach(task => {
+      this.defineNpmTask(task.name, task.tasks, task.description);
+    });
 
     this.buildTool.write.apply(this);
   },
@@ -172,5 +179,12 @@ module.exports = confitGen.create({
       skipMessage: true,
       bower: false
     });
+
+    // Run any sourceFormat-related install commands
+    var sourceFormatBuildData = this.getResources().buildJS.sourceFormat[this.getConfig('sourceFormat')];
+    if (sourceFormatBuildData.onInstall) {
+      var cmd = sourceFormatBuildData.onInstall;
+      this.runOnInstall(cmd.cmd, cmd.args);
+    }
   }
 });

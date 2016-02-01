@@ -69,6 +69,7 @@ buildJS:
         - name: ts-loader
           version: '0.8.0'
 
+
 # README section for large blocks of static text
 # TODO: Move these to appropriate tool sections (e.g. build, testUnit)
 readme:
@@ -160,3 +161,7 @@ zzfinish:
   packages:
     - name: extract-text-webpack-plugin
       version: '1.0.1'
+
+  onEnd:
+    cmd: npm
+    args: ['start']

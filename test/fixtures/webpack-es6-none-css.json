@@ -1,0 +1,82 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Latest",
+      "editorConfig": true,
+      "_version": "b5a809fa571b3a2c61c6d3a0aae915758478a4df"
+    },
+    "paths": {
+      "input": {
+        "srcDir": "src/",
+        "modulesSubDir": "modules/",
+        "assetsDir": "assets/",
+        "stylesDir": "styles/",
+        "templateDir": "template/",
+        "unitTestDir": "unitTest/",
+        "browserTestDir": "browserTest/",
+        "modulesDir": "src/modules/"
+      },
+      "output": {
+        "devDir": "dev/",
+        "prodDir": "prod/",
+        "assetsSubDir": "assets/",
+        "cssSubDir": "css/",
+        "jsSubDir": "js/",
+        "vendorJSSubDir": "vendor/",
+        "viewsSubDir": "views/",
+        "reportDir": "reports/"
+      },
+      "config": {
+        "configDir": "config/",
+        "tempDir": ".tmp/"
+      },
+      "_version": "051e4b7307b0ddd05a6f9894e6ab41e42625aee1"
+    },
+    "buildAssets": {},
+    "buildCSS": {
+      "includeOlderBrowsers": false,
+      "cssCompiler": "none",
+      "autoprefixer": true,
+      "_version": "2e30ea2f5191d6d7d528f2d4a5823b57807644f1"
+    },
+    "buildJS": {
+      "sourceFormat": "ES6",
+      "outputFormat": "ES5",
+      "framework": [],
+      "vendorScripts": [],
+      "_version": "75ad00d667bfe9ee9b76d8ff9b9b957d31620dd5"
+    },
+    "buildHTML": {
+      "extension": ".html",
+      "_version": "06b6d2f07f16df91852d082d0c314e9f51a0ee65"
+    },
+    "build": {},
+    "entryPoint": {
+      "entryPoints": {},
+      "_version": "666f5f0d167057ea62f753ca5e4030bbe783c0d5"
+    },
+    "serverDev": {
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "af27305fe9c2705b8899a19343a386b709389156"
+    },
+    "serverProd": {
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "01b15dd136236be875025175878631dc33d1fad7"
+    },
+    "testUnit": {},
+    "testBrowser": {},
+    "verify": {
+      "jsLinter": [],
+      "_version": "6e4bcaa21dcc26a4916b73413dad6eb411438afe"
+    },
+    "sampleApp": {
+      "createSampleApp": true,
+      "_version": "2ca952a0feed6500264d6b2e69f0e710fc7d24e3"
+    },
+    "zzfinish": {}
+  }
+}

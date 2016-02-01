@@ -1,7 +1,7 @@
 'use strict';
 
 // START_CONFIT_GENERATED_CONTENT
-import 'phantomjs-polyfill';
+require('phantomjs-polyfill');
 
 <%
 // The entry-point references are either node_modules (or module names),
@@ -33,14 +33,18 @@ sourceEPs = sourceEPs.map(function(file) {
   return file.substr(2);
 })
 
-sourceEPs.forEach(function(file) { %>
+// If we are dealing with Typescript, our unit tests are the ones that import the app (whereas in NG1, this file imported the app)
+// So don't import source code if we are using TypeScript. Otherwise, import source code.
+if (buildJS.sourceFormat !== 'TypeScript') {
+  sourceEPs.forEach(function(file) { %>
 import '../../<%= paths.input.srcDir + file -%>';
-<% }); -%>
+<% });
+} -%>
 
 
 // Lazily-loaded modules (user-edit)
 
-// Includes all *.spec.js files in the unitTest directory. The '../../' is the relative path from where Karma is (config/testUnit) to where the source folders are.
-var testsContext = require.context('../../<%- paths.input.modulesDir.substr(0, paths.input.modulesDir.length - 1) -%>', true, /<%- paths.input.unitTestDir.replace(/\//g, '\\/') %>.*spec\.js$/);
+// Includes all *.spec.js|ts files in the unitTest directory. The '../../' is the relative path from where Karma is (config/testUnit) to where the source folders are.
+var testsContext = require.context('../../<%- paths.input.modulesDir.substr(0, paths.input.modulesDir.length - 1) -%>', true, /<%- paths.input.unitTestDir.replace(/\//g, '\\/') %>.*spec\.(js|ts)$/);
 testsContext.keys().forEach(testsContext);
 // END_CONFIT_GENERATED_CONTENT

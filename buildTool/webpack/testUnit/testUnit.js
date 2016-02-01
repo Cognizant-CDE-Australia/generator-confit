@@ -1,7 +1,5 @@
 'use strict';
 
-var updateJSFile = require('../../../lib/fileUtils').updateJSFile;
-
 module.exports = function() {
 
   function write() {
@@ -11,10 +9,10 @@ module.exports = function() {
     var config = this.getGlobalConfig();
     var outputDir = config.paths.config.configDir + 'testUnit/';
 
-    updateJSFile.call(this, this.toolTemplatePath('karma.conf.js'), this.destinationPath(outputDir + 'karma.conf.js'));
-    updateJSFile.call(this, this.toolTemplatePath('karma.debug.conf.js'), this.destinationPath(outputDir + 'karma.debug.conf.js'));
-    updateJSFile.call(this, this.toolTemplatePath('karma.common.js'), this.destinationPath(outputDir + 'karma.common.js'), config);
-    updateJSFile.call(this, this.toolTemplatePath('test.files.js.tpl'), this.destinationPath(outputDir + 'test.files.js'), config);
+    this.updateJSFile.call(this, this.toolTemplatePath('karma.conf.js'), this.destinationPath(outputDir + 'karma.conf.js'));
+    this.updateJSFile.call(this, this.toolTemplatePath('karma.debug.conf.js'), this.destinationPath(outputDir + 'karma.debug.conf.js'));
+    this.updateJSFile.call(this, this.toolTemplatePath('karma.common.js'), this.destinationPath(outputDir + 'karma.common.js'), config);
+    this.updateJSFile.call(this, this.toolTemplatePath('test.files.js.tpl'), this.destinationPath(outputDir + 'test.files.js'), config);
 
     this.defineNpmTask('test', ['npm run test:unit'], 'Alias for `npm run test:unit` task');
     this.defineNpmTask('test:unit', ['karma start ./' + outputDir + 'karma.conf.js'], 'Run unit tests whenever JS code changes, with code coverage');

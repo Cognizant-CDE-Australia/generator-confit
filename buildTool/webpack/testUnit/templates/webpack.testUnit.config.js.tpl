@@ -4,7 +4,7 @@
 var sourceFormat = buildJS.sourceFormat;
 var outputFormat = buildJS.outputFormat;
 
-if (sourceFormat !== outputFormat) { -%>
+if (sourceFormat === 'ES6' && outputFormat === 'ES5') { -%>
 config.module.loaders.push({
   test: /test\.files\.js$/,
   loader: 'babel-loader',

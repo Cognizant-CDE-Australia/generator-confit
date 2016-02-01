@@ -60,8 +60,8 @@ module.exports = function() {
     var vendorScripts = jsFrameworkConfig[selectedFramework].vendorScripts || [];
 
     // Add the NPM dev dependencies (for the build tools) and the runtime dependencies (vendorScripts)
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
     this.setNpmDependenciesFromArray(vendorScripts);
+    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
 
     // Add the CSSFile to the config, so that it can be require()'ed in Webpack
     config.$CSSFilePath = paths.input.stylesDir + this.CSSFile;

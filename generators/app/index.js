@@ -165,6 +165,7 @@ module.exports = confitGen.create({
     var subGenOptions = {
       rebuildFromConfig: this.rebuildFromConfig,
       'skip-install': this.options['skip-install'],
+      'skip-run': this.options['skip-run'],
       configFile: this.configFile
     };
 
@@ -179,25 +180,9 @@ module.exports = confitGen.create({
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],    //--skip-install
-      skipRun: this.options['skip-run'],
       skipMessage: true,
-      bower: false,
-      callback: function() {
-        // Emit a new event - dependencies installed
-        this.emit('dependenciesInstalled');
-      }.bind(this)
+      bower: false
     });
-
-    // If we skip installation, we still want to begin development
-    if (this.options['skip-install']) {
-      this.buildTool.beginDevelopment.apply(this);
-    } else {
-      // Lastly, run the 'dev' command to start everything
-      // Now you can bind to the dependencies installed event
-      this.on('dependenciesInstalled', function() {
-        this.buildTool.beginDevelopment.apply(this);
-      });
-    }
   }
 });
 
