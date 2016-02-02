@@ -6,6 +6,16 @@ testBrowser:
       version: '2.1.1'
     - name: jasmine-spec-reporter
       version: '2.4.0'
+
+  typeLibs:
+    - name: selenium-webdriver
+      key: ambientDependencies
+      version: github:DefinitelyTyped/DefinitelyTyped/selenium-webdriver/selenium-webdriver.d.ts#a83677ed13add14c2ab06c7325d182d0ba2784ea
+
+    - name: angular-protractor
+      key: ambientDependencies
+      version: github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#64b25f63f0ec821040a5d3e049a976865062ed9d
+
   readme:
     extensionPoint: >
       `npm test:browser` can be extended by modifying <%= link(paths.config.configDir + 'testBrowser/protractor.conf.js') %>.

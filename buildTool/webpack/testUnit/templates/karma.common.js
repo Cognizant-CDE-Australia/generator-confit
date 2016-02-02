@@ -68,17 +68,23 @@ var karmaConfig = {
     outputDir: '<%- paths.output.reportDir %>unit/'
   },
 
+  <%
+    var jsExtension = (buildJS.sourceFormat === 'TypeScript') ? 'ts' : 'js';
+    var preLoaders = (buildJS.sourceFormat === 'TypeScript') ? '!ts-loader' : '';
+  -%>
+
   webpack: {
     module: {
       // Obtained from http://stackoverflow.com/questions/32170176/getting-karma-code-coverage-for-pre-transpilation-souce-code
       preLoaders: [{
-        test: /\.js$/,
+        test: /\.<%= jsExtension %>$/,
         exclude: /(<%- paths.input.unitTestDir.substr(0, paths.input.unitTestDir.length - 1) %>|<%- paths.input.browserTestDir.substr(0, paths.input.browserTestDir.length - 1) %>|node_modules|bower_components|<%- paths.config.configDir.substr(0, paths.config.configDir.length - 1) %>)\//,
-        loader: 'isparta'
+        loader: 'isparta<%= preLoaders %>'
       }],
       loaders: webpackConfig.module.loaders
     },
-    plugins: webpackConfig.plugins
+    plugins: webpackConfig.plugins,
+    resolve: webpackConfig.resolve
   },
 
   webpackServer: {

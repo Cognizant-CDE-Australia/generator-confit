@@ -5,6 +5,7 @@ module.exports = function() {
   function write() {
     this.log('Writing Webpack unit-test options');
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().testUnit.packages);
+    this.ts.addTypeLibsFromArray(this.buildTool.getResources().testUnit.typeLibs);
 
     var config = this.getGlobalConfig();
     var outputDir = config.paths.config.configDir + 'testUnit/';

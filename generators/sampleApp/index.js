@@ -73,11 +73,6 @@ module.exports = confitGen.create({
 
 
     // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific files to use
-    var sourceFormat = config.buildJS.sourceFormat;
-    var jsExtension = this.getResources().sampleApp.jsExtension[sourceFormat];
-
-    // Copy unit test(s)
-    this.fs.copy(this.templatePath('unitTest/*.' + jsExtension), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);
 
     // Copy browser test(s)
     this.fs.copy(this.templatePath('browserTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.browserTestDir);

@@ -48,8 +48,6 @@ buildJS:
       templates:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
-        - src: typings.json
-          dest: typings.json
 
       tasks:
         - name: typingsInstall
@@ -72,19 +70,27 @@ buildJS:
       packages:
         - name: angular
           version: '1.4.9'
-      typings: []
+      typeLibs: []
+      testPackages:
+        - name: angular-mocks
+          version: '1.4.9'
+      testTypeLibs: []
 
     AngularJS 2.x:
       packages:
         - name: angular2
           version: '*'
-      typings: []
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
 
     React (latest):
       packages:
         - name: react
           version: '*'
-      typings: []
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
 
 # CSS configuration
 css:
@@ -204,6 +210,15 @@ serverProd:
     port: 3000
     hostname: localhost
     protocol: https
+
+
+# TypeScript Utils
+TypeScriptUtils:
+  typeLibs:
+    - name: node
+      key: ambientDependencies
+      version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
+
 
 verify:
   jsLinters:

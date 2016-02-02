@@ -180,8 +180,15 @@ module.exports = confitGen.create({
       bower: false
     });
 
+    var sourceFormat = this.getConfig('sourceFormat');
+
+    // Create the typings.json file, if using TypeScript
+    if (sourceFormat === 'TypeScript') {
+      this.fs.writeJSON(this.destinationPath('typings.json'), this.ts.getTypeLibConfig());
+    }
+
     // Run any sourceFormat-related install commands
-    var sourceFormatBuildData = this.getResources().buildJS.sourceFormat[this.getConfig('sourceFormat')];
+    var sourceFormatBuildData = this.getResources().buildJS.sourceFormat[sourceFormat];
     if (sourceFormatBuildData.onInstall) {
       var cmd = sourceFormatBuildData.onInstall;
       this.runOnInstall(cmd.cmd, cmd.args);

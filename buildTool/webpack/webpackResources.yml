@@ -157,6 +157,11 @@ testUnit:
     - name: isparta-loader
       version: '1.0.0'    #TODO: version 2 is out...
 
+  typeLibs:
+    - name: jasmine
+      key: ambientDependencies
+      version: github:angular/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
+
 zzfinish:
   packages:
     - name: extract-text-webpack-plugin

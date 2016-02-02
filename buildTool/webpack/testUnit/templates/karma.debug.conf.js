@@ -9,7 +9,7 @@ function getConfitConfig(config) {
 
   // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
   commonConfig.webpack.module.preLoaders = commonConfig.webpack.module.preLoaders.filter(function (loader) {
-    return (loader.loader !== 'isparta');
+    return (loader.loader.indexOf('isparta') === -1);
   });
 
   // QUIRK: karma-webpack
