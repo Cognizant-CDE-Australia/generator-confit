@@ -44,7 +44,7 @@
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "75ad00d667bfe9ee9b76d8ff9b9b957d31620dd5"
+      "_version": "321ed80b36fbb5ca4da4a400ea863c6f57b7ce5f"
     },
     "buildHTML": {
       "extension": ".html",
@@ -67,7 +67,9 @@
       "protocol": "https",
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
-    "testUnit": {},
+    "testUnit": {
+      "_version": "1489705c99a0c7c7676a4c35fbcc7a998d5fbc01"
+    },
     "testBrowser": {},
     "verify": {
       "jsLinter": [],
@@ -75,7 +77,7 @@
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "2ca952a0feed6500264d6b2e69f0e710fc7d24e3"
+      "_version": "39d75b3a506b3fe1798ec1dbf01b5a72aee2c2c5"
     },
     "zzfinish": {}
   }

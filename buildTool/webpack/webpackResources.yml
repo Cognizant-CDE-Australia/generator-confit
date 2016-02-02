@@ -154,8 +154,8 @@ testUnit:
     - name: phantomjs-polyfill
       version: '0.0.1'
 
-    - name: isparta-loader
-      version: '1.0.0'    #TODO: version 2 is out...
+    - name: istanbul-instrumenter-loader
+      version: '0.1.3'
 
   typeLibs:
     - name: jasmine
