@@ -58,7 +58,16 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
     
 - `--skip-install` skips the installation of NPM and Bower dependencies
 - `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
-    
+
+## Upgrading
+
+Confit is designed to be hassle-free when upgrading. As well as using semantic versioning, Confit has some smarts to make upgrading simple even when there are "breaking changes". *It is always a good idea to commit all your source code to a repo BEFORE upgrading, so that if the upgrade doesn't turn out how you expected, you can revert to the previous version of the code.*
+
+Each Confit generator (Confit is composed of multiple generators) contains a version identifier. When you upgrade to a new version of Confit, if any of the new generators have changed, Confit will detect this and the generator will re-ask the questions for that section. That will cause the generator's version in your `confit.json` file to be updated, as well as new information being added to the file in some cases. Old / deprecated information will not be automatically removed.
+
+Similarly for the generated tools, if the tooling changes, or you choose to use a different build profile which uses different tools, the old tools' files will not be removed.
+
+
 ## Sponsors
 
 These are the companies that are sponsoring the development of Confit:
