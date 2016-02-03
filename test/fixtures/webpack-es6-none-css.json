@@ -3,7 +3,7 @@
     "app": {
       "buildProfile": "Latest",
       "editorConfig": true,
-      "_version": "7cf0048dcb4351708c748e9c6e60cc88e77daec1"
+      "_version": "b5a809fa571b3a2c61c6d3a0aae915758478a4df"
     },
     "paths": {
       "input": {
@@ -35,7 +35,7 @@
     "buildAssets": {},
     "buildCSS": {
       "includeOlderBrowsers": false,
-      "cssCompiler": "sass",
+      "cssCompiler": "none",
       "autoprefixer": true,
       "_version": "2e30ea2f5191d6d7d528f2d4a5823b57807644f1"
     },
@@ -44,7 +44,7 @@
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "c336b21cd3bc899e7dc86516f07f2aca138bc4fc"
+      "_version": "321ed80b36fbb5ca4da4a400ea863c6f57b7ce5f"
     },
     "buildHTML": {
       "extension": ".html",
@@ -67,15 +67,17 @@
       "protocol": "https",
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
+    "testUnit": {
+      "_version": "1489705c99a0c7c7676a4c35fbcc7a998d5fbc01"
+    },
     "testBrowser": {},
-    "testUnit": {},
     "verify": {
-      "jsLinter": ["eslint"],
+      "jsLinter": [],
       "_version": "6e4bcaa21dcc26a4916b73413dad6eb411438afe"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "b2210cb8e07bc2eec9e16ca521e72c290feecbf5"
+      "_version": "39d75b3a506b3fe1798ec1dbf01b5a72aee2c2c5"
     },
     "zzfinish": {}
   }

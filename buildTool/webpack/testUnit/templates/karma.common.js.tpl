@@ -1,10 +1,16 @@
 // Global karma config
+'use strict';
+
+// START_CONFIT_GENERATED_CONTENT
+<%
+var jsExtension = (buildJS.sourceFormat === 'TypeScript') ? 'ts' : 'js';
+-%>
 
 // We want to re-use the loaders from the dev.webpack.config
 var webpackConfig = require('./../webpack/dev.webpack.config.js');
 
 
-module.exports = {
+var karmaConfig = {
   autoWatch: true,
 
   // base path, that will be used to resolve files and exclude
@@ -44,6 +50,7 @@ module.exports = {
   ],
 
   preprocessors: {
+    '<%- paths.input.modulesDir %>/**/*.<%= jsExtension %>': ['coverage'],
     '<%- paths.config.configDir %>testUnit/test.files.js': ['webpack']
   },
 
@@ -67,15 +74,20 @@ module.exports = {
 
   webpack: {
     module: {
-      // Obtained from http://stackoverflow.com/questions/32170176/getting-karma-code-coverage-for-pre-transpilation-souce-code
-      preLoaders: [{
-        test: /\.js$/,
-        exclude: /(<%- paths.input.unitTestDir.substr(0, paths.input.unitTestDir.length - 1) %>|<%- paths.input.browserTestDir.substr(0, paths.input.browserTestDir.length - 1) %>|node_modules|bower_components|<%- paths.config.configDir.substr(0, paths.config.configDir.length - 1) %>)\//,
-        loader: 'isparta'
-      }],
+      postLoaders: [
+        // instrument only testing sources with Istanbul
+        {
+          test: /<%= paths.input.modulesDir.replace(/\//g, '\\/') %>.*\.<%= jsExtension %>$/,
+          loader: 'istanbul-instrumenter-loader',
+          exclude: [
+            /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/
+          ]
+        }
+      ],
       loaders: webpackConfig.module.loaders
     },
-    plugins: webpackConfig.plugins
+    plugins: webpackConfig.plugins,
+    resolve: webpackConfig.resolve
   },
 
   webpackServer: {
@@ -83,6 +95,8 @@ module.exports = {
   },
 
   singleRun: false,
-
   colors: true
 };
+// END_CONFIT_GENERATED_CONTENT
+
+module.exports = karmaConfig;

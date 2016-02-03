@@ -1,9 +1,10 @@
 // Karma configuration
 'use strict';
 
+// START_CONFIT_GENERATED_CONTENT
 var commonConfig = require('./karma.common.js');
 
-module.exports = function (config) {
+function getConfitConfig(config) {
   // level of logging
   // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
   commonConfig.logLevel = config.LOG_INFO;
@@ -17,3 +18,6 @@ module.exports = function (config) {
 
   config.set(commonConfig);
 };
+// END_CONFIT_GENERATED_CONTENT
+
+module.exports = getConfitConfig;

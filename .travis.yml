@@ -18,6 +18,7 @@ addons:
 
 before_script:
   - npm prune
+  - npm set progress=false
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start

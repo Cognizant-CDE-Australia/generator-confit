@@ -27,6 +27,70 @@ buildJS:
       This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
       For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
 
+  sourceFormat:
+    ES5:
+      packages: []
+      templates: []
+      tasks: []
+
+    ES6:
+      packages: []
+      templates: []
+      tasks: []
+
+    TypeScript:
+      packages:
+        - name: typescript
+          version: '1.7.3'
+        - name: typings
+          version: '0.6.3'
+
+      templates:
+        - src: tsconfig.json.tpl
+          dest: tsconfig.json
+
+      tasks:
+        - name: typingsInstall
+          tasks: ['typings install']
+          description: ''
+
+      onInstall:
+        cmd: npm
+        args: ['run', 'typingsInstall']
+
+  sourceFormatDefault: ES6
+
+  outputFormat:
+    - ES5
+    - ES6
+  outputFormatDefault: ES5
+
+  frameworks:
+    AngularJS 1.x:
+      packages:
+        - name: angular
+          version: '1.4.9'
+      typeLibs: []
+      testPackages:
+        - name: angular-mocks
+          version: '1.4.9'
+      testTypeLibs: []
+
+    AngularJS 2.x:
+      packages:
+        - name: angular2
+          version: '*'
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
+
+    React (latest):
+      packages:
+        - name: react
+          version: '*'
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
 
 # CSS configuration
 css:
@@ -53,28 +117,6 @@ entryPoint:
       one entry point, but it is possible to have more than one.
       `entryPoint.entryPoints` must have at-least property (e.g. `property: [file]`), where `file` is a list
       of NPM module names and/or references to JavaScript files (file references must start with `./`);
-
-# Javascript config
-js:
-  frameworks:
-    AngularJS 1.x:  #TODO: Convert this pacakge defintion format to the standard format
-      - angular: '1.4.9'
-    AngularJS 2.x:
-      - angular2: '*'
-    React (latest):
-      - react: '*'
-
-  sourceFormat:
-    options:
-      - ES5
-      - ES6
-    default: ES6
-
-  outputFormat:
-    options:
-      - ES5
-      - ES6
-    default: ES5
 
 # Path Defaults
 path:
@@ -146,6 +188,15 @@ readme:
 # Sample App
 sampleApp:
   demoModuleDir: demoModule/
+  entryPointFileName:
+    ES5: 'app.js'
+    ES6: 'app.js'
+    TypeScript: 'app.ts'
+
+  jsExtension:
+    ES5: 'js'
+    ES6: 'js'
+    TypeScript: 'ts'
 
 # Server - Development
 serverDev:
@@ -159,6 +210,15 @@ serverProd:
     port: 3000
     hostname: localhost
     protocol: https
+
+
+# TypeScript Utils
+TypeScriptUtils:
+  typeLibs:
+    - name: node
+      key: ambientDependencies
+      version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
+
 
 verify:
   jsLinters:

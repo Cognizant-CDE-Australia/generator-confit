@@ -17,19 +17,26 @@ config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
 var sourceFormat = buildJS.sourceFormat;
 var outputFormat = buildJS.outputFormat;
 
-if (sourceFormat !== outputFormat) { %>
+if (sourceFormat === 'ES6' && outputFormat === 'ES5') { %>
 var jsRE = new RegExp(projectPaths.input.modulesDir.replace(/\//g, '\\/') + '.*\.js$');
 config.module.loaders.push({
   test: jsRE,
   loader: 'babel-loader',
-  // TODO: Should we do this?
-  // exclude: [nodeModulesPath]
+  exclude: ['node_modules'],    // There should be no need to exclude unit or browser tests because they should NOT be part of the source code dependency tree
   query: {
     // https://github.com/babel/babel-loader#options
     cacheDirectory: true,
     presets: ['es2015']
   }
 });<%
+}
+
+if (sourceFormat === 'TypeScript') { %>
+config.module.loaders.push({
+  test: /<%= paths.input.modulesDir.replace(/\//g, '\\/') %>.*\.ts$/,
+  loader: 'ts-loader'
+});
+<%
 }
 %>
 /* **/

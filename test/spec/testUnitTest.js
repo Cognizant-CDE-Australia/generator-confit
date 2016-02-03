@@ -30,12 +30,14 @@ module.exports = function(confitConfig) {
                             confitConfig.paths.input.unitTestDir + 'unitTest-fail.spec.js';
 
       before(function() {
-        // Check the confit config. If verify.jsLinter.indexOf('eslint')
+        // Need to create a JS AND TypeScript version of this spec
         fs.copySync(process.env.FIXTURE_DIR + 'unitTest/unitTest-fail.spec.js', destFixtureFile);
+        fs.copySync(process.env.FIXTURE_DIR + 'unitTest/unitTest-fail.spec.js', destFixtureFile.replace('.js', '.ts'));
       });
 
       after(function() {
         fs.removeSync(destFixtureFile);
+        fs.removeSync(destFixtureFile.replace('.js', '.ts'));
       });
 
 

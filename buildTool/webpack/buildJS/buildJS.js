@@ -4,7 +4,11 @@ module.exports = function() {
 
   function write() {
     this.log('Writing Webpack buildJS options');
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().buildJS.packages);
+
+    var sourceFormat = this.getConfig('sourceFormat');
+    var sourceFormatDependencies = this.buildTool.getResources().buildJS.sourceFormat[sourceFormat].packages;
+
+    this.setNpmDevDependenciesFromArray(sourceFormatDependencies);
   }
 
   return {

@@ -1,13 +1,15 @@
 // Karma configuration
 // http://karma-runner.github.io/0.12/config/configuration-file.html
 'use strict';
+
+// START_CONFIT_GENERATED_CONTENT
 var commonConfig = require('./karma.common.js');
 
-module.exports = function (config) {
+function getConfitConfig(config) {
 
   // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
-  commonConfig.webpack.module.preLoaders = commonConfig.webpack.module.preLoaders.filter(function (loader) {
-    return (loader.loader !== 'isparta');
+  commonConfig.webpack.module.postLoaders = commonConfig.webpack.module.postLoaders.filter(function (loader) {
+    return (loader.loader.indexOf('istanbul-instrumenter-loader') === -1);
   });
 
   // QUIRK: karma-webpack
@@ -23,3 +25,6 @@ module.exports = function (config) {
 
   config.set(commonConfig);
 };
+// END_CONFIT_GENERATED_CONTENT
+
+module.exports = getConfitConfig;

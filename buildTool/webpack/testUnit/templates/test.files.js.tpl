@@ -1,8 +1,13 @@
-import 'phantomjs-polyfill';
+'use strict';
+
+// START_CONFIT_GENERATED_CONTENT
+require('phantomjs-polyfill');
 
 <%
 // The entry-point references are either node_modules (or module names),
 // OR they are references to local files.
+
+var jsExtension = buildJS.sourceFormat === 'TypeScript' ? 'ts' : 'js';
 
 // We only want to test the LOCAL FILES, but we still must IMPORT the non-local files
 var eps = [];
@@ -20,23 +25,18 @@ vendorScripts = vendorScripts.concat(moduleEPs);
 
 // Load the vendor(node) modules first<%
 vendorScripts.forEach(function(moduleName) { %>
-import '<%= moduleName -%>';
+require('<%= moduleName -%>');
+<% }); -%>
+%>
+
+// Load the test dependencies!<%
+testUnit.testDependencies.forEach(function(moduleName) { %>
+require('<%= moduleName -%>');
 <% }); -%>
 
-%>// Load the application entry-point(s)<%
+// Don't load any source code! The unit tests are responsible for loading the code-under-test.
 
-// Remove the './' at the start of each file
-sourceEPs = sourceEPs.map(function(file) {
-  return file.substr(2);
-})
-
-sourceEPs.forEach(function(file) { %>
-import '../../<%= paths.input.srcDir + file -%>';
-<% }); -%>
-
-
-// Lazily-loaded modules (user-edit)
-
-// Includes all *.spec.js files in the unitTest directory. The '../../' is the relative path from where Karma is (config/testUnit) to where the source folders are.
-var testsContext = require.context('../../<%- paths.input.modulesDir.substr(0, paths.input.modulesDir.length - 1) -%>', true, /<%- paths.input.unitTestDir.replace(/\//g, '\\/') %>.*spec\.js$/);
+// Includes all *.spec.js|ts files in the unitTest directory. The '../../' is the relative path from where Karma is (config/testUnit) to where the source folders are.
+var testsContext = require.context('../../<%- paths.input.modulesDir.substr(0, paths.input.modulesDir.length - 1) -%>', true, /<%- paths.input.unitTestDir.replace(/\//g, '\\/') %>.*spec\.<%= jsExtension %>$/);
 testsContext.keys().forEach(testsContext);
+// END_CONFIT_GENERATED_CONTENT

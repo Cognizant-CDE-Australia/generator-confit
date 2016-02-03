@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "es6-promise": "github:typings/typed-es6-promise#9243c53f70fb4909ed7cce3094bec221b9fb6d5f"
+  },
+  "devDependencies": {},
+  "ambientDependencies": {
+    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2",
+    "ng2": "github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c",
+    "webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4",
+    "zone": "github:angular/DefinitelyTyped/zone/zone.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9"
+  }
+}
