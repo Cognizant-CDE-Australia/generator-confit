@@ -221,7 +221,13 @@ TypeScriptUtils:
 
 
 verify:
-  jsLinters:
+  jsLintRules:
+    - none
+    - AirBnB
+    - Google
+    - StandardJS
+
+  jsLinter:
     - eslint
 
   linterFiles:
