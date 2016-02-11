@@ -4,7 +4,15 @@ module.exports = function() {
 
   function write() {
     this.log('Writing Webpack buildCSS options');
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().buildCSS.packages);
+
+    var resources = this.buildTool.getResources().buildCSS;
+
+    this.setNpmDevDependenciesFromArray(resources.packages);
+
+    // Add the source-format specific CSS packages
+    var config = this.getGlobalConfig();
+    var cssSourceFormat = config.buildCSS.sourceFormat;
+    this.setNpmDevDependenciesFromArray(resources.sourceFormat[cssSourceFormat].packages);
   }
 
   return {
