@@ -12,13 +12,22 @@ module.exports = function() {
 
     var config = this.config.getAll();
     var outputDir = config.paths.config.configDir;
+    var toolResources = this.buildTool.getResources().verify;
+    var cssCodingStandard = config.buildCSS.sourceFormat;
+    var jsCodingStandard = config.verify.jsCodingStandard;
+    var packages = [].concat(
+      toolResources.packages,
+      toolResources.cssCodingStandard[cssCodingStandard].packages,
+      toolResources.jsCodingStandard[jsCodingStandard].packages
+    );
+    this.setNpmDevDependenciesFromArray(packages);
 
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().verify.packages);
-
+    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
+    var templateData = _.merge({}, config, {resources: this.getResources()});
     this.fs.copyTpl(
       this.toolTemplatePath('gruntVerify.js.tpl'),
       this.destinationPath(outputDir + 'grunt/verify.js'),
-      config
+      templateData
     );
 
     // Define the verify tasks

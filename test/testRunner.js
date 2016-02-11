@@ -10,7 +10,7 @@ var async = require('async');
 var CONFIT_CMD = 'node';
 var CONFIT_PARAMS = ['test/runConfit.js'];
 var MOCHA_CMD = 'mocha';
-var MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/confit.spec.js'];
+var MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/**/*.spec.js'];
 
 var FIXTURE_DIR = path.join(__dirname, 'fixtures/');
 var TEST_DIR = path.join(__dirname, '../temp-test');

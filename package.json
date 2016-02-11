@@ -36,8 +36,9 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "test": "node test/testRunner.js",
+    "test": "npm run test:unit && npm run test:seq",
     "test:seq": "node test/testRunner.js --sequence",
+    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
@@ -77,6 +78,7 @@
     "npm-module-checklist": "1.6.0",
     "semantic-release": "4.3.5",
     "validate-commit-msg": "1.1.0",
+    "yeoman-assert": "2.1.1",
     "yeoman-test": "1.0.0"
   },
   "config": {

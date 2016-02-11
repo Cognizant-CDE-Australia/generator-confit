@@ -2,32 +2,61 @@ module.exports = function (grunt) {
   'use strict';
 
   grunt.extendConfig({
-<% if (verify.linters.indexOf('eslint') > -1) { -%>
+<%
+  var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+
+  // Loop through extensions and generate jsFiles and cssFiles
+  var jsFiles = jsExtensions.map(ext => paths.input.srcDir + '**/*.' + ext).concat(jsExtensions.map(ext => paths.config.configDir + '**/*.' + ext));
+
+  // Ignore the sampleApp.demoModuleDir directory
+  jsFiles.push('!' + paths.input.modulesDir + '**/' + resources.sampleApp.demoModuleDir);
+  var cssFiles = cssExtensions.map(ext => paths.input.srcDir + '**/*.' + ext);
+
+  var lintTasks = [];
+-%>
+<% if (buildJS.sourceFormat === 'ES5' || buildJS.sourceFormat === 'ES6') {
+  lintTasks.push('eslint:all'); -%>
     eslint: {
       options: {
-        configFile: '<%= paths.config.configDir %>verify/eslint.json',
+        configFile: '<%= paths.config.configDir %>verify/.eslintrc',
         quiet: true // Report errors only
       },
       all: {
-        src: ['<%= paths.input.srcDir %>**/*.js', '<%= paths.config.configDir %>**/*.js']
+        src: <%- JSON.stringify(jsFiles).replace(/"/g, '\'') %>
       }
     },
 <% } -%>
-<% if (verify.linters.indexOf('sasslint') > -1) { -%>
+<% if (buildJS.sourceFormat === 'TypeScript') {
+    lintTasks.push('tslint:all'); -%>
+    tslint: {
+      options: {
+        configuration: '<%= paths.config.configDir %>verify/tslint.json'
+      },
+      all: {
+        files: {
+          src: <%- JSON.stringify(jsFiles).replace(/"/g, '\'') %>
+        }
+      }
+    },
+<% } -%>
+<% if (buildCSS.sourceFormat === 'sass') {
+    lintTasks.push('sasslint:all'); -%>
     sasslint: {
       options: {
         configFile: '<%= paths.config.configDir %>verify/.sasslintrc'
       },
-      all: ['<%= paths.input.srcDir %>**/*.s+(a|c)ss']
+      all: <%- JSON.stringify(cssFiles).replace(/"/g, '\'') %>
     },
 <% } -%>
-<% if (verify.linters.indexOf('stylint') > -1) { -%>
+<% if (buildCSS.sourceFormat === 'stylus') {
+    lintTasks.push('stylint:all'); -%>
     stylint: {
       all: {
         options: {
           configFile: '<%= paths.config.configDir %>verify/.stylintrc'
         },
-        src: ['<%= paths.input.srcDir %>**/*.styl']
+        src: <%- JSON.stringify(cssFiles).replace(/"/g, '\'') %>
       }
     },
 <% } -%>
@@ -36,16 +65,11 @@ module.exports = function (grunt) {
         options: {
           spawn: true
         },
-        files: [<%- verify.linters.map(function(linter) {
-          if (linter === 'sasslint')
-            return '\'<' + '%= ' + linter + '.all %' + '>\'';
-          else
-            return '\'<' + '%= ' + linter + '.all.src %' + '>\'';
-          }).join(', ');%>],
-        tasks: [<%- verify.linters.map(function(linter) {return '\'newer:' + linter + ':all\'';}).join(', '); %>]
+        files: <%- JSON.stringify(jsFiles.concat(cssFiles)).replace(/"/g, '\'') %>,
+        tasks: <%- JSON.stringify(lintTasks.map(function(task) { return 'newer:' + task; })).replace(/"/g, '\'') %>
       }
     }
   });
 
-  grunt.registerTask('verify', 'Run all the verify tasks', [<%- verify.linters.map(function(linter) {return '\'' + linter + ':all\'';}).join(', '); %>]);
+  grunt.registerTask('verify', 'Run all the verify tasks', <%- JSON.stringify(lintTasks).replace(/"/g, '\'') %>);
 };

@@ -2,8 +2,10 @@
   "generator-confit": {
     "app": {
       "buildProfile": "Latest",
-      "editorConfig": true,
-      "_version": "b5a809fa571b3a2c61c6d3a0aae915758478a4df"
+      "browserSupport": [
+        "latest"
+      ],
+      "_version": "39ba228117092a1a3c0d2341b27c0fa7638f2287"
     },
     "paths": {
       "input": {
@@ -34,10 +36,9 @@
     },
     "buildAssets": {},
     "buildCSS": {
-      "includeOlderBrowsers": false,
-      "cssCompiler": "sass",
+      "sourceFormat": "sass",
       "autoprefixer": true,
-      "_version": "2e30ea2f5191d6d7d528f2d4a5823b57807644f1"
+      "_version": "c47b630f62295eeeb1c4f15ccd0ec5c8e76a7530"
     },
     "buildJS": {
       "sourceFormat": "ES6",
@@ -72,12 +73,12 @@
     },
     "testBrowser": {},
     "verify": {
-      "jsLinter": ["eslint"],
-      "_version": "6e4bcaa21dcc26a4916b73413dad6eb411438afe"
+      "jsCodingStandard": "StandardJS",
+      "_version": "a1d7d3e4c63d2796f78e256fdc07e716f11864de"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "39d75b3a506b3fe1798ec1dbf01b5a72aee2c2c5"
+      "_version": "dcb5bcbb0684742c6baa0db8609479d70083e8c6"
     },
     "zzfinish": {}
   }

@@ -3,17 +3,17 @@
 // The css question around broswer support should change this variable
 var autoprefixLoader = buildCSS.autoprefixer ? '!autoprefixer-loader?browsers=last 2 versions' : '';
 
-if (buildCSS.cssCompiler === 'sass') { %>
+if (buildCSS.sourceFormat === 'sass') { %>
 config.module.loaders.push({
-  test: /\.(sass|scss)$/,
+  test: /\.(<%= resources.buildCSS.sourceFormat.sass.ext.join('|') %>)$/,
   loader: ExtractTextPlugin.extract('style-loader', 'css-loader<%= autoprefixLoader %>!sass-loader?indentedSyntax=true')
 });<%
 
-} else if (buildCSS.cssCompiler === 'stylus') {
+} else if (buildCSS.sourceFormat === 'stylus') {
 
 -%>
 config.module.loaders.push({
-  test: /\.styl$/,
+  test: /\.(<%= resources.buildCSS.sourceFormat.stylus.ext.join('|') %>)/,
   loader: ExtractTextPlugin.extract('style-loader', 'css-loader<%= autoprefixLoader %>!stylus-loader')
 });<%
 

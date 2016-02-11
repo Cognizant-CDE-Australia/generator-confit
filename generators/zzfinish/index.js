@@ -45,6 +45,11 @@ function getReadmeTemplateData() {
   // Generate a README, or update the existing README.md
   var packageJSON = this.readPackageJson();
   var readmeFragments = this.getResources().readme;
+
+  // Make sure the packageJSON has some the mandatory fields
+  packageJSON.description = packageJSON.description || '';
+  packageJSON.name = packageJSON.name || '';
+
   var templateData = _.merge({}, packageJSON, readmeFragments, { configFile: this.configFile });
 
   // Remove the config.readme from the packageJSON, before writing it back to disk

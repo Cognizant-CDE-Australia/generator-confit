@@ -63,8 +63,8 @@ module.exports = function() {
     this.setNpmDependenciesFromArray(vendorScripts);
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
 
-    // Add the CSSFile to the config, so that it can be require()'ed in Webpack
-    config.$CSSFilePath = paths.input.stylesDir + this.CSSFile;
+    // Add the $CSSEntryPoints to the config, so that it can be require()'ed in Webpack
+    config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file.dest);
 
     // Copy JS files
     this.fs.copyTpl(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*'), paths.input.modulesDir + this.demoOutputModuleDir, config);

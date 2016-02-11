@@ -73,14 +73,18 @@ module.exports = confitGen.create({
         return;
       }
 
-      var self = this;
       var done = this.async();
 
       // Sort out the build profiles
       var buildProfiles = this.getBuildProfiles();
-      var profileDescriptions = buildProfiles.map(function(profile) {
-        return profile.name + ' - ' + profile.description;
-      });
+      var profileDescriptions = buildProfiles.map(profile => profile.name + ' - ' + profile.description);
+      var existingProfileName = this.getConfig('buildProfile');
+      var resources = this.getResources().app;
+      var browsers = resources.supportedBrowsers;
+      var defaultBrowsers = resources.defaultSupportedBrowsers;
+
+      var browserList = _.keys(browsers);
+      var browserObjList = browserList.map(browser => { return { value: browser, name: browsers[browser].label};});
 
       // Ask everything...
       var prompts = [
@@ -90,10 +94,9 @@ module.exports = confitGen.create({
           message: 'Choose a build-profile for your project',
           choices: profileDescriptions,
           default: function() {
-            var existingProfileName = self.getConfig('buildProfile');
             var existingProfileDesc = '';
 
-            buildProfiles.forEach(function(profile) {
+            buildProfiles.forEach(profile => {
               if (profile.name === existingProfileName) {
                 existingProfileDesc = profile.name + ' - ' + profile.description;
               }
@@ -105,18 +108,19 @@ module.exports = confitGen.create({
             }
             return existingProfileDesc;
           },
+          // Convert the label back into the name:
           filter: function(answer) {
-            var profile = buildProfiles.filter(function(profile) {
-              return (profile.name + ' - ' + profile.description) === answer;
-            });
+            var profile = buildProfiles.filter(profile => (profile.name + ' - ' + profile.description) === answer);
             return profile[0].name;
           }
         },
         {
-          type: 'confirm',
-          name: 'editorConfig',
-          message: 'Use EditorConfig?',
-          default: this.getConfig('editorConfig') || true
+          type: 'checkbox',
+          name: 'browserSupport',
+          message: 'Supported browsers (required)',
+          choices: browserObjList,
+          default: this.getConfig().browserSupport || defaultBrowsers,
+          validate: answer => answer.length > 0   // Must select at-least one
         }
       ];
 
@@ -140,22 +144,14 @@ module.exports = confitGen.create({
 
   writing: function() {
     // Common files (independent of the build-tool) to write
-    var packageJSON = this.destinationPath('package.json');
-    if (!this.fs.exists(packageJSON)) {
-      this.fs.copyTpl(
-        this.templatePath('_package.json'),
-        packageJSON,
-        { name: this.appPackageName }
-      );
-    }
+     this.copyIfNotExist(
+      this.templatePath('_package.json'),
+      this.destinationPath('package.json'),
+      { name: this.appPackageName }
+    );
 
     // Don't overwrite an existing editorConfig - that would be bad manners.
-    if (this.getConfig('editorConfig') && !this.fs.exists('editorConfig')) {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-    }
+    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'));
 
     this.setNpmDevDependenciesFromArray(this.getResources().app.packages);
 

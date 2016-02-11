@@ -7,10 +7,10 @@ app:
       version: '0.1.13'
 
     - name: grunt-extend-config
-      version: '*'
+      version: '0.9.3'
 
     - name: load-grunt-tasks
-      version: '*'
+      version: '3.4.0'
 
 # sampleApp configuration
 sampleApp:
@@ -35,7 +35,7 @@ sampleApp:
 serverDev:
   packages:
     - name: grunt-contrib-watch
-      version: '*'
+      version: '0.6.1'
 
     - name: grunt-contrib-connect
       version: '*'
@@ -43,33 +43,63 @@ serverDev:
 serverProd:
   packages:
     - name: grunt-contrib-watch
-      version: '*'
+      version: '0.6.1'
 
     - name: grunt-contrib-connect
-      version: '*'
+      version: '0.11.2'
 
 verify:
+  # Common packages
   packages:
     - name: grunt-newer
-      version: '*'
-      criteria: this.config.verify.linters.length > 0
+      version: '1.1.1'
+    - name: grunt-contrib-watch
+      version: '0.6.1'
 
-    - name: grunt-eslint
-      version: '*'
-      criteria: this.config.verify.linters.indexOf('eslint') !== -1
+  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+    css:
+      packages: []
+    sass:
+      packages:
+        - name: grunt-sass-lint
+          version: '0.1.0'
+    stylus:
+      packages:
+        - name: grunt-stylint
+          version: '0.1.2'
 
-    - name: eslint-config-airbnb
-      version: '*'
-      criteria: this.config.verify.linters.indexOf('eslint') !== -1
+  jsCodingStandard:
+    none:
+      packages:
+        - name: grunt-eslint
+          version: '17.3.1'
+        - name: grunt-newer
+          version: '1.1.1'
 
-    - name: grunt-sass-lint
-      version: '*'
-      criteria: this.config.verify.linters.indexOf('sasslint') !== -1
+    AirBnB:
+      packages:
+        - name: grunt-eslint
+          version: '17.3.1'
+        - name: grunt-newer
+          version: '1.1.1'
+    Google:
+      packages:
+        - name: grunt-eslint
+          version: '17.3.1'
+        - name: grunt-newer
+          version: '1.1.1'
 
-    - name: grunt-stylint
-      version: '*'
-      criteria: this.config.verify.linters.indexOf('stylint') !== -1
+    StandardJS:
+      packages:
+        - name: grunt-eslint
+          version: '17.3.1'
+        - name: grunt-newer
+          version: '1.1.1'
 
+    TypeScript:
+      packages:
+        - name: grunt-tslint
+          version: '3.0.2'
 
 zzfinish:
   onEnd:

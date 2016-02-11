@@ -16,11 +16,12 @@ config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
 // If ES6 -> ES5
 var sourceFormat = buildJS.sourceFormat;
 var outputFormat = buildJS.outputFormat;
+var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+var srcDirRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + '.*\\.(' + jsExtensions.join('|') + ')$');
 
-if (sourceFormat === 'ES6' && outputFormat === 'ES5') { %>
-var jsRE = new RegExp(projectPaths.input.modulesDir.replace(/\//g, '\\/') + '.*\.js$');
+if (sourceFormat === 'ES6' && outputFormat === 'ES5') {%>
 config.module.loaders.push({
-  test: jsRE,
+  test: <%= srcDirRegEx.toString() %>,
   loader: 'babel-loader',
   exclude: ['node_modules'],    // There should be no need to exclude unit or browser tests because they should NOT be part of the source code dependency tree
   query: {
@@ -33,7 +34,7 @@ config.module.loaders.push({
 
 if (sourceFormat === 'TypeScript') { %>
 config.module.loaders.push({
-  test: /<%= paths.input.modulesDir.replace(/\//g, '\\/') %>.*\.ts$/,
+  test: <%= srcDirRegEx.toString() %>,
   loader: 'ts-loader'
 });
 <%

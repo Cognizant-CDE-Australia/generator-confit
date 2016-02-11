@@ -5,7 +5,10 @@ import demoModule from './demoModule';
 import ngRoute from 'angular-route';
 
 // Require the CSS file explicitly (or it could be defined as an entry-point too).
-require('./<%= $CSSFilePath %>');
+<% $CSSEntryPoints.forEach(function (file) { -%>
+  require('./<%= file %>');
+<% }); -%>
+
 
 (function (angular) {
   var app = angular.module('myApp', [ngRoute, demoModule]);

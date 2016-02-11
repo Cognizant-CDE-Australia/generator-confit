@@ -3,7 +3,9 @@
 import demoModule from './demoModule';
 
 // Require the CSS file explicitly (or it could be defined as an entry-point too.
-require('./<%= $CSSFilePath %>');
+<% $CSSEntryPoints.forEach(function (file) { -%>
+require('./<%= file %>');
+<% }); -%>
 
 // Put this method onto the global object, so that the views can call on-click="gotoPage('pageName')"
 window.gotoPage = demoModule.gotoPage;

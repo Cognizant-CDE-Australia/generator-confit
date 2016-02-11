@@ -25,17 +25,18 @@ module.exports = function(confitConfig) {
     });
 
 
-    if ((confitConfig.verify.jsLinter || []).indexOf('eslint') > -1) {
-      describe('eslint', function() {
-        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + 'eslint-fail.js';
+    if (confitConfig.verify.jsCodingStandard !== 'none') {
+      describe('JS Coding Standards', function() {
+        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + 'js-syntax-fail.js';
 
         before(function() {
-          // Check the confit config. If verify.jsLinter.indexOf('eslint')
-          fs.copySync(process.env.FIXTURE_DIR + 'verify/eslint-fail.js', destFixtureFile);
+          fs.copySync(process.env.FIXTURE_DIR + 'verify/js-syntax-fail.js', destFixtureFile);
+          fs.copySync(process.env.FIXTURE_DIR + 'verify/js-syntax-fail.js', destFixtureFile.replace('.js', '.ts'));
         });
 
         after(function() {
           fs.removeSync(destFixtureFile);
+          fs.removeSync(destFixtureFile.replace('.js', '.ts'));
         });
 
 

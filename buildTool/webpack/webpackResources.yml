@@ -21,21 +21,26 @@ buildCSS:
     - name: style-loader
       version: '0.13.0'
 
-    - name: stylus-loader
-      version: '1.4.3'
-      criteria: this.config.buildCSS.cssCompiler === 'stylus'
-
-    - name: sass-loader
-      version: '3.1.2'
-      criteria: this.config.buildCSS.cssCompiler === 'sass'
-
-    - name: node-sass
-      version: '3.4.2'
-      criteria: this.config.buildCSS.cssCompiler === 'sass'
-
     - name: autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
       version: '3.2.0'
-      criteria: this.config.buildCSS.autoprefixer === true
+
+  sourceFormat:
+    css:
+      packages: []
+
+    stylus:
+      packages:
+        - name: stylus-loader
+          version: '1.4.3'
+
+    sass:
+      packages:
+        - name: sass-loader
+          version: '3.1.2'
+
+        - name: node-sass
+          version: '3.4.2'
+
 
 buildHTML:
   packages:
@@ -160,7 +165,7 @@ testUnit:
   typeLibs:
     - name: jasmine
       key: ambientDependencies
-      version: github:angular/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
+      version: github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
 
 zzfinish:
   packages:

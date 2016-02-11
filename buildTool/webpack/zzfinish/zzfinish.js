@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 module.exports = function() {
 
   function write() {
@@ -7,7 +9,11 @@ module.exports = function() {
 
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().zzfinish.packages);
 
-    var config = this.getGlobalConfig();
+    // Merge all-the-things into a data object for use by our templates
+    var config = _.merge({}, this.getGlobalConfig(), {
+      buildTool: this.buildTool.getResources(),
+      resources: this.getResources()
+    });
     var outputDir = config.paths.config.configDir;
 
     this.addReadmeDoc('extensionPoint.start', this.buildTool.getResources().readme.extensionPoint.start);

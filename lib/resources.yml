@@ -20,6 +20,54 @@ app:
     - name: npm-run-all
       version: '1.5.0'
 
+  defaultSupportedBrowsers: ['latest']
+  supportedBrowsers:
+    latest:
+      label: Latest Versions (major browsers)
+      browserList: ['last 1 version']
+    latest2:
+      label: Latest 2 Versions (major browsers)
+      browserList: ['last 2 versions']
+    legacyIE:
+      label: Legacy Internet Explorer (9, 10, 11)
+      browserList: ['ie9', 'ie10', 'ie11']
+    legacyMobile:
+      label: Legacy Mobile (Blackberry, Android Webview)
+      browserList: ['bb', 'Android Webview']
+
+
+# CSS configuration
+buildCSS:
+  defaultSourceFormat: stylus
+  sourceFormat:
+    css:
+      ext: ['css']
+      entryPointFiles:
+        - src: css/app.css
+          dest: app.css
+      sampleAppFiles:
+        - src: css/iconFont.css
+          dest: iconFont.css
+
+    sass:
+      ext: ['sass', 'scss']
+      entryPointFiles:
+        - src: css/app.sass
+          dest: app.sass
+      sampleAppFiles:
+        - src: css/iconFont.css
+          dest: iconFont.css
+
+    stylus:
+      ext: ['styl']
+      entryPointFiles:
+        - src: css/app.styl
+          dest: app.styl
+      sampleAppFiles:
+        - src: css/iconFont.css
+          dest: iconFont.css
+
+
 buildJS:
   readme:
     extensionPoint: >
@@ -29,21 +77,24 @@ buildJS:
 
   sourceFormat:
     ES5:
+      ext: ['js']
       packages: []
       templates: []
       tasks: []
 
     ES6:
+      ext: ['js']
       packages: []
       templates: []
       tasks: []
 
     TypeScript:
+      ext: ['ts']
       packages:
         - name: typescript
           version: '1.7.3'
         - name: typings
-          version: '0.6.3'
+          version: '0.6.7'
 
       templates:
         - src: tsconfig.json.tpl
@@ -91,23 +142,6 @@ buildJS:
       typeLibs: []
       testPackages: []
       testTypeLibs: []
-
-# CSS configuration
-css:
-  none:
-    ext: css
-    sampleAppFilename: app.css
-    linter:
-
-  sass:
-    ext: sass
-    sampleAppFilename: app.sass
-    linter: sasslint
-
-  stylus:
-    ext: styl
-    sampleAppFilename: app.styl
-    linter: stylint
 
 entryPoint:
   readme:
@@ -221,24 +255,83 @@ TypeScriptUtils:
 
 
 verify:
-  jsLintRules:
-    - none
-    - AirBnB
-    - Google
-    - StandardJS
+  jsCodingStandard:
+    none:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - name: eslint
+          version: '1.10.3'
+        - name: eslint-config-defaults
+          version: '8.0.2'
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint-off.json
+          dest: (configDir)/verify/.eslintrc
 
-  jsLinter:
-    - eslint
+    AirBnB:
+      supportedSourceFormat: ['ES6']
+      packages:
+        - name: eslint
+          version: '1.10.3'
+        - name: eslint-config-defaults
+          version: '8.0.2'
+        - name: eslint-plugin-react
+          version: '3.16.1'
+        - name: babel-eslint
+          version: '4.1.8'
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint-airbnb.json
+          dest: (configDir)/verify/.eslintrc
 
-  linterFiles:
-    eslint:
-      - src: eslint.json
-        dest: (configDir)verify/eslint.json
-      - src: eslintignore.tpl
-        dest: .eslintignore
-    sasslint:
-      - src: sasslintrc
-        dest: (configDir)verify/.sasslintrc
-    stylint:
-      - src: stylintrc
-        dest: (configDir)verify/.stylintrc
+    Google:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - name: eslint
+          version: '1.10.3'
+        - name: eslint-config-defaults
+          version: '8.0.2'
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint-google.json
+          dest: (configDir)/verify/.eslintrc
+
+    StandardJS:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - name: eslint-config-standard
+          version: '4.4.0'
+        - name:  eslint-plugin-standard
+          version: '1.3.1'
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint-standardJS.json
+          dest: (configDir)/verify/.eslintrc
+
+    TypeScript:
+      supportedSourceFormat: ['TypeScript']
+      packages:
+        - name: tslint
+          version: '3.3.0'
+      templateFiles:
+        - src: tslint.json
+          dest: (configDir)/verify/tslint.json
+
+
+  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+    css:
+      templateFiles: []
+    sass:
+      # No packages to install, as the build-tools will have their own
+      templateFiles:
+        - src: sasslintrc
+          dest: (configDir)verify/.sasslintrc
+    stylus:
+      # No packages to install, as the build-tools will have their own
+      templateFiles:
+        - src: stylintrc
+          dest: (configDir)verify/.stylintrc

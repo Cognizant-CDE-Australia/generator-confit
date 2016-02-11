@@ -63,13 +63,15 @@ module.exports = confitGen.create({
 
     // Copy compiler-specific CSS
     var cssTemplateDir = 'css/';
-    var compiler = config.buildCSS.cssCompiler;
-    var cssConfig = this.getResources().css;
+    var cssSourceFormat = config.buildCSS.sourceFormat;
+    var cssConfig = this.getResources().buildCSS.sourceFormat;
 
-    // Make CSSFile a member property so that the build tool can use it too
-    this.CSSFile = cssConfig[compiler].sampleAppFilename;
-    this.fs.copy(this.templatePath(cssTemplateDir + this.CSSFile), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + this.CSSFile);
-    this.fs.copy(this.templatePath(cssTemplateDir + 'iconFont.css'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + 'iconFont.css');
+    // Make CSSEntryPointFiles a member property so that the build tool can use it too
+    var templateFiles = this.CSSEntryPointFiles = cssConfig[cssSourceFormat].entryPointFiles;
+
+    // Copy all of the template CSS files
+    templateFiles = templateFiles.concat(cssConfig[cssSourceFormat].sampleAppFiles || []);
+    templateFiles.forEach(file => this.fs.copy(this.templatePath(file.src), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + file.dest));
 
 
     // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific files to use

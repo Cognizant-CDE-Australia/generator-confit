@@ -13,39 +13,49 @@ module.exports = confitGen.create({
     }
   },
 
-  prompting: function () {
-    // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig) {
-      return;
-    }
-
-    this.log(chalk.underline.bold.green('Verify Generator'));
-
-    var done = this.async();
-    var jsLinters = this.getResources().verify.jsLinters;
-
-    var prompts = [
-      {
-        type: 'checkbox',
-        name: 'jsLinter',
-        message: 'JavaScript linting',
-        default: this.getConfig('jsLinter') || jsLinters[0],
-        choices: jsLinters
+  // We need to run this AFTER the buildJS generator, in order to read the buildJS.sourceFormat
+  // property. Hence, the 'configuring' task contains the prompts, to allow access to the buildJS config.
+  configuring: {
+    prompting: function() {
+      // Bail out if we just want to rebuild from the configuration file
+      if (this.rebuildFromConfig) {
+        return;
       }
-    ];
 
-    this.prompt(prompts, function (props) {
-      this.answers = this.generateObjFromAnswers(props);
+      this.log(chalk.underline.bold.green('Verify Generator'));
 
-      done();
-    }.bind(this));
-  },
+      var done = this.async();
+      var sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
+      var jsCodingStandardObjs = this.getResources().verify.jsCodingStandard;
+      // Only show the linters that are applicable for the selected JS sourceFormat
+      var validJSStandards = _.pick(jsCodingStandardObjs, val => val.supportedSourceFormat.indexOf(sourceFormat) > -1);
+      var jsCodingStandards = _.keys(validJSStandards);
 
-  configuring: function() {
-    // If we have new answers, then change the config
-    if (this.answers) {
-      this.buildTool.configure.apply(this);
-      this.setConfig(this.answers);
+      // Filter the list based on sourceFormat
+
+      var prompts = [
+        {
+          type: 'list',
+          name: 'jsCodingStandard',
+          message: 'JS coding standard',
+          default: this.getConfig('jsCodingStandard') || jsCodingStandards[0],
+          choices: jsCodingStandards
+        }
+      ];
+
+      this.prompt(prompts, function(props) {
+        this.answers = this.generateObjFromAnswers(props);
+
+        done();
+      }.bind(this));
+    },
+
+    configuring: function() {
+      // If we have new answers, then change the config
+      if (this.answers) {
+        this.buildTool.configure.apply(this);
+        this.setConfig(this.answers);
+      }
     }
   },
 
@@ -53,36 +63,23 @@ module.exports = confitGen.create({
     // Copy the linting templates
     var config = this.config.getAll();
     var outputDir = config.paths.config.configDir;
+    var jsCodingStandard = this.getConfig('jsCodingStandard');
 
-    var jsLinters = this.getConfig('jsLinter');
-    var gen = this;
+    var cssTemplateFiles = this.getResources().verify.cssCodingStandard[config.buildCSS.sourceFormat].templateFiles;
+    var jsTemplateFiles = this.getResources().verify.jsCodingStandard[jsCodingStandard].templateFiles;
+    var allTemplateFiles = [].concat(cssTemplateFiles, jsTemplateFiles);
+    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
 
-    // Create a "linters" property, which is a combination of ALL linters
-    var linters = [].concat(jsLinters);
-    var cssLinter = this.getResources().css[config.buildCSS.cssCompiler].linter;
-
-    if (cssLinter) {
-      linters.push(cssLinter);
-    }
-
-    var existingConfig = this.getConfig();
-    existingConfig.linters = linters;
-    this.setConfig(existingConfig);
-
-    var linterFiles = this.getResources().verify.linterFiles; // A list of files to copy (src & dest) per linter
-    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this!  // TODO: Do this in the sample app?
-
-    // TODO: Need to consider different linting options for ES5 vs ES6 source code?!? OR do we deprecate ES5?
-    linters.forEach(function(linter) {
-      linterFiles[linter].forEach(function (linterFile) {
-        gen.fs.copyTpl(
-          gen.templatePath(linterFile.src),
-          gen.destinationPath(linterFile.dest.replace('(configDir)', outputDir)),
-          _.merge({}, config, {demoModuleDir: demoModuleDir})
-        );
-      });
+    allTemplateFiles.forEach(templateFile => {
+      this.fs.copyTpl(
+        this.templatePath(templateFile.src),
+        this.destinationPath(templateFile.dest.replace('(configDir)', outputDir)),
+        _.merge({}, config, {demoModuleDir: demoModuleDir})
+      );
     });
 
+    // NPM dependencies only for jsCodingStandard - nothing for CSS? Correct. The buildTool has the CSS dependencies
+    this.setNpmDevDependenciesFromArray(this.getResources().verify.jsCodingStandard[jsCodingStandard].packages);
 
     this.buildTool.write.apply(this);
   },

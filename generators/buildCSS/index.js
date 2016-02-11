@@ -20,36 +20,15 @@ module.exports = confitGen.create({
     this.log(chalk.underline.bold.green('Build CSS Generator'));
 
     var done = this.async();
-    var cssCompilerConfig = this.getResources().css;
+    var resources = this.getResources().buildCSS;
 
     var prompts = [
-      // These next too questions are a little hazy. How will they affect the build process?
-      // At the moment, nothing is affected. But Autoprefixer should be, and maybe the JS libraries.
-      {
-        type: 'confirm',
-        name: 'includeOlderBrowsers',
-        message: 'Supports older browsers (i.e. less than IE10)?',
-        default: false
-      },
       {
         type: 'list',
-        name: 'olderBrowsers',
-        message: 'Older browsers',
-        choices: [
-          'IE10',
-          'IE9'
-        ],
-        default: this.getConfig('olderBrowsers') || 'IE9',
-        when: function(answers) {
-          return answers.includeOlderBrowsers;
-        }
-      },
-      {
-        type: 'list',
-        name: 'cssCompiler',
-        message: 'Choose a CSS compiler',
-        choices: Object.keys(cssCompilerConfig),
-        default: this.getConfig('cssCompiler') || 'stylus'
+        name: 'sourceFormat',
+        message: 'CSS source format',
+        choices: Object.keys(resources.sourceFormat),
+        default: this.getConfig('sourceFormat') || resources.defaultSourceFormat
       }
     ];
 

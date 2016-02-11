@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var server = require('./../server');
+var server = require('./server');
 var childProc = require('child_process');
 var tempTestDir = process.env.TEST_DIR;
 
@@ -22,13 +22,13 @@ function runBrowserTest(baseUrl) {
 
 module.exports = function() {
 
-  describe('npm run build:serve', function() {
+  describe('npm run dev', function() {
 
     var baseUrl;
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, 10000).then(function success(result) {
+      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, 10000).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });
