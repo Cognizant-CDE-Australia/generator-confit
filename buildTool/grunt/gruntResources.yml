@@ -1,16 +1,9 @@
 app:
   packages:
-    - name: grunt
-      version: '0.4.5'
-
-    - name: grunt-cli
-      version: '0.1.13'
-
-    - name: grunt-extend-config
-      version: '0.9.3'
-
-    - name: load-grunt-tasks
-      version: '3.4.0'
+    - <<: *pkg_grunt
+    - <<: *pkg_grunt-cli
+    - <<: *pkg_grunt-extend-config
+    - <<: *pkg_load-grunt-tasks
 
 # sampleApp configuration
 sampleApp:
@@ -34,72 +27,54 @@ sampleApp:
 
 serverDev:
   packages:
-    - name: grunt-contrib-watch
-      version: '0.6.1'
-
-    - name: grunt-contrib-connect
-      version: '*'
+    - <<: *pkg_grunt-contrib-watch
+    - <<: *pkg_grunt-contrib-connect
 
 serverProd:
   packages:
-    - name: grunt-contrib-watch
-      version: '0.6.1'
-
-    - name: grunt-contrib-connect
-      version: '0.11.2'
+    - <<: *pkg_grunt-contrib-watch
+    - <<: *pkg_grunt-contrib-connect
 
 verify:
   # Common packages
   packages:
-    - name: grunt-newer
-      version: '1.1.1'
-    - name: grunt-contrib-watch
-      version: '0.6.1'
+    - <<: *pkg_grunt-newer
+    - <<: *pkg_grunt-contrib-watch
 
   cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
     css:
       packages: []
     sass:
       packages:
-        - name: grunt-sass-lint
-          version: '0.1.0'
+        - <<: *pkg_grunt-sass-lint
     stylus:
       packages:
-        - name: grunt-stylint
-          version: '0.1.2'
+        - <<: *pkg_grunt-stylint
 
   jsCodingStandard:
     none:
       packages:
-        - name: grunt-eslint
-          version: '17.3.1'
-        - name: grunt-newer
-          version: '1.1.1'
+        - <<: *pkg_grunt-eslint
+        - <<: *pkg_grunt-newer
 
     AirBnB:
       packages:
-        - name: grunt-eslint
-          version: '17.3.1'
-        - name: grunt-newer
-          version: '1.1.1'
+        - <<: *pkg_grunt-eslint
+        - <<: *pkg_grunt-newer
+
     Google:
       packages:
-        - name: grunt-eslint
-          version: '17.3.1'
-        - name: grunt-newer
-          version: '1.1.1'
+        - <<: *pkg_grunt-eslint
+        - <<: *pkg_grunt-newer
 
     StandardJS:
       packages:
-        - name: grunt-eslint
-          version: '17.3.1'
-        - name: grunt-newer
-          version: '1.1.1'
+        - <<: *pkg_grunt-eslint
+        - <<: *pkg_grunt-newer
 
     TypeScript:
       packages:
-        - name: grunt-tslint
-          version: '3.0.2'
+        - <<: *pkg_grunt-tslint
 
 zzfinish:
   onEnd:

@@ -1,11 +1,8 @@
 testBrowser:
   packages:
-    - name: protractor
-      version: '*'
-    - name: jasmine-reporters
-      version: '2.1.1'
-    - name: jasmine-spec-reporter
-      version: '2.4.0'
+    - <<: *pkg_protractor
+    - <<: *pkg_jasmine-reporters
+    - <<: *pkg_jasmine-spec-reporter
 
   typeLibs:
     - name: selenium-webdriver

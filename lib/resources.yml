@@ -1,3 +1,6 @@
+# Package Anchor
+#package: !!inc/file 'lib/packages.yml'
+
 # App configuration
 app:
   subGenerators:  # This is the order that the sub-generators should be executed in. Try not to couple these together
@@ -17,8 +20,7 @@ app:
     - confit:zzfinish
 
   packages:
-    - name: npm-run-all
-      version: '1.5.0'
+    - <<: *pkg_npm-run-all
 
   defaultSupportedBrowsers: ['latest']
   supportedBrowsers:
@@ -91,10 +93,8 @@ buildJS:
     TypeScript:
       ext: ['ts']
       packages:
-        - name: typescript
-          version: '1.7.3'
-        - name: typings
-          version: '0.6.7'
+        - <<: *pkg_typescript
+        - <<: *pkg_typings
 
       templates:
         - src: tsconfig.json.tpl
@@ -119,26 +119,23 @@ buildJS:
   frameworks:
     AngularJS 1.x:
       packages:
-        - name: angular
-          version: '1.4.9'
+        - <<: *pkg_angular
       typeLibs: []
+
       testPackages:
-        - name: angular-mocks
-          version: '1.4.9'
+        - <<: *pkg_angular-mocks
       testTypeLibs: []
 
     AngularJS 2.x:
       packages:
-        - name: angular2
-          version: '*'
+        - <<: *pkg_angular2
       typeLibs: []
       testPackages: []
       testTypeLibs: []
 
     React (latest):
       packages:
-        - name: react
-          version: '*'
+        - <<: *pkg_react
       typeLibs: []
       testPackages: []
       testTypeLibs: []
@@ -259,10 +256,8 @@ verify:
     none:
       supportedSourceFormat: ['ES5', 'ES6']
       packages:
-        - name: eslint
-          version: '1.10.3'
-        - name: eslint-config-defaults
-          version: '8.0.2'
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
@@ -272,14 +267,10 @@ verify:
     AirBnB:
       supportedSourceFormat: ['ES6']
       packages:
-        - name: eslint
-          version: '1.10.3'
-        - name: eslint-config-defaults
-          version: '8.0.2'
-        - name: eslint-plugin-react
-          version: '3.16.1'
-        - name: babel-eslint
-          version: '4.1.8'
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
+        - <<: *pkg_eslint-plugin-react
+        - <<: *pkg_babel-eslint
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
@@ -289,10 +280,8 @@ verify:
     Google:
       supportedSourceFormat: ['ES5', 'ES6']
       packages:
-        - name: eslint
-          version: '1.10.3'
-        - name: eslint-config-defaults
-          version: '8.0.2'
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
@@ -302,10 +291,8 @@ verify:
     StandardJS:
       supportedSourceFormat: ['ES5', 'ES6']
       packages:
-        - name: eslint-config-standard
-          version: '4.4.0'
-        - name:  eslint-plugin-standard
-          version: '1.3.1'
+        - <<: *pkg_eslint-config-standard
+        - <<: *pkg_eslint-plugin-standard
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
@@ -315,8 +302,7 @@ verify:
     TypeScript:
       supportedSourceFormat: ['TypeScript']
       packages:
-        - name: tslint
-          version: '3.3.0'
+        - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
           dest: (configDir)/verify/tslint.json

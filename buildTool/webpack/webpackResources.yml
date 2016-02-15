@@ -1,28 +1,18 @@
 # app
 app:
   packages: # TODO: Not sure if these should be here, or in zzfinish?
-    - name: webpack
-      version: '1.12.11'
-
-    - name: webpack-dev-server
-      version: '1.14.1'
+    - <<: *pkg_webpack
+    - <<: *pkg_webpack-dev-server
 
 buildAssets:
   packages:
-    - name: file-loader
-      version: '0.8.5'
-
+    - <<: *pkg_file-loader
 
 buildCSS:
   packages:
-    - name: css-loader
-      version: '0.23.1'
-
-    - name: style-loader
-      version: '0.13.0'
-
-    - name: autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
-      version: '3.2.0'
+    - <<: *pkg_css-loader
+    - <<: *pkg_style-loader
+    - <<: *pkg_autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
 
   sourceFormat:
     css:
@@ -30,49 +20,33 @@ buildCSS:
 
     stylus:
       packages:
-        - name: stylus-loader
-          version: '1.4.3'
+        - <<: *pkg_stylus-loader
 
     sass:
       packages:
-        - name: sass-loader
-          version: '3.1.2'
-
-        - name: node-sass
-          version: '3.4.2'
-
+        - <<: *pkg_sass-loader
+        - <<: *pkg_node-sass
 
 buildHTML:
   packages:
-    - name: html-loader
-      version: '0.4.0'
-
-    - name: html-webpack-plugin
-      version: '2.7.1'
+    - <<: *pkg_html-loader
+    - <<: *pkg_html-webpack-plugin
 
 buildJS:
   sourceFormat:
     ES6:
       packages:
-        - name: babel-core
-          version: '6.4.5'
-
-        - name: babel-runtime
-          version: '6.3.19'
-
-        - name: babel-loader
-          version: '6.2.1'
-
-        - name: babel-preset-es2015
-          version: '6.3.13'
+        - <<: *pkg_babel-core
+        - <<: *pkg_babel-runtime
+        - <<: *pkg_babel-loader
+        - <<: *pkg_babel-preset-es2015
 
     ES5:
       packages: []
 
     TypeScript:
       packages:
-        - name: ts-loader
-          version: '0.8.0'
+        - <<: *pkg_ts-loader
 
 
 # README section for large blocks of static text
@@ -100,8 +74,7 @@ sampleApp:
       AngularJS 1.x:
         sampleDir: ng1/
         vendorScripts:
-          - name: angular-route
-            version: '1.4.9'
+          - <<: *pkg_angular-route
 
       AngularJS 2.x:
         sampleDir: ng2/      # not yet implemented
@@ -111,56 +84,26 @@ sampleApp:
         sampleDir: react/
 
   packages:
-    - name: lodash
-      version: '3.10.1'
+    - <<: *pkg_lodash
 
 
 testUnit:
   packages:
-    - name: karma
-      version: '0.13.19'
-
-    - name: karma-chrome-launcher
-      version: '0.2.2'
-
-    - name: karma-coverage
-      version: '0.5.3'
-
-    - name: karma-jasmine
-      version: '0.3.6'
-
-    - name: karma-junit-reporter
-      version: '0.3.8'
-
-    - name: karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional?
-      version: '0.2.0'
-
-    - name: karma-phantomjs-launcher
-      version: '0.2.3'
-
-    - name: karma-sourcemap-loader
-      version: '0.3.7'
-
-    - name: karma-spec-reporter
-      version: '0.0.23'
-
-    - name: karma-threshold-reporter
-      version: '0.1.15'
-
-    - name: karma-webpack
-      version: '1.7.0'
-
-    - name: jasmine-core
-      version: '2.4.1'
-
-    - name: phantomjs
-      version: '1.9.19'
-
-    - name: phantomjs-polyfill
-      version: '0.0.1'
-
-    - name: istanbul-instrumenter-loader
-      version: '0.1.3'
+    - <<: *pkg_karma
+    - <<: *pkg_karma-chrome-launcher
+    - <<: *pkg_karma-coverage
+    - <<: *pkg_karma-jasmine
+    - <<: *pkg_karma-junit-reporter
+    - <<: *pkg_karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional?
+    - <<: *pkg_karma-phantomjs-launcher
+    - <<: *pkg_karma-sourcemap-loader
+    - <<: *pkg_karma-spec-reporter
+    - <<: *pkg_karma-threshold-reporter
+    - <<: *pkg_karma-webpack
+    - <<: *pkg_jasmine-core
+    - <<: *pkg_phantomjs
+    - <<: *pkg_phantomjs-polyfill
+    - <<: *pkg_istanbul-instrumenter-loader
 
   typeLibs:
     - name: jasmine
@@ -169,8 +112,7 @@ testUnit:
 
 zzfinish:
   packages:
-    - name: extract-text-webpack-plugin
-      version: '1.0.1'
+    - <<: *pkg_extract-text-webpack-plugin
 
   onEnd:
     cmd: npm
