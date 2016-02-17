@@ -5,7 +5,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var confitConfig = require(path.join(process.cwd(), 'confit.json'))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
-var projectPaths = confitConfig.paths;
 var basePath = process.cwd() + '/';
 
 var config = {
@@ -29,10 +28,10 @@ var config = {
     modulesDirectories: ['node_modules', 'bower_components'],
 
     // https://webpack.github.io/docs/configuration.html#resolve-extensions
-    <% var extensions = ['', '.webpack.js', '.web.js', '.js'];
+    <%
+    var extensions = ['', '.webpack.js', '.web.js', '.js'];
     if (buildJS.sourceFormat === 'TypeScript') { extensions.push('.ts'); }
-    -%>
-    extensions: <%- JSON.stringify(extensions).replace(/"/g, '\'') %>
+    -%>extensions: <%- JSON.stringify(extensions).replace(/"/g, '\'') %>
   },
 
   // Output stats to provide more feedback when things go wrong:

@@ -28,7 +28,7 @@ module.exports = function() {
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, 10000).then(function success(result) {
+      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, 20000).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });

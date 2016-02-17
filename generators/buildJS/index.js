@@ -146,10 +146,12 @@ module.exports = confitGen.create({
     // Loop through the selected frameworks, and install the respective modules
     var frameworks = this.getConfig('framework') || [];
     var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].packages));
+    var activeFrameworkTypeLibs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].typeLibs));
     var buildJsResources = this.getResources().buildJS;
 
     // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
     this.setNpmDependenciesFromArray(activeFrameworkScriptObjs);
+    this.ts.addTypeLibsFromArray(activeFrameworkTypeLibs);
     this.addReadmeDoc('extensionPoint.buildJSVendorScripts', buildJsResources.readme.extensionPoint);
 
     // Copy any template files related directly to the sourceFormat

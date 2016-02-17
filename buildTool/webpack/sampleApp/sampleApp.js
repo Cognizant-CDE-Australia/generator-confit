@@ -11,7 +11,7 @@ module.exports = function() {
     return this.fs.readJSON(this.configFile);
   }
 
-  function writeConfig(data) {
+  function writeConfit(data) {
     this.fs.writeJSON(this.configFile, data);
   }
 
@@ -39,7 +39,7 @@ module.exports = function() {
     // Deduplicate the array
     config.buildJS.vendorScripts = _.uniq(config.buildJS.vendorScripts.concat(vendorScripts));
 
-    writeConfig.apply(this, [fullConfig]);
+    writeConfit.apply(this, [fullConfig]);
   }
 
 
@@ -57,11 +57,12 @@ module.exports = function() {
     var sourceFormat = config.buildJS.sourceFormat;
     var selectedFramework = config.buildJS.framework[0] || '';
     var selectedJSFrameworkDir = jsFrameworkConfig[selectedFramework].sampleDir + sourceFormat + '/'; // e.g. ng1/ES6/
-    var vendorScripts = jsFrameworkConfig[selectedFramework].vendorScripts || [];
 
     // Add the NPM dev dependencies (for the build tools) and the runtime dependencies (vendorScripts)
-    this.setNpmDependenciesFromArray(vendorScripts);
+    this.setNpmDependenciesFromArray(jsFrameworkConfig[selectedFramework].vendorScripts);
+    this.ts.addTypeLibsFromArray(jsFrameworkConfig[selectedFramework].typeLibs);
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
+
 
     // Add the $CSSEntryPoints to the config, so that it can be require()'ed in Webpack
     config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file.dest);

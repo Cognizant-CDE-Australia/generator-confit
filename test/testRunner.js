@@ -21,7 +21,8 @@ var LABEL_FAILED = chalk.red.bold('FAILED');
 var BLACK_START = chalk.styles.bgBlack.open;
 var BLACK_END = chalk.styles.bgBlack.close;
 
-
+const TICK = chalk.green('\u2713');
+const CROSS = chalk.red('x');
 
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
@@ -33,6 +34,7 @@ function main() {
   var procCount = fixtures.length;
   var procComplete = 0;
   var procSuccess = 0;
+  var results = [];
 
   var runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
   var processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
@@ -80,11 +82,12 @@ function main() {
     procComplete++;
     var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
+    results.push(isSuccess ? TICK : CROSS);
 
-    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount + '.', 'Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED));
+    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount + '.', 'Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED), results.join(''));
 
     if (procComplete === procCount) {
-      confitMsg(chalk.white.bold('Overall Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), BLACK_END);
+      confitMsg(chalk.white.bold('Overall Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), results.join(''), BLACK_END);
       process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
@@ -140,3 +143,4 @@ function confitMsg() {
 }
 
 main();
+//console.info.apply(this, ['this is a tick \u2713']);

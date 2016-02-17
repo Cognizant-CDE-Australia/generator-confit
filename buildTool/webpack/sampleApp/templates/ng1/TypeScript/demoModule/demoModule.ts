@@ -1,6 +1,6 @@
 'use strict';
 
-var angular = window.angular;
+import 'angular';
 var mod = angular.module('demoModule', []);
 
 mod.factory('demoService', function () {

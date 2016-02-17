@@ -45,7 +45,7 @@
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "321ed80b36fbb5ca4da4a400ea863c6f57b7ce5f"
+      "_version": "3291fbf06d95d4b40ff9e768eefb800f207bd75f"
     },
     "buildHTML": {
       "extension": ".html",
@@ -74,11 +74,11 @@
     "testBrowser": {},
     "verify": {
       "jsCodingStandard": "StandardJS",
-      "_version": "a1d7d3e4c63d2796f78e256fdc07e716f11864de"
+      "_version": "47e43e329dfae3fbc47e4260dc9dff879fb063c2"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "dcb5bcbb0684742c6baa0db8609479d70083e8c6"
+      "_version": "602ab5429605e3a7c93ca26555686da480447687"
     },
     "zzfinish": {}
   }

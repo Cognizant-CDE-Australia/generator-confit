@@ -70,18 +70,26 @@ sampleApp:
       '':
         sampleDir: noFramework/
         vendorScripts: []
+        typeLibs: []
 
       AngularJS 1.x:
         sampleDir: ng1/
         vendorScripts:
           - <<: *pkg_angular-route
+        typeLibs:
+          - name: angular-route
+            key: ambientDependencies
+            version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
 
       AngularJS 2.x:
         sampleDir: ng2/      # not yet implemented
         vendorScripts: []
+        typeLibs: []
 
       React (latest):
         sampleDir: react/
+        vendorScripts: []
+        typeLibs: []
 
   packages:
     - <<: *pkg_lodash

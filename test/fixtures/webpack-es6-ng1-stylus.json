@@ -43,8 +43,12 @@
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
-      "framework": [],
-      "vendorScripts": [],
+      "framework": [
+        "AngularJS 1.x"
+      ],
+      "vendorScripts": [
+        "angular"
+      ],
       "_version": "3291fbf06d95d4b40ff9e768eefb800f207bd75f"
     },
     "buildHTML": {
@@ -73,7 +77,7 @@
     },
     "testBrowser": {},
     "verify": {
-      "jsCodingStandard": "Google",
+      "jsCodingStandard": "AirBnB",
       "_version": "47e43e329dfae3fbc47e4260dc9dff879fb063c2"
     },
     "sampleApp": {

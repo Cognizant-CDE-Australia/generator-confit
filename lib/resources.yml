@@ -120,11 +120,21 @@ buildJS:
     AngularJS 1.x:
       packages:
         - <<: *pkg_angular
-      typeLibs: []
+      typeLibs:
+        - name: angular
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
+        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
 
       testPackages:
         - <<: *pkg_angular-mocks
-      testTypeLibs: []
+      testTypeLibs:
+        - name: angular-mocks
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
+
 
     AngularJS 2.x:
       packages:

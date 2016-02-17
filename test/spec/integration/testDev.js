@@ -28,7 +28,7 @@ module.exports = function() {
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, 10000).then(function success(result) {
+      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, 20000).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });
