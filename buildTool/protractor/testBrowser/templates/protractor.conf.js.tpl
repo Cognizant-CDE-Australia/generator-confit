@@ -1,6 +1,9 @@
 'use strict';
 
-<% var rootDir = (paths.config.configDir + 'testBrowser/').replace(/(.+?\/)/g, '../'); -%>
+<%
+var rootDir = (paths.config.configDir + 'testBrowser/').replace(/(.+?\/)/g, '../');
+// TODO: Add support for test specs written with non-JS extensions
+-%>
 
 exports.config = {
   // ChromeDriver location is used to help the standalone Selenium Server

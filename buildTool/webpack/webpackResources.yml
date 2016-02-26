@@ -71,25 +71,47 @@ sampleApp:
         sampleDir: noFramework/
         vendorScripts: []
         typeLibs: []
+        sourceFormat: {}
 
       AngularJS 1.x:
         sampleDir: ng1/
         vendorScripts:
           - <<: *pkg_angular-route
+        testVendorScripts:
+          - <<: *pkg_angular-route
         typeLibs:
           - name: angular-route
             key: ambientDependencies
             version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
+        sourceFormat: {}
 
       AngularJS 2.x:
-        sampleDir: ng2/      # not yet implemented
-        vendorScripts: []
+        sampleDir: ng2/
+        vendorScripts:
+          - <<: *pkg_angular2/router
+          - <<: *pkg_angular2/platform/browser
         typeLibs: []
+
+        sourceFormat:
+          TypeScript:
+            testUnitConfig: |
+              var testing = require('angular2/testing');
+              var browser = require('angular2/platform/testing/browser');
+
+              testing.setBaseTestProviders(
+                browser.TEST_BROWSER_PLATFORM_PROVIDERS,
+                browser.TEST_BROWSER_APPLICATION_PROVIDERS
+              );
+            vendorScripts:  # Generates adds the item to the vendor scripts
+              pre:
+                - './polyfills.ts'
+              post: []
 
       React (latest):
         sampleDir: react/
         vendorScripts: []
         typeLibs: []
+        sourceFormat: {}
 
   packages:
     - <<: *pkg_lodash

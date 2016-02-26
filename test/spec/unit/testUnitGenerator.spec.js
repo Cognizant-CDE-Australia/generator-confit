@@ -46,8 +46,9 @@ describe('testUnit Generator', function () {
       // Confit.json should now have an angular-mocks reference
       yoassert.file(['confit.json']);
       var confit = fs.readJsonSync('confit.json');
-      assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 1);
-      assert.equal(confit['generator-confit'].testUnit.testDependencies[0], 'angular-mocks');
+      assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 2);
+      assert.equal(confit['generator-confit'].testUnit.testDependencies[0], 'angular');
+      assert.equal(confit['generator-confit'].testUnit.testDependencies[1], 'angular-mocks');
 
       // And package.json should have a new dependency
       yoassert.file(['package.json']);

@@ -3,9 +3,18 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 config.module.loaders.push({
   test: /\.html$/,
-  loader: 'html-loader?minimize=true',
+  loader: 'html-loader',
   exclude: /index-template.html$/
 });
+
+// Configuration that works with Angular 2  :(
+config.htmlLoader = {
+  minimize: true,
+  removeAttributeQuotes: false,
+  caseSensitive: true,
+  customAttrSurround: [ [/#/, /(?:)/], [/\*/, /(?:)/], [/\[?\(?/, /(?:)/] ],
+  customAttrAssign: [ /\)?\]?=/ ]
+};
 
 config.plugins.push(
   new HtmlWebpackPlugin({

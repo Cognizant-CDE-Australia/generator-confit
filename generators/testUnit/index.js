@@ -6,8 +6,9 @@ module.exports = confitGen.create({
   configuring: function() {
     var testDependencies = [];
 
-    if (this.getGlobalConfig().buildJS.framework.length) {
-      var selectedFramework = this.getGlobalConfig().buildJS.framework[0];
+    var frameworks = this.getGlobalConfig().buildJS.framework;
+    if (frameworks.length) {
+      var selectedFramework = frameworks[0];
       var testDeps = this.getResources().buildJS.frameworks[selectedFramework].testPackages;
       testDependencies = testDeps.map(pkg => pkg.name);
     }
@@ -20,13 +21,18 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
-    // Need to install test frameworks for the selected JS Library
-    if (this.getGlobalConfig().buildJS.framework.length) {
-      var selectedFramework = this.getGlobalConfig().buildJS.framework[0];
+    // Need to install test frameworks for the selected JS Framework
+    var frameworks = this.getGlobalConfig().buildJS.framework;
+    if (frameworks.length) {
+      var selectedFramework = frameworks[0];
       var testDeps = this.getResources().buildJS.frameworks[selectedFramework].testPackages;
 
       // We need to store the test dependency names against the config, so that our build tools can
       // add these "extra" dependencies to the test harnesses
+
+      // Before we add them as dev dependencies, filter the ones that are already dependencies
+      var deps = this.readPackageJson().dependencies || {};
+      testDeps = testDeps.filter(testDep => !deps[this.getBasePackageName(testDep)]);
 
       this.setNpmDevDependenciesFromArray(testDeps);
       this.ts.addTypeLibsFromArray(this.getResources().buildJS.frameworks[selectedFramework].testTypeLibs);

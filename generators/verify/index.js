@@ -37,7 +37,7 @@ module.exports = confitGen.create({
         {
           type: 'list',
           name: 'jsCodingStandard',
-          message: 'JS coding standard',
+          message: 'JavaScript coding standard',
           default: this.getConfig('jsCodingStandard') || jsCodingStandards[0],
           choices: jsCodingStandards
         }

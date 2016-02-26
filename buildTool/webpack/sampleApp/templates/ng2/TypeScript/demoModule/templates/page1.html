@@ -3,5 +3,8 @@
 
   <img src="../assets/img/blank-logo.png">
 
+  <div *ngIf="myFlag">My Flag is {{myFlag}}</div>
+  <div [style.display]="!myFlag ? 'block' : 'none'">Opposite</div>
+
   <a class="btn" href="#/page2">Page 2</a>
 </div>

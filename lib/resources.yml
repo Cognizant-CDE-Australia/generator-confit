@@ -75,7 +75,7 @@ buildJS:
     extensionPoint: >
       The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
       This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', ...]`
+      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
 
   sourceFormat:
     ES5:
@@ -128,7 +128,8 @@ buildJS:
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
 
-      testPackages:
+      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
+        - <<: *pkg_angular
         - <<: *pkg_angular-mocks
       testTypeLibs:
         - name: angular-mocks
@@ -137,10 +138,38 @@ buildJS:
 
 
     AngularJS 2.x:
-      packages:
-        - <<: *pkg_angular2
-      typeLibs: []
-      testPackages: []
+      packages:  # the order of packages is *very* important for angular2!
+        - <<: *pkg_es6-shim
+        - <<: *pkg_es6-promise
+        - <<: *pkg_es7-reflect-metadata
+        - <<: *pkg_rxjs
+        - <<: *pkg_zone.js
+        - <<: *pkg_angular2/core
+      typeLibs:
+        - name: es6-promise
+          key: dependencies
+          version: github:typed-typings/npm-es6-promise#fb04188767acfec1defd054fc8024fafa5cd4de7
+
+        - name: es6-shim
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2
+
+        - name: ng2
+          key: ambientDependencies
+          version: github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c
+
+        - name: zone.js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts#c393f8974d44840a6c9cc6d5b5c0188a8f05143d
+
+      testPackages:
+        - <<: *pkg_es6-shim
+        - <<: *pkg_es6-promise
+        - <<: *pkg_reflect-metadata
+        - <<: *pkg_zone.js/dist/zone-microtask.js
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone.js
+        - <<: *pkg_zone.js/dist/jasmine-patch.js
+        - <<: *pkg_angular2/core
       testTypeLibs: []
 
     React (latest):
@@ -233,11 +262,6 @@ sampleApp:
     ES5: 'app.js'
     ES6: 'app.js'
     TypeScript: 'app.ts'
-
-  jsExtension:
-    ES5: 'js'
-    ES6: 'js'
-    TypeScript: 'ts'
 
 # Server - Development
 serverDev:

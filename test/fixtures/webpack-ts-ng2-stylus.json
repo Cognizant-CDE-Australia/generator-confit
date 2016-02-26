@@ -3,7 +3,8 @@
     "app": {
       "buildProfile": "Latest",
       "browserSupport": [
-        "latest"
+        "latest",
+        "latest2"
       ],
       "_version": "39ba228117092a1a3c0d2341b27c0fa7638f2287"
     },
@@ -44,10 +45,17 @@
       "sourceFormat": "TypeScript",
       "outputFormat": "ES5",
       "framework": [
-        "AngularJS 1.x"
+        "AngularJS 2.x"
       ],
       "vendorScripts": [
-        "angular"
+        "es6-shim",
+        "es6-promise",
+        "es7-reflect-metadata",
+        "rxjs",
+        "zone.js",
+        "angular2/core",
+        "angular2/router",
+        "angular2/platform/browser"
       ],
       "_version": "3291fbf06d95d4b40ff9e768eefb800f207bd75f"
     },
@@ -73,6 +81,7 @@
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
     "testUnit": {
+      "testDependencies": [],
       "_version": "313316fba4897fac2573089486359ad7f537af10"
     },
     "testBrowser": {},

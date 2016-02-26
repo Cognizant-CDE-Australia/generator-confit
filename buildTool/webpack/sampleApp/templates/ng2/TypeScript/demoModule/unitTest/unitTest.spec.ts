@@ -1,7 +1,4 @@
-'use strict';
-
-// This is correct - the unit test should import the code-under-test. Can only do this when using a module-loader like Webpack, Node, JSPM
-//import app from '../app';
+import {DemoService} from '../DemoService';
 
 describe('Basic unit test', function () {
 
@@ -11,5 +8,18 @@ describe('Basic unit test', function () {
 
   it('should add two numbers together', function () {
     expect(adder(2, 3)).toEqual(5);
+  });
+});
+
+
+describe('Test imported module', function () {
+  var demoService;
+
+  beforeEach(function() {
+    demoService = new DemoService();
+  });
+
+  it('should have a demoService with a demo method', function () {
+    expect(typeof demoService.demo).toEqual('function');
   });
 });

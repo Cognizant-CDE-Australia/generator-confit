@@ -3,7 +3,8 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
-var jsExtension = (buildJS.sourceFormat === 'TypeScript') ? 'ts' : 'js';
+var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+var srcFileRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + ".*\\.(" + jsExtensions.join('|') + ")$");
 -%>
 
 // We want to re-use the loaders from the dev.webpack.config
@@ -50,7 +51,7 @@ var karmaConfig = {
   ],
 
   preprocessors: {
-    '<%- paths.input.modulesDir %>/**/*.<%= jsExtension %>': ['coverage'],
+    '<%- paths.input.modulesDir %>/**/*.(<%= jsExtensions.join('|') %>)': ['coverage'],
     '<%- paths.config.configDir %>testUnit/test.files.js': ['webpack']
   },
 
@@ -77,7 +78,7 @@ var karmaConfig = {
       postLoaders: [
         // instrument only testing sources with Istanbul
         {
-          test: /<%= paths.input.modulesDir.replace(/\//g, '\\/') %>.*\.<%= jsExtension %>$/,
+          test: <%= srcFileRegEx.toString() %>,
           loader: 'istanbul-instrumenter-loader',
           exclude: [
             /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/

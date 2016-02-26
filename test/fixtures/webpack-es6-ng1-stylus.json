@@ -73,12 +73,12 @@
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
     },
     "testUnit": {
-      "_version": "1489705c99a0c7c7676a4c35fbcc7a998d5fbc01"
+      "_version": "313316fba4897fac2573089486359ad7f537af10"
     },
     "testBrowser": {},
     "verify": {
       "jsCodingStandard": "AirBnB",
-      "_version": "47e43e329dfae3fbc47e4260dc9dff879fb063c2"
+      "_version": "28bdde56c7f2f86bb419442c6ec6ebfc503f4a45"
     },
     "sampleApp": {
       "createSampleApp": true,

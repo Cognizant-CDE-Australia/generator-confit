@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp" ng-strict-di>
+<html lang="en">
 
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <base href="/">
-  <title>ES6 Angular Demo App</title>
+  <title>TypeScript Angular2 Demo App</title>
 
   <!-- Die frame! DIE! http://en.wikipedia.org/wiki/Framekiller -->
   <style>html{display:none}</style>
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-  <div ng-view></div>
+  <app>Loading...</app>
 
 <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
 <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>

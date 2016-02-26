@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 module.exports = function() {
 
   function write() {
@@ -7,11 +9,16 @@ module.exports = function() {
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().testUnit.packages);
     this.ts.addTypeLibsFromArray(this.buildTool.getResources().testUnit.typeLibs);
 
-    var config = this.getGlobalConfig();
+    // Merge all-the-things into a data object for use by our templates
+    var config = _.merge({}, this.getGlobalConfig(), {
+      buildTool: this.buildTool.getResources(),
+      resources: this.getResources()
+    });
+
     var outputDir = config.paths.config.configDir + 'testUnit/';
 
-    this.updateJSFile.call(this, this.toolTemplatePath('karma.conf.js'), this.destinationPath(outputDir + 'karma.conf.js'));
-    this.updateJSFile.call(this, this.toolTemplatePath('karma.debug.conf.js'), this.destinationPath(outputDir + 'karma.debug.conf.js'));
+    this.updateJSFile.call(this, this.toolTemplatePath('karma.conf.js'), this.destinationPath(outputDir + 'karma.conf.js'), config);
+    this.updateJSFile.call(this, this.toolTemplatePath('karma.debug.conf.js'), this.destinationPath(outputDir + 'karma.debug.conf.js'), config);
     this.updateJSFile.call(this, this.toolTemplatePath('karma.common.js.tpl'), this.destinationPath(outputDir + 'karma.common.js'), config);
     this.updateJSFile.call(this, this.toolTemplatePath('test.files.js.tpl'), this.destinationPath(outputDir + 'test.files.js'), config);
 

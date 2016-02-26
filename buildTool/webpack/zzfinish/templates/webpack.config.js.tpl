@@ -42,6 +42,7 @@ var config = {
   }
 };
 
+<%- include('../../buildJS/templates/webpack.vendorJS.config.js.tpl') %>
 <%- include('../../buildJS/templates/webpack.buildJS.config.js.tpl') %>
 <%- include('../../testUnit/templates/webpack.testUnit.config.js.tpl') %>
 <%- include('../../buildAssets/templates/webpack.buildAssets.config.js.tpl') %>

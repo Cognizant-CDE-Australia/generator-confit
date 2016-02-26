@@ -31,13 +31,17 @@ module.exports = function() {
     var entryPointFileName = this.getResources().sampleApp.entryPointFileName[config.buildJS.sourceFormat];
     config.entryPoint.entryPoints.sampleApp = ['./' + modulesDir + this.demoOutputModuleDir + entryPointFileName];
 
-    // Add any vendor scripts to the config that the sampleApp for the selected framework needs
+    // Get the sampleApp's JS Framework config
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
-    var selectedFramework = config.buildJS.framework[0] || '';
-    var vendorScripts = (jsFrameworkConfig[selectedFramework].vendorScripts || []).map((pkg) => pkg.name);
+    var selectedFrameworkConfig = jsFrameworkConfig[config.buildJS.framework[0] || ''] || {};
 
-    // Deduplicate the array
+    // Add any vendor scripts to the config that the sampleApp for the selected framework needs
+    var vendorScripts = (selectedFrameworkConfig.vendorScripts || []).map((pkg) => pkg.name);
     config.buildJS.vendorScripts = _.uniq(config.buildJS.vendorScripts.concat(vendorScripts));
+
+    // Add any TEST vendor scripts to the testUnit config form the selectedFrameworkConfig
+    var testVendorScripts = (selectedFrameworkConfig.testVendorScripts || []).map((pkg) => pkg.name);
+    config.testUnit.testDependencies = _.uniq(config.testUnit.testDependencies.concat(testVendorScripts));
 
     writeConfit.apply(this, [fullConfig]);
   }
@@ -56,13 +60,13 @@ module.exports = function() {
     // Build the sample app using just the first framework (in case many are selected)
     var sourceFormat = config.buildJS.sourceFormat;
     var selectedFramework = config.buildJS.framework[0] || '';
-    var selectedJSFrameworkDir = jsFrameworkConfig[selectedFramework].sampleDir + sourceFormat + '/'; // e.g. ng1/ES6/
+    var selectedFrameworkConfig = jsFrameworkConfig[selectedFramework];
+    var selectedJSFrameworkDir = selectedFrameworkConfig.sampleDir + sourceFormat + '/'; // e.g. ng1/ES6/
 
     // Add the NPM dev dependencies (for the build tools) and the runtime dependencies (vendorScripts)
-    this.setNpmDependenciesFromArray(jsFrameworkConfig[selectedFramework].vendorScripts);
-    this.ts.addTypeLibsFromArray(jsFrameworkConfig[selectedFramework].typeLibs);
+    this.setNpmDependenciesFromArray(selectedFrameworkConfig.vendorScripts);
+    this.ts.addTypeLibsFromArray(selectedFrameworkConfig.typeLibs);
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
-
 
     // Add the $CSSEntryPoints to the config, so that it can be require()'ed in Webpack
     config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file.dest);
@@ -78,7 +82,7 @@ module.exports = function() {
     this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
 
     // Copy Webpack specific index.html template
-    this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + 'index-template.html'), this.destinationPath(outputDir + 'index-template.html'));
+    this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + '*'), this.destinationPath(outputDir));
   }
 
   return {
