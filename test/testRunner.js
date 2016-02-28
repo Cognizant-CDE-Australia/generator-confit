@@ -12,17 +12,19 @@ var CONFIT_PARAMS = ['test/runConfit.js'];
 var MOCHA_CMD = 'mocha';
 var MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/**/*.spec.js'];
 
-var FIXTURE_DIR = path.join(__dirname, 'fixtures/');
-var TEST_DIR = path.join(__dirname, '../temp-test');
+const FIXTURE_DIR = path.join(__dirname, 'fixtures/');
+const TEST_DIR = path.join(__dirname, '../temp-test');
+const SAMPLE_APP_MODULE_DIR = 'demoModule/';
 
-var LABEL_CONFIT = chalk.green.underline.bold('CONFIT');
-var LABEL_SUCCESS = chalk.green.bold('SUCCESS');
-var LABEL_FAILED = chalk.red.bold('FAILED');
-var BLACK_START = chalk.styles.bgBlack.open;
-var BLACK_END = chalk.styles.bgBlack.close;
+const LABEL_CONFIT = chalk.green.underline.bold('CONFIT');
+const LABEL_SUCCESS = chalk.green.bold('SUCCESS');
+const LABEL_FAILED = chalk.red.bold('FAILED');
+const BLACK_START = chalk.styles.bgBlack.open;
+const BLACK_END = chalk.styles.bgBlack.close;
 
 const TICK = chalk.green('\u2713');
 const CROSS = chalk.red('x');
+
 
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
@@ -64,7 +66,8 @@ function main() {
     return promiseRunner(CONFIT_CMD, CONFIT_PARAMS, {
       FIXTURE: fixture,
       FIXTURE_DIR: fixtureDir,
-      TEST_DIR: testDir
+      TEST_DIR: testDir,
+      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR
     });
   }
 
@@ -73,7 +76,8 @@ function main() {
     return promiseRunner(MOCHA_CMD, MOCHA_PARAMS, {
       FIXTURE: fixture,
       FIXTURE_DIR: fixtureDir,
-      TEST_DIR: testDir
+      TEST_DIR: testDir,
+      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR
     });
   }
 

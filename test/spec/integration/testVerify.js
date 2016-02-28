@@ -1,9 +1,10 @@
 'use strict';
-var assert = require('assert');
-var childProc = require('child_process');
-var fs = require('fs-extra');
+const assert = require('assert');
+const childProc = require('child_process');
+const fs = require('fs-extra');
 
-var VERIFY_CMD = 'npm run verify';
+const VERIFY_CMD = 'npm run verify';
+const FIXTURE_DIR = __dirname + '/fixtures/';
 
 // Pass the confit config to this module... (use module.exports
 
@@ -26,17 +27,43 @@ module.exports = function(confitConfig) {
 
 
     if (confitConfig.verify.jsCodingStandard !== 'none') {
-      describe('JS Coding Standards', function() {
-        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + 'js-syntax-fail.js';
+      describe('- JS Coding Standards', function() {
+        var jsFixtureFile = 'js-syntax-fail.js';
+        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + jsFixtureFile;
 
         before(function() {
-          fs.copySync(process.env.FIXTURE_DIR + 'verify/js-syntax-fail.js', destFixtureFile);
-          fs.copySync(process.env.FIXTURE_DIR + 'verify/js-syntax-fail.js', destFixtureFile.replace('.js', '.ts'));
+          fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile);
+          fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile.replace('.js', '.ts'));
         });
 
         after(function() {
           fs.removeSync(destFixtureFile);
           fs.removeSync(destFixtureFile.replace('.js', '.ts'));
+        });
+
+
+        it('should throw an error when the code fails to lint', function() {
+          assert.throws(runCommand, Error);
+        });
+      });
+    }
+
+    if (confitConfig.buildCSS.sourceFormat !== 'css') {
+      describe('- CSS Linting', function() {
+        var cssFixtureFile = 'css-lint-fail.css';
+        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
+                               confitConfig.paths.input.stylesDir + cssFixtureFile;
+
+        before(function() {
+          fs.copySync(FIXTURE_DIR + cssFixtureFile, destFixtureFile);
+          fs.copySync(FIXTURE_DIR + cssFixtureFile, destFixtureFile.replace('.css', '.styl'));
+          fs.copySync(FIXTURE_DIR + cssFixtureFile, destFixtureFile.replace('.css', '.sass'));
+        });
+
+        after(function() {
+          fs.removeSync(destFixtureFile);
+          fs.removeSync(destFixtureFile.replace('.css', '.styl'));
+          fs.removeSync(destFixtureFile.replace('.css', '.sass'));
         });
 
 
