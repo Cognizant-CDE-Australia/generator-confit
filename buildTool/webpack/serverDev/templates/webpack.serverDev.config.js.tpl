@@ -3,8 +3,8 @@ config.devServer = {
   contentBase: config.output.path,  // We want to re-use this path
   noInfo: false,
   debug: true, // Makes no difference
-  port: confitConfig.serverDev.port,
-  https: confitConfig.serverDev.protocol === 'https',
+  port: <%= serverDev.port %>,
+  https: <%= serverDev.protocol === 'https' %>,
   colors: true,
   // hot: true,    // Pass this from the command line as '--hot', which sets up the HotModuleReplacementPlugin automatically
   inline: true,

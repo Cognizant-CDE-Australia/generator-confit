@@ -237,7 +237,7 @@ readme:
 
     1. BEST: Modify the Confit configuration file (<%= link(configFile) %>) by hand, then re-run `yo confit` and tell it to use the existing configuration.
     1. OK: Re-run `yo confit` and provide new answers to the questions. **Confit will attempt to overwrite your existing configuration (it will prompt for confirmation), so make sure you have committed your code to a source control (e.g. git) first**.
-      There are certain configuration settings which can **only** be specified by hand, in which case the first approach is still necessary needs to be used.
+      There are certain configuration settings which can **only** be specified by hand, in which case the first approach is still best.
     1. RISKY: Modify the generated build-tool config by hand. Be aware that if you re-run `yo confit` it will attempt to overwrite your changes. So commit your changes to source control first.
 
     Additionally, the **currently-generated** configuration can be extended in the following ways:
