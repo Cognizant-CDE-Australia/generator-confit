@@ -20,7 +20,7 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
   var result = {};
 
   getFreePort().then(function(port) {
-    // Once we have the port, modify the confit.serverDEV configuration, then start the server
+    // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
     var confitJson = fs.readJsonSync(testDir + 'confit.json');
     var server = confitJson['generator-confit'][confitServerToStart];
     server.port = port;

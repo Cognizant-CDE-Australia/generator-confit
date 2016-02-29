@@ -2,8 +2,6 @@
 const confitGen = require('../../lib/ConfitGenerator.js');
 const chalk = require('chalk');
 const _ = require('lodash');
-const MAX_EVENT_LISTENERS = 20;
-
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
 // This generator is a shell to call other generators and setup global config.
@@ -14,9 +12,6 @@ module.exports = confitGen.create({
     init: function() {
       this.rebuildFromConfig = false;
       this.hasConfig = this.hasExistingConfig();
-
-      // Avoid http://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
-      this.env.sharedFs.setMaxListeners(MAX_EVENT_LISTENERS);
     }
   },
 

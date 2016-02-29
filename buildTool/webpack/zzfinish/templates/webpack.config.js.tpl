@@ -1,11 +1,6 @@
 'use strict';
 
 // START_CONFIT_GENERATED_CONTENT
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require('path');
-var basePath = process.cwd() + '/';
-
 <%- include('../../build/templates/webpack.build.config.js.tpl') %>
 <%- include('../../entryPoint/templates/webpack.entryPoint.config.js.tpl') %>
 <%- include('../../buildJS/templates/webpack.buildJS.config.js.tpl') %>
