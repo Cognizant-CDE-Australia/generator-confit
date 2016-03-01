@@ -12,7 +12,7 @@ module.exports = function () {
 
     this.fs.copyTpl(
       this.toolTemplatePath('serverDev.js.tpl'),
-      this.destinationPath('config/grunt/serverDev.js'),
+      this.destinationPath(config.paths.config.configDir + 'grunt/serverDev.js'),
       config
     );
 

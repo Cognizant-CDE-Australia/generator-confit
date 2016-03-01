@@ -195,6 +195,11 @@ module.exports = confitGen.create({
 
       this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
+    } else {
+      // Recalculate the calculated fields
+      var config = this.getConfig();
+      config.input.modulesDir = config.input.srcDir + config.input.modulesSubDir;
+      this.setConfig(config);
     }
   },
 

@@ -5,6 +5,9 @@
 <%
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var srcFileRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + ".*\\.(" + jsExtensions.join('|') + ")$");
+
+var configPath = paths.config.configDir + 'testUnit/';
+var relativePath = configPath.replace(/([^/]+)/g, '..');
 -%>
 
 // We want to re-use the loaders from the dev.webpack.config
@@ -15,12 +18,10 @@ var karmaConfig = {
   autoWatch: true,
 
   // base path, that will be used to resolve files and exclude
-  basePath: '../../',
+  basePath: '<%= relativePath %>',
 
   // testing framework to use (jasmine/mocha/qunit/...)
   frameworks: ['jasmine'],
-
-  // list of files / patterns to load in the browser - defined in /config/grunt/unitTest.js
 
   // list of files / patterns to exclude
   exclude: [],

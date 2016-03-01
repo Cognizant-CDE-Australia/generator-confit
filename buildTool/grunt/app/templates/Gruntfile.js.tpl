@@ -5,5 +5,5 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   // Load additional tasks
-  grunt.loadTasks('config/grunt');
+  grunt.loadTasks('<%= paths.config.configDir %>grunt');
 };
