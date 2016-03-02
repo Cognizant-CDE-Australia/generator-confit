@@ -205,7 +205,11 @@ module.exports = confitGen.create({
 
 
   writing: function () {
-    // Defer the actual writing to the build-tool-choice the user has made (currently), this is Grunt.
+    // Don't overwrite an existing gitignore - that would be bad manners.
+    var config = this.getGlobalConfig();
+    this.copyIfNotExist(this.templatePath('gitignore'), this.destinationPath('.gitignore'), config);
+
+    // Defer the actual writing to the build-tool-choice the user has made
     this.buildTool.write.apply(this);
   }
 });

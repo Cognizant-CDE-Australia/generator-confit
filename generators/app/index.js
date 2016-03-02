@@ -128,9 +128,7 @@ module.exports = confitGen.create({
     );
 
     // Don't overwrite an existing editorConfig - that would be bad manners.
-    var config = this.getGlobalConfig();
-    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'), config);
-    this.copyIfNotExist(this.templatePath('gitignore'), this.destinationPath('.gitignore'), config);
+    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'));
 
     this.setNpmDevDependenciesFromArray(this.getResources().app.packages);
 
