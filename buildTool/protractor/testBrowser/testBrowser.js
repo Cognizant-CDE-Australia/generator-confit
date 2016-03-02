@@ -18,7 +18,7 @@ module.exports = function() {
     if (unsupportedMessage) {
       this.defineNpmTask('test:browser', ['echo ' + unsupportedMessage], unsupportedMessage);
     } else {
-      this.defineNpmTask('test:browser', ['protractor ' + outputDir + 'protractor.conf.js'], 'Run browser tests against the DEVELOPMENT web server (the server **must** be running)');
+      this.defineNpmTask('test:browser', ['protractor ' + outputDir + 'protractor.conf.js'], 'Run browser tests against the *development* web server (the development server **must** be running)');
       this.addReadmeDoc('extensionPoint.testBrowser', buildToolResources.readme.extensionPoint);
     }
   }

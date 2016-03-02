@@ -1,0 +1,5 @@
+node_modules/
+<%= paths.output.devDir %>
+<%= paths.output.prodDir %>
+<%= paths.output.reportDir %>
+<%= paths.config.tempDir %>
