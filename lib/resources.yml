@@ -1,6 +1,9 @@
 # Package Anchor
 #package: !!inc/file 'lib/packages.yml'
 
+# Globals
+rootGeneratorName: generator-confit
+
 # App configuration
 app:
   subGenerators:  # This is the order that the sub-generators should be executed in. Try not to couple these together

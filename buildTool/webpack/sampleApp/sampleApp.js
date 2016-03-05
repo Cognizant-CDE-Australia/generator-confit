@@ -19,7 +19,7 @@ module.exports = function() {
   function configuring() {
     // Generate a Webpack-specific version of the sample entry points
     var fullConfig = readConfit.apply(this);
-    var config = fullConfig[this.ROOT_GENERATOR_NAME];
+    var config = fullConfig[this.getResources().rootGeneratorName];
     var modulesDir = config.paths.input.modulesSubDir;
 
     // Add a sampleApp entryPoint

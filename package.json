@@ -36,7 +36,8 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "test": "npm run test:unit && npm run test:seq",
+    "updateFixtures": "node lib/updateFixtures.js",
+    "test": "npm run updateFixtures && npm run test:unit && npm run test:seq",
     "test:seq": "node test/testRunner.js --sequence",
     "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
