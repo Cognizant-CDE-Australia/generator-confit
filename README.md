@@ -15,6 +15,10 @@
 
 [Concept Video](https://vimeo.com/128842400)
 
+## Contributing
+
+Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
+
 ## Install
 
     npm install -g yo
@@ -75,7 +79,3 @@ These are the companies that are sponsoring the development of Confit:
 <a href="https://www.nab.com.au"><img src="http://developer.nab.com.au/images/5a2a9621.nab-logo-horizontal.png" height="100"></a>
 [![Odecee](http://odecee.com.au/wp-content/themes/odecee/library/images/logo.svg)](http://www.odecee.com.au)
 
-
-## Contributing
-
-Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
