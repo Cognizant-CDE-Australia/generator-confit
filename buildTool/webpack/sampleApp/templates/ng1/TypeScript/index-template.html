@@ -25,6 +25,7 @@
 <body>
 
   <div ng-view></div>
+  <div class="css-type"></div>
 
 <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
 <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>

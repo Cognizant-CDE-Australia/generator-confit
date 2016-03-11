@@ -10,7 +10,12 @@ var Page1 = function() {
     body: element(by.css('body')),
     heading: element(by.css('h1')),
     logo: element(by.css('img')),
-    linkToPage2: element(by.css('a'))
+    linkToPage2: element(by.css('a')),
+    cssType: function() {
+      // To get the content of a pseudo element, you need to do this:
+      var selector = '.css-type';
+      return browser.executeScript('return window.getComputedStyle(document.querySelector("' + selector + '"), ":after").content.replace(/"/g, "")');
+    }
   };
   return page;
 };

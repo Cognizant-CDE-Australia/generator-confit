@@ -6,7 +6,7 @@ describe('Test SampleApp build', function() {
   var page1 = pages.Page1();
   var page2 = pages.Page2();
 
-  it('should have a page 1 which has a non-white background-colour, a large image, a heading, and a link to the second page', function() {
+  it('should have a two pages which show one image, a font icon, links, a heading and the CSS preprocessor type', function() {
     page1.get();
     expect(browser.getCurrentUrl()).toContain('page1');
 
@@ -16,8 +16,8 @@ describe('Test SampleApp build', function() {
     expect(page1.logo.getAttribute('width')).toEqual('300');
     expect(page1.logo.getAttribute('height')).toEqual('250');
 
-    // There should be a background colour
-    expect(page1.body.getCssValue('background-color')).not.toEqual('rgba(0, 0, 0, 0)');
+    // There should be a cssType, which is a pseudo element containing text
+    expect(page1.cssType()).toMatch('CSS Preprocessor: .*');
 
     expect(page1.linkToPage2.isDisplayed()).toEqual(true);
 

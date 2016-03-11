@@ -25,6 +25,7 @@
 <body onload="dispatchEvent(new Event('customBootEvent'))">
 
   <div id="content"></div>
+  <div class="css-type"></div>
 
   <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
   <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
