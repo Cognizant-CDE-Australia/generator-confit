@@ -1,6 +1,7 @@
 'use strict';
 var confitGen = require('../../lib/ConfitGenerator.js');
 var chalk = require('chalk');
+var _ = require('lodash');
 
 module.exports = confitGen.create({
   initializing: {
@@ -12,41 +13,59 @@ module.exports = confitGen.create({
     }
   },
 
-  prompting: function () {
-    // Bail out if we just want to rebuild from the configuration file
-    if (this.rebuildFromConfig && this.getConfig('createSampleApp') === false) {
-      return;
-    }
-
-    this.log(chalk.underline.bold.green('Sample App Generator'));
-
-    var done = this.async();
-
-    var prompts = [
-      {
-        type: 'confirm',
-        name: 'createSampleApp',
-        message: 'Create a sample app?',
-        default: this.getConfig('createSampleApp') || true
+  // We need to run this AFTER the buildJS generator, in order to read the buildJS.sourceFormat
+  // property. Hence, the 'configuring' task contains the prompts, to allow access to the buildJS config.
+  configuring: {
+    prompting: function() {
+      // Bail out if we just want to rebuild from the configuration file
+      if (this.rebuildFromConfig && this.getConfig('createSampleApp') === false) {
+        return;
       }
-    ];
 
+      // Check if the build-profile's buildTool's sampleApp generator supports the selected buildJS configuration
+      var buildJS = this.getGlobalConfig().buildJS;
+      var sampleAppFrameworks = this.buildTool.getResources().sampleApp.js.framework;
+      var jsSourceFormat = buildJS.sourceFormat;
+      var selectedFramework = buildJS.framework[0] || '';
 
-    this.prompt(prompts, function (props) {
-      this.answers = this.generateObjFromAnswers(props);
-      done();
-    }.bind(this));
-  },
-
-  configuring: function() {
-    // If we have new answers, then change the config
-    if (this.answers) {
-      // If we don't want to create a sample app, don't bother calling the buildTool.
-      if (this.answers.createSampleApp) {
-        this.buildTool.configure.apply(this);
+      if (_.get(sampleAppFrameworks, [selectedFramework, 'sourceFormat', jsSourceFormat, 'hasSampleApp']) !== true) {
+        this.log(chalk.bgRed.bold.white('A complete sample application is not available for the selected JS Framework and source code language.'));
+        this.answers = {
+          createSampleApp: false
+        };
+        return;
       }
-      this.setConfig(this.answers);
-    }
+
+      this.log(chalk.underline.bold.green('Sample App Generator'));
+
+      var done = this.async();
+
+      var prompts = [
+        {
+          type: 'confirm',
+          name: 'createSampleApp',
+          message: 'Create a sample app?',
+          default: this.getConfig('createSampleApp') || true
+        }
+      ];
+
+
+      this.prompt(prompts, function(props) {
+        this.answers = this.generateObjFromAnswers(props);
+        done();
+      }.bind(this));
+    },
+
+    configuring: function() {
+      // If we have new answers, then change the config
+      if (this.answers) {
+        // If we don't want to create a sample app, don't bother calling the buildTool.
+        if (this.answers.createSampleApp) {
+          this.buildTool.configure.apply(this);
+        }
+        this.setConfig(this.answers);
+      }
+    },
   },
 
   writing: function () {

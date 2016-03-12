@@ -71,7 +71,11 @@ sampleApp:
         sampleDir: noFramework/
         vendorScripts: []
         typeLibs: []
-        sourceFormat: {}
+        sourceFormat:
+          ES6:
+            hasSampleApp: true
+          TypeScript:
+            hasSampleApp: true
 
       AngularJS 1.x:
         sampleDir: ng1/
@@ -83,7 +87,11 @@ sampleApp:
           - name: angular-route
             key: ambientDependencies
             version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
-        sourceFormat: {}
+        sourceFormat:
+          ES6:
+            hasSampleApp: true
+          TypeScript:
+            hasSampleApp: true
 
       AngularJS 2.x:
         sampleDir: ng2/
@@ -94,6 +102,7 @@ sampleApp:
 
         sourceFormat:
           TypeScript:
+            hasSampleApp: true
             testUnitConfig: |
               // Load Angular 2's Jasmine helper methods:
               var testing = require('angular2/testing');
