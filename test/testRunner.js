@@ -1,16 +1,16 @@
 'use strict';
 
-var childProc = require('child_process');
-var fs = require('fs-extra');
-var path = require('path');
-var _ = require('lodash');
-var chalk = require('chalk');
-var async = require('async');
+const childProc = require('child_process');
+const fs = require('fs-extra');
+const path = require('path');
+const _ = require('lodash');
+const chalk = require('chalk');
+const async = require('async');
 
-var CONFIT_CMD = 'node';
-var CONFIT_PARAMS = ['test/runConfit.js'];
-var MOCHA_CMD = 'mocha';
-var MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/**/*.spec.js'];
+const CONFIT_CMD = 'node';
+const CONFIT_PARAMS = ['test/runConfit.js'];
+const MOCHA_CMD = 'mocha';
+const MOCHA_PARAMS = ['--reporter list', '--no-timeouts', 'test/spec/**/*.spec.js'];
 
 const FIXTURE_DIR = path.join(__dirname, 'fixtures/');
 const TEST_DIR = path.join(__dirname, '../temp-test');

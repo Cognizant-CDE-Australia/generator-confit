@@ -1,70 +1,52 @@
 'use strict';
 
-var path = require('path');
-var helpers = require('yeoman-test');
-var yoassert = require('yeoman-assert');
-var assert = require('assert');
-var fs = require('fs-extra');
+const helpers = require('yeoman-test');
+const utils = require('./unitTestUtils');
+const path = require('path');
+const yoassert = require('yeoman-assert');
+const assert = require('assert');
+const fs = require('fs-extra');
 
 const GENERATOR_UNDER_TEST = 'app';
 
 
 function runGenerator(confitFixture, beforeTestCb, assertionCb) {
-  var generatorName = path.join(__dirname, '../../../generators/' + GENERATOR_UNDER_TEST);
-  var testDir;
-
-  helpers.run(generatorName)
-    .inTmpDir(function (dir) {
-      // Copy the confit.json fixture here
-      if (confitFixture) {
-        fs.copySync(path.join(__dirname, confitFixture), path.join(dir, 'confit.json'));
-      }
-      testDir = dir;
-      beforeTestCb(testDir);
-    })
-    .withArguments(['--force=true'])    // Any file-conflicts, over-write
-    .withGenerators([
-      [helpers.createDummyGenerator(), 'confit:build'],
-      [helpers.createDummyGenerator(), 'confit:buildAssets'],
-      [helpers.createDummyGenerator(), 'confit:buildCSS'],
-      [helpers.createDummyGenerator(), 'confit:buildHTML'],
-      [helpers.createDummyGenerator(), 'confit:buildJS'],
-      [helpers.createDummyGenerator(), 'confit:entryPoint'],
-      [helpers.createDummyGenerator(), 'confit:paths'],
-      [helpers.createDummyGenerator(), 'confit:sampleApp'],
-      [helpers.createDummyGenerator(), 'confit:serverDev'],
-      [helpers.createDummyGenerator(), 'confit:serverProd'],
-      [helpers.createDummyGenerator(), 'confit:testBrowser'],
-      [helpers.createDummyGenerator(), 'confit:testUnit'],
-      [helpers.createDummyGenerator(), 'confit:verify'],
-      [helpers.createDummyGenerator(), 'confit:zzfinish']
-    ])
-    .withPrompts({
-      buildProfile: 'Latest'
-    })
-    .withOptions({
-      skipInstall: true,
-      skipRun: true
-    })
-    //.on('ready', function() {
-    //
-    //})
-    .on('end', function() {
-      assertionCb(testDir);
-    });
+  utils.runGenerator(
+    GENERATOR_UNDER_TEST,
+    confitFixture,
+    beforeTestCb,
+    assertionCb
+  ).withGenerators([
+    [helpers.createDummyGenerator(), 'confit:build'],
+    [helpers.createDummyGenerator(), 'confit:buildAssets'],
+    [helpers.createDummyGenerator(), 'confit:buildCSS'],
+    [helpers.createDummyGenerator(), 'confit:buildHTML'],
+    [helpers.createDummyGenerator(), 'confit:buildJS'],
+    [helpers.createDummyGenerator(), 'confit:entryPoint'],
+    [helpers.createDummyGenerator(), 'confit:paths'],
+    [helpers.createDummyGenerator(), 'confit:sampleApp'],
+    [helpers.createDummyGenerator(), 'confit:serverDev'],
+    [helpers.createDummyGenerator(), 'confit:serverProd'],
+    [helpers.createDummyGenerator(), 'confit:testBrowser'],
+    [helpers.createDummyGenerator(), 'confit:testUnit'],
+    [helpers.createDummyGenerator(), 'confit:verify'],
+    [helpers.createDummyGenerator(), 'confit:zzfinish']
+  ]).withPrompts({
+    buildProfile: 'Latest'
+  });
 }
 
 
 describe('App Generator', function () {
 
   it('should create a confit.json, .editorConfig and package.json file when they do not exist', function(done) {
-    // How to prove
+    var filesThatShouldBeGenerated = ['confit.json', '.editorconfig', 'package.json'];
     runGenerator(null,
       function beforeTest() {
-        yoassert.noFile(['confit.json', '.editorconfig', 'package.json']);
+        yoassert.noFile(filesThatShouldBeGenerated);
       },
       function afterTest() {
-        yoassert.file(['confit.json', '.editorconfig', 'package.json']);
+        yoassert.file(filesThatShouldBeGenerated);
         done();
       }
     );

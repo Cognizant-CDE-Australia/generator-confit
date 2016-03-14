@@ -229,7 +229,7 @@ readme:
   RM_DEVELOPMENT_TASKS: |
     ##Development Tasks
 
-    <% objectValues(config.readme.buildTask).forEach(function(value) {
+    <% objectValues(readme.buildTask).forEach(function(value) {
     %>- `<%- value.command %>`: <%- value.description %>
     <% }); %>
 
@@ -246,7 +246,7 @@ readme:
     Additionally, the **currently-generated** configuration can be extended in the following ways:
 
     - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
-    <% objectValues(config.readme.extensionPoint).forEach(function(value) {
+    <% objectValues(readme.extensionPoint).forEach(function(value) {
     %>- <%- value -%>
 
     <% }); %>
@@ -255,7 +255,7 @@ readme:
     ## Build Tool Features
 
     *Coming soon*
-    <% objectValues(config.readme.buildToolFeature).forEach(function(value) {
+    <% objectValues(readme.buildToolFeature).forEach(function(value) {
     %>- <%- value -%>
     <% }); %>
 
