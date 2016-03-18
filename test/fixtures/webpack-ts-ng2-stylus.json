@@ -57,7 +57,7 @@
         "angular2/router",
         "angular2/platform/browser"
       ],
-      "_version": "3291fbf06d95d4b40ff9e768eefb800f207bd75f"
+      "_version": "e0eb11022fe93b2a25374b11c20fbe0ab496707b"
     },
     "buildHTML": {
       "extension": ".html",
@@ -91,7 +91,7 @@
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "5cfd34367496327bfb136959d25662ded10b8ecc"
+      "_version": "783cb1167748d185bdb6faed3b86f83a6b49cbc9"
     },
     "zzfinish": {}
   }

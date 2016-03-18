@@ -22,7 +22,6 @@ module.exports = function() {
     );
     this.setNpmDevDependenciesFromArray(packages);
 
-    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
     var templateData = _.merge({}, config, {resources: this.getResources()});
     this.fs.copyTpl(
       this.toolTemplatePath('gruntVerify.js.tpl'),

@@ -72,17 +72,30 @@ module.exports = function() {
     config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file.dest);
 
     // Copy JS files
-    this.fs.copyTpl(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*'), paths.input.modulesDir + this.demoOutputModuleDir, config);
+    this.fs.copyTpl(
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*'),
+      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir),
+      config
+    );
 
     // Copy unit test(s)
-    this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir);
+    this.fs.copy(
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*'),
+      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir)
+    );
 
 
     // Copy TEMPLATE HTML files
-    this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir);
+    this.fs.copy(
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*'),
+      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir)
+    );
 
     // Copy Webpack specific index.html template
-    this.fs.copy(this.toolTemplatePath(selectedJSFrameworkDir + '*'), this.destinationPath(outputDir));
+    this.fs.copy(
+      this.toolTemplatePath(selectedJSFrameworkDir + '*'),
+      this.destinationPath(outputDir)
+    );
   }
 
   return {

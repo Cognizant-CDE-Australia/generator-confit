@@ -78,7 +78,10 @@ module.exports = confitGen.create({
     var paths = config.paths;
 
     // Copy Assets
-    this.fs.copy(this.templatePath('assets/**/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.assetsDir);
+    this.fs.copy(
+      this.templatePath('assets/**/*'),
+      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.assetsDir)
+    );
 
     // Copy compiler-specific CSS
     var cssSourceFormat = config.buildCSS.sourceFormat;
@@ -89,12 +92,20 @@ module.exports = confitGen.create({
 
     // Copy all of the template CSS files
     templateFiles = templateFiles.concat(cssConfig[cssSourceFormat].sampleAppFiles || []);
-    templateFiles.forEach(file => this.fs.copy(this.templatePath(file.src), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + file.dest));
+    templateFiles.forEach(file => {
+      this.fs.copy(
+        this.templatePath(file.src),
+        this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + file.dest)
+      );
+    });
 
     // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific files to use
 
     // Copy browser test(s)
-    this.fs.copy(this.templatePath('browserTest/*'), paths.input.modulesDir + this.demoOutputModuleDir + paths.input.browserTestDir);
+    this.fs.copy(
+      this.templatePath('browserTest/*'),
+      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.browserTestDir)
+    );
 
     this.buildTool.write.apply(this);
   },

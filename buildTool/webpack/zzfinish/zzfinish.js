@@ -18,9 +18,9 @@ module.exports = function() {
 
     this.addReadmeDoc('extensionPoint.start', this.buildTool.getResources().readme.extensionPoint.start);
 
-    this.updateJSFile.call(this, this.toolTemplatePath('webpack.config.js.tpl'), this.destinationPath(outputDir + 'webpack/webpack.config.js'), config);
-    this.updateJSFile.call(this, this.toolTemplatePath('dev.webpack.config.js'), this.destinationPath(outputDir + 'webpack/dev.webpack.config.js'), config);
-    this.updateJSFile.call(this, this.toolTemplatePath('prod.webpack.config.js'), this.destinationPath(outputDir + 'webpack/prod.webpack.config.js'), config);
+    this.updateJSFile(this.toolTemplatePath('webpack.config.js.tpl'), this.destinationPath(outputDir + 'webpack/webpack.config.js'), config);
+    this.updateJSFile(this.toolTemplatePath('dev.webpack.config.js'), this.destinationPath(outputDir + 'webpack/dev.webpack.config.js'), config);
+    this.updateJSFile(this.toolTemplatePath('prod.webpack.config.js'), this.destinationPath(outputDir + 'webpack/prod.webpack.config.js'), config);
 
     // Setup things to run on end, if we have anything
     var cmd = this.buildTool.getResources().zzfinish.onEnd;

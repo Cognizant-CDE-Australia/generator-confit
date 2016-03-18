@@ -11,7 +11,11 @@ module.exports = function() {
     var config = this.getGlobalConfig();
     var outputDir = config.paths.config.configDir + 'testBrowser/';
 
-    this.fs.copyTpl(this.toolTemplatePath('protractor.conf.js.tpl'), this.destinationPath(outputDir + 'protractor.conf.js'), config);
+    this.fs.copyTpl(
+      this.toolTemplatePath('protractor.conf.js.tpl'),
+      this.destinationPath(outputDir + 'protractor.conf.js'),
+      config
+    );
 
     // First check whether this configuration supports browser testing
     var unsupportedMessage = this.isBuildToolSupported(buildToolResources);

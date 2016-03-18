@@ -159,7 +159,11 @@ module.exports = confitGen.create({
     var config = this.getGlobalConfig();
 
     sourceFormatBuildData.templates.forEach((file) => {
-      this.fs.copyTpl(this.templatePath(file.src), this.destinationPath(file.dest), config);
+      this.fs.copyTpl(
+        this.templatePath(file.src),
+        this.destinationPath(file.dest),
+        config
+      );
     });
 
     // Install any sourceFormat related packages
@@ -167,9 +171,7 @@ module.exports = confitGen.create({
 
 
     // Install any sourceFormat related tasks
-    sourceFormatBuildData.tasks.forEach(task => {
-      this.defineNpmTask(task.name, task.tasks, task.description);
-    });
+    sourceFormatBuildData.tasks.forEach(task => this.defineNpmTask(task.name, task.tasks, task.description));
 
     this.buildTool.write.apply(this);
   },
