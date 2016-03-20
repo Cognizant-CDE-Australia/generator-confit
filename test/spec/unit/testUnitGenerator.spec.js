@@ -13,7 +13,7 @@ describe('testUnit Generator', function () {
   it('should generate test config when there are no test dependencies due to a JS framework', function(done) {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'fixtures/testUnit-no-test-deps.json',
+      'testUnit-no-test-deps.json',
       utils.noop,
       function after() {
         yoassert.file(['confit.json']);
@@ -31,7 +31,7 @@ describe('testUnit Generator', function () {
   it('should generate test dependencies when there are IS a JS framework which has test dependencies', function(done) {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'fixtures/testUnit-framework-with-test-deps.json',
+      'testUnit-framework-with-test-deps.json',
       utils.noop,
       function after() {
         // Confit.json should now have an angular-mocks reference

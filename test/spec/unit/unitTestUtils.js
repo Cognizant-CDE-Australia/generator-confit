@@ -17,7 +17,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
     .inTmpDir(function (dir) {
       // Copy the confit.json fixture here
       if (confitFixture) {
-        fs.copySync(path.join(__dirname, confitFixture), path.join(dir, 'confit.json'));
+        fs.copySync(path.join(__dirname, 'fixtures/', confitFixture), path.join(dir, 'confit.json'));
       }
       testDir = dir;
       beforeTestCb(testDir);

@@ -24,6 +24,7 @@ app:
 
   packages:
     - <<: *pkg_npm-run-all
+    - <<: *pkg_rimraf
 
   defaultSupportedBrowsers: ['latest']
   supportedBrowsers:
@@ -39,6 +40,37 @@ app:
     legacyMobile:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']
+
+  tasks:
+    - name: start
+      tasks: ['npm run dev']
+      description: Alias for `npm run dev` task
+      features:
+
+    - name: dev
+      tasks: ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev']
+      description: Run project in development mode (verify code, create dev build into <%= paths.output.devDir %> folder, serve on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**, watch for changes and reload the browser automatically)
+      features:
+
+    - name: build
+      tasks: ['clean:prod', 'build:prod']
+      description: Generate production build into <%= link(paths.output.prodDir) %> folder
+      features:
+
+    - name: build:serve
+      tasks: ['build', 'serve:prod']
+      description: Generate production build and serve on **<%= serverProd.protocol + '://' + serverProd.hostname + ':' + serverProd.port %>**'
+      features:
+
+    - name: clean:dev
+      tasks: ['rimraf <%= paths.output.devDir %>']
+      description:
+      features:
+
+    - name: clean:prod
+      tasks: ['rimraf <%= paths.output.prodDir %>']
+      description:
+      features:
 
 
 # CSS configuration
@@ -229,8 +261,13 @@ readme:
   RM_DEVELOPMENT_TASKS: |
     ##Development Tasks
 
+    Command | Description
+    :------ | :----------
     <% objectValues(readme.buildTask).forEach(function(value) {
-    %>- `<%- value.command %>`: <%- value.description %>
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
     <% }); %>
 
   RM_CHANGING_BUILD_TOOL_CONFIG: |

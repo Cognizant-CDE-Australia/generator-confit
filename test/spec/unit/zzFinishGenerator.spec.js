@@ -9,38 +9,11 @@ const GENERATOR_UNDER_TEST = 'zzfinish';
 
 describe('zzFinish Generator', function () {
 
-  it('should generate scripts in package.json', function(done) {
-    utils.runGenerator(
-      GENERATOR_UNDER_TEST,
-      'fixtures/zzFinish-config.json',
-      function before(testDir) {
-        yoassert.noFile(['package.json']);
-
-        // Create a package.json file as the generator expects it will exist
-        fs.writeJsonSync(testDir + '/package.json', {
-          name: 'some-name',
-          description: 'desc'
-        });
-        yoassert.file(['package.json']);
-      },
-      function after() {
-        var pkg = fs.readJsonSync('package.json');
-        assert.equal(pkg.scripts.start, 'npm run dev');
-        assert.ok(pkg.scripts.dev);
-        assert.ok(pkg.scripts.build);
-        assert.ok(pkg.scripts['build:serve']);
-        assert.ok(pkg.scripts['clean:dev']);
-        assert.ok(pkg.scripts['clean:prod']);
-        done();
-      }
-    );
-  });
-
 
   it('should generate a README.md file with the appropriate sections and content', function(done) {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'fixtures/zzFinish-config.json',
+      'zzFinish-config.json',
       function before(testDir) {
         yoassert.noFile(['README.md']);
 

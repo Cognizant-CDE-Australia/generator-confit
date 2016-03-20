@@ -3,8 +3,7 @@
 module.exports = function() {
 
   function write() {
-    this.log('Writing "app" using Webpack');
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().app.packages);
+    this.log('Writing Webpack app options');
   }
 
   return {

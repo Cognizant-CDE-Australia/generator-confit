@@ -20,6 +20,7 @@ module.exports = function() {
       toolResources.cssCodingStandard[cssCodingStandard].packages,
       toolResources.jsCodingStandard[jsCodingStandard].packages
     );
+    this.addNpmTasks(toolResources.tasks);
     this.setNpmDevDependenciesFromArray(packages);
 
     var templateData = _.merge({}, config, {resources: this.getResources()});
@@ -28,10 +29,6 @@ module.exports = function() {
       this.destinationPath(outputDir + 'grunt/verify.js'),
       templateData
     );
-
-    // Define the verify tasks
-    this.defineNpmTask('verify', ['grunt verify'], 'Verify JS & CSS code style and syntax');
-    this.defineNpmTask('verify:watch', ['grunt watch:verify'], 'Run verify task whenever JS or CSS code changes');
   }
 
   return {

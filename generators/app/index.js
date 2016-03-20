@@ -117,23 +117,13 @@ module.exports = confitGen.create({
       // Update our buildtool, as it may have changed
       this.updateBuildTool();
     }
-  },
 
-  writing: function() {
     // Common files (independent of the build-tool) to write
      this.copyIfNotExist(
       this.templatePath('_package.json'),
       this.destinationPath('package.json'),
       { name: this.appPackageName }
     );
-
-    // Don't overwrite an existing editorConfig - that would be bad manners.
-    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'));
-
-    this.setNpmDevDependenciesFromArray(this.getResources().app.packages);
-
-    // Build-tool specific files
-    this.buildTool.write.apply(this);
 
     var subGenOptions = {
       rebuildFromConfig: this.rebuildFromConfig,
@@ -142,14 +132,26 @@ module.exports = confitGen.create({
       configFile: this.configFile
     };
 
-
     // Now call the other generators
     this.getResources().app.subGenerators.forEach((subGeneratorName) => {
       this.composeWith(subGeneratorName, {options: _.merge({}, subGenOptions)});
     });
   },
 
+  writing: function() {
+    var resources = this.getResources().app;
+    this.addNpmTasks(resources.tasks);
+    this.setNpmDevDependenciesFromArray(resources.packages);
+
+    // Don't overwrite an existing editorConfig - that would be bad manners.
+    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'));
+
+    // Build-tool specific files
+    this.buildTool.write.apply(this);
+  },
+
   install: function () {
+
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],    //--skip-install

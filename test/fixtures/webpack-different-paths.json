@@ -5,7 +5,7 @@
       "browserSupport": [
         "latest"
       ],
-      "_version": "de3644f493df050b2f785b7e9ebaf033c1f17021"
+      "_version": "12dc4368d8bdd36283e805604d937de84e6a614e"
     },
     "paths": {
       "input": {
@@ -49,7 +49,7 @@
       "vendorScripts": [
         "angular"
       ],
-      "_version": "e0eb11022fe93b2a25374b11c20fbe0ab496707b"
+      "_version": "becc02ddff160b3916f974a151419be4f9de63ee"
     },
     "buildHTML": {
       "extension": ".html",

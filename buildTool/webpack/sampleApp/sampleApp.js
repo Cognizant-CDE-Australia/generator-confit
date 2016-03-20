@@ -73,21 +73,21 @@ module.exports = function() {
 
     // Copy JS files
     this.fs.copyTpl(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*'),
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir),
       config
     );
 
     // Copy unit test(s)
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*'),
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir)
     );
 
 
     // Copy TEMPLATE HTML files
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*'),
+      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir)
     );
 

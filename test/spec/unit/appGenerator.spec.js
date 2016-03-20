@@ -40,8 +40,8 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
 describe('App Generator', function () {
 
   it('should create a confit.json, .editorConfig and package.json file when they do not exist', function(done) {
-    var filesThatShouldBeGenerated = ['confit.json', '.editorconfig', 'package.json'];
-    runGenerator(null,
+    var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
+    runGenerator('app-config.json',
       function beforeTest() {
         yoassert.noFile(filesThatShouldBeGenerated);
       },
@@ -53,9 +53,12 @@ describe('App Generator', function () {
   });
 
 
-  it('should create a confit.json file with valid data inside it', function(done) {
-    runGenerator(null,
-      function beforeTest() {},
+  it('should add an "app" section to the confit.json file with valid data inside it', function(done) {
+    runGenerator('app-config.json',
+      function beforeTest() {
+        var confit = fs.readJsonSync('confit.json');
+        assert.equal(confit['generator-confit'].app, undefined);
+      },
       function afterTest() {
         var confit = fs.readJsonSync('confit.json');
         assert.equal(typeof confit['generator-confit'].app, 'object');
@@ -79,7 +82,7 @@ describe('App Generator', function () {
   it('should not overwrite an existing .editorconfig file', function(done) {
     var originalContents = 'dummy data' + (new Date());
 
-    runGenerator(null,
+    runGenerator('app-config.json',
       function beforeTest(testDir) {
         fs.writeFileSync(path.join(testDir, '.editorconfig'), originalContents);
       },
@@ -95,7 +98,7 @@ describe('App Generator', function () {
   it('should not overwrite an existing package.json file with a template, but will add additional data', function(done) {
     var originalContents = { name: 'name-is-required', description: 'abc' };
 
-    runGenerator(null,
+    runGenerator('app-config.json',
       function beforeTest(testDir) {
         fs.writeJsonSync(testDir + '/package.json', originalContents);
         //fs.readdirSync(testDir).forEach(file => console.log('b', file));
@@ -106,6 +109,31 @@ describe('App Generator', function () {
         assert.equal(newContents.name, originalContents.name);
         assert.equal(newContents.description, originalContents.description);
         assert.equal(typeof newContents.devDependencies, 'object');
+        done();
+      }
+    );
+  });
+
+  it('should generate scripts in package.json', function(done) {
+    runGenerator('app-config.json',
+      function before(testDir) {
+        yoassert.noFile(['package.json']);
+
+        // Create a package.json file as the generator expects it will exist
+        fs.writeJsonSync(testDir + '/package.json', {
+          name: 'some-name',
+          description: 'desc'
+        });
+        yoassert.file(['package.json']);
+      },
+      function after() {
+        var pkg = fs.readJsonSync('package.json');
+        assert.equal(pkg.scripts.start, 'npm run dev');
+        assert.ok(pkg.scripts.dev);
+        assert.ok(pkg.scripts.build);
+        assert.ok(pkg.scripts['build:serve']);
+        assert.ok(pkg.scripts['clean:dev']);
+        assert.ok(pkg.scripts['clean:prod']);
         done();
       }
     );

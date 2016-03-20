@@ -30,10 +30,29 @@ serverDev:
     - <<: *pkg_grunt-contrib-watch
     - <<: *pkg_grunt-contrib-connect
 
+  tasks:
+    - name: serve:dev
+      tasks: ['grunt connect:dev']
+      description: Runs a dev server using `grunt-connect` on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**
+      features:
+        - HTTP or HTTPS
+        - LiveReload support
+        - 'Port can be overridden on command line: `-- -port=1234`'
+        - 'Browser can be opened to a specific path via command line: `-- -url=sub/path`'
+
 serverProd:
   packages:
     - <<: *pkg_grunt-contrib-watch
     - <<: *pkg_grunt-contrib-connect
+
+  tasks:
+    - name: serve:prod
+      tasks: ['grunt connect:prod']
+      description: Runs a production server using `grunt-connect` on **<%= serverProd.protocol + '://' + serverProd.hostname + ':' + serverProd.port %>**
+      features:
+        - HTTP or HTTPS
+        - 'Port can be overridden on command line: `-- -port=1234`'
+        - 'Browser can be opened to a specific path via command line: `-- -url=sub/path`'
 
 verify:
   # Common packages
@@ -75,6 +94,18 @@ verify:
     TypeScript:
       packages:
         - <<: *pkg_grunt-tslint
+
+  tasks:
+    - name: verify
+      tasks: ['grunt verify']
+      description: Verify JS & CSS code style and syntax
+      features:
+        - Verifies source *and test code* (unlike Webpack loaders)
+
+    - name: verify:watch
+      tasks: ['grunt watch:verify']
+      description: Runs verify task whenever JS or CSS code is changed
+      features: []
 
 zzfinish:
   onEnd:

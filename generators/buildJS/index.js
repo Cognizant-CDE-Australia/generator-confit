@@ -148,16 +148,20 @@ module.exports = confitGen.create({
     var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].packages));
     var activeFrameworkTypeLibs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].typeLibs));
     var buildJsResources = this.getResources().buildJS;
+    var sourceFormatBuildData = buildJsResources.sourceFormat[this.getConfig('sourceFormat')];
+    var config = this.getGlobalConfig();
 
     // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
     this.setNpmDependenciesFromArray(activeFrameworkScriptObjs);
     this.ts.addTypeLibsFromArray(activeFrameworkTypeLibs);
     this.addReadmeDoc('extensionPoint.buildJSVendorScripts', buildJsResources.readme.extensionPoint);
 
-    // Copy any template files related directly to the sourceFormat
-    var sourceFormatBuildData = buildJsResources.sourceFormat[this.getConfig('sourceFormat')];
-    var config = this.getGlobalConfig();
+    // Install any sourceFormat related tasks & packages
+    // At the moment, this is only needed for "npm run typingsInstall"
+    this.addNpmTasks(sourceFormatBuildData.tasks);
+    this.setNpmDevDependenciesFromArray(sourceFormatBuildData.packages);
 
+    // Copy any template files related directly to the sourceFormat
     sourceFormatBuildData.templates.forEach((file) => {
       this.fs.copyTpl(
         this.templatePath(file.src),
@@ -165,13 +169,6 @@ module.exports = confitGen.create({
         config
       );
     });
-
-    // Install any sourceFormat related packages
-    this.setNpmDevDependenciesFromArray(sourceFormatBuildData.packages);
-
-
-    // Install any sourceFormat related tasks
-    sourceFormatBuildData.tasks.forEach(task => this.defineNpmTask(task.name, task.tasks, task.description));
 
     this.buildTool.write.apply(this);
   },

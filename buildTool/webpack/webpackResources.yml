@@ -1,8 +1,25 @@
 # app
-app:
+build:
   packages: # TODO: Not sure if these should be here, or in zzfinish?
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
+
+  tasks:
+    - name: build:dev
+      tasks: ['webpack-dev-server --progress --config <%= paths.config.configDir %>webpack/dev.webpack.config.js --hot']
+      description: Create a development build using Webpack
+      features:
+        - Sourcemaps
+        - Hot reloading of source code
+    - name: build:prod
+      tasks: ['webpack -p --progress --config <%= paths.config.configDir %>webpack/prod.webpack.config.js']
+      description: Create a production build using Webpack
+      features:
+        - Minifies source code
+        - Sourcemaps
+        - Dead code removal
+        - Hashes added to file names for cache-busting
+
 
 buildAssets:
   packages:
@@ -126,6 +143,7 @@ sampleApp:
   packages:
     - <<: *pkg_lodash
 
+serverDev: {}
 
 testUnit:
   packages:
@@ -144,6 +162,31 @@ testUnit:
     - <<: *pkg_phantomjs
     - <<: *pkg_phantomjs-polyfill
     - <<: *pkg_istanbul-instrumenter-loader
+
+  tasks:
+    - name: test
+      tasks: ['npm run test:unit']
+      description: Alias for `npm run test:unit` task
+      features: []
+
+    - name: test:unit
+      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      description: Run unit tests whenever JS source or tests change
+      features:
+        - Uses Karma and Jasmine 2
+        - Code coverage
+        - Runs continuously (best to run in a separate window)
+
+    - name: test:unit:once
+      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      description: Run unit tests once
+      features:
+
+    - name: test:unit:debug
+      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.debug.conf.js']
+      description: Run unit tests in a browser to make debugging easier
+      features:
+        - no code coverage to make it easier to read source code
 
   typeLibs:
     - name: jasmine

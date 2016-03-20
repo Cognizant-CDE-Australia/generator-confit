@@ -16,9 +16,9 @@ module.exports = function () {
       config
     );
 
-    this.defineNpmTask('serve:dev', ['grunt connect:dev'], 'Runs a dev server using grunt-connect on **' + config.serverDev.protocol + '://' + config.serverDev.hostname + ':' + config.serverDev.port + '**');
-
-    this.setNpmDevDependenciesFromArray(this.buildTool.getResources().serverDev.packages);
+    var toolResources = this.buildTool.getResources().serverDev;
+    this.addNpmTasks(toolResources.tasks);
+    this.setNpmDevDependenciesFromArray(toolResources.packages);
   }
 
   return {
