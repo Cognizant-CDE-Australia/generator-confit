@@ -57,9 +57,14 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
       }
     });
 
+    // Webpack is logging the % complete on stderr! Filter out these messages
+    var filterRE = /^\d*%/;
     child.stderr.on('data', function (data) {
-      console.error('' + data);
-      //rejectFn('' + data);      // Webpack is logging the % complete on stderr!
+      var msg = data.toString();
+      if (filterRE.test(msg)) {
+        console.error(msg);
+      }
+      //rejectFn('' + data);
     });
   }, function(err) {
     rejectFn(err);
