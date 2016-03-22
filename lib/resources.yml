@@ -336,7 +336,7 @@ verify:
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
-        - src: eslint-off.json
+        - src: eslint.yml
           dest: (configDir)/verify/.eslintrc
 
     AirBnB:
@@ -349,7 +349,7 @@ verify:
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
-        - src: eslint-airbnb.json
+        - src: eslint.yml
           dest: (configDir)/verify/.eslintrc
 
     Google:
@@ -360,7 +360,7 @@ verify:
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
-        - src: eslint-google.json
+        - src: eslint.yml
           dest: (configDir)/verify/.eslintrc
 
     StandardJS:
@@ -371,7 +371,7 @@ verify:
       templateFiles:
         - src: eslintignore.tpl
           dest: .eslintignore
-        - src: eslint-standardJS.json
+        - src: eslint.yml
           dest: (configDir)/verify/.eslintrc
 
     TypeScript:

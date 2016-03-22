@@ -18,7 +18,7 @@ describe('Test imported module', function () {
   beforeEach(function() {
     angular.mock.module(demoModule);
 
-    inject(function(_demoService_) {
+    angular.mock.inject(function(_demoService_) {
       demoService = _demoService_;
     });
   });

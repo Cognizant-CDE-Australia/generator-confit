@@ -147,4 +147,3 @@ function confitMsg() {
 }
 
 main();
-//console.info.apply(this, ['this is a tick \u2713']);

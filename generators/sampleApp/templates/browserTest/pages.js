@@ -1,6 +1,6 @@
 'use strict';
 
-var Page1 = function() {
+function page1() {
   var page = {
     get: function() {
       browser.get('/');
@@ -18,10 +18,10 @@ var Page1 = function() {
     }
   };
   return page;
-};
+}
 
 
-var Page2 = function() {
+function page2() {
   var page = {
     get: function() {
       browser.get('/page2');
@@ -38,6 +38,6 @@ var Page2 = function() {
 
 
 module.exports = {
-  Page1: Page1,
-  Page2: Page2
+  Page1: page1,
+  Page2: page2
 };

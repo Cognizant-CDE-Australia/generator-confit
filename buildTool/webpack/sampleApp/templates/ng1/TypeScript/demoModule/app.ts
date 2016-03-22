@@ -23,8 +23,8 @@ app.config(['$routeProvider',
   }]);
 
 
-app.run(['$rootScope', 'demoService', function ($rootScope, demoService) {
-  $rootScope.$on('$routeChangeStart', function (event, next) {
+app.run(['$rootScope', 'demoService', function($rootScope, demoService) {
+  $rootScope.$on('$routeChangeStart', function(event, next) {
     demoService.demo(next.originalPath);
   });
 }]);

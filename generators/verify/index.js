@@ -71,7 +71,7 @@ module.exports = confitGen.create({
     var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
 
     allTemplateFiles.forEach(templateFile => {
-      this.fs.copyTpl(
+      this.updateTextFile(
         this.templatePath(templateFile.src),
         this.destinationPath(templateFile.dest.replace('(configDir)', outputDir)),
         _.merge({}, config, {demoModuleDir: demoModuleDir})

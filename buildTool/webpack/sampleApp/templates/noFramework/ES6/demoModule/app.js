@@ -3,7 +3,7 @@
 import demoModule from './demoModule';
 
 // Require the CSS file explicitly (or it could be defined as an entry-point too.
-<% $CSSEntryPoints.forEach(function (file) { -%>
+<% $CSSEntryPoints.forEach(function(file) { -%>
 require('./<%= file %>');
 <% }); -%>
 
@@ -15,6 +15,6 @@ window.page1 = require('./template/page1.html');
 window.page2 = require('./template/page2.html');
 
 // Go to the first page once the window has loaded (we use a custom event here so that we don't try to do this within a test window)
-window.addEventListener('customBootEvent', function () {
+window.addEventListener('customBootEvent', function() {
   demoModule.gotoPage('page1');
 });

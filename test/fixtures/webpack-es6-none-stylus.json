@@ -74,7 +74,7 @@
     "testBrowser": {},
     "verify": {
       "jsCodingStandard": "Google",
-      "_version": "28bdde56c7f2f86bb419442c6ec6ebfc503f4a45"
+      "_version": "9ecb0d40688a5dd4c56404f8c1e647e1ec86f934"
     },
     "sampleApp": {
       "createSampleApp": true,
