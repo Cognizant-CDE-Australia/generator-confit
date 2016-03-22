@@ -6,6 +6,7 @@ env:
   browser: true
   commonjs: true    # For Webpack, CommonJS
   protractor: true
+  <% if (buildJS.sourceFormat === 'ES6') { -%>es6: true <% } %>
 
 confit-globals: &confit-globals
 <%
