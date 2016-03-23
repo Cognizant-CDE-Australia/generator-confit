@@ -254,12 +254,12 @@ readme:
   RM_HEADING: '# <%- name %>'
   RM_DESCRIPTION: '> <%- description %>'
   RM_INSTALL: |
-    ##Install
+    ## Install
 
         npm install <%- name %>
 
   RM_DEVELOPMENT_TASKS: |
-    ##Development Tasks
+    ## Development Tasks
 
     Command | Description
     :------ | :----------
@@ -271,7 +271,7 @@ readme:
     <% }); %>
 
   RM_CHANGING_BUILD_TOOL_CONFIG: |
-    ##Changing build-tool configuration
+    ## Changing build-tool configuration
 
     There are 3 ways you can change the build-tool configuration for this project:
 
