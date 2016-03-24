@@ -184,7 +184,7 @@ testUnit:
       features:
 
     - name: test:unit:debug
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.debug.conf.js']
+      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.debug.conf.js']
       description: Run unit tests in a browser to make debugging easier
       features:
         - no code coverage to make it easier to read source code
