@@ -14,7 +14,9 @@ config.module.loaders.push({
   query: {
     // https://github.com/babel/babel-loader#options
     cacheDirectory: true,
-    presets: ['es2015']
+    presets: ['es2015'],
+    // Generate the "default" export when using Babel 6: http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default
+    plugins: ['add-module-exports']
   }
 });<%
 }

@@ -44,6 +44,10 @@ $packages:
     name: babel-preset-es2015
     version: 6.3.13
 
+  - &pkg_babel-plugin-add-module-exports
+    name: babel-plugin-add-module-exports
+    version: 0.1.2
+
   - &pkg_babel-runtime
     name: babel-runtime
     version: 6.3.19
