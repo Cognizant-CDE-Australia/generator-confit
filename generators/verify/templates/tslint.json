@@ -6,7 +6,7 @@
     "indent": "spaces",
     "max-line-length": [
       true,
-      100
+      200
     ],
     "member-ordering": [
       true,

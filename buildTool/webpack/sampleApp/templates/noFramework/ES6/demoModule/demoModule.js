@@ -1,24 +1,31 @@
 'use strict';
 
+let win = window;
+win.onpopstate = stateChangeHandler;
+
+let demoModule = {
+  gotoPage: gotoPage,
+  setWindow: function(newWin) {   // Allow the window object to be mocked
+    win = newWin;
+    win.onpopstate = stateChangeHandler;
+  }
+};
+
 // Basic routing functions, in the absence of a "proper" router
 function gotoPage(pageName, addToHistory) {
   // TODO: Use config paths here instead of 'modules/demoModule'
-  window.document.getElementById('content').innerHTML = window[pageName.replace('#/', '')];
+  win.document.getElementById('content').innerHTML = win[pageName.replace('#/', '')];
   if (addToHistory !== false) {
     var title = pageName;
     var url = '#/' + pageName;
-    window.history.pushState({ isPushState: true, url: url }, title, url);
+    win.history.pushState({ isPushState: true, url: url }, title, url);
   }
 }
 
-window.onpopstate = function (event) {
+function stateChangeHandler(event) {
   if (event.state && event.state.isPushState) {
-    gotoPage(event.state.url, false);
+    demoModule.gotoPage(event.state.url, false);
   }
 };
 
-export default {
-  gotoPage: gotoPage
-};
-
-
+export default demoModule;

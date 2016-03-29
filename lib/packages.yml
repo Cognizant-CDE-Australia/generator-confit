@@ -144,9 +144,13 @@ $packages:
     name: html-webpack-plugin
     version: 2.7.1
 
+  - &pkg_isparta-instrumenter-loader    # Works with ES5/ES6 as a preloader, and Typescript as a post-loader
+    name: isparta-instrumenter-loader
+    version: 1.0.0
+
   - &pkg_istanbul-instrumenter-loader
     name: istanbul-instrumenter-loader
-    version: 0.1.3
+    version: 0.2.0
 
   - &pkg_jasmine-core
     name: jasmine-core

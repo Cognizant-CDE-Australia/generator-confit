@@ -52,7 +52,6 @@ var karmaConfig = {
   ],
 
   preprocessors: {
-    '<%- paths.input.modulesDir %>/**/*.(<%= jsExtensions.join('|') %>)': ['coverage'],
     '<%- paths.config.configDir %>testUnit/test.files.js': ['webpack']
   },
 
@@ -74,16 +73,26 @@ var karmaConfig = {
     outputDir: '<%- paths.output.reportDir %>unit/'
   },
 
+<%
+// If the code is ES5 or ES6, we can use the instrumenter as a pre-loader, to instument the original source code
+// (which isparta understands).
+// For Typescript, there is no code coverage tool that understands TypeScript's source. So use a post-loader
+// to instrument the transpiled source code. This is less than ideal, but we are waiting for the tools to arrive
+
+var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceFormat];
+%>
+
   webpack: {
     module: {
-      postLoaders: [
-        // instrument only testing sources with Istanbul
+      <%= testUnitSourceFormatConfig.loaderType %>: [
+        // instrument only testing sources
         {
           test: <%= srcFileRegEx.toString() %>,
-          loader: 'istanbul-instrumenter-loader',
+          loader: '<%= testUnitSourceFormatConfig.loaderName %>',
           exclude: [
             /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/
-          ]
+          ]<% if (testUnitSourceFormatConfig.query) { %>,
+          query: <%- JSON.stringify(testUnitSourceFormatConfig.query, null, '  ').replace(/"/g, '\'') %><% } %>
         }
       ],
       loaders: webpackConfig.module.loaders

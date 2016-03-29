@@ -8,8 +8,8 @@ var commonConfig = require('./karma.common.js');
 function getConfitConfig(config) {
 
   // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
-  commonConfig.webpack.module.postLoaders = commonConfig.webpack.module.postLoaders.filter(function (loader) {
-    return (loader.loader.indexOf('istanbul-instrumenter-loader') === -1);
+  commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %> = commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %>.filter(function (loader) {
+    return (loader.loader.indexOf('<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderName %>') === -1);
   });
 
   // QUIRK: karma-webpack

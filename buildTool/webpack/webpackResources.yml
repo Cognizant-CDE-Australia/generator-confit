@@ -147,6 +147,29 @@ sampleApp:
 serverDev: {}
 
 testUnit:
+  # Use differet coverage loaders for TypeScript as there currently isn't a loader that understands TypeScript natively?
+  sourceFormat:
+    ES5:
+      loaderType: preLoaders
+      loaderName: isparta-instrumenter-loader
+      packages:
+        - <<: *pkg_isparta-instrumenter-loader
+
+    ES6:
+      loaderType: preLoaders
+      loaderName: isparta-instrumenter-loader
+      query:
+        babel:
+          presets: ['es2015']
+      packages:
+        - <<: *pkg_isparta-instrumenter-loader
+
+    TypeScript:
+      loaderType: postLoaders
+      loaderName: istanbul-instrumenter-loader
+      packages:
+        - <<: *pkg_istanbul-instrumenter-loader
+
   packages:
     - <<: *pkg_karma
     - <<: *pkg_karma-chrome-launcher
@@ -162,7 +185,6 @@ testUnit:
     - <<: *pkg_jasmine-core
     - <<: *pkg_phantomjs
     - <<: *pkg_phantomjs-polyfill
-    - <<: *pkg_istanbul-instrumenter-loader
 
   tasks:
     - name: test

@@ -18,7 +18,7 @@ import demoModule from './demoModule';
 // Go to the first page once the window has loaded (we use a custom event here so
 // that we don't try to do this within a test window)
 window.addEventListener('customBootEvent', function () {
-  demoModule.gotoPage('page1');
+  demoModule.gotoPage('page1', true);
 });
 
 export default 'app'; // Dummy export, needed to satisfy unit tests

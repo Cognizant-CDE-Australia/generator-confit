@@ -12,6 +12,12 @@ module.exports = function() {
     this.addNpmTasks(toolResources.tasks);
     this.ts.addTypeLibsFromArray(toolResources.typeLibs);
 
+    // Add the packages which are dependent on the JS sourceFormat
+    var sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
+    var sourceFormatDependencies = toolResources.sourceFormat[sourceFormat].packages;
+    this.setNpmDevDependenciesFromArray(sourceFormatDependencies);
+
+
     // Merge all-the-things into a data object for use by our templates
     var config = _.merge({}, this.getGlobalConfig(), {
       buildTool: this.buildTool.getResources(),
