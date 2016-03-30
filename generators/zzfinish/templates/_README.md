@@ -17,10 +17,6 @@
 
 <!--[]-->
 
-<!--[RM_BUILD_TOOL_FEATURES]-->
-<%- RM_BUILD_TOOL_FEATURES %>
-
-<!--[]-->
 
 <!--[RM_CHANGING_BUILD_TOOL_CONFIG]-->
 <%- RM_CHANGING_BUILD_TOOL_CONFIG %>

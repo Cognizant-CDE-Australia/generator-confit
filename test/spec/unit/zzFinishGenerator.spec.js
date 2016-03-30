@@ -34,7 +34,6 @@ describe('zzFinish Generator', function () {
         assert.notEqual(readmeText.indexOf('> desc'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_INSTALL]-->'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_DEVELOPMENT_TASKS]-->'), -1);
-        assert.notEqual(readmeText.indexOf('<!--[RM_BUILD_TOOL_FEATURES]-->'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_CHANGING_BUILD_TOOL_CONFIG]-->'), -1);
         done();
       }

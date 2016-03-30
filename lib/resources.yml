@@ -289,14 +289,6 @@ readme:
 
     <% }); %>
 
-  RM_BUILD_TOOL_FEATURES: |
-    ## Build Tool Features
-
-    *Coming soon*
-    <% objectValues(readme.buildToolFeature).forEach(function(value) {
-    %>- <%- value -%>
-    <% }); %>
-
 
 #    - name: semantic-release
 #      tasks: ['semantic-release pre', 'npm publish', 'semantic-release post']
