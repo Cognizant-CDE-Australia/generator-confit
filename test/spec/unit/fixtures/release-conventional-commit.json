@@ -1,0 +1,12 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Latest"
+    },
+    "paths": {
+      "config": {
+        "configDir": "config/"
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ app:
     - confit:testUnit
     - confit:testBrowser
     - confit:verify
+    - confit:release
     - confit:sampleApp
     - confit:zzfinish
 
@@ -295,6 +296,12 @@ readme:
     <% objectValues(readme.buildToolFeature).forEach(function(value) {
     %>- <%- value -%>
     <% }); %>
+
+
+#    - name: semantic-release
+#      tasks: ['semantic-release pre', 'npm publish', 'semantic-release post']
+#      description: Called by Travis CI to semantically-release the NPM module,
+#      features: []
 
 # Sample App
 sampleApp:

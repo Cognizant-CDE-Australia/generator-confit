@@ -58,6 +58,7 @@ function install(resolve, reject) {
         path.join(__dirname, '../generators/buildJS'),
         path.join(__dirname, '../generators/entryPoint'),
         path.join(__dirname, '../generators/paths'),
+        path.join(__dirname, '../generators/release'),
         path.join(__dirname, '../generators/sampleApp'),
         path.join(__dirname, '../generators/serverDev'),
         path.join(__dirname, '../generators/serverProd'),

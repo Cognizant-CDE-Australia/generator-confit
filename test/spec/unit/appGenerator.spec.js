@@ -24,6 +24,7 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:buildJS'],
     [helpers.createDummyGenerator(), 'confit:entryPoint'],
     [helpers.createDummyGenerator(), 'confit:paths'],
+    [helpers.createDummyGenerator(), 'confit:release'],
     [helpers.createDummyGenerator(), 'confit:sampleApp'],
     [helpers.createDummyGenerator(), 'confit:serverDev'],
     [helpers.createDummyGenerator(), 'confit:serverProd'],

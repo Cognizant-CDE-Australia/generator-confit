@@ -10,7 +10,7 @@
     "buildJS": "webpack",
     "entryPoint": "webpack",
     "paths": "",
-    "release": "grunt",
+    "release": "npm",
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "grunt",

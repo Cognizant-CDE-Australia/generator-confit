@@ -52,9 +52,22 @@ $packages:
     name: babel-runtime
     version: 6.3.19
 
+  - &pkg_commitizen
+    name: commitizen
+    version: 2.7.3
+    global: true
+
+  - &pkg_corp-semantic-release
+    name: corp-semantic-release
+    version: 1.1.1
+
   - &pkg_css-loader
     name: css-loader
     version: 0.23.1
+
+  - &pkg_cz-customizable
+    name: cz-customizable
+    version: 3.1.0
 
   - &pkg_es6-shim
     name: es6-shim
@@ -255,6 +268,11 @@ $packages:
   - &pkg_sass-loader
     name: sass-loader
     version: 3.1.2
+
+  - &pkg_semantic-release-cli
+    name: semantic-release-cli
+    version: 1.4.1
+    global: true
 
   - &pkg_style-loader
     name: style-loader

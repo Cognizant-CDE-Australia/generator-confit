@@ -1,0 +1,78 @@
+release:
+  commitMessageFormat:
+    Conventional:
+      packages:
+        - <<: *pkg_cz-customizable
+
+      npmConfig:
+        - commitizen:
+            path: node_modules/cz-customizable
+        - cz-customizable:
+            config: <%= paths.config.configDir %>release/commitMessageConfig.js
+
+      templateFiles:
+        - src: commitMessageConfig.js
+          dest: <%= paths.config.configDir %>release/commitMessageConfig.js
+          overwrite: false
+
+      onInstall:
+        - <<: *pkg_commitizen
+
+    None:
+      packages: []
+
+
+  repositoryType:
+    GitHub:
+      semantic:
+        packages: []
+
+        tasks:
+          - name: release
+            tasks: ['build', 'verify', 'test:unit:once']
+            description: |
+              Create production version of software, verify code, run unit tests. This task is designed to be run before
+              the `semantic-release` task.
+            features:
+              - Requires Node 4.x (`semantic-release-cli` will not work on Node 5.x as of March 2015)
+              - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details
+              - Generates release notes against each release in the "Releases" section in GitHub
+              - Publishes package to NPM
+              - Integrates with Travis CI
+
+        onInstall:
+          - <<: *pkg_semantic-release-cli
+
+      manual:
+        tasks:
+          - name: release
+            tasks: ['build', 'verify', 'test:unit:once']
+            description: Create production version of software, verify code, run unit tests.
+            features:
+              - Define another script-task called `postrelease` to define the rest of your release process
+
+    Other:
+      semantic:
+        packages:
+          - <<: *pkg_corp-semantic-release
+
+        tasks:
+          - name: semantic-release
+            tasks: ['corp-semantic-release']
+
+          - name: release
+            tasks: ['build', 'verify', 'test:unit:once', 'semantic-release']
+            description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
+            features:
+              - Generates `CHANGELOG.md`
+              - Bumps `package.json`
+              - Tags the changes with the release
+              - Requires conventional commit messages to be used
+
+      manual:
+        tasks:
+          - name: release
+            tasks: ['build', 'verify', 'test:unit:once']
+            description: Create production version of software, verify code, run unit tests.
+            features:
+              - Define another script-task called `postrelease` to define the rest of your release process

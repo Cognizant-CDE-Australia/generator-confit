@@ -80,6 +80,11 @@
       "jsCodingStandard": "TypeScript",
       "_version": "9ecb0d40688a5dd4c56404f8c1e647e1ec86f934"
     },
+    "release": {
+      "repositoryType": "Other",
+      "useSemantic": false,
+      "commitMessageFormat": "Conventional"
+    },
     "sampleApp": {
       "createSampleApp": true,
       "_version": "783cb1167748d185bdb6faed3b86f83a6b49cbc9"

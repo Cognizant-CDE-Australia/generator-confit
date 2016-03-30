@@ -67,7 +67,7 @@
   "devDependencies": {
     "async": "1.5.2",
     "commitizen": "2.5.0",
-    "cz-conventional-changelog": "1.1.5",
+    "cz-customizable": "3.1.0",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "fs-extra": "0.26.3",
@@ -88,7 +88,10 @@
       "commit-msg": "validate-commit-msg"
     },
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/release/commitMessageConfig.js"
     }
   }
 }
