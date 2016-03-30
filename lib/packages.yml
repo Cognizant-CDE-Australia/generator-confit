@@ -59,7 +59,7 @@ $packages:
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
-    version: 1.1.1
+    version: 1.1.2
 
   - &pkg_css-loader
     name: css-loader
