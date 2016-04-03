@@ -10,7 +10,8 @@ module.exports = confitGen.create({
 
   writing: function() {
     this.buildTool.write.apply(this);
-    this.generateReadmeFile();
+    this.generateMarkdownFile(this.templatePath('_README.md'), this.destinationPath('README.md'));
+    this.generateMarkdownFile(this.templatePath('_CONTRIBUTING.md'), this.destinationPath('CONTRIBUTING.md'));
   },
 
   install: function() {

@@ -33,8 +33,30 @@ describe('zzFinish Generator', function () {
         assert.notEqual(readmeText.indexOf('<!--[RM_DESCRIPTION]-->'), -1);
         assert.notEqual(readmeText.indexOf('> desc'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_INSTALL]-->'), -1);
-        assert.notEqual(readmeText.indexOf('<!--[RM_DEVELOPMENT_TASKS]-->'), -1);
-        assert.notEqual(readmeText.indexOf('<!--[RM_CHANGING_BUILD_TOOL_CONFIG]-->'), -1);
+        done();
+      }
+    );
+  });
+
+  it('should generate a CONTRIBUTING.md file with the appropriate sections and content', function(done) {
+    utils.runGenerator(
+      GENERATOR_UNDER_TEST,
+      'zzFinish-config.json',
+      function before(testDir) {
+        yoassert.noFile(['CONTRIBUTING.md']);
+
+        // Create a package.json file as the generator expects it will exist
+        fs.writeJsonSync(testDir + '/package.json', {
+          name: 'some-name',
+          description: 'desc'
+        });
+        yoassert.file(['package.json']);
+      },
+      function after() {
+        yoassert.file(['CONTRIBUTING.md']);
+
+        var readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
+        assert.notEqual(readmeText.indexOf('<!--[CN_HEADING]-->'), -1);
         done();
       }
     );

@@ -1,4 +1,9 @@
 testBrowser:
+  unsupported:
+    - criteria:
+        buildJS.framework[0]: AngularJS 2.x
+      message: '**Unsupported** Angular2 does not yet support Protractor via Firefox. See https://github.com/angular/zone.js/issues/234#issuecomment-189115330'
+
   packages:
     - <<: *pkg_protractor
     - <<: *pkg_jasmine-reporters
@@ -14,11 +19,11 @@ testBrowser:
       version: github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#64b25f63f0ec821040a5d3e049a976865062ed9d
 
   readme:
-    extensionPoint: >
-      `npm test:browser` can be extended by modifying <%= link(paths.config.configDir + 'testBrowser/protractor.conf.js') %>.
-      This task uses Protractor to run Jasmine2 test specs (located in `<%= paths.input.modulesDir %>**/<%= paths.input.browserTestDir %>`)
-      against the development web server URL.
-
+    extensionPoint:
+      testBrowser: >
+        `npm run test:browser` can be extended by modifying <%= link(paths.config.configDir + 'testBrowser/protractor.conf.js') %>.
+        This task uses Protractor to run Jasmine2 test specs (located in `<%= paths.input.modulesDir %>**/<%= paths.input.browserTestDir %>`)
+        against the development web server URL.
 
   tasks:
     - name: test:browser
@@ -26,9 +31,7 @@ testBrowser:
       description: Run browser tests against the *development* web server (the development server **must** be running)
       features:
 
-  unsupported:
-    - criteria:
-        buildJS.framework[0]: AngularJS 2.x
-      message: '**Unsupported** Angular2 does not yet support Protractor via Firefox. See https://github.com/angular/zone.js/issues/234#issuecomment-189115330'
-
-
+  templateFiles:
+    - src: protractor.conf.js.tpl
+      dest: <%= paths.config.configDir %>testBrowser/protractor.conf.js
+      overwrite: true

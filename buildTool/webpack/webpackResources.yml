@@ -1,8 +1,9 @@
 # app
 build:
-  packages: # TODO: Not sure if these should be here, or in zzfinish?
+  packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
+    - <<: *pkg_lodash   # Used by the webpack-dev-server
 
   tasks:
     - name: build:dev
@@ -140,9 +141,6 @@ sampleApp:
         vendorScripts: []
         typeLibs: []
         sourceFormat: {}
-
-  packages:
-    - <<: *pkg_lodash
 
 serverDev: {}
 

@@ -6,7 +6,7 @@
         "latest",
         "latest2"
       ],
-      "_version": "12dc4368d8bdd36283e805604d937de84e6a614e"
+      "_version": "a98f0ef5206822734da9753dfe7f187b5f8f923e"
     },
     "paths": {
       "input": {
@@ -57,7 +57,7 @@
         "angular2/router",
         "angular2/platform/browser"
       ],
-      "_version": "becc02ddff160b3916f974a151419be4f9de63ee"
+      "_version": "4247c81f6b3f395dd20704f1b8eb499072caa9c0"
     },
     "buildHTML": {
       "extension": ".html",
@@ -92,7 +92,8 @@
     "release": {
       "repositoryType": "Other",
       "useSemantic": false,
-      "commitMessageFormat": "Conventional"
+      "commitMessageFormat": "Conventional",
+      "_version": "87b67f78321f96a671d403022c9ccb729b90b277"
     },
     "sampleApp": {
       "createSampleApp": true,

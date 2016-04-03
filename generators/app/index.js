@@ -148,6 +148,9 @@ module.exports = confitGen.create({
 
     // Build-tool specific files
     this.buildTool.write.apply(this);
+
+    // Run finalisation for all the used buildTools
+    this.buildTool.finalizeAll.call(this);
   },
 
   install: function () {

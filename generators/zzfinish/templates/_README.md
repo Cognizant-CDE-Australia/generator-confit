@@ -12,14 +12,7 @@
 
 <!--[]-->
 
-<!--[RM_DEVELOPMENT_TASKS]-->
-<%- RM_DEVELOPMENT_TASKS %>
+<!--[RM_CONTRIBUTING]-->
+<%= RM_CONTRIBUTING %>
 
 <!--[]-->
-
-
-<!--[RM_CHANGING_BUILD_TOOL_CONFIG]-->
-<%- RM_CHANGING_BUILD_TOOL_CONFIG %>
-
-<!--[]-->
-

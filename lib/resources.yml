@@ -259,19 +259,92 @@ readme:
 
         npm install <%- name %>
 
-  RM_DEVELOPMENT_TASKS: |
-    ## Development Tasks
+  RM_CONTRIBUTING: |
+    ## Contributing
+
+    See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+#  CN_ALL_TASKS: |
+#    ## All Tasks
+#
+#    Command | Description
+#    :------ | :----------
+#    <% objectValues(readme.buildTask).forEach(function(value) {
+#    %><pre><%- value.command %></pre> | <%- value.description %><%
+#      if (value.features && value.features.length) {
+#        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+#      } %>
+#    <% }); %>
+
+  CN_BUILD_TASKS: |
+    ## Build Tasks
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask).forEach(function(value) {
+    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
     <% }); %>
 
-  RM_CHANGING_BUILD_TOOL_CONFIG: |
+
+  CN_COMMIT_TASKS: |
+    ## Commit Tasks
+
+    Command | Description
+    :------ | :----------
+    <pre>git status</pre> | Lists the current branch and the status of changed files
+    <pre>git log</pre> | Displays the commit log (press Q to quit viewing)
+    <pre>git add .</pre> | Stages all modified & untracked files, ready to be committed
+    <% objectValues(readme.buildTask.commit).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); -%>
+    <pre>git push</pre> | Push local repository changes to remote repository
+
+
+  CN_RELEASE_TASKS: |
+    ## Release Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.release).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+  CN_TEST_TASKS: |
+    ## Test Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_VERIFY_TASKS: |
+    ## Verification (Linting) Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.verify).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_CHANGING_BUILD_TOOL_CONFIG: |
     ## Changing build-tool configuration
 
     There are 3 ways you can change the build-tool configuration for this project:
@@ -289,6 +362,10 @@ readme:
 
     <% }); %>
 
+  CN_HEADING: |
+    # Contributing
+
+    Welcome! Thanks for taking some time to find out more about how you can make **<%- name %>** even better.
 
 #    - name: semantic-release
 #      tasks: ['semantic-release pre', 'npm publish', 'semantic-release post']

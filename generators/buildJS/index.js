@@ -136,7 +136,6 @@ module.exports = confitGen.create({
 
       // If the new framework is "react" and the user already had a "react" vendor script, we could still get a duplicate. So call uniq().
       this.answers.vendorScripts = _.uniq(activeFrameworkScripts.concat(vendorScripts));
-
       this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
     }
