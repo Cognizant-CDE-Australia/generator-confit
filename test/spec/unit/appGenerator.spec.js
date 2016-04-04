@@ -40,7 +40,9 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
 
 describe('App Generator', function () {
 
-  it('should create a confit.json, .editorConfig and package.json file when they do not exist', function(done) {
+  it('should be a dummy test', () => {});
+
+  it('should create an .editorConfig and package.json file when they do not exist', function(done) {
     var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
     runGenerator('app-config.json',
       function beforeTest() {

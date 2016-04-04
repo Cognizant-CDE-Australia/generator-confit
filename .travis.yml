@@ -23,9 +23,10 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start
   - npm install --quiet -g yo
-  - npm install
+  - npm install --verbose
 
 script:
+  - npm run test:unit
   - npm test
 
 after_success:
