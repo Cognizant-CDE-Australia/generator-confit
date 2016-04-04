@@ -73,7 +73,7 @@ app:
       features:
 
   templateFiles:
-    - src: editorConfig
+    - src: editorconfig
       dest: .editorconfig
       overwrite: false
 

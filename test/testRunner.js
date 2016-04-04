@@ -25,6 +25,7 @@ const BLACK_END = chalk.styles.bgBlack.close;
 const TICK = chalk.green('\u2713');
 const CROSS = chalk.red('x');
 
+const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
 
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
@@ -67,7 +68,8 @@ function main() {
       FIXTURE: fixture,
       FIXTURE_DIR: fixtureDir,
       TEST_DIR: testDir,
-      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR
+      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR,
+      MAX_LOG: MAX_LOG
     });
   }
 
@@ -77,7 +79,8 @@ function main() {
       FIXTURE: fixture,
       FIXTURE_DIR: fixtureDir,
       TEST_DIR: testDir,
-      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR
+      SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR,
+      MAX_LOG: MAX_LOG
     });
   }
 

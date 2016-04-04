@@ -38,8 +38,8 @@
     "commit": "git-cz",
     "updateFixtures": "node lib/updateFixtures.js",
     "test": "npm run updateFixtures && npm run test:unit && npm run test:seq",
-    "test:seq": "node test/testRunner.js --sequence",
-    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js",
+    "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
+    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js --MAX_LOG=true",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [

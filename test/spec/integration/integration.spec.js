@@ -7,7 +7,9 @@ var fs = require('fs');
 
 describe('test "' + fixtureFileName + '"', function () {
   //console.info(require(testDir + 'package.json'));
-  fs.readdirSync(testDir).forEach(file => console.log(file));
+  if (process.env.MAX_LOG) {
+    fs.readdirSync(testDir).forEach(file => console.log(file));
+  }
   // The actual tests...
   require('./testDev')(confitConfig);
   require('./testBuildServe')(confitConfig);

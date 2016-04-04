@@ -3,6 +3,7 @@
 const path = require('path');
 const helpers = require('yeoman-test');
 const fs = require('fs-extra');
+const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
 
 module.exports = {
   noop: function() {},
@@ -20,7 +21,9 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
         if (confitFixture) {
           fs.copySync(path.join(__dirname, 'fixtures/', confitFixture), path.join(dir, 'confit.json'));
         }
-        console.log('testdir', dir);
+        if (MAX_LOG) {
+          console.log('testdir', dir);
+        }
         testDir = dir;
         beforeTestCb(testDir);
       })
@@ -31,13 +34,18 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
         skipRun: true
       })
       .on('ready', function() {
-        console.log('generator ready');
+        if (MAX_LOG) {
+          console.log('generator ready');
+        }
       })
-      .on('error', function() {
-        console.error('generator error', arguments);
+      .on('error', function(err) {
+        console.error('generator error', err);
+        assert.ifError(err);
       })
       .on('end', function() {
-        console.error('generator end');
+        if (MAX_LOG) {
+          console.error('generator end');
+        }
         assertionCb(testDir);
       });
   } catch (e) {

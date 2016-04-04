@@ -30,8 +30,8 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - npm run test:unit
-  #- npm test
+#  - npm run test:unit
+  - npm test
 
 after_success:
   - npm run semantic-release
