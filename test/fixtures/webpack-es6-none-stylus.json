@@ -45,7 +45,7 @@
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "ce752bb321538a36a166082c623de93e47b9c347"
+      "_version": "f2cb2d011e826f51454bfe3f16bd5e0954489246"
     },
     "buildHTML": {
       "extension": ".html",

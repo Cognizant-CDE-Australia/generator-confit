@@ -128,10 +128,6 @@ buildJS:
           dest: tsconfig.json
           overwrite: true
 
-        - src: typings.json
-          dest: typings.json
-          overwrite: true
-
       tasks:
         - name: typingsInstall
           tasks: ['typings install']
@@ -190,9 +186,9 @@ buildJS:
           key: ambientDependencies
           version: github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c
 
-        - name: zone.js
+        - name: zone
           key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts#c393f8974d44840a6c9cc6d5b5c0188a8f05143d
+          version: github:DefinitelyTyped/DefinitelyTyped/zone/zone.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9
 
       testPackages:
         - <<: *pkg_es6-shim
@@ -402,9 +398,8 @@ sampleApp:
         - src: css/app.css
           dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
           overwrite: true
-
         - src: css/iconFont.css
-          dest: iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
           overwrite: true
 
     sass:
