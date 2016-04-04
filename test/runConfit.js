@@ -88,6 +88,7 @@ function install(resolve, reject) {
 
   } catch(err) {
     process.chdir(previousCWD);
+    console.log(err);
     reject(err);
   }
 }
