@@ -22,7 +22,7 @@ module.exports = confitGen.create({
 
     this.log(chalk.underline.bold.green('Project Path Generator'));
 
-    defaultPaths = _.merge({}, this.getResources().path.defaults, this.getConfig());
+    defaultPaths = _.merge({}, this.getResources().paths.defaults, this.getConfig());
 
     var done = this.async();
 
@@ -205,9 +205,8 @@ module.exports = confitGen.create({
 
 
   writing: function () {
-    // Don't overwrite an existing gitignore - that would be bad manners.
-    var config = this.getGlobalConfig();
-    this.copyIfNotExist(this.templatePath('gitignore'), this.destinationPath('.gitignore'), config);
+    let resources = this.getResources().paths;
+    this.writeGeneratorConfig(resources);
 
     // Defer the actual writing to the build-tool-choice the user has made
     this.buildTool.write.apply(this);

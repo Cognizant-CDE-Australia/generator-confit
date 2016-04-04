@@ -10,10 +10,6 @@ init:
       dest: Gruntfile.js
       overwrite: true
 
-  onEnd:
-    - cmd: grunt
-      args: ['dev', '--url=index.html']
-
 serverDev:
   packages:
     - <<: *pkg_grunt-contrib-watch
@@ -107,3 +103,8 @@ verify:
       tasks: ['grunt watch:verify']
       description: Runs verify task whenever JS or CSS code is changed
       features: []
+
+zzfinish:
+  onEnd:
+    - cmd: grunt
+      args: ['dev', '--url=index.html']

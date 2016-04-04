@@ -77,6 +77,9 @@ app:
       dest: .editorconfig
       overwrite: false
 
+build: {}
+
+buildAssets: {}
 
 # CSS configuration
 buildCSS:
@@ -84,38 +87,22 @@ buildCSS:
   sourceFormat:
     css:
       ext: ['css']
-      entryPointFiles:
-        - src: css/app.css
-          dest: app.css
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
     sass:
       ext: ['sass', 'scss']
-      entryPointFiles:
-        - src: css/app.sass
-          dest: app.sass
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
     stylus:
       ext: ['styl']
-      entryPointFiles:
-        - src: css/app.styl
-          dest: app.styl
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
+buildHTML: {}
 
 buildJS:
   readme:
-    extensionPoint: >
-      The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
-      This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
+    extensionPoint:
+      buildJS: >
+        The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
+        This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
+        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
 
   sourceFormat:
     ES5:
@@ -136,9 +123,14 @@ buildJS:
         - <<: *pkg_typescript
         - <<: *pkg_typings
 
-      templates:
+      templateFiles:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
+          overwrite: true
+
+        - src: typings.json
+          dest: typings.json
+          overwrite: true
 
       tasks:
         - name: typingsInstall
@@ -146,8 +138,8 @@ buildJS:
           description: ''
 
       onInstall:
-        cmd: npm
-        args: ['run', 'typingsInstall']
+        - cmd: npm
+          args: ['run', 'typingsInstall']
 
   sourceFormatDefault: ES6
 
@@ -221,15 +213,16 @@ buildJS:
 
 entryPoint:
   readme:
-    extensionPoint: >
-      The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
-      It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
-      one entry point, but it is possible to have more than one.
-      `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
-      of NPM module names and/or references to JavaScript files (file references must start with `./`);
+    extensionPoint:
+      entryPoint: >
+        The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
+        It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
+        one entry point, but it is possible to have more than one.
+        `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
+        of NPM module names and/or references to JavaScript files (file references must start with `./`);
 
 # Path Defaults
-path:
+paths:
   defaults:
     input:
       srcDir: src/
@@ -253,6 +246,11 @@ path:
     config:
       configDir: config/
       tempDir: .tmp/
+
+  templateFiles:
+    - src: gitignore
+      dest: .gitignore
+      overwrite: false
 
 # README section for the template tags that will appear inside the README.md template
 readme:
@@ -376,6 +374,8 @@ readme:
 #      description: Called by Travis CI to semantically-release the NPM module,
 #      features: []
 
+release: {}
+
 # Sample App
 sampleApp:
   demoModuleDir: demoModule/
@@ -383,6 +383,49 @@ sampleApp:
     ES5: 'app.js'
     ES6: 'app.js'
     TypeScript: 'app.ts'
+
+  templateFiles:
+    - src: assets/**/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
+      overwrite: true
+      type: binary
+
+    - src: browserTest/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
+      overwrite: true
+      type: binary
+
+  cssSourceFormat:
+    css:
+      entryPointFileName: app.css
+      templateFiles:
+        - src: css/app.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
+          overwrite: true
+
+        - src: css/iconFont.css
+          dest: iconFont.css
+          overwrite: true
+
+    sass:
+      entryPointFileName: app.sass
+      templateFiles:
+        - src: css/app.sass
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+    stylus:
+      entryPointFileName: app.styl
+      templateFiles:
+        - src: css/app.styl
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
 
 # Server - Development
 serverDev:
@@ -397,6 +440,7 @@ serverProd:
     hostname: localhost
     protocol: https
 
+testBrowser: {}
 
 # TypeScript Utils
 TypeScriptUtils:

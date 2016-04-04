@@ -139,8 +139,9 @@ module.exports = confitGen.create({
   },
 
   writing: function() {
-    var resources = this.getResources().app;
+    let resources = this.getResources().app;
     this.writeGeneratorConfig(resources);
+    this.buildTool.write.apply(this);
 
     // Run finalisation for all the used buildTools
     this.buildTool.finalizeAll.call(this);

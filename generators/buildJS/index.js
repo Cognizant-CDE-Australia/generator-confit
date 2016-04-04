@@ -143,31 +143,21 @@ module.exports = confitGen.create({
 
   writing: function () {
     // Loop through the selected frameworks, and install the respective modules
-    var frameworks = this.getConfig('framework') || [];
-    var activeFrameworkScriptObjs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].packages));
-    var activeFrameworkTypeLibs = _.flatten(frameworks.map((framework) => frameworkScriptMap[framework].typeLibs));
-    var buildJsResources = this.getResources().buildJS;
-    var sourceFormatBuildData = buildJsResources.sourceFormat[this.getConfig('sourceFormat')];
-    var config = this.getGlobalConfig();
+    let frameworks = this.getConfig('framework');
+    let resources = this.getResources().buildJS;
 
-    // Always add dependencies - it is hard to guess correctly when to remove a framework dependency
-    this.setNpmDependenciesFromArray(activeFrameworkScriptObjs);
-    this.ts.addTypeLibsFromArray(activeFrameworkTypeLibs);
-    this.addReadmeDoc('extensionPoint.buildJSVendorScripts', buildJsResources.readme.extensionPoint);
+    // Add the global things
+    this.writeGeneratorConfig(resources);
 
-    // Install any sourceFormat related tasks & packages
-    // At the moment, this is only needed for "npm run typingsInstall"
-    this.addNpmTasks(sourceFormatBuildData.tasks);
-    this.setNpmDevDependenciesFromArray(sourceFormatBuildData.packages);
-
-    // Copy any template files related directly to the sourceFormat
-    sourceFormatBuildData.templates.forEach((file) => {
-      this.fs.copyTpl(
-        this.templatePath(file.src),
-        this.destinationPath(file.dest),
-        config
-      );
+    // Add the framework-specific things
+    (frameworks || []).forEach((framework) => {
+      let frameworkResources = resources.frameworks[framework];
+      this.writeGeneratorConfig(frameworkResources);
     });
+
+    // Add the sourceFormat-specific things
+    let sourceFormatResources = resources.sourceFormat[this.getConfig('sourceFormat')];
+    this.writeGeneratorConfig(sourceFormatResources);
 
     this.buildTool.write.apply(this);
   },
@@ -179,19 +169,5 @@ module.exports = confitGen.create({
       skipMessage: true,
       bower: false
     });
-
-    var sourceFormat = this.getConfig('sourceFormat');
-
-    // Create the typings.json file, if using TypeScript
-    if (sourceFormat === 'TypeScript') {
-      this.fs.writeJSON(this.destinationPath('typings.json'), this.ts.getTypeLibConfig());
-    }
-
-    // Run any sourceFormat-related install commands
-    var sourceFormatBuildData = this.getResources().buildJS.sourceFormat[sourceFormat];
-    if (sourceFormatBuildData.onInstall) {
-      var cmd = sourceFormatBuildData.onInstall;
-      this.runOnInstall(cmd.cmd, cmd.args);
-    }
   }
 });

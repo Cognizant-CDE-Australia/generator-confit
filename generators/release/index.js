@@ -79,6 +79,8 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
+    let resources = this.getResources().release;
+    this.writeGeneratorConfig(resources);
     this.buildTool.write.apply(this);
   },
 

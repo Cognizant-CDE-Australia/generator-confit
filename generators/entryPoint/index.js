@@ -68,7 +68,8 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
-    this.addReadmeDoc('extensionPoint.entryPoint', this.getResources().entryPoint.readme.extensionPoint);
+    let resources = this.getResources().entryPoint;
+    this.writeGeneratorConfig(resources);
     this.buildTool.write.apply(this);
   },
 
