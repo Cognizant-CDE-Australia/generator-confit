@@ -32,7 +32,7 @@ before_script:
 
 script:
   - npm run test:unit
-  - npm test
+  #- npm test
 
 after_success:
   - npm run semantic-release
