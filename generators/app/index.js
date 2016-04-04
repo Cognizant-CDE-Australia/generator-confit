@@ -119,7 +119,7 @@ module.exports = confitGen.create({
     }
 
     // Common files (independent of the build-tool) to write
-     this.copyIfNotExist(
+    this.copyIfNotExist(
       this.templatePath('_package.json'),
       this.destinationPath('package.json'),
       { name: this.appPackageName }
@@ -140,21 +140,13 @@ module.exports = confitGen.create({
 
   writing: function() {
     var resources = this.getResources().app;
-    this.addNpmTasks(resources.tasks);
-    this.setNpmDevDependenciesFromArray(resources.packages);
-
-    // Don't overwrite an existing editorConfig - that would be bad manners.
-    this.copyIfNotExist(this.templatePath('editorconfig'), this.destinationPath('.editorconfig'));
-
-    // Build-tool specific files
-    this.buildTool.write.apply(this);
+    this.writeGeneratorConfig(resources);
 
     // Run finalisation for all the used buildTools
     this.buildTool.finalizeAll.call(this);
   },
 
   install: function () {
-
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],    //--skip-install

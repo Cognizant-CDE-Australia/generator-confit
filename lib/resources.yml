@@ -22,11 +22,6 @@ app:
     - confit:release
     - confit:sampleApp
     - confit:zzfinish
-
-  packages:
-    - <<: *pkg_npm-run-all
-    - <<: *pkg_rimraf
-
   defaultSupportedBrowsers: ['latest']
   supportedBrowsers:
     latest:
@@ -41,6 +36,10 @@ app:
     legacyMobile:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']
+
+  packages:
+    - <<: *pkg_npm-run-all
+    - <<: *pkg_rimraf
 
   tasks:
     - name: start
@@ -72,6 +71,11 @@ app:
       tasks: ['rimraf <%= paths.output.prodDir %>']
       description:
       features:
+
+  templateFiles:
+    - src: editorConfig
+      dest: .editorconfig
+      overwrite: false
 
 
 # CSS configuration
