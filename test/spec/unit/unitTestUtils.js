@@ -14,12 +14,10 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
   var testDir;
 
   try {
-    console.log(arguments);
     return helpers.run(generatorName)
       .inTmpDir(function(dir) {
         // Copy the confit.json fixture here
         if (confitFixture) {
-          console.log(path.join(__dirname, 'fixtures/', confitFixture));
           fs.copySync(path.join(__dirname, 'fixtures/', confitFixture), path.join(dir, 'confit.json'));
         }
         console.log('testdir', dir);
@@ -32,7 +30,14 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
         skipInstall: true,
         skipRun: true
       })
+      .on('ready', function() {
+        console.log('generator ready');
+      })
+      .on('error', function() {
+        console.error('generator error', arguments);
+      })
       .on('end', function() {
+        console.error('generator end');
         assertionCb(testDir);
       });
   } catch (e) {
