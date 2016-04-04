@@ -121,7 +121,6 @@ buildJS:
       ext: ['ts']
       packages:
         - <<: *pkg_typescript
-        - <<: *pkg_typings
 
       templateFiles:
         - src: tsconfig.json.tpl
@@ -129,13 +128,14 @@ buildJS:
           overwrite: true
 
       tasks:
-        - name: typingsInstall
+        - name: typings:install
           tasks: ['typings install']
           description: ''
 
       onInstall:
+        - <<: *pkg_typings
         - cmd: npm
-          args: ['run', 'typingsInstall']
+          args: ['run', 'typings:install']
 
   sourceFormatDefault: ES6
 
