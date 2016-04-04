@@ -1,10 +1,11 @@
 'use strict';
 const confitGen = require('../../lib/ConfitGenerator.js');
+const _ = require('lodash');
 
 module.exports = confitGen.create({
 
   configuring: function() {
-    var testDependencies = [];
+    var testDependencies = this.getConfig().testDependencies || [];   // read existing dependencies, if they exist
 
     var frameworks = this.getGlobalConfig().buildJS.framework;
     if (frameworks.length) {
@@ -14,7 +15,7 @@ module.exports = confitGen.create({
     }
 
     this.setConfig({
-      testDependencies: testDependencies
+      testDependencies: _.uniq(testDependencies)
     });
 
     this.buildTool.configure.apply(this);
