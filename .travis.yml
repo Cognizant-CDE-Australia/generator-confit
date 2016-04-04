@@ -16,14 +16,19 @@ addons:
     packages:
       - g++-4.8
 
-before_script:
+before_install:
   - npm prune
   - npm set progress=false
+
+install:
+  - npm install --quiet -g yo
+  - npm install
+
+before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start
-  - npm install --quiet -g yo
-  - npm install --verbose
+
 
 script:
   - npm run test:unit
