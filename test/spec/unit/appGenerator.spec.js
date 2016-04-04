@@ -40,7 +40,7 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
 
 describe('App Generator', function () {
 
-  it('should be a dummy test', () => {});
+  it('should be a dummy test', (done) => done());
 
   xit('should create an .editorConfig and package.json file when they do not exist', function(done) {
     var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
@@ -61,8 +61,10 @@ describe('App Generator', function () {
       function beforeTest() {
         var confit = fs.readJsonSync('confit.json');
         assert.equal(confit['generator-confit'].app, undefined);
+        console.log('TEST: inside beforeTest()');
       },
       function afterTest() {
+        console.log('TEST: inside afterTest() 1');
         var confit = fs.readJsonSync('confit.json');
         assert.equal(typeof confit['generator-confit'].app, 'object');
         assert.equal(typeof confit['generator-confit'].app.buildProfile, 'string');
@@ -76,6 +78,7 @@ describe('App Generator', function () {
         assert(confit['generator-confit'].app.browserSupport[0].indexOf(' ') === -1, 'browserSupport is a simple key');
 
         //fs.readdirSync(testDir).forEach(file => console.log(file));
+        console.log('TEST: inside afterTest() 2');
         done();
       }
     );
