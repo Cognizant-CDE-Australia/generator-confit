@@ -62,7 +62,7 @@
     "js-yaml": "3.5.2",
     "lodash": "3.10.1",
     "lodash-deep": "1.6.0",
-    "yeoman-generator": "0.22.2"
+    "yeoman-generator": "0.22.5"
   },
   "devDependencies": {
     "async": "1.5.2",
@@ -79,8 +79,8 @@
     "protractor": "3.2.1",
     "semantic-release": "4.3.5",
     "validate-commit-msg": "1.1.0",
-    "yeoman-assert": "2.1.1",
-    "yeoman-test": "1.0.0"
+    "yeoman-assert": "2.1.2",
+    "yeoman-test": "1.1.0"
   },
   "config": {
     "ghooks": {
