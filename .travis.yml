@@ -22,7 +22,7 @@ before_install:
 
 install:
   - npm install --quiet -g yo
-  - npm install
+  - npm install --quiet
 
 before_script:
   - export DISPLAY=:99.0
@@ -30,7 +30,6 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-#  - npm run test:unit
   - npm test
 
 after_success:
