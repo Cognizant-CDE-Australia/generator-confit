@@ -5,6 +5,7 @@ var server = require('./server');
 var childProc = require('child_process');
 var tempTestDir = process.env.TEST_DIR;
 
+const SERVER_MAX_WAIT_TIME = 30000;
 
 function runBrowserTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
@@ -28,7 +29,7 @@ module.exports = function() {
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, 20000).then(function success(result) {
+      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, SERVER_MAX_WAIT_TIME).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });

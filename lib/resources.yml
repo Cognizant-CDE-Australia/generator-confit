@@ -22,11 +22,6 @@ app:
     - confit:release
     - confit:sampleApp
     - confit:zzfinish
-
-  packages:
-    - <<: *pkg_npm-run-all
-    - <<: *pkg_rimraf
-
   defaultSupportedBrowsers: ['latest']
   supportedBrowsers:
     latest:
@@ -41,6 +36,10 @@ app:
     legacyMobile:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']
+
+  packages:
+    - <<: *pkg_npm-run-all
+    - <<: *pkg_rimraf
 
   tasks:
     - name: start
@@ -73,6 +72,14 @@ app:
       description:
       features:
 
+  templateFiles:
+    - src: editorconfig
+      dest: .editorconfig
+      overwrite: false
+
+build: {}
+
+buildAssets: {}
 
 # CSS configuration
 buildCSS:
@@ -80,38 +87,22 @@ buildCSS:
   sourceFormat:
     css:
       ext: ['css']
-      entryPointFiles:
-        - src: css/app.css
-          dest: app.css
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
     sass:
       ext: ['sass', 'scss']
-      entryPointFiles:
-        - src: css/app.sass
-          dest: app.sass
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
     stylus:
       ext: ['styl']
-      entryPointFiles:
-        - src: css/app.styl
-          dest: app.styl
-      sampleAppFiles:
-        - src: css/iconFont.css
-          dest: iconFont.css
 
+buildHTML: {}
 
 buildJS:
   readme:
-    extensionPoint: >
-      The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
-      This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-      For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
+    extensionPoint:
+      buildJS: >
+        The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
+        This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
+        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
 
   sourceFormat:
     ES5:
@@ -130,20 +121,21 @@ buildJS:
       ext: ['ts']
       packages:
         - <<: *pkg_typescript
-        - <<: *pkg_typings
 
-      templates:
+      templateFiles:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
+          overwrite: true
 
       tasks:
-        - name: typingsInstall
+        - name: typings:install
           tasks: ['typings install']
           description: ''
 
       onInstall:
-        cmd: npm
-        args: ['run', 'typingsInstall']
+        - <<: *pkg_typings
+        - cmd: npm
+          args: ['run', 'typings:install']
 
   sourceFormatDefault: ES6
 
@@ -194,9 +186,9 @@ buildJS:
           key: ambientDependencies
           version: github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c
 
-        - name: zone.js
+        - name: zone
           key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/zone.js/zone.js.d.ts#c393f8974d44840a6c9cc6d5b5c0188a8f05143d
+          version: github:DefinitelyTyped/DefinitelyTyped/zone/zone.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9
 
       testPackages:
         - <<: *pkg_es6-shim
@@ -217,15 +209,16 @@ buildJS:
 
 entryPoint:
   readme:
-    extensionPoint: >
-      The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
-      It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
-      one entry point, but it is possible to have more than one.
-      `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
-      of NPM module names and/or references to JavaScript files (file references must start with `./`);
+    extensionPoint:
+      entryPoint: >
+        The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
+        It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
+        one entry point, but it is possible to have more than one.
+        `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
+        of NPM module names and/or references to JavaScript files (file references must start with `./`);
 
 # Path Defaults
-path:
+paths:
   defaults:
     input:
       srcDir: src/
@@ -250,6 +243,11 @@ path:
       configDir: config/
       tempDir: .tmp/
 
+  templateFiles:
+    - src: gitignore
+      dest: .gitignore
+      overwrite: false
+
 # README section for the template tags that will appear inside the README.md template
 readme:
   RM_HEADING: '# <%- name %>'
@@ -259,19 +257,92 @@ readme:
 
         npm install <%- name %>
 
-  RM_DEVELOPMENT_TASKS: |
-    ## Development Tasks
+  RM_CONTRIBUTING: |
+    ## Contributing
+
+    See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+#  CN_ALL_TASKS: |
+#    ## All Tasks
+#
+#    Command | Description
+#    :------ | :----------
+#    <% objectValues(readme.buildTask).forEach(function(value) {
+#    %><pre><%- value.command %></pre> | <%- value.description %><%
+#      if (value.features && value.features.length) {
+#        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+#      } %>
+#    <% }); %>
+
+  CN_BUILD_TASKS: |
+    ## Build Tasks
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask).forEach(function(value) {
+    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
     <% }); %>
 
-  RM_CHANGING_BUILD_TOOL_CONFIG: |
+
+  CN_COMMIT_TASKS: |
+    ## Commit Tasks
+
+    Command | Description
+    :------ | :----------
+    <pre>git status</pre> | Lists the current branch and the status of changed files
+    <pre>git log</pre> | Displays the commit log (press Q to quit viewing)
+    <pre>git add .</pre> | Stages all modified & untracked files, ready to be committed
+    <% objectValues(readme.buildTask.commit).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); -%>
+    <pre>git push</pre> | Push local repository changes to remote repository
+
+
+  CN_RELEASE_TASKS: |
+    ## Release Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.release).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+  CN_TEST_TASKS: |
+    ## Test Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_VERIFY_TASKS: |
+    ## Verification (Linting) Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.verify).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_CHANGING_BUILD_TOOL_CONFIG: |
     ## Changing build-tool configuration
 
     There are 3 ways you can change the build-tool configuration for this project:
@@ -289,11 +360,17 @@ readme:
 
     <% }); %>
 
+  CN_HEADING: |
+    # Contributing
+
+    Welcome! Thanks for taking some time to find out more about how you can make **<%- name %>** even better.
 
 #    - name: semantic-release
 #      tasks: ['semantic-release pre', 'npm publish', 'semantic-release post']
 #      description: Called by Travis CI to semantically-release the NPM module,
 #      features: []
+
+release: {}
 
 # Sample App
 sampleApp:
@@ -302,6 +379,48 @@ sampleApp:
     ES5: 'app.js'
     ES6: 'app.js'
     TypeScript: 'app.ts'
+
+  templateFiles:
+    - src: assets/**/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
+      overwrite: true
+      type: binary
+
+    - src: browserTest/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
+      overwrite: true
+      type: binary
+
+  cssSourceFormat:
+    css:
+      entryPointFileName: app.css
+      templateFiles:
+        - src: css/app.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+    sass:
+      entryPointFileName: app.sass
+      templateFiles:
+        - src: css/app.sass
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+    stylus:
+      entryPointFileName: app.styl
+      templateFiles:
+        - src: css/app.styl
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
 
 # Server - Development
 serverDev:
@@ -316,6 +435,7 @@ serverProd:
     hostname: localhost
     protocol: https
 
+testBrowser: {}
 
 # TypeScript Utils
 TypeScriptUtils:

@@ -1,11 +1,12 @@
 'use strict';
 
+// START_CONFIT_GENERATED_CONTENT
 <%
 var rootDir = (paths.config.configDir + 'testBrowser/').replace(/(.+?\/)/g, '../');
 // TODO: Add support for test specs written with non-JS extensions
 -%>
 
-exports.config = {
+var config = {
   // ChromeDriver location is used to help the standalone Selenium Server
   // find the chromedriver binary. This will be passed to the Selenium jar as
   // the system property webdriver.chrome.driver. If null, Selenium will
@@ -96,3 +97,6 @@ exports.config = {
     print: function() {}
   }
 };
+// END_CONFIT_GENERATED_CONTENT
+
+exports.config = config;

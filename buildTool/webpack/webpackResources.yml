@@ -1,8 +1,10 @@
-# app
+app: {}
+
 build:
-  packages: # TODO: Not sure if these should be here, or in zzfinish?
+  packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
+    - <<: *pkg_lodash   # Used by the webpack-dev-server
 
   tasks:
     - name: build:dev
@@ -26,6 +28,7 @@ buildAssets:
     - <<: *pkg_file-loader
 
 buildCSS:
+  # Common packages
   packages:
     - <<: *pkg_css-loader
     - <<: *pkg_style-loader
@@ -66,20 +69,6 @@ buildJS:
       packages:
         - <<: *pkg_ts-loader
 
-
-# README section for large blocks of static text
-# TODO: Move these to appropriate tool sections (e.g. build, testUnit)
-readme:
-  extensionPoint:
-    start: >
-      `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
-      and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
-      files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
-    testUnit: >
-      `npm test:unit` can be extended by modifying
-      <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
-      <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
-      It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
 
 # sampleApp configuration
 sampleApp:
@@ -141,13 +130,10 @@ sampleApp:
         typeLibs: []
         sourceFormat: {}
 
-  packages:
-    - <<: *pkg_lodash
-
 serverDev: {}
 
 testUnit:
-  # Use differet coverage loaders for TypeScript as there currently isn't a loader that understands TypeScript natively?
+  # Use different coverage loaders for TypeScript as there currently isn't a loader that understands TypeScript natively?
   sourceFormat:
     ES5:
       loaderType: preLoaders
@@ -216,10 +202,56 @@ testUnit:
       key: ambientDependencies
       version: github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
 
+  templateFiles:
+    - src: karma.conf.js
+      dest: <%= paths.config.configDir %>testUnit/karma.conf.js
+      overwrite: true
+
+    - src: karma.debug.conf.js
+      dest: <%= paths.config.configDir %>testUnit/karma.debug.conf.js
+      overwrite: true
+
+    - src: karma.common.js.tpl
+      dest: <%= paths.config.configDir %>testUnit/karma.common.js
+      overwrite: true
+
+    - src: test.files.js.tpl
+      dest: <%= paths.config.configDir %>testUnit/test.files.js
+      overwrite: true
+
+
+  readme:
+    extensionPoint:
+      testUnit: >
+        `npm test:unit` can be extended by modifying
+        <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
+        <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
+        It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
+
 zzfinish:
   packages:
     - <<: *pkg_extract-text-webpack-plugin
 
+  templateFiles:
+    - src: webpack.config.js.tpl
+      dest: <%= paths.config.configDir %>webpack/webpack.config.js
+      overwrite: true
+
+    - src: dev.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/dev.webpack.config.js
+      overwrite: true
+
+    - src: prod.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
+      overwrite: true
+
+  readme:
+    extensionPoint:
+      start: >
+        `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
+        and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
+        files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
+
   onEnd:
-    cmd: npm
-    args: ['start']
+    - cmd: npm
+      args: ['start']

@@ -1,12 +1,12 @@
 'use strict';
 
-var helpers = require('yeoman-test');
-var path = require('path');
-var fs = require('fs-extra');
-var _ = require('lodash');
+const helpers = require('yeoman-test');
+const path = require('path');
+const fs = require('fs-extra');
+const _ = require('lodash');
 
 // Global data
-var CONFIT_FILE_NAME = 'confit.json';
+const CONFIT_FILE_NAME = 'confit.json';
 
 var testDirName = process.env.TEST_DIR;
 var srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
@@ -76,6 +76,10 @@ function install(resolve, reject) {
         rebuildFromConfig: true,
         createSampleApp: true
       })
+      .on('error', function(err) {
+        console.error('generator error', err);
+        assert.ifError(err);
+      })
       .on('end', function() {
         var config = require(destConfitConfigPath)['generator-confit'];
 
@@ -88,6 +92,7 @@ function install(resolve, reject) {
 
   } catch(err) {
     process.chdir(previousCWD);
+    console.log(err);
     reject(err);
   }
 }

@@ -1,18 +1,14 @@
-'use strict';
-
-module.exports = function() {
+module.exports = function () {
+  'use strict';
 
   function write() {
     this.log('Writing Grunt finish options');
-
-    // Setup things to run on end, if we have anything
-    var cmd = this.buildTool.getResources().zzfinish.onEnd;
-    if (cmd) {
-      this.runOnEnd(cmd.cmd, cmd.args);
-    }
+    let toolResources = this.buildTool.getResources().zzfinish;
+    this.writeBuildToolConfig(toolResources);
   }
 
   return {
     write: write
   };
 };
+

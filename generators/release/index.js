@@ -38,7 +38,7 @@ module.exports = confitGen.create({
         type: 'confirm',
         name: 'useSemantic',
         message: 'Use semantic releasing?',
-        default: this.getConfig('useSemantic') || true
+        default: this.getConfig('useSemantic') !== undefined ? this.getConfig('useSemantic') : true
       },
       {
         type: 'list',
@@ -79,6 +79,8 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
+    let resources = this.getResources().release;
+    this.writeGeneratorConfig(resources);
     this.buildTool.write.apply(this);
   },
 

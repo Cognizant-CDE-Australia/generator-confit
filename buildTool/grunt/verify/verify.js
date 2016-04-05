@@ -1,34 +1,22 @@
 'use strict';
-var _ = require('lodash');
+const _ = require('lodash');
 
 module.exports = function() {
 
-  var gruntApp = require('./../app/app')();
-
   function write() {
-    gruntApp.write.apply(this); // Make sure we have a Gruntfile.js
-
     this.log('Writing Grunt verify options');
 
-    var config = this.config.getAll();
-    var outputDir = config.paths.config.configDir;
-    var toolResources = this.buildTool.getResources().verify;
-    var cssCodingStandard = config.buildCSS.sourceFormat;
-    var jsCodingStandard = config.verify.jsCodingStandard;
-    var packages = [].concat(
-      toolResources.packages,
-      toolResources.cssCodingStandard[cssCodingStandard].packages,
-      toolResources.jsCodingStandard[jsCodingStandard].packages
-    );
-    this.addNpmTasks(toolResources.tasks);
-    this.setNpmDevDependenciesFromArray(packages);
+    // Write global verify config...
+    let toolResources = this.buildTool.getResources().verify;
+    this.writeBuildToolConfig(toolResources);
 
-    var templateData = _.merge({}, config, {resources: this.getResources()});
-    this.fs.copyTpl(
-      this.toolTemplatePath('gruntVerify.js.tpl'),
-      this.destinationPath(outputDir + 'grunt/verify.js'),
-      templateData
-    );
+    // ...then sub-configs for cssCodingStandard and jsCodingStandard
+    let config = this.getGlobalConfig();
+    let cssCodingStandard = config.buildCSS.sourceFormat;
+    let jsCodingStandard = config.verify.jsCodingStandard;
+
+    this.writeBuildToolConfig(toolResources.cssCodingStandard[cssCodingStandard]);
+    this.writeBuildToolConfig(toolResources.jsCodingStandard[jsCodingStandard]);
   }
 
   return {

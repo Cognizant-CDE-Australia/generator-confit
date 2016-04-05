@@ -50,6 +50,7 @@ module.exports = function() {
   function write() {
     this.log('Writing Webpack sampleApp options');
 
+    // Sample is the most complicated buildTool...
     var config = this.getGlobalConfig();
     var paths = config.paths;
     var outputDir = paths.input.srcDir;
@@ -69,7 +70,7 @@ module.exports = function() {
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
 
     // Add the $CSSEntryPoints to the config, so that it can be require()'ed in Webpack
-    config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file.dest);
+    config.$CSSEntryPoints = this.CSSEntryPointFiles.map(file => paths.input.stylesDir + file);
 
     // Copy JS files
     this.fs.copyTpl(

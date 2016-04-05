@@ -73,40 +73,18 @@ module.exports = confitGen.create({
       return;
     }
 
-    // Write the basic demo project, but maybe a tool can overwrite it?...
-    var config = this.getGlobalConfig();
-    var paths = config.paths;
+    // Write the common generator config
+    let resources = this.getResources().sampleApp;
+    this.writeGeneratorConfig(resources);
 
-    // Copy Assets
-    this.fs.copy(
-      this.templatePath('assets/**/*'),
-      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.assetsDir)
-    );
-
-    // Copy compiler-specific CSS
-    var cssSourceFormat = config.buildCSS.sourceFormat;
-    var cssConfig = this.getResources().buildCSS.sourceFormat;
+    // Write the css-specific config
+    let config = this.getGlobalConfig();
+    let cssSourceFormat = config.buildCSS.sourceFormat;
+    let cssResources = resources.cssSourceFormat[cssSourceFormat];
+    this.writeGeneratorConfig(cssResources);
 
     // Make CSSEntryPointFiles a member property so that the build tool can use it too
-    var templateFiles = this.CSSEntryPointFiles = cssConfig[cssSourceFormat].entryPointFiles;
-
-    // Copy all of the template CSS files
-    templateFiles = templateFiles.concat(cssConfig[cssSourceFormat].sampleAppFiles || []);
-    templateFiles.forEach(file => {
-      this.fs.copy(
-        this.templatePath(file.src),
-        this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.stylesDir + file.dest)
-      );
-    });
-
-    // Defer copying of JS & HTML files to the build tool, as there WILL be build-tool-specific AND framework-specific files to use
-
-    // Copy browser test(s)
-    this.fs.copy(
-      this.templatePath('browserTest/*'),
-      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.browserTestDir)
-    );
-
+    this.CSSEntryPointFiles = [cssResources.entryPointFileName];
     this.buildTool.write.apply(this);
   },
 

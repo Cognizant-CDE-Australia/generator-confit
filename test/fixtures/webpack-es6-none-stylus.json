@@ -5,7 +5,7 @@
       "browserSupport": [
         "latest"
       ],
-      "_version": "12dc4368d8bdd36283e805604d937de84e6a614e"
+      "_version": "d57b68c2906645393d38a9af48b3bbebed45ac11"
     },
     "paths": {
       "input": {
@@ -32,44 +32,44 @@
         "configDir": "config/",
         "tempDir": ".tmp/"
       },
-      "_version": "7395f619c5681c40469a4c74a64da83ad113b971"
+      "_version": "818364d48065f98c0c3cbd72a59d18586bfdbd14"
     },
     "buildAssets": {},
     "buildCSS": {
       "sourceFormat": "stylus",
       "autoprefixer": true,
-      "_version": "c47b630f62295eeeb1c4f15ccd0ec5c8e76a7530"
+      "_version": "51acf34bcc4ca869a9f3ed932f4b0808a6fd4b37"
     },
     "buildJS": {
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [],
       "vendorScripts": [],
-      "_version": "becc02ddff160b3916f974a151419be4f9de63ee"
+      "_version": "f2cb2d011e826f51454bfe3f16bd5e0954489246"
     },
     "buildHTML": {
       "extension": ".html",
-      "_version": "06b6d2f07f16df91852d082d0c314e9f51a0ee65"
+      "_version": "3044ad9ab5bb860ddacfc268b5e03fe7f2948361"
     },
     "build": {},
     "entryPoint": {
       "entryPoints": {},
-      "_version": "666f5f0d167057ea62f753ca5e4030bbe783c0d5"
+      "_version": "a5743aa6ec32330496ed3f9a4215a456239e5639"
     },
     "serverDev": {
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "af27305fe9c2705b8899a19343a386b709389156"
+      "_version": "db06861d68613ebfe14a49745c03783c05d9310a"
     },
     "serverProd": {
       "port": 3000,
       "hostname": "localhost",
       "protocol": "https",
-      "_version": "01b15dd136236be875025175878631dc33d1fad7"
+      "_version": "4dbbaaa4d00c979746568aa32ef21425e2fe560d"
     },
     "testUnit": {
-      "_version": "313316fba4897fac2573089486359ad7f537af10"
+      "_version": "de2fb819f5057b6f8c9a86d042efc711588a3e0c"
     },
     "testBrowser": {},
     "verify": {
@@ -79,11 +79,12 @@
     "release": {
       "repositoryType": "Other",
       "useSemantic": false,
-      "commitMessageFormat": "Conventional"
+      "commitMessageFormat": "Conventional",
+      "_version": "56bbc396bc335ba0a6b6da908998fd650277086a"
     },
     "sampleApp": {
       "createSampleApp": true,
-      "_version": "783cb1167748d185bdb6faed3b86f83a6b49cbc9"
+      "_version": "b2ed6d3c5d23eb5dea9ace37dd16171a6b666941"
     },
     "zzfinish": {}
   }

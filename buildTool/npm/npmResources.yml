@@ -18,6 +18,16 @@ release:
       onInstall:
         - <<: *pkg_commitizen
 
+      readme:
+        buildTask:  # This is a "special" task in that it is designed to appear only in the Readme, not in package.json
+          commit:
+            commit:
+              command: git cz
+              description: Commit changes to local repository using Commitizen
+              features:
+                - Asks questions about the change to generate a valid conventional commit message
+                - Can be customised by modifying <%= link(paths.config.configDir + 'release/commitMessageConfig.js') %>
+
     None:
       packages: []
 
