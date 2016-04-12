@@ -12,7 +12,15 @@
 
 <!--[]-->
 
+## Usage
+
 <!--[RM_CONTRIBUTING]-->
 <%= RM_CONTRIBUTING %>
 
 <!--[]-->
+
+<!--[RM_LICENSE]-->
+<%= RM_LICENSE %>
+
+<!--[]-->
+

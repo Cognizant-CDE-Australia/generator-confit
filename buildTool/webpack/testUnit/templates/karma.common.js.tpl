@@ -92,7 +92,7 @@ var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceF
           exclude: [
             /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/
           ]<% if (testUnitSourceFormatConfig.query) { %>,
-          query: <%- JSON.stringify(testUnitSourceFormatConfig.query, null, '  ').replace(/"/g, '\'') %><% } %>
+          query: <%- printJson(testUnitSourceFormatConfig.query, 10) %><% } %>
         }
       ],
       loaders: webpackConfig.module.loaders

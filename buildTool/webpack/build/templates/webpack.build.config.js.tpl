@@ -33,7 +33,7 @@ var config = {
     <%
     var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
     var extensions = ['', '.webpack.js', '.web.js', '.js'].concat(jsExtensions.map(function(ext) { return '.' + ext; }));
-    -%>extensions: <%- JSON.stringify(extensions).replace(/"/g, '\'') %>
+    -%>extensions: <%- printJson(extensions, 4) %>
   },
 
   // Output stats to provide more feedback when things go wrong:

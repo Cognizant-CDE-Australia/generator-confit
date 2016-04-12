@@ -63,6 +63,22 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 - `--skip-install` skips the installation of NPM and Bower dependencies
 - `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
 
+## Features
+
+### Sample projects
+
+Confit can generate a sample project implemented using the chosen combination of technologies and tools.
+*It is recommended to choose to generate the sample project the first time you run `yo confit`.* 
+
+There are sample project implementations for the following technology combinations:
+
+Build Profile | JS Source Format | JS Frameworks Supported
+:------------ | :--------------- | :----------------------
+Webpack       | ES6              | None, Angular 1.x,
+Webpack       | Typescript       | None, Angular 1.x, Angular 2
+
+All sample projects support the chosen CSS compiler (or plain CSS files).
+
 ## Upgrading
 
 Confit is designed to be hassle-free when upgrading. As well as using semantic versioning, Confit has some smarts to make upgrading simple even when there are "breaking changes". *It is always a good idea to commit all your source code to a repo BEFORE upgrading, so that if the upgrade doesn't turn out how you expected, you can revert to the previous version of the code.*
@@ -71,6 +87,34 @@ Each Confit generator (Confit is composed of multiple generators) contains a ver
 
 Similarly for the generated tools, if the tooling changes, or you choose to use a different build profile which uses different tools, the old tools' files will not be removed.
 
+
+### Templates for README.md & CONTRIBUTING.md content
+
+There are several tags available for inserting generated content into the README.md file and CONTRIBUTING.md. 
+Information inside README.md is aimed at end-users (consumers) of the package. Information inside CONTRIBUTING.md is
+aimed at developers who need to modify the package.
+
+Tag | Description | Example
+:-- | :-----------| :------
+<pre><!--[RM_HEADING]-->&#10;<%- RM_HEADING %>&#10;&#10;<!--[]--></pre> | The package *name* as captured in the `package.json`, rendered as a H1 heading | # package-name
+<pre><!--[RM_DESCRIPTION]-->&#10;<%- RM_DESCRIPTION %>&#10;&#10;<!--[]--></pre> | The package *description* as captured in the `package.json`, rendered as a block quote | > A description of my awesome package
+<pre><!--[RM_INSTALL]-->&#10;<%- RM_INSTALL %>&#10;&#10;<!--[]--></pre> | The installation commands for the package, from a consumer's perspective | `npm install sample-app`
+<pre><!--[RM_CONTRIBUTING]-->&#10;<%- RM_CONTRIBUTING %>&#10;&#10;<!--[]--></pre> | A link to `CONTRIBUTING.md` | ## Contributing<br><br>See [CONTRIBUTING.md](CONTRIBUTING.md).
+<pre><!--[RM_LICENSE]-->&#10;<%- RM_LICENSE %>&#10;&#10;<!--[]--></pre> | A link to the `LICENSE` file | ## License<br><br>This software is licensed under the MIT Licence. See [LICENSE](LICENSE).
+<pre><!--[CN_HEADING]-->&#10;<%- CN_HEADING %>&#10;&#10;<!--[]--></pre> | Heading for `CONTRIBUTING.md` | # Contributing<br><br>Welcome! Thanks for taking some time to find out more about how you can make **package-name** even better.
+<pre><!--[CN_GETTING_STARTED]-->&#10;<%- CN_GETTING_STARTED %>&#10;&#10;<!--[]--></pre> | Getting started with contributing to the project | # Getting Started.
+<pre><!--[CN_GITFLOW_PROCESS]-->&#10;<%- CN_GITFLOW_PROCESS %>&#10;&#10;<!--[]--></pre> | Description of the GitFlow development process | # GitFlow Development Process<br><br>This project uses the [GitHub Flow](https://guides.github.com/introduction/flow/index.html) workflow...
+<pre><!--[CN_BUILD_TASKS]-->&#10;<%- CN_BUILD_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *build*-related commands | `npm run build`
+<pre><!--[CN_TEST_TASKS]-->&#10;<%- CN_TEST_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *test*-related commands | `npm test`
+<pre><!--[CN_VERIFY_TASKS]-->&#10;<%- CN_VERIFY_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *verify*-related commands | `npm run verify`
+<pre><!--[CN_COMMIT_TASKS]-->&#10;<%- CN_COMMIT_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *commit*-related commands | `git status`
+<pre><!--[CN_RELEASE_TASKS]-->&#10;<%- CN_RELEASE_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *release*-related commands | `npm run release`
+<pre><!--[CN_CHANGING_BUILD_TOOL_CONFIG]-->&#10;<%- CN_CHANGING_BUILD_TOOL_CONFIG %>&#10;&#10;<!--[]--></pre> | Information on how to safely change the generated configuration | ## Changing build-tool configuration<br><br>There are 3 ways you can change the build-tool configuration for this project...
+
+
+#### Why the strange template syntax?
+The template syntax has to parsable as an EJS template, valid HTML and valid Markdown in both Stash and GitHub. Each syntax treats whitespace slightly differently. 
+This syntax allows the templates to be inside the markdown files without being visible when rendered as HTML. 
 
 ## Sponsors
 

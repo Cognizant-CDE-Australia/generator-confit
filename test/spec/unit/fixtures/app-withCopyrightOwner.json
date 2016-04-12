@@ -1,10 +1,9 @@
 {
   "generator-confit": {
     "app": {
-      "buildProfile": "null"
+      "copyrightOwner": "Ralph McGee"
     },
     "paths": {
-      "input": {},
       "output": {}
     },
     "serverDev": {
