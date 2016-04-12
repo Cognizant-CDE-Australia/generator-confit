@@ -94,7 +94,7 @@ module.exports = function() {
 
     // Copy Webpack specific index.html template
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + '*'),
+      this.toolTemplatePath(selectedJSFrameworkDir + '*.*'),
       this.destinationPath(outputDir)
     );
   }
