@@ -1,5 +1,5 @@
 /** Entry point START **/
-config.entry = <%- JSON.stringify(entryPoint.entryPoints).replace(/"/g, '\'') %>;
+config.entry = <%- printJson(entryPoint.entryPoints) %>;
 
 <%
 // There are benefits to having the vendor scripts separate to the source code (faster recompilation when changing source code, caching of vendor JS file)
@@ -24,7 +24,7 @@ if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVe
     );
   } -%>
 // (Re)create the config.entry.vendor entryPoint
-config.entry.vendor = <%- JSON.stringify(vendorScripts).replace(/"/g, '\'') %>;
+config.entry.vendor = <%- printJson(vendorScripts) %>;
 
 // Create a common chunk for the vendor modules (https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk)
 config.plugins.push(new webpack.optimize.CommonsChunkPlugin({

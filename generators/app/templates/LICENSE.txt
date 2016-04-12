@@ -1,0 +1,3 @@
+<%- projectName %> Copyright (c) <%- (new Date()).getFullYear() %> <%- copyrightOwner %>
+
+<%- licenseText %>

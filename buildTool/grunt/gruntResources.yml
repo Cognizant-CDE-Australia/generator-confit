@@ -28,6 +28,7 @@ serverDev:
   templateFiles:
     - src: serverDev.js.tpl
       dest: <%= paths.config.configDir %>grunt/serverDev.js
+      overwrite: true
 
 serverProd:
   packages:
@@ -56,6 +57,7 @@ verify:
   templateFiles:
     - src: gruntVerify.js.tpl
       dest: <%= paths.config.configDir %>grunt/verify.js
+      overwrite: true
 
   cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
     css:

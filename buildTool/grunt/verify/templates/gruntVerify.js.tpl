@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         quiet: true // Report errors only
       },
       all: {
-        src: <%- JSON.stringify(jsFiles).replace(/"/g, '\'') %>
+        src: <%- printJson(jsFiles, 10) %>
       }
     },
 <% } -%>
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
       },
       all: {
         files: {
-          src: <%- JSON.stringify(jsFiles).replace(/"/g, '\'') %>
+          src: <%- printJson(jsFiles, 10) %>
         }
       }
     },
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
       options: {
         configFile: '<%= paths.config.configDir %>verify/.sasslintrc'
       },
-      all: <%- JSON.stringify(cssFiles).replace(/"/g, '\'') %>
+      all: <%- printJson(cssFiles, 10) %>
     },
 <% } -%>
 <% if (buildCSS.sourceFormat === 'stylus') {
@@ -56,7 +56,7 @@ module.exports = function (grunt) {
         options: {
           configFile: '<%= paths.config.configDir %>verify/.stylintrc'
         },
-        src: <%- JSON.stringify(cssFiles).replace(/"/g, '\'') %>
+        src: <%- printJson(cssFiles, 10) %>
       }
     },
 <% } -%>
@@ -65,11 +65,11 @@ module.exports = function (grunt) {
         options: {
           spawn: true
         },
-        files: <%- JSON.stringify(jsFiles.concat(cssFiles)).replace(/"/g, '\'') %>,
-        tasks: <%- JSON.stringify(lintTasks.map(function(task) { return 'newer:' + task; })).replace(/"/g, '\'') %>
+        files: <%- printJson(jsFiles.concat(cssFiles), 10) %>,
+        tasks: <%- printJson(lintTasks.map(function(task) { return 'newer:' + task; }), 10) %>
       }
     }
   });
 
-  grunt.registerTask('verify', 'Run all the verify tasks', <%- JSON.stringify(lintTasks).replace(/"/g, '\'') %>);
+  grunt.registerTask('verify', 'Run all the verify tasks', <%- printJson(lintTasks) %>);
 };

@@ -3,22 +3,15 @@
 
 <!--[]-->
 
-Getting started
+<!--[CN_GETTING_STARTED]-->
+<%- CN_GETTING_STARTED %>
 
-- Installing dependencies
+<!--[]-->
 
-# Development Process
+<!--[CN_GITFLOW_PROCESS]-->
+<%- CN_GITFLOW_PROCESS %>
 
-This project uses the [GitHub Flow](https://guides.github.com/introduction/flow/index.html) workflow.
-
-## Create a branch
-
-## Add commits
-
-## Open a pull request
-
-## Merge to Master
-
+<!--[]-->
 
 <!--[CN_BUILD_TASKS]-->
 <%- CN_BUILD_TASKS %>

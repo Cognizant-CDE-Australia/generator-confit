@@ -2,10 +2,14 @@
 const confitGen = require('../../lib/ConfitGenerator.js');
 const chalk = require('chalk');
 const _ = require('lodash');
+const inquirer = require('inquirer');
+const spdxLic = require('spdx-license-list');
 
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
 // This generator is a shell to call other generators and setup global config.
 // It doesn't do much other work.
+
+let userName;     // Transient - do not store in confit.json
 
 module.exports = confitGen.create({
   initializing: {
@@ -50,28 +54,33 @@ module.exports = confitGen.create({
         return;
       }
 
-      var done = this.async();
+      let done = this.async();
 
       // Sort out the build profiles
-      var buildProfiles = this.getBuildProfiles();
-      var profileDescriptions = buildProfiles.map(profile => profile.name + ' - ' + profile.description);
-      var existingProfileName = this.getConfig('buildProfile');
-      var resources = this.getResources().app;
-      var browsers = resources.supportedBrowsers;
-      var defaultBrowsers = resources.defaultSupportedBrowsers;
+      let buildProfiles = this.getBuildProfiles();
+      let profileDescriptions = buildProfiles.map(profile => profile.name + ' - ' + profile.description);
+      let existingProfileName = this.getConfig('buildProfile');
+      let resources = this.getResources().app;
 
-      var browserList = _.keys(browsers);
-      var browserObjList = browserList.map(browser => { return { value: browser, name: browsers[browser].label};});
+      let popularLicenses = resources.licenses.popular;
+      let defaultLicense = resources.licenses.default;
+      let allLicenses = _.keys(spdxLic);
+
+      let browsers = resources.supportedBrowsers;
+      let defaultBrowsers = resources.defaultSupportedBrowsers;
+      let browserList = _.keys(browsers);
+      let browserObjList = browserList.map(browser => { return { value: browser, name: browsers[browser].label};});
+
 
       // Ask everything...
-      var prompts = [
+      let prompts = [
         {
           type: 'list',
           name: 'buildProfile',
           message: 'Choose a build-profile for your project',
           choices: profileDescriptions,
           default: function() {
-            var existingProfileDesc = '';
+            let existingProfileDesc = '';
 
             buildProfiles.forEach(profile => {
               if (profile.name === existingProfileName) {
@@ -87,9 +96,22 @@ module.exports = confitGen.create({
           },
           // Convert the label back into the name:
           filter: function(answer) {
-            var profile = buildProfiles.filter(profile => (profile.name + ' - ' + profile.description) === answer);
+            let profile = buildProfiles.filter(profile => (profile.name + ' - ' + profile.description) === answer);
             return profile[0].name;
           }
+        },
+        {
+          type: 'list',
+          name: 'license',
+          message: 'Choose a licence',
+          default: this.getConfig().license || defaultLicense,
+          choices: [].concat(new inquirer.Separator('---- Popular (below) ----'), popularLicenses, new inquirer.Separator('---- Popular (above) ----'), allLicenses)
+        },
+        {
+          type: 'input',
+          name: 'copyrightOwner',
+          message: 'Copyright owner',
+          default: this.getConfig().copyrightOwner || this.user.git.name()
         },
         {
           type: 'checkbox',
@@ -101,8 +123,9 @@ module.exports = confitGen.create({
         }
       ];
 
-      this.prompt(prompts, function(props) {
-        this.answers = this.generateObjFromAnswers(props);
+      this.prompt(prompts, function(answers) {
+        // Remove the username from the answers, as we only want it temporarily
+        this.answers = this.generateObjFromAnswers(answers, prompts);
         done();
       }.bind(this));
     }
@@ -114,8 +137,15 @@ module.exports = confitGen.create({
       this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
 
-      // Update our buildtool, as it may have changed
+      // Update our buildTool, as it may have changed
       this.updateBuildTool();
+    }
+
+    // Make sure that even older configurations receive a license property, even when rebuilding
+    let existingConfig = this.getConfig();
+    if (!existingConfig.license) {
+      existingConfig.license = this.getResources().app.licenses.default;
+      this.setConfig(existingConfig);
     }
 
     // Common files (independent of the build-tool) to write
@@ -140,7 +170,25 @@ module.exports = confitGen.create({
 
   writing: function() {
     let resources = this.getResources().app;
+    let config = this.getConfig();
     this.writeGeneratorConfig(resources);
+
+    // Write the license file if there is one
+    if (config.license && resources.licenses.noLicenseFile.indexOf(config.license) === -1) {
+      let licenseObj = require('spdx-license-list/spdx-full')[config.license];
+      let licenseText = licenseObj.license;
+      let templateData = {
+        licenseText,
+        copyrightOwner: config.copyrightOwner,
+        projectName: '' + this.readPackageJson().name
+      };
+
+      this.copyGeneratorTemplates(resources.licenses.templateFiles, templateData);
+      if (licenseText.indexOf('<') > -1) {
+        this.log(chalk.bold.red('The license file MAY contain templates. Please review before committing.'));
+      }
+    }
+
     this.buildTool.write.apply(this);
 
     // Run finalisation for all the used buildTools

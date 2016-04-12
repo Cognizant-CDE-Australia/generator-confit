@@ -25,7 +25,11 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
           console.log('testdir', dir);
         }
         testDir = dir;
-        beforeTestCb(testDir);
+        try {
+          beforeTestCb(testDir);
+        } catch(e) {
+          console.error(e);
+        }
       })
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       //.withGenerators(generators)
@@ -46,7 +50,11 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, assertionCb) {
         if (MAX_LOG) {
           console.error('generator end');
         }
-        assertionCb(testDir);
+        try {
+          assertionCb(testDir);
+        } catch(e) {
+          console.error(e);
+        }
       });
   } catch (e) {
     console.error(e);

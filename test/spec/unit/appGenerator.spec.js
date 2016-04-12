@@ -10,7 +10,7 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'app';
 
 function runGenerator(confitFixture, beforeTestCb, assertionCb) {
-  utils.runGenerator(
+  return utils.runGenerator(
     GENERATOR_UNDER_TEST,
     confitFixture,
     beforeTestCb,
@@ -31,29 +31,11 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:testUnit'],
     [helpers.createDummyGenerator(), 'confit:verify'],
     [helpers.createDummyGenerator(), 'confit:zzfinish']
-  ]).withPrompts({
-    buildProfile: 'Latest'
-  });
+  ]);
 }
 
 
 describe('App Generator', function () {
-
-  it('should be a dummy test', (done) => done());
-
-  it('should create an .editorConfig and package.json file when they do not exist', function(done) {
-    var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
-    runGenerator('app-config.json',
-      function beforeTest() {
-        yoassert.noFile(filesThatShouldBeGenerated);
-      },
-      function afterTest() {
-        yoassert.file(filesThatShouldBeGenerated);
-        done();
-      }
-    );
-  });
-
 
   it('should add an "app" section to the confit.json file with valid data inside it', function(done) {
     runGenerator('app-config.json',
@@ -77,7 +59,67 @@ describe('App Generator', function () {
         //fs.readdirSync(testDir).forEach(file => console.log(file));
         done();
       }
-    );
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
+  });
+
+
+  it('should create an .editorConfig and package.json file when they do not exist', function(done) {
+    var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
+    runGenerator('app-config.json',
+      function beforeTest() {
+        yoassert.noFile(filesThatShouldBeGenerated);
+      },
+      function afterTest() {
+        yoassert.file(filesThatShouldBeGenerated);
+        done();
+      }
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
+  });
+
+
+  it('should not create a license file when the license type is UNLICENSED', function(done) {
+    runGenerator('app-config.json',
+      function beforeTest() {
+        yoassert.noFile('LICENSE');
+      },
+      function afterTest() {
+        yoassert.noFile('LICENSE');
+        done();
+      }
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
+  });
+
+
+  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', function(done) {
+    runGenerator('app-withCopyrightOwner.json',
+      function beforeTest() {
+        yoassert.noFile('LICENSE');
+      },
+      function afterTest(dir) {
+        yoassert.file('LICENSE');
+
+        let confit = fs.readJsonSync('confit.json');
+        let expectedCopyrightOwner = confit['generator-confit'].app.copyrightOwner;
+        assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
+
+        let licenseText = fs.readFileSync('LICENSE', 'utf-8');
+        let year = (new Date()).getFullYear();
+        assert.notEqual(licenseText.indexOf('Copyright (c) ' + year + ' ' + expectedCopyrightOwner), -1, 'Copyright message is in the correct format');
+        done();
+      }
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'MIT'
+    });
   });
 
 
@@ -93,7 +135,10 @@ describe('App Generator', function () {
         assert.equal(originalContents, newContents);
         done();
       }
-    );
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
   });
 
 
@@ -113,7 +158,10 @@ describe('App Generator', function () {
         assert.equal(typeof newContents.devDependencies, 'object');
         done();
       }
-    );
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
   });
 
   it('should generate scripts in package.json', function(done) {
@@ -138,6 +186,9 @@ describe('App Generator', function () {
         assert.ok(pkg.scripts['clean:prod']);
         done();
       }
-    );
+    ).withPrompts({
+      buildProfile: 'Latest',
+      license: 'UNLICENSED'
+    });
   });
 });
