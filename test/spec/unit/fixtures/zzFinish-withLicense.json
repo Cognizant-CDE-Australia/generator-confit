@@ -6,7 +6,8 @@
     },
     "paths": {
       "input": {},
-      "output": {}
+      "output": {},
+      "config": {}
     },
     "serverDev": {
       "port": 3000,

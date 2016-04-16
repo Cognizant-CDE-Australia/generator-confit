@@ -243,6 +243,62 @@ entryPoint:
 
 # Path Defaults
 paths:
+  prompts:
+    - name: input.srcDir
+      heading: |
+        Source-code paths
+
+      message: Path to SOURCE directory (relative to the current directory)
+
+    - name: input.modulesSubDir
+      message: Path to MODULES directory (relative to the SOURCE directory)
+
+    - name: input.assetsDir
+      message: Name of module ASSETS directory (for images, fonts)
+
+    - name: input.stylesDir
+      message: Name of module STYLES directory (for CSS)
+
+    - name: input.templateDir
+      message: Name of module TEMPLATE directory (for component HTML templates)
+
+    - name: input.unitTestDir
+      message: Name of module UNIT TEST directory
+
+    - name: input.browserTestDir
+      message: Name of module FUNCTIONAL TEST directory
+
+    - name: output.devDir
+      heading: |
+        Output paths
+
+      message: Path to DEV OUTPUT directory (relative to the current directory)
+
+    - name: output.prodDir
+      message: Path to PRODUCTION OUTPUT directory (relative to the current directory)
+
+    - name: output.assetsSubDir
+      message: Path to ASSETS sub-directory (relative to the OUTPUT directory)
+
+    - name: output.cssSubDir
+      message: Path to CSS sub-directory (relative to the OUTPUT directory)
+
+    - name: output.jsSubDir
+      message: Path to JS sub-directory (relative to OUTPUT directory)
+
+    - name: output.vendorJSSubDir
+      message: Path to VENDOR JS libraries sub-directory (relative to OUTPUT directory)
+
+    - name: output.reportDir
+      message: Path to TEST REPORTS directory (relative to the current directory)
+
+    - name: config.configDir
+      heading: |
+        Config paths
+
+      message: Path to CONFIG directory (relative to the current directory)
+
+
   defaults:
     input:
       srcDir: src/
