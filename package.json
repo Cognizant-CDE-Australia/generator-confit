@@ -39,7 +39,7 @@
     "updateFixtures": "node lib/updateFixtures.js",
     "test": "npm run updateFixtures && npm run test:unit && npm run test:seq",
     "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
-    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/paths*.spec.js --MAX_LOG=false --no-logo",
+    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js --MAX_LOG=false --no-logo",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [

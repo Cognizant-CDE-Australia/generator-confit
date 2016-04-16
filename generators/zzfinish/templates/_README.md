@@ -12,6 +12,11 @@
 
 <!--[]-->
 
+<!--[RM_DIR_STRUCTURE]-->
+<%= RM_DIR_STRUCTURE %>
+
+<!--[]-->
+
 ## Usage
 
 <!--[RM_CONTRIBUTING]-->

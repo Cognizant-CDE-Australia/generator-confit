@@ -99,6 +99,7 @@ Tag | Description | Example
 <pre><!--[RM_HEADING]-->&#10;<%- RM_HEADING %>&#10;&#10;<!--[]--></pre> | The package *name* as captured in the `package.json`, rendered as a H1 heading | # package-name
 <pre><!--[RM_DESCRIPTION]-->&#10;<%- RM_DESCRIPTION %>&#10;&#10;<!--[]--></pre> | The package *description* as captured in the `package.json`, rendered as a block quote | > A description of my awesome package
 <pre><!--[RM_INSTALL]-->&#10;<%- RM_INSTALL %>&#10;&#10;<!--[]--></pre> | The installation commands for the package, from a consumer's perspective | `npm install sample-app`
+<pre><!--[RM_DIR_STRUCTURE]-->&#10;<%- RM_DIR_STRUCTURE %>&#10;&#10;<!--[]--></pre> | A tree representation of the directory structure | 
 <pre><!--[RM_CONTRIBUTING]-->&#10;<%- RM_CONTRIBUTING %>&#10;&#10;<!--[]--></pre> | A link to `CONTRIBUTING.md` | ## Contributing<br><br>See [CONTRIBUTING.md](CONTRIBUTING.md).
 <pre><!--[RM_LICENSE]-->&#10;<%- RM_LICENSE %>&#10;&#10;<!--[]--></pre> | A link to the `LICENSE` file | ## License<br><br>This software is licensed under the MIT Licence. See [LICENSE](LICENSE).
 <pre><!--[CN_HEADING]-->&#10;<%- CN_HEADING %>&#10;&#10;<!--[]--></pre> | Heading for `CONTRIBUTING.md` | # Contributing<br><br>Welcome! Thanks for taking some time to find out more about how you can make **package-name** even better.
