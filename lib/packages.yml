@@ -24,9 +24,9 @@ $packages:
     name: angular2/router
     version: 2.0.0-beta.6
 
-  - &pkg_autoprefixer-loader
-    name: autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
-    version: 3.2.0
+  - &pkg_autoprefixer
+    name: autoprefixer
+    version: 6.3.6
 
   - &pkg_babel-core
     name: babel-core
@@ -244,6 +244,10 @@ $packages:
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill
     version: 0.0.1
+
+  - &pkg_postcss-loader
+    name: postcss-loader
+    version: 0.8.2
 
   - &pkg_protractor
     name: protractor

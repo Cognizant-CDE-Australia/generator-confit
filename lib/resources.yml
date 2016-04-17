@@ -33,7 +33,7 @@ app:
       browserList: ['last 2 versions']
     legacyIE:
       label: Legacy Internet Explorer (9, 10, 11)
-      browserList: ['ie9', 'ie10', 'ie11']
+      browserList: ['ie 9', 'ie 10', 'ie 11']
     legacyMobile:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']

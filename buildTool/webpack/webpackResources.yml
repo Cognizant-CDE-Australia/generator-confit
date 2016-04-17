@@ -32,7 +32,8 @@ buildCSS:
   packages:
     - <<: *pkg_css-loader
     - <<: *pkg_style-loader
-    - <<: *pkg_autoprefixer-loader   #TODO: Change to use PostCSS instead (as suggested by the package)
+    - <<: *pkg_autoprefixer
+    - <<: *pkg_postcss-loader
 
   sourceFormat:
     css:
