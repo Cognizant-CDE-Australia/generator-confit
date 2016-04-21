@@ -124,6 +124,8 @@ sampleApp:
               pre:
                 - './polyfills.ts'
               post: []
+          ES6:
+            hasSampleApp: true
 
       React (latest):
         sampleDir: react/

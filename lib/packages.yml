@@ -71,7 +71,7 @@ $packages:
 
   - &pkg_es6-shim
     name: es6-shim
-    version: 0.33.3   #TODO: newer version exists
+    version: 0.35.0
 
   - &pkg_es6-promise
     name: es6-promise
