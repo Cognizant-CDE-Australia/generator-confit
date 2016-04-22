@@ -195,8 +195,8 @@ testUnit:
       features:
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.debug.conf.js']
-      description: Run unit tests in a browser to make debugging easier
+      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
+      description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - no code coverage to make it easier to read source code
 
@@ -208,10 +208,6 @@ testUnit:
   templateFiles:
     - src: karma.conf.js
       dest: <%= paths.config.configDir %>testUnit/karma.conf.js
-      overwrite: true
-
-    - src: karma.debug.conf.js
-      dest: <%= paths.config.configDir %>testUnit/karma.debug.conf.js
       overwrite: true
 
     - src: karma.common.js.tpl
