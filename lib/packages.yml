@@ -304,6 +304,7 @@ $packages:
   - &pkg_typings
     name: typings
     version: 0.6.7
+    global: true
 
   - &pkg_webpack
     name: webpack
