@@ -179,23 +179,23 @@ $packages:
 
   - &pkg_karma
     name: karma
-    version: 0.13.19
+    version: 0.13.22
 
   - &pkg_karma-chrome-launcher
     name: karma-chrome-launcher
-    version: 0.2.2
+    version: 0.2.3
 
   - &pkg_karma-coverage
     name: karma-coverage
-    version: 0.5.3
+    version: 0.5.5
 
   - &pkg_karma-jasmine
     name: karma-jasmine
-    version: 0.3.6
+    version: 0.3.8
 
   - &pkg_karma-junit-reporter
     name: karma-junit-reporter
-    version: 0.3.8
+    version: 0.4.2
 
   - &pkg_karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional?
     name: karma-ng-html2js-preprocessor
@@ -203,7 +203,7 @@ $packages:
 
   - &pkg_karma-phantomjs-launcher
     name: karma-phantomjs-launcher
-    version: 0.2.3
+    version: 1.0.0
 
   - &pkg_karma-sourcemap-loader
     name: karma-sourcemap-loader
@@ -239,12 +239,14 @@ $packages:
 
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill
-    version: 0.0.1
+    version: 0.0.2
 
   - &pkg_phantomjs-prebuilt
     name: phantomjs-prebuilt
     version: 2.1.7
-    global: true
+    # For karma-phantomjs-launcher to work, this package *must* appaear in package.json
+    # So install it globally AND include it in package.json
+    global: both
 
   - &pkg_postcss-loader
     name: postcss-loader
