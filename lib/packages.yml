@@ -237,13 +237,14 @@ $packages:
     name: npm-run-all
     version: 1.5.0
 
-  - &pkg_phantomjs
-    name: phantomjs
-    version: 1.9.19
-
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill
     version: 0.0.1
+
+  - &pkg_phantomjs-prebuilt
+    name: phantomjs-prebuilt
+    version: 2.1.7
+    global: true
 
   - &pkg_postcss-loader
     name: postcss-loader

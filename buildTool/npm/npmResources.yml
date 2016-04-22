@@ -3,6 +3,7 @@ release:
     Conventional:
       packages:
         - <<: *pkg_cz-customizable
+        - <<: *pkg_commitizen
 
       npmConfig:
         - commitizen:
@@ -14,9 +15,6 @@ release:
         - src: commitMessageConfig.js
           dest: <%= paths.config.configDir %>release/commitMessageConfig.js
           overwrite: false
-
-      onInstall:
-        - <<: *pkg_commitizen
 
       readme:
         buildTask:  # This is a "special" task in that it is designed to appear only in the Readme, not in package.json
@@ -35,7 +33,8 @@ release:
   repositoryType:
     GitHub:
       semantic:
-        packages: []
+        packages:
+          - <<: *pkg_semantic-release-cli
 
         tasks:
           - name: release
@@ -49,9 +48,6 @@ release:
               - Generates release notes against each release in the "Releases" section in GitHub
               - Publishes package to NPM
               - Integrates with Travis CI
-
-        onInstall:
-          - <<: *pkg_semantic-release-cli
 
       manual:
         tasks:

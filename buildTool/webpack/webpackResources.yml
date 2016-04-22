@@ -172,7 +172,7 @@ testUnit:
     - <<: *pkg_karma-threshold-reporter
     - <<: *pkg_karma-webpack
     - <<: *pkg_jasmine-core
-    - <<: *pkg_phantomjs
+    - <<: *pkg_phantomjs-prebuilt
     - <<: *pkg_phantomjs-polyfill
 
   tasks:
