@@ -145,6 +145,7 @@ buildJS:
       ext: ['ts']
       packages:
         - <<: *pkg_typescript
+        - <<: *pkg_typings
 
       templateFiles:
         - src: tsconfig.json.tpl
@@ -157,7 +158,6 @@ buildJS:
           description: ''
 
       onInstall:
-        - <<: *pkg_typings
         - cmd: npm
           args: ['run', 'typings:install']
 

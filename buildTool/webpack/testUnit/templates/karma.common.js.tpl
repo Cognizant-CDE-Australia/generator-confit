@@ -3,16 +3,34 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
+
+var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+var testFilesRegEx = new RegExp(paths.input.unitTestDir.replace(/\//g, '\\/') + ".*spec\\.(" + jsExtensions.join('|') + ")$");
+
+// We only want to test the SOURCE FILES, but we still must IMPORT the test dependencies
+-%>
+var DefinePlugin = require('webpack').DefinePlugin;   // Needed to pass the testFilesRegEx to test.files.js
+var testFilesRegEx = <%= testFilesRegEx.toString() %>;
+
+// Customise the testFilesRegEx to filter which files to test, if desired.
+// E.g.
+// if (process.argv.indexOf('--spec') !== -1) {
+//   testFilesRegEx = ...
+// }
+// END_CONFIT_GENERATED_CONTENT
+
+
+// START_CONFIT_GENERATED_CONTENT
+<%
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var srcFileRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + ".*\\.(" + jsExtensions.join('|') + ")$");
 
 var configPath = paths.config.configDir + 'testUnit/';
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 -%>
-
 // We want to re-use the loaders from the dev.webpack.config
 var webpackConfig = require('./../webpack/dev.webpack.config.js');
-
+var preprocessorList = ['coverage', 'webpack', 'sourcemap'];
 
 var karmaConfig = {
   autoWatch: true,
@@ -52,7 +70,7 @@ var karmaConfig = {
   ],
 
   preprocessors: {
-    '<%- paths.config.configDir %>testUnit/test.files.js': ['webpack']
+    '<%- paths.config.configDir %>testUnit/test.files.js': preprocessorList
   },
 
 
@@ -97,8 +115,11 @@ var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceF
       ],
       loaders: webpackConfig.module.loaders
     },
-    plugins: webpackConfig.plugins,
-    resolve: webpackConfig.resolve
+    plugins: webpackConfig.plugins.concat([new DefinePlugin({
+      __karmaTestSpec: testFilesRegEx
+    })]),
+    resolve: webpackConfig.resolve,
+    devtool: 'inline-source-map'      // Changed to allow the sourcemap loader to work: https://github.com/webpack/karma-webpack
   },
 
   webpackServer: {

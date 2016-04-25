@@ -124,6 +124,8 @@ sampleApp:
               pre:
                 - './polyfills.ts'
               post: []
+          ES6:
+            hasSampleApp: true
 
       React (latest):
         sampleDir: react/
@@ -170,7 +172,7 @@ testUnit:
     - <<: *pkg_karma-threshold-reporter
     - <<: *pkg_karma-webpack
     - <<: *pkg_jasmine-core
-    - <<: *pkg_phantomjs
+    - <<: *pkg_phantomjs-prebuilt
     - <<: *pkg_phantomjs-polyfill
 
   tasks:
@@ -193,8 +195,8 @@ testUnit:
       features:
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.debug.conf.js']
-      description: Run unit tests in a browser to make debugging easier
+      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
+      description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - no code coverage to make it easier to read source code
 
@@ -206,10 +208,6 @@ testUnit:
   templateFiles:
     - src: karma.conf.js
       dest: <%= paths.config.configDir %>testUnit/karma.conf.js
-      overwrite: true
-
-    - src: karma.debug.conf.js
-      dest: <%= paths.config.configDir %>testUnit/karma.debug.conf.js
       overwrite: true
 
     - src: karma.common.js.tpl
@@ -228,6 +226,11 @@ testUnit:
         <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
         <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
         It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
+
+        Note that it is possible to run a subset of unit tests by passing a command line argument to Karma, and then modifying the `testFilesRegEx`
+        variable in <%= link(paths.config.configDir + 'testUnit/karma.common.js') %> to refer to the command line argument value.
+        For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
+        which can then be used to change the default value of `testFilesRegEx`.
 
 zzfinish:
   packages:

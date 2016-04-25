@@ -1,6 +1,3 @@
-/*
- * Providers provided by Angular
- */
 import {provide, enableProdMode} from 'angular2/core';
 import {Component} from 'angular2/core';
 import {bootstrap, ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/browser';
@@ -9,7 +6,6 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Page1Component} from './Page1Component';
 import {Page2Component} from './Page2Component';
-
 
 // Require the CSS file explicitly (or it could be defined as an entry-point too).
 <% $CSSEntryPoints.forEach(function (file) { -%>
@@ -25,34 +21,32 @@ if (__PROD__) {
   ENV_PROVIDERS.push(ELEMENT_PROBE_PROVIDERS);
 }
 
-/*
- * App Component
- * Top Level Component
- */
-@Component({
+
+let componentAnnotation = new Component({
   selector: 'app',
-  providers: [],
-  directives: [ ...ROUTER_DIRECTIVES ],
-  pipes: [],
-  styles: [],
   template: `
     <main>
       <router-outlet></router-outlet>
     </main>
-  `
-})
-@RouteConfig([
+  `,
+  providers: [],
+  directives: [ ...ROUTER_DIRECTIVES ],
+  pipes: [],
+  styles: []
+});
+
+let routeConfig = new RouteConfig([
   { path: '/', component: Page1Component, name: 'Index' },
   { path: '/page1', component: Page1Component, name: 'Page1' },
   { path: '/page2', component: Page2Component, name: 'Page2' },
   // TODO: Not yet using es6-promise-loader (for Webpack) to load components dynamically.
   { path: '/**', redirectTo: ['Index'] }
-])
+]);
+
 export class App {
-  //static get parameters() {
-  //  return [[HeroService], [Router]];
-  //};
 }
+
+App.annotations = [componentAnnotation, routeConfig];
 
 
 /*
@@ -70,19 +64,3 @@ function main() {
 
 
 document.addEventListener('DOMContentLoaded', main);
-
-//// typescript lint error 'Cannot find name "module"' fix
-//declare let module: any;
-//
-//// activate hot module reload
-//if (module.hot) {
-//
-//  // bootstrap must not be called after DOMContentLoaded,
-//  // otherwise it cannot be rerenderd after module replacement
-//  //
-//  // for testing try to comment the bootstrap function,
-//  // open the dev tools and you'll see the reloader is replacing the module but cannot rerender it
-//  main();
-//
-//  module.hot.accept();
-//}

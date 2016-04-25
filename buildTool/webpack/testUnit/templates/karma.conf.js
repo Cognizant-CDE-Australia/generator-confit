@@ -3,6 +3,7 @@
 
 // START_CONFIT_GENERATED_CONTENT
 var commonConfig = require('./karma.common.js');
+var debugMode = process.argv.indexOf('--debug') > -1;
 
 function getConfitConfig(config) {
   // level of logging
@@ -15,6 +16,14 @@ function getConfitConfig(config) {
   commonConfig.webpack.plugins = commonConfig.webpack.plugins.filter(function (plugin) {
     return !(plugin.ident && plugin.ident.indexOf('CommonsChunkPlugin'));
   });
+
+
+  if (debugMode) {
+    // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
+    commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %> = commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %>.filter(function (loader) {
+      return (loader.loader.indexOf('<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderName %>') === -1);
+    });
+  }
 
   config.set(commonConfig);
 };

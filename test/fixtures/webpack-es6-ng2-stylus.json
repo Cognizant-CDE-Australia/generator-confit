@@ -9,18 +9,18 @@
     },
     "paths": {
       "input": {
-        "srcDir": "src/here/",
-        "modulesSubDir": "",
+        "srcDir": "src/",
+        "modulesSubDir": "modules/",
         "assetsDir": "assets/",
         "stylesDir": "styles/",
         "templateDir": "template/",
         "unitTestDir": "unitTest/",
-        "browserTestDir": "browserTest/sub/",
+        "browserTestDir": "browserTest/",
         "modulesDir": "src/modules/"
       },
       "output": {
         "devDir": "dev/",
-        "prodDir": "dist/",
+        "prodDir": "prod/",
         "assetsSubDir": "assets/",
         "cssSubDir": "css/",
         "jsSubDir": "js/",
@@ -29,7 +29,7 @@
         "reportDir": "reports/"
       },
       "config": {
-        "configDir": "config/a/b/",
+        "configDir": "config/",
         "tempDir": ".tmp/"
       },
       "_version": "a7fbbf6a129b3b6ac4b325b3b9f51bbbb4a398b4"
@@ -44,10 +44,17 @@
       "sourceFormat": "ES6",
       "outputFormat": "ES5",
       "framework": [
-        "AngularJS 1.x"
+        "AngularJS 2.x"
       ],
       "vendorScripts": [
-        "angular"
+        "es6-shim",
+        "es6-promise",
+        "es7-reflect-metadata",
+        "rxjs",
+        "zone.js",
+        "angular2/core",
+        "angular2/router",
+        "angular2/platform/browser"
       ],
       "_version": "f2cb2d011e826f51454bfe3f16bd5e0954489246"
     },
@@ -73,6 +80,15 @@
       "_version": "4dbbaaa4d00c979746568aa32ef21425e2fe560d"
     },
     "testUnit": {
+      "testDependencies": [
+        "es6-shim",
+        "es6-promise",
+        "reflect-metadata",
+        "zone.js/dist/zone-microtask.js",
+        "zone.js/dist/long-stack-trace-zone.js",
+        "zone.js/dist/jasmine-patch.js",
+        "angular2/core"
+      ],
       "_version": "de2fb819f5057b6f8c9a86d042efc711588a3e0c"
     },
     "testBrowser": {},

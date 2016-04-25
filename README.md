@@ -5,7 +5,7 @@
 <!--[![NPM](https://nodei.co/npm/generator-confit.png?downloads=true)](https://npmjs.org/package/generator-confit)-->
 
 [![NPM Version](https://img.shields.io/npm/v/generator-confit.svg?style=flat-square)](http://npm.im/generator-confit)
-[![Build Status](https://travis-ci.org/odecee/generator-confit.svg)](https://travis-ci.org/odecee/generator-confit)
+[![Build Status](https://travis-ci.org/odecee/generator-confit.svg?branch=master)](https://travis-ci.org/odecee/generator-confit)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Dependencies status](https://david-dm.org/odecee/generator-confit/status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=dependencies)
 [![Dev Dependencies status](https://david-dm.org/odecee/generator-confit/dev-status.svg?theme=shields.io)](https://david-dm.org/odecee/generator-confit#info=devDependencies)
@@ -18,6 +18,11 @@
 ## Contributing
 
 Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
+
+## Requirements
+
+- Node > 4.x
+
 
 ## Install
 
@@ -47,10 +52,9 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 
 - Confit is a **web development-tool generator** that is designed to evolve as web technologies change.
 - Confit captures a project's build processes in a **build-tool-independent configuration file** (`confit.json`), so you can *migrate your configuration to use newer build-tools more-easily*.
-- Confit is **focused** on generating tools for single-page web applications (SPAs).
+- Confit is **aimed at** generating tools for single-page web applications (SPAs), but will soon support generating ES6 NodeJS libraries too (see issue #17)
 - Confit is **opinionated**. For example, Confit does not advocate the use of BowerJS. If you need it, look elsewhere. (Or create an NPM module if one doesn't already exist for the Bower library you need).
-- Confit is **not** the solution for *every* kind of web application that exists. It is **not** going to support obscure features or exceptional cases. It is a web development-tool generator for what **the contributors** consider to be the *best setup for **most** people*
-- Having said that, Confit does permit **some** configuration (see the animated gif above for an idea).
+- Confit-generated config can be customised AND still preserve your changes (so long as you make changes outside of the generated sections)
 
 > Confit wants to capture the information about your project which **will not** change when your build-tooling changes.
   This is the essence of Confit - decoupling your project configuration from the build-tool implementation of that configuration. 
@@ -68,14 +72,14 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 ### Sample projects
 
 Confit can generate a sample project implemented using the chosen combination of technologies and tools.
-*It is recommended to choose to generate the sample project the first time you run `yo confit`.* 
+*It is recommended to generate the sample project the first time you run `yo confit`.* 
 
 There are sample project implementations for the following technology combinations:
 
-Build Profile | JS Source Format | JS Frameworks Supported
+Build Profile | JS Source Format | JS Frameworks Supported (optional)
 :------------ | :--------------- | :----------------------
-Webpack       | ES6              | None, Angular 1.x,
-Webpack       | Typescript       | None, Angular 1.x, Angular 2
+Webpack       | ES6              | Angular 1.x, Angular 2
+Webpack       | Typescript       | Angular 1.x, Angular 2
 
 All sample projects support the chosen CSS compiler (or plain CSS files).
 
