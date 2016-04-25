@@ -227,6 +227,11 @@ testUnit:
         <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
         It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
 
+        Note that it is possible to run a subset of unit tests by passing a command line argument to Karma, and then modifying the `testFilesRegEx`
+        variable in <%= link(paths.config.configDir + 'testUnit/karma.common.js') %> to refer to the command line argument value.
+        For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
+        which can then be used to change the default value of `testFilesRegEx`.
+
 zzfinish:
   packages:
     - <<: *pkg_extract-text-webpack-plugin
