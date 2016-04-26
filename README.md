@@ -19,7 +19,7 @@
 
 Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
 
-## Requirements
+## Pre-requisites
 
 - Node > 4.x
 
