@@ -68,7 +68,7 @@ buildJS:
 
     TypeScript:
       packages:
-        - <<: *pkg_ts-loader
+        - <<: *pkg_awesome-typescript-loader
 
 
 # sampleApp configuration
@@ -104,8 +104,9 @@ sampleApp:
       AngularJS 2.x:
         sampleDir: ng2/
         vendorScripts:
-          - <<: *pkg_angular2/router
           - <<: *pkg_angular2/platform/browser
+          - <<: *pkg_angular2/platform/common_dom
+          - <<: *pkg_angular2/router
         typeLibs: []
 
         sourceFormat:
@@ -120,6 +121,8 @@ sampleApp:
                 browser.TEST_BROWSER_PLATFORM_PROVIDERS,
                 browser.TEST_BROWSER_APPLICATION_PROVIDERS
               );
+
+              Object.assign(global, testing);
             vendorScripts:  # Generates adds the item to the vendor scripts
               pre:
                 - './polyfills.ts'

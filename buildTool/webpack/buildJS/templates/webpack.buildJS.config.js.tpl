@@ -22,9 +22,12 @@ config.module.loaders.push({
 }
 
 if (sourceFormat === 'TypeScript') { %>
+
+const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+
 config.module.loaders.push({
   test: <%= srcDirRegEx.toString() %>,
-  loader: 'ts-loader'
+  loader: 'awesome-typescript-loader'
 });
 <%
 }

@@ -14,19 +14,31 @@ $packages:
 
   - &pkg_angular2/core
     name: angular2/core
-    version: 2.0.0-beta.6
+    version: 2.0.0-beta.17
 
   - &pkg_angular2/platform/browser
     name: angular2/platform/browser
-    version: 2.0.0-beta.6
+    version: 2.0.0-beta.17
+
+  - &pkg_angular2/platform/common_dom
+    name: angular2/platform/common_dom
+    version: 2.0.0-beta.17
+
+  - &pkg_angular2/common
+    name: angular2/common
+    version: 2.0.0-beta.17
 
   - &pkg_angular2/router
     name: angular2/router
-    version: 2.0.0-beta.6
+    version: 2.0.0-beta.17
 
   - &pkg_autoprefixer
     name: autoprefixer
     version: 6.3.6
+
+  - &pkg_awesome-typescript-loader
+    name: awesome-typescript-loader
+    version: 0.17.0
 
   - &pkg_babel-core
     name: babel-core
@@ -57,6 +69,10 @@ $packages:
     version: 2.7.3
     global: true
 
+  - &pkg_core-js
+    name: core-js
+    version: 2.3.0
+
   - &pkg_corp-semantic-release
     name: corp-semantic-release
     version: 1.3.0
@@ -69,17 +85,18 @@ $packages:
     name: cz-customizable
     version: 3.1.0
 
-  - &pkg_es6-shim
-    name: es6-shim
-    version: 0.35.0
-
-  - &pkg_es6-promise
-    name: es6-promise
-    version: 3.1.2
-
-  - &pkg_es7-reflect-metadata
-    name: es7-reflect-metadata
-    version: 1.5.5
+# Deprecated - use core-js instead
+#  - &pkg_es6-shim
+#    name: es6-shim
+#    version: 0.35.0
+#
+#  - &pkg_es6-promise
+#    name: es6-promise
+#    version: 3.1.2
+#
+#  - &pkg_es7-reflect-metadata
+#    name: es7-reflect-metadata
+#    version: 1.5.5
 
   - &pkg_eslint
     name: eslint
@@ -270,7 +287,7 @@ $packages:
 
   - &pkg_rxjs
     name: rxjs
-    version: 5.0.0-beta.0
+    version: 5.0.0-beta.7
 
   - &pkg_sass-loader
     name: sass-loader
@@ -291,15 +308,15 @@ $packages:
 
   - &pkg_tslint
     name: tslint
-    version: 3.3.0
-
-  - &pkg_ts-loader
-    name: ts-loader
-    version: 0.8.0
+    version: 3.8.1
 
   - &pkg_typescript
     name: typescript
-    version: 1.7.3
+    version: 1.8.9
+
+  - &pkg_ts-helpers
+    name: ts-helpers
+    version: 1.1.1
 
   - &pkg_typings
     name: typings
@@ -316,16 +333,20 @@ $packages:
 
   - &pkg_zone.js
     name: zone.js
-    version: 0.5.14
+    version: 0.6.12
 
-  - &pkg_zone.js/dist/zone-microtask.js
-    name: zone.js/dist/zone-microtask.js
-    version: 0.5.14
+  - &pkg_zone.js/dist/zone
+    name: zone.js/dist/zone
+    version: 0.6.12
 
-  - &pkg_zone.js/dist/long-stack-trace-zone.js
-    name: zone.js/dist/long-stack-trace-zone.js
-    version: 0.5.14
+  - &pkg_zone.js/dist/long-stack-trace-zone
+    name: zone.js/dist/long-stack-trace-zone
+    version: 0.6.12
 
-  - &pkg_zone.js/dist/jasmine-patch.js
-    name: zone.js/dist/jasmine-patch.js
-    version: 0.5.14
+  - &pkg_zone.js/dist/jasmine-patch
+    name: zone.js/dist/jasmine-patch
+    version: 0.6.12
+
+  - &pkg_zone.js/dist/async-test
+    name: zone.js/dist/async-test
+    version: 0.6.12
