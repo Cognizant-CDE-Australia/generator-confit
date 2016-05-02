@@ -123,10 +123,15 @@ buildHTML: {}
 buildJS:
   readme:
     extensionPoint:
-      buildJS: >
+      buildJS.frameworkScripts: >
+        The `buildJS.frameworkScripts` array in <%= link(configFile) %> contains framework-specific scripts, and should not be modified.
+        If a sample project is generated, the additional framework scripts needed by the sample app will also appear here.
+        This property will be overwritten **every time** Confit is run.
+
+      buildJS.vendorScripts: >
         The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
         This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
+        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
 
   sourceFormat:
     ES5:
@@ -533,6 +538,8 @@ readme:
     Additionally, the **currently-generated** configuration can be extended in the following ways:
 
     - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
+    You can also use the `pre...` and `post...` script-name prefixes to run commands before (pre) and after (post) the generated commands.
+
     <% objectValues(readme.extensionPoint).forEach(function(value) {
     %>- <%- value -%>
 

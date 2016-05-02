@@ -104,6 +104,10 @@ sampleApp:
       AngularJS 2.x:
         sampleDir: ng2/
         vendorScripts:
+          # Need to load ALL the libraries that are used in polyfills.ts and vendor.ts
+          - <<: *pkg_core-js
+          - <<: *pkg_zone.js
+          - <<: *pkg_rxjs
           - <<: *pkg_angular2/platform/browser
           - <<: *pkg_angular2/platform/common_dom
           - <<: *pkg_angular2/router
@@ -123,7 +127,7 @@ sampleApp:
               );
 
               Object.assign(global, testing);
-            vendorScripts:  # Generates adds the item to the vendor scripts
+            vendorScripts:  # Add these items to the vendor scripts entryPoint
               pre:
                 - './polyfills.ts'
               post: []

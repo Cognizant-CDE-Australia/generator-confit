@@ -64,7 +64,7 @@ module.exports = function() {
     var selectedFrameworkConfig = jsFrameworkConfig[selectedFramework];
     var selectedJSFrameworkDir = selectedFrameworkConfig.sampleDir + sourceFormat + '/'; // e.g. ng1/ES6/
 
-    // Add the NPM dev dependencies (for the build tools) and the runtime dependencies (vendorScripts)
+    // Add the NPM dev dependencies (for the build tools) and the runtime dependencies
     this.setNpmDependenciesFromArray(selectedFrameworkConfig.vendorScripts);
     this.ts.addTypeLibsFromArray(selectedFrameworkConfig.typeLibs);
     this.setNpmDevDependenciesFromArray(this.buildTool.getResources().sampleApp.packages);
