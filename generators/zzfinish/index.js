@@ -1,6 +1,6 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
 
 module.exports = confitGen.create({
 
@@ -15,6 +15,11 @@ module.exports = confitGen.create({
   },
 
   install: function() {
+    // Sort the package.json
+    const sortPkg = require('sort-package-json');
+    let data = this.readPackageJson();
+    this.writePackageJson(sortPkg(data));
+
     // InstallDependencies runs 'npm install' and 'bower install'
     this.installDependencies({
       skipInstall: this.options['skip-install'],

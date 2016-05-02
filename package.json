@@ -63,6 +63,7 @@
     "js-yaml": "3.5.2",
     "lodash": "3.10.1",
     "lodash-deep": "1.6.0",
+    "sort-package-json": "1.4.0",
     "spdx-license-list": "2.1.0",
     "yeoman-generator": "0.22.5"
   },
