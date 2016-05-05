@@ -23,6 +23,7 @@ before_install:
 install:
   - npm install --quiet -g yo
   - npm install --quiet
+  - npm link
 
 before_script:
   - export DISPLAY=:99.0
