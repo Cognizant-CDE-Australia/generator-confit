@@ -70,6 +70,11 @@ buildJS:
       packages:
         - <<: *pkg_awesome-typescript-loader
 
+      typeLibs:
+        - name: webpack
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
+
 
 # sampleApp configuration
 sampleApp:
@@ -104,12 +109,15 @@ sampleApp:
       AngularJS 2.x:
         sampleDir: ng2/
         vendorScripts:
+          # This should just be the framework files + sample-specific files
           # Need to load ALL the libraries that are used in polyfills.ts and vendor.ts
-          - <<: *pkg_core-js
-          - <<: *pkg_zone.js
-          - <<: *pkg_rxjs
-          - <<: *pkg_angular2/platform/browser
-          - <<: *pkg_angular2/platform/common_dom
+#          - <<: *pkg_core-js
+#          - <<: *pkg_zone.js
+#          - <<: *pkg_rxjs
+#          - <<: *pkg_angular2/platform/browser
+#          - <<: *pkg_angular2/platform/common_dom
+#          - <<: *pkg_angular2/core
+#          - <<: *pkg_angular2/common
           - <<: *pkg_angular2/router
         typeLibs: []
 

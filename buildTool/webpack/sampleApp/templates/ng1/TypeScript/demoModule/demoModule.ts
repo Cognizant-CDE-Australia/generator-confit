@@ -1,7 +1,6 @@
-'use strict';
-
 import 'angular';
-var mod = angular.module('demoModule', []);
+
+let mod = angular.module('demoModule', []);
 
 mod.factory('demoService', function () {
   return {

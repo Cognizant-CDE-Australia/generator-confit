@@ -16,8 +16,8 @@ function gotoPage(pageName, addToHistory) {
   // TODO: Use config paths here instead of 'modules/demoModule'
   (<any>win).document.getElementById('content').innerHTML = win[pageName.replace('#/', '')];
   if (addToHistory !== false) {
-    var title = pageName;
-    var url = '#/' + pageName;
+    let title = pageName;
+    let url = '#/' + pageName;
     win.history.pushState({ isPushState: true, url: url }, title, url);
   }
 }

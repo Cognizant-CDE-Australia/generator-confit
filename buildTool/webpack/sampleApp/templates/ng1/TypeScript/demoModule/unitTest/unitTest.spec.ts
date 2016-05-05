@@ -2,7 +2,7 @@ import demoModule from '../demoModule';
 
 describe('Basic unit test', function () {
 
-  var adder = function (x, y) {
+  let adder = function (x, y) {
     return x + y;
   };
 
@@ -13,17 +13,17 @@ describe('Basic unit test', function () {
 
 
 describe('Test imported module', function () {
-  var demoService;
+  let service;
 
   beforeEach(function() {
     angular.mock.module(demoModule);
 
-    angular.mock.inject(function(_demoService_) {
-      demoService = _demoService_;
+    angular.mock.inject(function(demoService) {
+      service = demoService;
     });
   });
 
   it('should have a demoService with a demo method', function () {
-    expect(typeof demoService.demo).toEqual('function');
+    expect(typeof service.demo).toEqual('function');
   });
 });

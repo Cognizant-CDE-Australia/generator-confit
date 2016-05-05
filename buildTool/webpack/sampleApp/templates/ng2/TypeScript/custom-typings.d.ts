@@ -33,3 +33,13 @@
 // Declare the Webpack global vars
 declare var __PROD__: boolean;
 declare var __DEV__: boolean;
+
+
+
+// Document the Error.stackTraceLimit property
+
+interface ErrorStackTraceLimit {
+  stackTraceLimit: number;
+}
+
+interface ErrorConstructor extends ErrorStackTraceLimit {}

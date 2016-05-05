@@ -35,9 +35,9 @@ module.exports = function() {
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
     var selectedFrameworkConfig = jsFrameworkConfig[config.buildJS.framework[0] || ''] || {};
 
-    // Add any vendor scripts to the config that the sampleApp for the selected framework needs
+    // Add any vendor scripts that the sampleApp for the selected framework needs
     var vendorScripts = (selectedFrameworkConfig.vendorScripts || []).map((pkg) => pkg.name);
-    config.buildJS.vendorScripts = _.uniq(config.buildJS.vendorScripts.concat(vendorScripts));
+    config.buildJS.vendorScripts = _.uniq((config.buildJS.vendorScripts || []).concat(vendorScripts));
 
     // Add any TEST vendor scripts to the testUnit config form the selectedFrameworkConfig
     var testVendorScripts = (selectedFrameworkConfig.testVendorScripts || []).map((pkg) => pkg.name);

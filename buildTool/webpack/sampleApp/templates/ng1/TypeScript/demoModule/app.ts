@@ -9,7 +9,7 @@ import demoModule from './demoModule';
 require('./<%= file %>');
 <% }); -%>
 
-var app = angular.module('myApp', ['ngRoute', demoModule]);
+let app = angular.module('myApp', ['ngRoute', demoModule]);
 
 app.config(['$routeProvider',
   function ($routeProvider) {

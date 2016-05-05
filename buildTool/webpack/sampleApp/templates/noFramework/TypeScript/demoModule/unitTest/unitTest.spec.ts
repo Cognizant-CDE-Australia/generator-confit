@@ -1,10 +1,8 @@
-'use strict';
-
 import demoModule from '../demoModule';
 
 describe('Basic unit test', () => {
 
-  var adder = function (x, y) {
+  let adder = function (x, y) {
     return x + y;
   };
 
@@ -20,10 +18,10 @@ describe('Test imported module', function () {
   });
 
   it('should only update the HTML when gotoPage(page, false) is called', () => {
-    var documentState = {
+    let documentState = {
       innerHTML: ''
     };
-    var mockWin = {
+    let mockWin = {
       document: {
         getElementById: function() {
           return documentState;
@@ -39,10 +37,10 @@ describe('Test imported module', function () {
 
 
   it('should update HTML and call history.pushState when gotoPage(page, true) is called', () => {
-    var documentState = {
+    let documentState = {
       innerHTML: ''
     };
-    var mockWin = {
+    let mockWin = {
       document: {
         getElementById: function() {
           return documentState;
@@ -62,7 +60,7 @@ describe('Test imported module', function () {
 
 
   it('should create an onpopstate handler on the window object which calls gotoPage() when the event is a pushState event', function() {
-    var mockWin = {};
+    let mockWin = {};
     demoModule.setWindow(mockWin);
     expect(typeof (<any>mockWin).onpopstate).toEqual('function');
     spyOn(demoModule, 'gotoPage').and.stub();
@@ -78,7 +76,7 @@ describe('Test imported module', function () {
   });
 
   it('should not call gotoPage() when the event is not a pushState event', function() {
-    var mockWin = {};
+    let mockWin = {};
     demoModule.setWindow(mockWin);
     expect(typeof (<any>mockWin).onpopstate).toEqual('function');
 

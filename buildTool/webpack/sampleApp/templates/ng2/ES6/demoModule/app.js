@@ -25,7 +25,10 @@ import {Page2Component} from './Page2Component';
 require('./<%= file %>');
 <% }); -%>
 
-
+/*
+ * App Component
+ * Top Level Component
+ */
 let componentAnnotation = new Component({
   selector: 'app',
   template: `

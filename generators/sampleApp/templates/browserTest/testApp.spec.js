@@ -8,7 +8,7 @@ describe('Test SampleApp build', function() {
 
   it('should have a two pages which show one image, a font icon, links, a heading and the CSS preprocessor type', function() {
     page1.get();
-    expect(browser.getCurrentUrl()).toContain('page1');
+    expect(browser.getCurrentUrl()).toContain('/');
 
     expect(page1.heading.getText()).toEqual('This is page 1');
     expect(page1.heading.getCssValue('color')).toEqual('rgba(40, 50, 60, 1)');
@@ -44,7 +44,7 @@ describe('Test SampleApp build', function() {
     expect(page2.heading.getText()).toEqual('This is page 2');
 
     browser.navigate().back();
-    expect(browser.getCurrentUrl()).toContain('page1');
+    expect(browser.getCurrentUrl()).toContain('/');
     expect(page1.heading.getText()).toEqual('This is page 1');
   });
 

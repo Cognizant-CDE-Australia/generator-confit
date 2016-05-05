@@ -2,7 +2,7 @@ import {DemoService} from '../DemoService';
 
 describe('Basic unit test', function () {
 
-  var adder = function (x, y) {
+  let adder = function (x, y) {
     return x + y;
   };
 
@@ -13,7 +13,7 @@ describe('Basic unit test', function () {
 
 
 describe('Test imported module', function () {
-  var demoService;
+  let demoService;
 
   beforeEach(function() {
     demoService = new DemoService();

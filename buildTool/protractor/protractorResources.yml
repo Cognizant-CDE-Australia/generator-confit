@@ -1,8 +1,8 @@
 testBrowser:
-  unsupported:
-    - criteria:
-        buildJS.framework[0]: AngularJS 2.x
-      message: '**Unsupported** Angular2 does not yet support Protractor via Firefox. See https://github.com/angular/zone.js/issues/234#issuecomment-189115330'
+#  unsupported:
+#    - criteria:
+#        buildJS.framework[0]: AngularJS 2.x
+#      message: '**Unsupported** Angular2 does not yet support Protractor via Firefox. See https://github.com/angular/zone.js/issues/234#issuecomment-189115330'
 
   packages:
     - <<: *pkg_protractor

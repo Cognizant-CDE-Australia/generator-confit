@@ -198,14 +198,17 @@ buildJS:
       packages:
         - <<: *pkg_core-js          # In polyfills.ts
         - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # in vendor.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+#        - <<: *pkg_angular2
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
         - <<: *pkg_angular2/core
         - <<: *pkg_angular2/common
 
       typeLibs:
         - name: core-js
           key: ambientDependencies
-          version: registry:dt/core-js#0.0.0+20160317120654
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
 
         - name: zone.js
           key: dependencies
