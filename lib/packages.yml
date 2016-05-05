@@ -2,15 +2,15 @@
 $packages:
   - &pkg_angular
     name: angular
-    version: 1.4.9
+    version: 1.5.5
 
   - &pkg_angular-mocks
     name: angular-mocks
-    version: 1.4.9
+    version: 1.5.5
 
   - &pkg_angular-route
     name: angular-route
-    version: 1.4.9
+    version: 1.5.5
 
   - &pkg_angular2/core
     name: angular2/core
