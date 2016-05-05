@@ -9,7 +9,7 @@ env:
   - CXX=g++-4.8
 
 addons:
-  firefox: "45.0.2"
+  firefox: "46.0.1"
   apt:
     sources:
       - ubuntu-toolchain-r-test
