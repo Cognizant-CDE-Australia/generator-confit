@@ -6,7 +6,7 @@ describe('Test SampleApp build', function() {
   var page1 = pages.Page1();
   var page2 = pages.Page2();
 
-  it('should have a two pages which show one image, a font icon, links, a heading and the CSS preprocessor type', function() {
+  it('should have two pages which show one image, a font icon, links, a heading and the CSS preprocessor type', function() {
     page1.get();
     expect(browser.getCurrentUrl()).toContain('/');
 
@@ -30,7 +30,6 @@ describe('Test SampleApp build', function() {
     page2.linkToPage1.getCssValue('width').then(function (value) {
       expect(parseInt(value, 10)).toBeGreaterThan(74);
     });
-
 
 
     // Go back to page 1
