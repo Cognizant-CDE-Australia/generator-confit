@@ -5,8 +5,6 @@ const server = require('./server');
 const childProc = require('child_process');
 const tempTestDir = process.env.TEST_DIR;
 
-const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
-
 function runBrowserTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
@@ -21,7 +19,7 @@ function runBrowserTest(baseUrl) {
 }
 
 
-module.exports = function() {
+module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
   describe('npm run build:serve', () => {
 

@@ -33,15 +33,15 @@ const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
  * node testRunner.js [--sequence]
  */
 function main() {
-  var fixtures = getFixtures(FIXTURE_DIR);
-  var procCount = fixtures.length;
-  var procComplete = 0;
-  var procSuccess = 0;
-  var results = [];
+  let fixtures = getFixtures(FIXTURE_DIR);
+  let procCount = fixtures.length;
+  let procComplete = 0;
+  let procSuccess = 0;
+  let results = [];
 
-  var runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
-  var processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
-  var asyncMethod = (runInSequence) ? 'waterfall' : 'parallel';
+  let runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
+  let processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
+  let asyncMethod = (runInSequence) ? 'waterfall' : 'parallel';
 
 
   function promiseRunner(cmd, cmdParams, envData) {
@@ -86,8 +86,8 @@ function main() {
 
 
   function processResults(code) {
+    let isSuccess = (code === 0);
     procComplete++;
-    var isSuccess = (code === 0);
     procSuccess += (code === 0) ? 1 : 0;
     results.push(isSuccess ? TICK : CROSS);
 
@@ -102,7 +102,7 @@ function main() {
 
   function testConfitFixture(fixture) {
     confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
-    var testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/')
+    let testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/')
 
     // Install Confit first, wait for it to complete, then start the Mocha spec
     confitMsg(chalk.white('Running Confit generator...'));
@@ -131,15 +131,11 @@ function main() {
  */
 function getFixtures(dir) {
   // Get a list of files that end in '.json' from the directory, that do not start with 'x'
-  var files = fs.readdirSync(dir)
-    .filter(function(file) {
-      return fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null);
-    });
+  let files = fs.readdirSync(dir)
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null));
 
   // get a list of the files that start with '-'. If there are any return them, otherwise return everything
-  var soloFiles = files.filter(function(file) {
-    return file.charAt(0) === '-';
-  });
+  let soloFiles = files.filter(file => file.charAt(0) === '-');
 
   return (soloFiles.length) ? soloFiles : files;
 }
