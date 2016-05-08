@@ -1,10 +1,10 @@
 'use strict';
 
-var path = require('path');
-var spawn = require('child_process').spawn;
-var freeport = require('freeport');
-var fs = require('fs-extra');
-var child;
+const path = require('path');
+const spawn = require('child_process').spawn;
+const freeport = require('freeport');
+const fs = require('fs-extra');
+let child;
 
 
 /**
@@ -15,14 +15,15 @@ var child;
  * @returns {Promise}         Promise that is fullfilled once the server has started
  */
 function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateServerReady, serverStartTimeout) {
-  var SERVER_STARTED_RE = regExForStdioToIndicateServerReady;    // A string to search for in the stdout, which indicates the server has started.
-  var resolveFn, rejectFn;
-  var result = {};
+  let SERVER_STARTED_RE = regExForStdioToIndicateServerReady;    // A string to search for in the stdout, which indicates the server has started.
+  let resolveFn, rejectFn;
+  let result = {};
+  let resolveCalled = false;
 
-  getFreePort().then(function(port) {
+  getFreePort().then((port) => {
     // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
-    var confitJson = fs.readJsonSync(testDir + 'confit.json');
-    var server = confitJson['generator-confit'][confitServerToStart];
+    let confitJson = fs.readJsonSync(testDir + 'confit.json');
+    let server = confitJson['generator-confit'][confitServerToStart];
     server.port = port;
     fs.writeJsonSync(testDir + 'confit.json', confitJson);
 
@@ -31,8 +32,8 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
       details: server
     };
 
-    var cmdParams = cmd.split(' ');
-    var mainCmd = cmdParams.shift();
+    let cmdParams = cmd.split(' ');
+    let mainCmd = cmdParams.shift();
 
     child = spawn(mainCmd, cmdParams, {
       cwd: testDir,
@@ -48,35 +49,38 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
     });
 
     child.stdout.on('data', function (data) {
-      console.info('Server: ' + data);
+      let dataStr = '' + data;
+      console.info('Server: ' + dataStr);
       // If we detect from the stdout that the server has started, resolve immediately
-      var dataStr = '' + data;
       if (dataStr.match(SERVER_STARTED_RE)) {
         console.log('Server started!');
+        resolveCalled = true;
         resolveFn(result);
       }
     });
 
-    // Webpack is logging the % complete on stderr! Filter out these messages
-    var filterRE = /^\d*%/;
+    // Webpack is logging the %-complete on stderr! Filter out these messages
+    let filterRE = /^\d*%/;
     child.stderr.on('data', function (data) {
-      var msg = data.toString();
+      let msg = data.toString();
       if (filterRE.test(msg)) {
         console.error(msg);
       }
-      //rejectFn('' + data);
+      //rejectFn('' + data);    // Don't reject these percentage complete messages
     });
-  }, function(err) {
-    rejectFn(err);
-  });
+  }, err => rejectFn(err));
 
 
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     resolveFn = resolve;
     rejectFn = reject;
-    setTimeout(function() {
-      console.log('Server: returning to parent...');
-      resolveFn(result);
+
+    // If we timeout, still call the call rejectFn
+    setTimeout(() => {
+      let msg = `Server: Failed to start after ${serverStartTimeout}ms timeout`;
+      if (!resolveCalled) {
+        rejectFn(msg);
+      }
     }, serverStartTimeout);
   });
 }
@@ -91,8 +95,8 @@ function stopServer() {
 
 
 function getFreePort() {
-  return new Promise(function(resolve, reject) {
-    freeport(function(err, port) {
+  return new Promise((resolve, reject) => {
+    freeport((err, port) => {
       if (err) {
         reject(err);
       }

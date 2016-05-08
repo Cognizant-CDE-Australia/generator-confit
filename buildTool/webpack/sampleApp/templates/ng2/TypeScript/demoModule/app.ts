@@ -1,10 +1,20 @@
 /*
  * Providers provided by Angular
  */
-import {provide, enableProdMode} from 'angular2/core';
+import {bootstrap} from 'angular2/platform/browser';
+/*
+ * Platform and Environment
+ * our providers/directives/pipes
+ */
+import {ENV_PROVIDERS} from './environment';
+
+// platform/browser/provider imports:
+import {provide} from 'angular2/core';
+import {ROUTER_PROVIDERS} from 'angular2/router';
+import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
+
+// App-component specific imports:
 import {Component} from 'angular2/core';
-import {bootstrap, ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Page1Component} from './Page1Component';
@@ -15,15 +25,6 @@ import {Page2Component} from './Page2Component';
 <% $CSSEntryPoints.forEach(function (file) { -%>
 require('./<%= file %>');
 <% }); -%>
-
-// Environment setup
-const ENV_PROVIDERS = [];
-
-if (__PROD__) {
-  enableProdMode();
-} else {
-  ENV_PROVIDERS.push(ELEMENT_PROBE_PROVIDERS);
-}
 
 /*
  * App Component
@@ -48,11 +49,7 @@ if (__PROD__) {
   // TODO: Not yet using es6-promise-loader (for Webpack) to load components dynamically.
   { path: '/**', redirectTo: ['Index'] }
 ])
-export class App {
-  //static get parameters() {
-  //  return [[HeroService], [Router]];
-  //};
-}
+export class App {}
 
 
 /*
@@ -70,19 +67,3 @@ function main() {
 
 
 document.addEventListener('DOMContentLoaded', main);
-
-//// typescript lint error 'Cannot find name "module"' fix
-//declare let module: any;
-//
-//// activate hot module reload
-//if (module.hot) {
-//
-//  // bootstrap must not be called after DOMContentLoaded,
-//  // otherwise it cannot be rerenderd after module replacement
-//  //
-//  // for testing try to comment the bootstrap function,
-//  // open the dev tools and you'll see the reloader is replacing the module but cannot rerender it
-//  main();
-//
-//  module.hot.accept();
-//}

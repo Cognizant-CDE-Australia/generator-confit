@@ -123,10 +123,15 @@ buildHTML: {}
 buildJS:
   readme:
     extensionPoint:
-      buildJS: >
+      buildJS.frameworkScripts: >
+        The `buildJS.frameworkScripts` array in <%= link(configFile) %> contains framework-specific scripts, and should not be modified.
+        If a sample project is generated, the additional framework scripts needed by the sample app will also appear here.
+        This property will be overwritten **every time** Confit is run.
+
+      buildJS.vendorScripts: >
         The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
         This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
-        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'angular2/core',  ...]`
+        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
 
   sourceFormat:
     ES5:
@@ -190,38 +195,36 @@ buildJS:
 
 
     AngularJS 2.x:
-      packages:  # the order of packages is *very* important for angular2!
-        - <<: *pkg_es6-shim
-        - <<: *pkg_es6-promise
-        - <<: *pkg_es7-reflect-metadata
-        - <<: *pkg_rxjs
-        - <<: *pkg_zone.js
+      packages:
+        - <<: *pkg_core-js          # In polyfills.ts
+        - <<: *pkg_zone.js          # In polyfills.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+#        - <<: *pkg_angular2
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
         - <<: *pkg_angular2/core
+        - <<: *pkg_angular2/common
+
       typeLibs:
-        - name: es6-promise
+        - name: core-js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
+
+        - name: zone.js
           key: dependencies
-          version: github:typed-typings/npm-es6-promise#fb04188767acfec1defd054fc8024fafa5cd4de7
+          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
 
-        - name: es6-shim
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#6697d6f7dadbf5773cb40ecda35a76027e0783b2
+      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+        - <<: *pkg_core-js
+        - <<: *pkg_ts-helpers
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_rxjs
+        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
+#        - <<: *pkg_angular2/core
 
-        - name: ng2
-          key: ambientDependencies
-          version: github:gdi2290/typings-ng2/ng2.d.ts#32998ff5584c0eab0cd9dc7704abb1c5c450701c
-
-        - name: zone
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/zone/zone.d.ts#31e7317c9a0793857109236ef7c7f223305a8aa9
-
-      testPackages:
-        - <<: *pkg_es6-shim
-        - <<: *pkg_es6-promise
-        - <<: *pkg_reflect-metadata
-        - <<: *pkg_zone.js/dist/zone-microtask.js
-        - <<: *pkg_zone.js/dist/long-stack-trace-zone.js
-        - <<: *pkg_zone.js/dist/jasmine-patch.js
-        - <<: *pkg_angular2/core
       testTypeLibs: []
 
     React (latest):
@@ -538,6 +541,8 @@ readme:
     Additionally, the **currently-generated** configuration can be extended in the following ways:
 
     - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
+    You can also use the `pre...` and `post...` script-name prefixes to run commands before (pre) and after (post) the generated commands.
+
     <% objectValues(readme.extensionPoint).forEach(function(value) {
     %>- <%- value -%>
 

@@ -28,8 +28,31 @@ Want to make life easier for web developers? Fix a bug? Become a [contributer](C
 
     npm install -g yo
     npm install -g generator-confit
+    
+    
+## Usage
 
-## What is Confit?
+    yo confit [--skip-install] [--skip-run]
+    
+- `--skip-install` skips the installation of NPM and Bower dependencies
+- `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
+
+
+
+## Features
+
+- Write code using ES5, ES6+ (using Babel) or TypeScript
+- Write plain CSS, SASS/SCSS or Stylus
+- Optional linting of CSS and JS code
+- Unit testing 
+- Browser testing
+- Support for releasing code using semantic releasing, conventional commits
+- Supports Angular 1.x and Angular 2.x frameworks 
+- Sample projects for some configurations (see below)
+- EXTENSIBLE! Decorate / extend configurations then re-run `yo confit` to re-generate configuration while preserving your changes (uses tags to identify generated-areas inside files) 
+
+
+## Con-waaat?!?
 
 Confit is a Yeoman generator that generates web-development tools for the main development processes in web projects:
 
@@ -57,17 +80,8 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 - Confit-generated config can be customised AND still preserve your changes (so long as you make changes outside of the generated sections)
 
 > Confit wants to capture the information about your project which **will not** change when your build-tooling changes.
-  This is the essence of Confit - decoupling your project configuration from the build-tool implementation of that configuration. 
-  
+  This is the essence of Confit - **decoupling your *project configuration* from the *build-tool implementation* of that configuration.** 
 
-## Usage
-
-    yo confit [--skip-install] [--skip-run]
-    
-- `--skip-install` skips the installation of NPM and Bower dependencies
-- `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
-
-## Features
 
 ### Sample projects
 

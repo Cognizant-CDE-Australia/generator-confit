@@ -68,7 +68,12 @@ buildJS:
 
     TypeScript:
       packages:
-        - <<: *pkg_ts-loader
+        - <<: *pkg_awesome-typescript-loader
+
+      typeLibs:
+        - name: webpack
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
 
 
 # sampleApp configuration
@@ -104,8 +109,16 @@ sampleApp:
       AngularJS 2.x:
         sampleDir: ng2/
         vendorScripts:
+          # This should just be the framework files + sample-specific files
+          # Need to load ALL the libraries that are used in polyfills.ts and vendor.ts
+#          - <<: *pkg_core-js
+#          - <<: *pkg_zone.js
+#          - <<: *pkg_rxjs
+#          - <<: *pkg_angular2/platform/browser
+#          - <<: *pkg_angular2/platform/common_dom
+#          - <<: *pkg_angular2/core
+#          - <<: *pkg_angular2/common
           - <<: *pkg_angular2/router
-          - <<: *pkg_angular2/platform/browser
         typeLibs: []
 
         sourceFormat:
@@ -120,7 +133,9 @@ sampleApp:
                 browser.TEST_BROWSER_PLATFORM_PROVIDERS,
                 browser.TEST_BROWSER_APPLICATION_PROVIDERS
               );
-            vendorScripts:  # Generates adds the item to the vendor scripts
+
+              Object.assign(global, testing);
+            vendorScripts:  # Add these items to the vendor scripts entryPoint
               pre:
                 - './polyfills.ts'
               post: []

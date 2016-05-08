@@ -1,16 +1,14 @@
 'use strict';
 
-var assert = require('assert');
-var server = require('./server');
-var childProc = require('child_process');
-var tempTestDir = process.env.TEST_DIR;
-
-const SERVER_MAX_WAIT_TIME = 30000;
+const assert = require('assert');
+const server = require('./server');
+const childProc = require('child_process');
+const tempTestDir = process.env.TEST_DIR;
 
 function runBrowserTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
-  var proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
+  let proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR
   });
@@ -21,25 +19,29 @@ function runBrowserTest(baseUrl) {
 }
 
 
-module.exports = function() {
+module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
-  describe('npm run build:serve', function() {
+  describe('npm run build:serve', () => {
 
-    var baseUrl;
+    let baseUrl;
 
     before(function() {
       // Start up the confit DEV webserver
-      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, SERVER_MAX_WAIT_TIME).then(function success(result) {
-        baseUrl = result.baseUrl;
-      });
+      return server.start('npm run build:serve', tempTestDir, 'serverProd', /Started connect web server on/, SERVER_MAX_WAIT_TIME).then(
+        function success(result) {
+          baseUrl = result.baseUrl;
+        },
+        function error(result) {
+          console.error(result);
+        }
+      );
     });
 
-    it('should start a webserver and build the sampleApp correctly', function() {
+    it('should start a webserver and build the sampleApp correctly', () => {
+      assert.ok(baseUrl, 'baseUrl should be defined, server took too long to load.');
       assert.doesNotThrow(function () { runBrowserTest(baseUrl); });
     });
 
-    after(function() {
-      server.stop();
-    });
+    after(() => server.stop());
   });
 };

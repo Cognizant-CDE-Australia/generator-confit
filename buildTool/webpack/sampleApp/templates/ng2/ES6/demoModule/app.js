@@ -1,7 +1,20 @@
-import {provide, enableProdMode} from 'angular2/core';
+/*
+ * Providers provided by Angular
+ */
+import {bootstrap} from 'angular2/platform/browser';
+/*
+ * Platform and Environment
+ * our providers/directives/pipes
+ */
+import {ENV_PROVIDERS} from './environment';
+
+// platform/browser/provider imports:
+import {provide} from 'angular2/core';
+import {ROUTER_PROVIDERS} from 'angular2/router';
+import {LocationStrategy, HashLocationStrategy} from 'angular2/platform/common';
+
+// App-component specific imports:
 import {Component} from 'angular2/core';
-import {bootstrap, ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/browser';
-import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Page1Component} from './Page1Component';
@@ -12,16 +25,10 @@ import {Page2Component} from './Page2Component';
 require('./<%= file %>');
 <% }); -%>
 
-// Environment setup
-const ENV_PROVIDERS = [];
-
-if (__PROD__) {
-  enableProdMode();
-} else {
-  ENV_PROVIDERS.push(ELEMENT_PROBE_PROVIDERS);
-}
-
-
+/*
+ * App Component
+ * Top Level Component
+ */
 let componentAnnotation = new Component({
   selector: 'app',
   template: `

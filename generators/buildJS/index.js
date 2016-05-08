@@ -59,12 +59,6 @@ module.exports = confitGen.create({
         choices: res.outputFormat,
         default: this.getConfig('outputFormat') || res.outputFormatDefault
       },
-      //{
-      //  type: 'confirm',
-      //  name: 'codeSplitting',
-      //  message: 'Do you wish to use code-splitting (lazy-load modules)?' + chalk.dim.green('\nNote: Code-splitting is not necessary for HTTP/2 applications.'),
-      //  default: this.getConfig('codeSplitting') || false
-      //},
       {
         type: 'checkbox',
         name: 'framework',
@@ -77,10 +71,8 @@ module.exports = confitGen.create({
         name: 'vendorScripts',
         message: 'Vendor scripts OR module-names to include ' + chalk.bold.green('(edit in ' + self.configFile + ')') + ':',
         choices: function() {
-          // Get a list of the "true" vendor scripts (not including the framework scripts)
-          var vendorScripts = (self.getConfig('vendorScripts') || []).filter((script) => {
-            return frameworkScripts.indexOf(script) === -1;
-          });
+          // Get a list of the vendor scripts
+          var vendorScripts = (self.getConfig('vendorScripts') || []);
           var cbItems = [];
           var index = 0;
           vendorScripts.forEach(function(script) {
@@ -113,32 +105,17 @@ module.exports = confitGen.create({
 
   configuring: function() {
     // If we have new answers, then change the config
-    if (this.answers) {
-      // Update the vendorScripts answer, based on the chosen framework
+    let config = this.answers || this.getConfig();
 
-      // Re-add the magic answer
-      var vendorScripts = this.getConfig('vendorScripts') || [];
-      var existingFramework = this.getConfig('framework') || [];
+    // Update the frameworkScripts answer, based on the chosen framework
+    let getScriptsForFramework = (framework) =>frameworkScriptMap[framework].packages.map((obj) => obj.name);
 
-      var getScriptsForFramework = function(framework) {
-        // Get the scripts that belong just to this old framework:
-        return frameworkScriptMap[framework].packages.map((obj) => obj.name);
-      };
+    // Add/Change the frameworkScripts property
+    let activeFrameworkScripts = _.flatten(_.flatten(config.framework.map(getScriptsForFramework)));
+    config.frameworkScripts = activeFrameworkScripts;
 
-      var oldFrameworkScripts = _.flatten(existingFramework.map(getScriptsForFramework));
-
-      // Remove the old framework scripts from vendorScripts, by only keeping the scripts which are NOT in the oldVendorScripts
-      vendorScripts = vendorScripts.filter(function(script) {
-        return oldFrameworkScripts.indexOf(script) === -1;
-      });
-
-      var activeFrameworkScripts = _.flatten(_.flatten(this.answers.framework.map(getScriptsForFramework)));
-
-      // If the new framework is "react" and the user already had a "react" vendor script, we could still get a duplicate. So call uniq().
-      this.answers.vendorScripts = _.uniq(activeFrameworkScripts.concat(vendorScripts));
-      this.buildTool.configure.apply(this);
-      this.setConfig(this.answers);
-    }
+    this.buildTool.configure.apply(this);
+    this.setConfig(config);
   },
 
   writing: function () {

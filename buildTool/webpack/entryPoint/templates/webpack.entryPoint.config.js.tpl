@@ -14,7 +14,7 @@ var sampleAppVendorScripts = (selectedFrameworkSourceFormatConfig || {}).vendorS
 
 // If there is a user-defined 'vendor' entryPoint or buildJS vendorsScripts or sampleApp vendor scripts, proceed...
 if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVendorScripts) {
-  var vendorScripts = entryPoint.entryPoints.vendor || buildJS.vendorScripts || [];
+  var vendorScripts = (buildJS.frameworkScripts || []).concat(entryPoint.entryPoints.vendor || buildJS.vendorScripts || []);
 
   if (sampleAppVendorScripts) {
     vendorScripts = [].concat(
