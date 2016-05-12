@@ -78,7 +78,7 @@ $packages:
 
   - &pkg_commitizen
     name: commitizen
-    version: 2.7.3
+    version: 2.8.1
     global: true
 
   - &pkg_core-js
@@ -96,7 +96,7 @@ $packages:
 
   - &pkg_cz-customizable
     name: cz-customizable
-    version: 3.1.0
+    version: 4.0.0
 
   - &pkg_eslint
     name: eslint
@@ -271,7 +271,7 @@ $packages:
 
   - &pkg_protractor
     name: protractor
-    version: 3.1.1
+    version: 3.2.1
 
   - &pkg_react
     name: react
