@@ -72,6 +72,7 @@
     "async": "1.5.2",
     "commitizen": "2.5.0",
     "cz-customizable": "3.1.0",
+    "cz-customizable-ghooks": "1.1.0",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "fs-extra": "0.26.3",
@@ -82,14 +83,13 @@
     "npm-module-checklist": "1.6.0",
     "protractor": "3.2.1",
     "semantic-release": "4.3.5",
-    "validate-commit-msg": "1.1.0",
     "yeoman-assert": "2.1.2",
     "yeoman-test": "1.1.0"
   },
   "config": {
     "ghooks": {
       "pre-commit": "exact-semver",
-      "commit-msg": "validate-commit-msg"
+      "commit-msg": "./node_modules/cz-customizable-ghooks/index.js $2"
     },
     "commitizen": {
       "path": "node_modules/cz-customizable"

@@ -98,6 +98,11 @@ $packages:
     name: cz-customizable
     version: 4.0.0
 
+  - &pkg_cz-customizable-ghooks
+    name: cz-customizable-ghooks
+    version: 1.1.0
+
+
   - &pkg_eslint
     name: eslint
     version: 1.10.3
@@ -125,6 +130,10 @@ $packages:
   - &pkg_file-loader
     name: file-loader
     version: 0.8.5
+
+  - &pkg_ghooks
+    name: ghooks
+    version: 1.2.1
 
   - &pkg_grunt
     name: grunt
