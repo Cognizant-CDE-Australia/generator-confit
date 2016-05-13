@@ -4,12 +4,16 @@ release:
       packages:
         - <<: *pkg_cz-customizable
         - <<: *pkg_commitizen
+        - <<: *pkg_ghooks
+        - <<: *pkg_cz-customizable-ghooks
 
       npmConfig:
         - commitizen:
             path: node_modules/cz-customizable
         - cz-customizable:
             config: <%= paths.config.configDir %>release/commitMessageConfig.js
+        - ghooks:
+            commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
 
       templateFiles:
         - src: commitMessageConfig.js
@@ -25,6 +29,10 @@ release:
               features:
                 - Asks questions about the change to generate a valid conventional commit message
                 - Can be customised by modifying <%= link(paths.config.configDir + 'release/commitMessageConfig.js') %>
+
+      onInstall:
+        - cmd: git    # It is safe to run this multiple times
+          args: ['init']
 
     None:
       packages: []
