@@ -3,10 +3,16 @@
     "app": {
       "buildProfile": "null"
     },
+    "buildJS": {
+      "sourceFormat": "ES6"
+    },
     "paths": {
       "input": {},
       "output": {},
       "config": {}
+    },
+    "release": {
+      "useSemantic": true
     },
     "serverDev": {
       "port": 3000,

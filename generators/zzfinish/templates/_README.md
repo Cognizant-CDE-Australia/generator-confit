@@ -24,6 +24,11 @@
 
 <!--[]-->
 
+<!--[RM_NEXT_STEPS]-->
+<%= RM_NEXT_STEPS %>
+
+<!--[]-->
+
 <!--[RM_LICENSE]-->
 <%= RM_LICENSE %>
 
