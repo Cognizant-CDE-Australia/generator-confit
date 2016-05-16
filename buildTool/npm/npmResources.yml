@@ -51,7 +51,6 @@ release:
               Create production version of software, verify code, run unit tests. This task is designed to be run before
               the `semantic-release` task.
             features:
-              - Requires Node 4.x (`semantic-release-cli` will not work on Node 5.x as of March 2015)
               - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details
               - Generates release notes against each release in the "Releases" section in GitHub
               - Publishes package to NPM

@@ -31,6 +31,7 @@ describe('zzFinish Generator', function () {
         assert.notEqual(readmeText.indexOf('<!--[RM_DESCRIPTION]-->'), -1);
         assert.notEqual(readmeText.indexOf('> desc'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_INSTALL]-->'), -1);
+        assert.notEqual(readmeText.indexOf('<!--[RM_NEXT_STEPS]-->'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_CONTRIBUTING]-->'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_LICENSE]-->'), -1);
         assert.notEqual(readmeText.indexOf('This software does not have a license.'), -1, 'correct license text when UNLICENSED');
