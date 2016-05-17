@@ -42,7 +42,7 @@ module.exports = {
    },
    */
 
-  allowCustomScopes: true,
+  allowCustomScopes: false,
   allowBreakingChanges: ['feat', 'fix']
 
 };
