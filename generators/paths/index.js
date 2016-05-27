@@ -151,6 +151,6 @@ function filterPath(pathStr, promptKey) {
     newPath = newPath.substr(2);
   }
 
-  // Replace any path separators with the standard ones
-  return path.normalize(newPath + path.sep);
+  // Replace any path separators with the Posix ones
+  return path.posix.normalize(newPath + path.posix.sep);
 }

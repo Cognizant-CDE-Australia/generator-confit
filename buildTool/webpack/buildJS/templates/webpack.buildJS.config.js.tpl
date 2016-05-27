@@ -7,8 +7,8 @@ var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var srcDirRegEx = new RegExp(paths.input.srcDir.replace(/\//g, '\\/') + '.*\\.(' + jsExtensions.join('|') + ')$');
 
 if (sourceFormat === 'ES6' && outputFormat === 'ES5') {%>
-config.module.loaders.push({
-  test: <%= srcDirRegEx.toString() %>,
+var srcLoader = {
+  test: helpers.pathRegEx(<%= srcDirRegEx.toString() %>),
   loader: 'babel-loader',
   exclude: ['node_modules'],    // There should be no need to exclude unit or browser tests because they should NOT be part of the source code dependency tree
   query: {
@@ -18,18 +18,20 @@ config.module.loaders.push({
     // Generate the "default" export when using Babel 6: http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default
     plugins: ['add-module-exports']
   }
-});<%
+};<%
 }
 
 if (sourceFormat === 'TypeScript') { %>
 
-const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+// Not used yet, but can speed up compile time for TypeScript AND Babel
+//const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
-config.module.loaders.push({
-  test: <%= srcDirRegEx.toString() %>,
+var srcLoader = {
+  test: helpers.pathRegEx(<%= srcDirRegEx.toString() %>),
   loader: 'awesome-typescript-loader'
-});
+};
 <%
 }
 %>
+config.module.loaders.push(srcLoader);
 /* **/

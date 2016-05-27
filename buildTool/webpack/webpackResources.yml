@@ -148,7 +148,17 @@ sampleApp:
         typeLibs: []
         sourceFormat: {}
 
-serverDev: {}
+serverDev:
+  packages: []
+
+  tasks:
+    - name: serve:dev
+      tasks: ['echo Starting DEV server']
+      description: Runs a dev server using `webpack-dev-server` on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**
+      features:
+        - HTTP or HTTPS
+        - LiveReload support for HTML & CSS
+        - Hot module reloading
 
 testUnit:
   # Use different coverage loaders for TypeScript as there currently isn't a loader that understands TypeScript natively?
@@ -262,6 +272,10 @@ zzfinish:
 
     - src: prod.webpack.config.js
       dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
+      overwrite: true
+
+    - src: webpackHelpers.js
+      dest: <%= paths.config.configDir %>webpack/webpackHelpers.js
       overwrite: true
 
   readme:
