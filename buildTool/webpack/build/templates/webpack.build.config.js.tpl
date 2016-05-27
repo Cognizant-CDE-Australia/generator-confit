@@ -22,9 +22,9 @@ var config = {
   devtool: 'source-map',
   context: path.join(basePath, '<%= paths.input.srcDir.slice(0, -1) %>'),  // The baseDir for resolving the entry option and the HTML-Webpack-Plugin
   output: {
-    filename: path.join('<%= paths.output.jsSubDir %>[name].[hash:8].js'),
-    chunkFilename: path.join('<%= paths.output.jsSubDir %>[id].[chunkhash:8].js'),  // The name for non-entry chunks
-    path: path.join('<%= paths.output.prodDir %>'),
+    filename: '<%= paths.output.jsSubDir %>[name].[hash:8].js',
+    chunkFilename: '<%= paths.output.jsSubDir %>[id].[chunkhash:8].js',  // The name for non-entry chunks
+    path: '<%= paths.output.prodDir %>',
     pathinfo: false   // Add path info beside module numbers in source code. Do not set to 'true' in production. http://webpack.github.io/docs/configuration.html#output-pathinfo
   },
   module: {
