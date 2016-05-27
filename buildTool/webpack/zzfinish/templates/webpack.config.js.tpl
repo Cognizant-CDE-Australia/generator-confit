@@ -9,6 +9,9 @@
 <% include ../../buildCSS/templates/webpack.buildCSS.config.js.tpl %>
 <% include ../../buildHTML/templates/webpack.buildHTML.config.js.tpl %>
 <% include ../../serverDev/templates/webpack.serverDev.config.js.tpl %>
+
+// To remove content hashes, call helpers.removeHash(config.prop.parent, propertyName, regExMatcher (optional));
+// For example helpers.removeHash(config.output, 'fileName', /\[(contentHash|hash).*?\]/)
 // END_CONFIT_GENERATED_CONTENT
 
 module.exports = config;

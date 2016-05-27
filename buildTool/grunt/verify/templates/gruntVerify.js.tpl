@@ -1,6 +1,9 @@
 module.exports = function (grunt) {
   'use strict';
 
+  var path = require('path');
+  var pathJoin = function(item) { return path.join(item); };
+
   grunt.extendConfig({
 <%
   var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
@@ -19,11 +22,11 @@ module.exports = function (grunt) {
   lintTasks.push('eslint:all'); -%>
     eslint: {
       options: {
-        configFile: '<%= paths.config.configDir %>verify/.eslintrc',
+        configFile: path.join('<%= paths.config.configDir %>verify/.eslintrc'),
         quiet: true // Report errors only
       },
       all: {
-        src: <%- printJson(jsFiles, 10) %>
+        src: <%- printJson(jsFiles, 10) %>.map(pathJoin)
       }
     },
 <% } -%>
@@ -31,11 +34,11 @@ module.exports = function (grunt) {
     lintTasks.push('tslint:all'); -%>
     tslint: {
       options: {
-        configuration: '<%= paths.config.configDir %>verify/tslint.json'
+        configuration: path.join('<%= paths.config.configDir %>verify/tslint.json')
       },
       all: {
         files: {
-          src: <%- printJson(jsFiles, 10) %>
+          src: <%- printJson(jsFiles, 10) %>.map(pathJoin)
         }
       }
     },
@@ -44,9 +47,9 @@ module.exports = function (grunt) {
     lintTasks.push('sasslint:all'); -%>
     sasslint: {
       options: {
-        configFile: '<%= paths.config.configDir %>verify/.sasslintrc'
+        configFile: path.join('<%= paths.config.configDir %>verify/.sasslintrc')
       },
-      all: <%- printJson(cssFiles, 10) %>
+      all: <%- printJson(cssFiles, 10) %>.map(pathJoin)
     },
 <% } -%>
 <% if (buildCSS.sourceFormat === 'stylus') {
@@ -54,9 +57,9 @@ module.exports = function (grunt) {
     stylint: {
       all: {
         options: {
-          configFile: '<%= paths.config.configDir %>verify/.stylintrc'
+          configFile: path.join('<%= paths.config.configDir %>verify/.stylintrc')
         },
-        src: <%- printJson(cssFiles, 10) %>
+        src: <%- printJson(cssFiles, 10) %>.map(pathJoin)
       }
     },
 <% } -%>
@@ -65,11 +68,11 @@ module.exports = function (grunt) {
         options: {
           spawn: true
         },
-        files: <%- printJson(jsFiles.concat(cssFiles), 10) %>,
+        files: <%- printJson(jsFiles.concat(cssFiles), 10) %>.map(pathJoin),
         tasks: <%- printJson(lintTasks.map(function(task) { return 'newer:' + task; }), 10) %>
       }
     }
   });
 
-  grunt.registerTask('verify', 'Run all the verify tasks', <%- printJson(lintTasks) %>);
+  grunt.registerTask('verify', 'Run all the verify tasks', <%- printJson(lintTasks, 4) %>);
 };

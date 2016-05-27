@@ -15,13 +15,40 @@
 
 [Concept Video](https://vimeo.com/128842400)
 
-## Contributing
 
-Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
+# Table of Contents
+
+- [Introduction](#introduction)
+  - [Features](#features)
+  - [Pre-requisites](#pre-requisites)
+  - [Install](#install)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+- [Background](#background)
+  - [Con-waaat?!?](#con-wat)
+- [Using Confit](#using-confit)
+  - [Sample Projects](#sample-projects)
+  - [Smart upgrading](#smart-upgrading)
+- [Sponsors](#sponsors)
+
+# Introduction
+
+## Features
+
+- Write code using ES5, ES6+ (using Babel) or TypeScript
+- Write plain CSS, SASS/SCSS or Stylus
+- Optional linting of CSS and JS code
+- Unit testing 
+- Browser testing
+- Support for releasing code using semantic releasing, conventional commits
+- Supports Angular 1.x and Angular 2.x frameworks 
+- Sample projects for some configurations (see below)
+- EXTENSIBLE! Decorate / extend configurations then re-run `yo confit` to re-generate configuration while preserving your changes (uses tags to identify generated-areas inside files) 
 
 ## Pre-requisites
 
-- Node > 4.x
+- Node 4.x
+- NPM 3.x (especially for Windows users)
 
 
 ## Install
@@ -38,19 +65,12 @@ Want to make life easier for web developers? Fix a bug? Become a [contributer](C
 - `--skip-run` skips the run command, which normally starts the build tool in develop mode (`npm run dev`)
 
 
+## Contributing
 
-## Features
+Want to make life easier for web developers? Fix a bug? Become a [contributer](CONTRIBUTING.md)!
 
-- Write code using ES5, ES6+ (using Babel) or TypeScript
-- Write plain CSS, SASS/SCSS or Stylus
-- Optional linting of CSS and JS code
-- Unit testing 
-- Browser testing
-- Support for releasing code using semantic releasing, conventional commits
-- Supports Angular 1.x and Angular 2.x frameworks 
-- Sample projects for some configurations (see below)
-- EXTENSIBLE! Decorate / extend configurations then re-run `yo confit` to re-generate configuration while preserving your changes (uses tags to identify generated-areas inside files) 
 
+# Background
 
 ## Con-waaat?!?
 
@@ -82,8 +102,9 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 > Confit wants to capture the information about your project which **will not** change when your build-tooling changes.
   This is the essence of Confit - **decoupling your *project configuration* from the *build-tool implementation* of that configuration.** 
 
+# Using Confit
 
-### Sample projects
+## Sample projects
 
 Confit can generate a sample project implemented using the chosen combination of technologies and tools.
 *It is recommended to generate the sample project the first time you run `yo confit`.* 
@@ -97,16 +118,23 @@ Webpack       | Typescript       | Angular 1.x, Angular 2
 
 All sample projects support the chosen CSS compiler (or plain CSS files).
 
-## Upgrading
+## Smart upgrading
 
-Confit is designed to be hassle-free when upgrading. As well as using semantic versioning, Confit has some smarts to make upgrading simple even when there are "breaking changes". *It is always a good idea to commit all your source code to a repo BEFORE upgrading, so that if the upgrade doesn't turn out how you expected, you can revert to the previous version of the code.*
+Confit is designed to be hassle-free when upgrading. As well as using semantic versioning, 
+Confit has some smarts to make upgrading simple even when there are "breaking changes".
+*It is always a good idea to commit all your source code to a repo BEFORE upgrading, so that if the upgrade doesn't 
+turn out how you expected, you can revert to the previous version of the code.*
 
-Each Confit generator (Confit is composed of multiple generators) contains a version identifier. When you upgrade to a new version of Confit, if any of the new generators have changed, Confit will detect this and the generator will re-ask the questions for that section. That will cause the generator's version in your `confit.json` file to be updated, as well as new information being added to the file in some cases. Old / deprecated information will not be automatically removed.
+Each Confit generator (Confit is composed of multiple generators) contains a version identifier. 
+When you upgrade to a new version of Confit, if any of the new generators have changed, 
+Confit will detect this and the generator will re-ask the questions for that section. 
+That will cause the generator's version in your `confit.json` file to be updated, as well
+ as new information being added to the file in some cases. Old / deprecated information will not be automatically removed.
 
-Similarly for the generated tools, if the tooling changes, or you choose to use a different build profile which uses different tools, the old tools' files will not be removed.
+Similarly for the generated tools, if the tooling changes, or you choose to use a different build profile which 
+uses different tools, the old tools' files will not be removed.
 
-
-### Templates for README.md & CONTRIBUTING.md content
+### Upgrading README.md & CONTRIBUTING.md content
 
 There are several tags available for inserting generated content into the README.md file and CONTRIBUTING.md. 
 Information inside README.md is aimed at end-users (consumers) of the package. Information inside CONTRIBUTING.md is

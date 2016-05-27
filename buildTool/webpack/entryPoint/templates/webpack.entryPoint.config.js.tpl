@@ -27,11 +27,13 @@ if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVe
 config.entry.vendor = <%- printJson(vendorScripts) %>;
 
 // Create a common chunk for the vendor modules (https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk)
-config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+var commonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin({
   name: 'vendor',
   filename: '<%- paths.output.vendorJSSubDir %>[name].[hash:8].js',
   minChunks: Infinity
-}));<%
+});
+config.plugins.push(commonsChunkPlugin);
+<%
 }
 %>
 /** Entry point END **/
