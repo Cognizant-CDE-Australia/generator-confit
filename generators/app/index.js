@@ -25,9 +25,9 @@ module.exports = confitGen.create({
       this.log(chalk.underline.bold.green('Confit App Generator'));
 
       if (this.hasConfig) {
-        var done = this.async();
+        let done = this.async();
 
-        var modePrompt = [
+        let modePrompt = [
           {
             type: 'confirm',
             name: 'rebuildFromConfig',
@@ -39,17 +39,43 @@ module.exports = confitGen.create({
         this.prompt(modePrompt, function(props) {
           // Build site, skip to configuring
           this.rebuildFromConfig = props.rebuildFromConfig;
-
           done();
         }.bind(this));
       }
     },
 
-    promptForEverything: function() {
-      //this.log('rebuildFromConfig = ' + this.rebuildFromConfig);
-
+    promptForProjectType: function() {
       // Bail out if we just want to rebuild from the configuration file
-      // But is we don't have a build tool, we need some answers!
+      // AND we have a project type
+      let projectType = this.getConfig('projectType');
+      if (this.rebuildFromConfig && projectType) {
+        this.getBuildProfiles(projectType);
+        this.updateBuildTool();
+        return;
+      }
+
+      let done = this.async();
+      let resources = this.getResources().app;
+
+      let prompts = [
+        {
+          type: 'list',
+          name: 'projectType',
+          message: 'Choose the project type',
+          choices: resources.projectTypeList,
+          default: projectType || resources.defaultProjectType
+        }
+      ];
+
+      this.prompt(prompts, function(answers) {
+        this.projectType = answers.projectType;
+        done();
+      }.bind(this));
+    },
+
+    promptForEverything: function() {
+      // Bail out if we just want to rebuild from the configuration file
+      // But if we don't have a build tool, we need some answers!
       if (this.rebuildFromConfig && !this.buildTool.isNull) {
         return;
       }
@@ -57,20 +83,14 @@ module.exports = confitGen.create({
       let done = this.async();
 
       // Sort out the build profiles
-      let buildProfiles = this.getBuildProfiles();
-      let profileDescriptions = buildProfiles.map(profile => profile.name + ' - ' + profile.description);
-      let existingProfileName = this.getConfig('buildProfile');
+      let projectType = this.projectType || this.getConfig('projectType');
+      let buildProfiles = this.getBuildProfiles(projectType);
+      let profileDescriptions = buildProfiles.map(profile => { return { value: profile.name, name: profile.name + ' - ' + profile.description };});
       let resources = this.getResources().app;
 
       let popularLicenses = resources.licenses.popular;
       let defaultLicense = resources.licenses.default;
       let allLicenses = _.keys(spdxLic);
-
-      let browsers = resources.supportedBrowsers;
-      let defaultBrowsers = resources.defaultSupportedBrowsers;
-      let browserList = _.keys(browsers);
-      let browserObjList = browserList.map(browser => { return { value: browser, name: browsers[browser].label};});
-
 
       // Ask everything...
       let prompts = [
@@ -79,26 +99,7 @@ module.exports = confitGen.create({
           name: 'buildProfile',
           message: 'Choose a build-profile for your project',
           choices: profileDescriptions,
-          default: function() {
-            let existingProfileDesc = '';
-
-            buildProfiles.forEach(profile => {
-              if (profile.name === existingProfileName) {
-                existingProfileDesc = profile.name + ' - ' + profile.description;
-              }
-            });
-
-            // If we still don't have a profile description (because our profile name changed, for instance), use the first one.
-            if (!existingProfileDesc) {
-              existingProfileDesc = profileDescriptions[0];
-            }
-            return existingProfileDesc;
-          },
-          // Convert the label back into the name:
-          filter: function(answer) {
-            let profile = buildProfiles.filter(profile => (profile.name + ' - ' + profile.description) === answer);
-            return profile[0].name;
-          }
+          default: this.getConfig('buildProfile') || profileDescriptions[0]
         },
         {
           type: 'list',
@@ -112,20 +113,13 @@ module.exports = confitGen.create({
           name: 'copyrightOwner',
           message: 'Copyright owner',
           default: this.getConfig().copyrightOwner || this.user.git.name()
-        },
-        {
-          type: 'checkbox',
-          name: 'browserSupport',
-          message: 'Supported browsers (required)',
-          choices: browserObjList,
-          default: this.getConfig().browserSupport || defaultBrowsers,
-          validate: answer => answer.length > 0   // Must select at-least one
         }
       ];
 
       this.prompt(prompts, function(answers) {
-        // Remove the username from the answers, as we only want it temporarily
         this.answers = this.generateObjFromAnswers(answers, prompts);
+        // Make sure projectType is stored as an answer, even though we may have asked the question in a previous prompt
+        this.answers.projectType = projectType;
         done();
       }.bind(this));
     }
@@ -134,12 +128,14 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     if (this.answers) {
-      this.buildTool.configure.apply(this);
       this.setConfig(this.answers);
 
       // Update our buildTool, as it may have changed
       this.updateBuildTool();
     }
+
+    // IMPORTANT: Reload the resources to include the project-type resources.
+    this.initResources(this.projectType, true);
 
     // Make sure that even older configurations receive a license property, even when rebuilding
     let existingConfig = this.getConfig();
@@ -188,9 +184,6 @@ module.exports = confitGen.create({
         this.log(chalk.bold.red('The license file MAY contain templates. Please review before committing.'));
       }
     }
-
-    this.buildTool.write.apply(this);
-
     // Run finalisation for all the used buildTools
     this.buildTool.finalizeAll.call(this);
   },

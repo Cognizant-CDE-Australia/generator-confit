@@ -1,6 +1,4 @@
-app: {}
-
-build:
+buildBrowser:
   packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server

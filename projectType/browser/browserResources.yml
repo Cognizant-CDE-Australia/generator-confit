@@ -1,0 +1,711 @@
+# App configuration
+app:
+  subGenerators:  # This is the order that the sub-generators should be executed in. Try not to couple these together
+    - confit:buildBrowser
+    - confit:paths
+    - confit:buildAssets
+    - confit:buildCSS
+    - confit:buildJS
+    - confit:buildHTML
+    - confit:entryPoint
+    - confit:serverDev
+    - confit:serverProd
+    - confit:testUnit
+    - confit:testBrowser
+    - confit:verify
+    - confit:release
+    - confit:sampleApp
+    - confit:zzfinish
+
+  packages:
+    - <<: *pkg_npm-run-all
+    - <<: *pkg_rimraf
+
+  tasks:
+    - name: start
+      tasks: ['npm run dev']
+      description: Alias for `npm run dev` task
+      features:
+
+    - name: dev
+      tasks: ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev']
+      description: Run project in development mode (verify code, create dev build into <%= paths.output.devDir %> folder, serve on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**, watch for changes and reload the browser automatically)
+      features:
+
+    - name: build
+      tasks: ['clean:prod', 'build:prod']
+      description: Generate production build into <%= link(paths.output.prodDir) %> folder
+      features:
+
+    - name: build:serve
+      tasks: ['build', 'serve:prod']
+      description: Generate production build and serve on **<%= serverProd.protocol + '://' + serverProd.hostname + ':' + serverProd.port %>**'
+      features:
+
+    - name: clean:dev
+      tasks: ['rimraf <%= paths.output.devDir %>']
+      description:
+      features:
+
+    - name: clean:prod
+      tasks: ['rimraf <%= paths.output.prodDir %>']
+      description:
+      features:
+
+buildBrowser:
+  defaultSupportedBrowsers: ['latest']
+
+  supportedBrowsers:
+    latest:
+      label: Latest Versions (major browsers)
+      browserList: ['last 1 version']
+    latest2:
+      label: Latest 2 Versions (major browsers)
+      browserList: ['last 2 versions']
+    legacyIE:
+      label: Legacy Internet Explorer (9, 10, 11)
+      browserList: ['ie 9', 'ie 10', 'ie 11']
+    legacyMobile:
+      label: Legacy Mobile (Blackberry, Android Webview)
+      browserList: ['bb', 'Android Webview']
+
+buildAssets: {}
+
+# CSS configuration
+buildCSS:
+  defaultSourceFormat: stylus
+  sourceFormat:
+    css:
+      ext: ['css']
+
+    sass:
+      ext: ['sass', 'scss']
+
+    stylus:
+      ext: ['styl']
+
+buildHTML: {}
+
+buildJS:
+  readme:
+    extensionPoint:
+      buildJS.frameworkScripts: >
+        The `buildJS.frameworkScripts` array in <%= link(configFile) %> contains framework-specific scripts, and should not be modified.
+        If a sample project is generated, the additional framework scripts needed by the sample app will also appear here.
+        This property will be overwritten **every time** Confit is run.
+
+      buildJS.vendorScripts: >
+        The `buildJS.vendorScripts` array in <%= link(configFile) %> is designed to be edited manually.
+        This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
+        For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
+
+  sourceFormat:
+    ES5:
+      ext: ['js']
+      packages: []
+      templates: []
+      tasks: []
+
+    ES6:
+      ext: ['js']
+      packages: []
+      templates: []
+      tasks: []
+
+    TypeScript:
+      ext: ['ts']
+      packages:
+        - <<: *pkg_typescript
+        - <<: *pkg_typings
+
+      templateFiles:
+        - src: tsconfig.json.tpl
+          dest: tsconfig.json
+          overwrite: true
+
+      tasks:
+        - name: typings:install
+          tasks: ['typings install']
+          description: ''
+
+      typeLibs:
+        - name: node
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
+
+      onInstall:
+        - cmd: npm
+          args: ['run', 'typings:install']
+
+  sourceFormatDefault: ES6
+
+  outputFormat:
+    - ES5
+    - ES6
+  outputFormatDefault: ES5
+
+  frameworks:
+    AngularJS 1.x:
+      packages:
+        - <<: *pkg_angular
+      typeLibs:
+        - name: angular
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
+        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
+
+      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
+        - <<: *pkg_angular
+        - <<: *pkg_angular-mocks
+      testTypeLibs:
+        - name: angular-mocks
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
+
+
+    AngularJS 2.x:
+      packages:
+        - <<: *pkg_core-js          # In polyfills.ts
+        - <<: *pkg_zone.js          # In polyfills.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+#        - <<: *pkg_angular2
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
+        - <<: *pkg_angular2/core
+        - <<: *pkg_angular2/common
+
+      typeLibs:
+        - name: core-js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
+
+        - name: zone.js
+          key: dependencies
+          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
+
+      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+        - <<: *pkg_core-js
+        - <<: *pkg_ts-helpers
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_rxjs
+        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
+#        - <<: *pkg_angular2/core
+
+      testTypeLibs: []
+
+    React (latest):
+      packages:
+        - <<: *pkg_react
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
+
+entryPoint:
+  readme:
+    extensionPoint:
+      entryPoint: >
+        The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
+        It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
+        one entry point, but it is possible to have more than one.
+        `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
+        of NPM module names and/or references to JavaScript files (file references must start with `./`);
+
+# Path Defaults
+paths:
+  prompts:
+    - name: input.srcDir
+      heading: |
+        Source-code paths
+
+      message: Path to SOURCE directory (relative to the current directory)
+
+    - name: input.modulesSubDir
+      message: Path to MODULES directory (relative to the SOURCE directory)
+
+    - name: input.assetsDir
+      message: Name of module ASSETS directory (for images, fonts)
+
+    - name: input.stylesDir
+      message: Name of module STYLES directory (for CSS)
+
+    - name: input.templateDir
+      message: Name of module TEMPLATE directory (for component HTML templates)
+
+    - name: input.unitTestDir
+      message: Name of module UNIT TEST directory
+
+    - name: input.browserTestDir
+      message: Name of module FUNCTIONAL TEST directory
+
+    - name: output.devDir
+      heading: |
+        Output paths
+
+      message: Path to DEV OUTPUT directory (relative to the current directory)
+
+    - name: output.prodDir
+      message: Path to PRODUCTION OUTPUT directory (relative to the current directory)
+
+    - name: output.assetsSubDir
+      message: Path to ASSETS sub-directory (relative to the OUTPUT directory)
+
+    - name: output.cssSubDir
+      message: Path to CSS sub-directory (relative to the OUTPUT directory)
+
+    - name: output.jsSubDir
+      message: Path to JS sub-directory (relative to OUTPUT directory)
+
+    - name: output.vendorJSSubDir
+      message: Path to VENDOR JS libraries sub-directory (relative to OUTPUT directory)
+
+    - name: output.reportDir
+      message: Path to TEST REPORTS directory (relative to the current directory)
+
+    - name: config.configDir
+      heading: |
+        Config paths
+
+      message: Path to CONFIG directory (relative to the current directory)
+
+
+  defaults:
+    input:
+      srcDir: src/
+      modulesSubDir: modules/
+      assetsDir: assets/
+      stylesDir: styles/
+      templateDir: template/
+      unitTestDir: unitTest/
+      browserTestDir: browserTest/
+
+    output:
+      devDir: dev/
+      prodDir: dist/
+      assetsSubDir: assets/
+      cssSubDir: css/
+      jsSubDir: js/
+      vendorJSSubDir: vendor/
+      viewsSubDir: views/
+      reportDir: reports/
+
+    config:
+      configDir: config/
+      tempDir: .tmp/
+
+  templateFiles:
+    - src: gitignore
+      dest: .gitignore
+      overwrite: false
+
+# README section for the template tags that will appear inside the README.md template
+readme:
+  RM_HEADING: '# <%- pkg.name %>'
+  RM_DESCRIPTION: '> <%- pkg.description %>'
+  RM_INSTALL: |
+    ## Install
+
+        npm install <%- pkg.name %>
+
+  RM_DIR_STRUCTURE: |
+    ## Directory Structure
+
+    Code is organised into modules which contain one-or-more components. This a great way to ensure maintainable code by encapsulation of behavior logic. A component is basically a self contained app usually in a single file or a folder with each concern as a file: style, template, specs, e2e, and component class. Here's how it looks:
+    ```<% var maxDirLen = 30; %>
+    <%- pkg.name %>/
+     ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. grunt, webpack, verify, testUnit)
+     │
+     ├──<%- rpad(paths.input.srcDir, maxDirLen) %>* source code files should be here
+     │   └──<%- rpad(paths.input.modulesSubDir, maxDirLen - 4) %>* all source code modules|components|features should appear as sub-directories under this directory
+     │       ├──<%- rpad('common/', maxDirLen - 8) %>
+     │       ├──<%- rpad('featureA/', maxDirLen - 8) %>
+     │       └──<%- rpad('featureB/', maxDirLen - 8) %>
+     │           ├──<%- rpad(paths.input.assetsDir, maxDirLen - 12) %>
+     │           │   ├──<%- rpad('font', maxDirLen - 16) %>* fonts for this module
+     │           │   └──<%- rpad('img', maxDirLen - 16) %>* images for this module
+     │           ├──<%- rpad(paths.input.stylesDir, maxDirLen - 12) %>* css source code for this module
+     │           ├──<%- rpad(paths.input.templateDir, maxDirLen - 12) %>* HTML templates for this module
+     │           ├──<%- rpad(paths.input.unitTestDir, maxDirLen - 12) %>* unit test specs for this module
+     │           └──<%- rpad(paths.input.browserTestDir, maxDirLen - 12) %>* browser test specs for this module
+     │
+     ├──<%- rpad(paths.output.devDir, maxDirLen) %>* development-build code is output here (Webpack may keep it in memory for speed)
+     ├──<%- rpad(paths.output.prodDir, maxDirLen) %>* production-build code is output here
+     │   ├──<%- rpad(paths.output.assetsSubDir, maxDirLen - 4) %>* all assets appear here, under module sub-folders. e.g.:
+     │   │   └──<%- rpad('featureB/', maxDirLen - 8) %>
+     │   │       ├──<%- rpad('font', maxDirLen - 12) %>
+     │   │       └──<%- rpad('img', maxDirLen - 12) %>
+     │   ├──<%- rpad(paths.output.cssSubDir, maxDirLen - 4) %>* compiled CSS files
+     │   ├──<%- rpad(paths.output.jsSubDir, maxDirLen - 4) %>* minified JS files
+     │   ├──<%- rpad(paths.output.vendorJSSubDir, maxDirLen - 4) %>* minified vendor JS files
+     │   └──<%- rpad(paths.output.viewsSubDir, maxDirLen - 4) %>* minified HTML files
+     │
+     ├──<%- rpad(paths.output.reportDir, maxDirLen) %>* test reports appear here
+     │
+     ├──<%- rpad(configFile, maxDirLen) %>* The project config file generated by 'yo confit'
+     ├──<%- rpad('CONTRIBUTING.md', maxDirLen) %>* how to contribute to the repo
+     ├──<%- rpad('README.md', maxDirLen) %>* this file
+     └──<%- rpad('package.json', maxDirLen) %>* what NPM uses to manage it's dependencies
+    ```
+
+  RM_CONTRIBUTING: |
+    ## Contributing
+
+    See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+  RM_NEXT_STEPS: |
+    ## *Next Steps to Setup your Project*
+
+        Remove this section once you are comfortable updating your project.
+
+    - [ ] Update [package.json](package.json) with a nice description, then run `yo confit --skip-install --skip-run` and see the README.md file is updated
+    - [ ] Add a new **dependency** to your project:
+      - For a **source-code** dependency:
+        1. `npm i {nodeModule} --save`
+        <% if (buildJS.sourceFormat === 'TypeScript') {
+        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency <% } %>
+        1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `buildJS.vendorScripts` array
+        1. `yo confit` to regenerate your build configuration
+      - For a **development** dependency:
+        1. `npm i {nodeModule} --save-dev`
+        1. Edit the configuration file(s) that will need to use this dependency in the areas of the file that will not be overwritten when `yo confit` is run.
+         For example:
+         ```js
+
+         // Changes in this region will be preserved.
+
+         // START_CONFIT_GENERATED_CONTENT
+
+           // Changes in this region will be overwritten if `yo confit` is run again.
+
+         // END_CONFIT_GENERATED_CONTENT
+
+         // Changes in this region will be preserved.
+
+         ```
+      - For a **test** dependency:
+        1. `npm i {nodeModule} --save`
+        <% if (buildJS.sourceFormat === 'TypeScript') {
+        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency<% } %>
+        1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `testUnit.testDependencies` array
+        1. Run `yo confit` to regenerate your build configuration
+    <% if (release.useSemantic) { %>- [ ] Complete the installation of the **semantic release** tool:
+      1. Make sure you have:
+        - a GitHub login
+        - an NPM login
+        - a TravisCI login (though you can still proceed if you use a different CI tool)
+      1. Run `semantic-release-cli setup` to complete the installation
+    <% } -%>
+    - [ ] Add a new module to `<%- paths.input.modulesDir %>`
+    - [ ] Run `npm start`, change the stylesheet and see the changes appear immediately
+    - [ ] Run `npm test` to execute the unit tests and see the test coverage
+    - [ ] Run `npm start &&test:browser` to execute the browser tests
+    <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
+    <% } -%>
+
+
+  RM_LICENSE: |
+    ## License
+
+    <% if (!app.license || app.license === 'UNLICENSED') { %>This software does not have a license.
+    <% } else { -%>This software is licensed under the <%- app.license %> Licence. See [LICENSE](LICENSE).<% } -%>
+
+  CN_HEADING: |
+    # Contributing
+
+    Welcome! This document explains how you can contribute to making **<%- pkg.name %>** even better.
+
+  CN_GETTING_STARTED: |
+    # Getting Started
+
+    ## Installation
+
+    ```
+    git clone <this repo>
+    npm install
+    ```
+
+  CN_GITFLOW_PROCESS: |
+    # GitFlow Development Process
+
+    This project uses the [GitHub Flow](https://guides.github.com/introduction/flow/index.html) workflow.
+
+    ## Create a branch
+    When you're working on a project, you're going to have a bunch of different features or ideas in progress at any given time – some of which are ready to go, and others which are not. Branching exists to help you manage this workflow.
+
+    When you create a branch in your project, you're creating an environment where you can try out new ideas. Changes you make on a branch don't affect the `master` branch, so you're free to experiment and commit changes, safe in the knowledge that your branch won't be merged until it's ready to be reviewed by someone you're collaborating with.
+
+    ###ProTip
+
+    Branching is a core concept in Git, and the entire GitHub Flow is based upon it. There's only one rule: anything in the `master` branch is always deployable.
+
+    Because of this, it's extremely important that your new branch is created off of `master` when working on a feature or a fix. Your branch name should be descriptive (e.g., `refactor-authentication`, `user-content-cache-key`, `make-retina-avatars`), so that others can see what is being worked on.
+
+    ## Add commits
+    Once your branch has been created, it's time to start making changes. Whenever you add, edit, or delete a file, you're making a commit, and adding them to your branch. This process of adding commits keeps track of your progress as you work on a feature branch.
+
+    Commits also create a transparent history of your work that others can follow to understand what you've done and why. Each commit has an associated commit message, which is a description explaining why a particular change was made. Furthermore, each commit is considered a separate unit of change. This lets you roll back changes if a bug is found, or if you decide to head in a different direction.
+
+    ###ProTip
+
+    Commit messages are important, especially since Git tracks your changes and then displays them as commits once they're pushed to the server. By writing clear commit messages, you can make it easier for other people to follow along and provide feedback.
+
+    ## Open a pull request
+
+    Pull Requests initiate discussion about your commits. Because they're tightly integrated with the underlying Git repository, anyone can see exactly what changes would be merged if they accept your request.
+
+    You can open a Pull Request at any point during the development process: when you have little or no code but want to share some screenshots or general ideas, when you're stuck and need help or advice, or when you're ready for someone to review your work. By using GitHub's @mention system in your Pull Request message, you can ask for feedback from specific people or teams, whether they're down the hall or ten time zones away.
+
+    ###ProTip
+
+    Pull Requests are useful for contributing to open source projects and for managing changes to shared repositories. If you're using a Fork & Pull Model, Pull Requests provide a way to notify project maintainers about the changes you'd like them to consider. If you're using a Shared Repository Model, Pull Requests help start code review and conversation about proposed changes before they're merged into the `master` branch.
+
+    ## Discuss and review your code
+    Once a Pull Request has been opened, the person or team reviewing your changes may have questions or comments. Perhaps the coding style doesn't match project guidelines, the change is missing unit tests, or maybe everything looks great and props are in order. Pull Requests are designed to encourage and capture this type of conversation.
+
+    You can also continue to push to your branch in light of discussion and feedback about your commits. If someone comments that you forgot to do something or if there is a bug in the code, you can fix it in your branch and push up the change. GitHub will show your new commits and any additional feedback you may receive in the unified Pull Request view.
+
+    ###ProTip
+
+    Pull Request comments are written in Markdown, so you can embed images and emoji, use pre-formatted text blocks, and other lightweight formatting.
+
+    ## Merge to `master`
+
+    Once your PR has passed any the integration tests and received approval to merge, it is time to merge your code into the `master` branch.
+
+    Once merged, Pull Requests preserve a record of the historical changes to your code. Because they're searchable, they let anyone go back in time to understand why and how a decision was made.
+
+    ###ProTip
+
+    By incorporating certain keywords into the text of your Pull Request, you can associate issues with code. When your Pull Request is merged, the related issues are also closed. For example, entering the phrase Closes #32 would close issue number 32 in the repository. For more information, check out our help article.
+
+
+  CN_BUILD_TASKS: |
+    ## Build Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build)).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_COMMIT_TASKS: |
+    ## Commit Tasks
+
+    Command | Description
+    :------ | :----------
+    <pre>git status</pre> | Lists the current branch and the status of changed files
+    <pre>git log</pre> | Displays the commit log (press Q to quit viewing)
+    <pre>git add .</pre> | Stages all modified & untracked files, ready to be committed
+    <% objectValues(readme.buildTask.commit).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); -%>
+    <pre>git push</pre> | Push local repository changes to remote repository
+
+
+  CN_RELEASE_TASKS: |
+    ## Release Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.release).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+  CN_TEST_TASKS: |
+    ## Test Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_VERIFY_TASKS: |
+    ## Verification (Linting) Tasks
+
+    Command | Description
+    :------ | :----------
+    <% objectValues(readme.buildTask.verify).forEach(function(value) {
+    %><pre><%- value.command %></pre> | <%- value.description %><%
+      if (value.features && value.features.length) {
+        %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
+      } %>
+    <% }); %>
+
+
+  CN_CHANGING_BUILD_TOOL_CONFIG: |
+    ## Changing build-tool configuration
+
+    There are 3 ways you can change the build-tool configuration for this project:
+
+    1. BEST: Modify the Confit configuration file (<%= link(configFile) %>) by hand, then re-run `yo confit` and tell it to use the existing configuration.
+    1. OK: Re-run `yo confit` and provide new answers to the questions. **Confit will attempt to overwrite your existing configuration (it will prompt for confirmation), so make sure you have committed your code to a source control (e.g. git) first**.
+      There are certain configuration settings which can **only** be specified by hand, in which case the first approach is still best.
+    1. RISKY: Modify the generated build-tool config by hand. Be aware that if you re-run `yo confit` it will attempt to overwrite your changes. So commit your changes to source control first.
+
+    Additionally, the **currently-generated** configuration can be extended in the following ways:
+
+    - The task configuration is defined in [package.json](package.json). It is possible to change the task definitions to add your own sub-tasks.
+    You can also use the `pre...` and `post...` script-name prefixes to run commands before (pre) and after (post) the generated commands.
+
+    <% objectValues(readme.extensionPoint).forEach(function(value) {
+    %>- <%- value -%>
+
+    <% }); %>
+
+
+release: {}
+
+# Sample App
+sampleApp:
+  demoModuleDir: demoModule/
+  entryPointFileName:
+    ES5: 'app.js'
+    ES6: 'app.js'
+    TypeScript: 'app.ts'
+
+  templateFiles:
+    - src: assets/**/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
+      overwrite: true
+      type: binary
+
+    - src: browserTest/*
+      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
+      overwrite: true
+      type: binary
+
+  cssSourceFormat:
+    css:
+      entryPointFileName: app.css
+      templateFiles:
+        - src: css/app.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+    sass:
+      entryPointFileName: app.sass
+      templateFiles:
+        - src: css/app.sass
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+    stylus:
+      entryPointFileName: app.styl
+      templateFiles:
+        - src: css/app.styl
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
+          overwrite: true
+        - src: css/iconFont.css
+          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          overwrite: true
+
+# Server - Development
+serverDev:
+  defaults:
+    port: 3000
+    hostname: localhost
+    protocol: https
+
+serverProd:
+  defaults:
+    port: 3000
+    hostname: localhost
+    protocol: https
+
+testBrowser: {}
+
+verify:
+  jsCodingStandard:
+    none:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint.yml
+          dest: (configDir)/verify/.eslintrc
+
+    AirBnB:
+      supportedSourceFormat: ['ES6']
+      packages:
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
+        - <<: *pkg_eslint-plugin-react
+        - <<: *pkg_babel-eslint
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint.yml
+          dest: (configDir)/verify/.eslintrc
+
+    Google:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-config-defaults
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint.yml
+          dest: (configDir)/verify/.eslintrc
+
+    StandardJS:
+      supportedSourceFormat: ['ES5', 'ES6']
+      packages:
+        - <<: *pkg_eslint-config-standard
+        - <<: *pkg_eslint-plugin-standard
+      templateFiles:
+        - src: eslintignore.tpl
+          dest: .eslintignore
+        - src: eslint.yml
+          dest: (configDir)/verify/.eslintrc
+
+    TypeScript:
+      supportedSourceFormat: ['TypeScript']
+      packages:
+        - <<: *pkg_tslint
+      templateFiles:
+        - src: tslint.json
+          dest: (configDir)/verify/tslint.json
+
+
+  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+    css:
+      templateFiles: []
+    sass:
+      # No packages to install, as the build-tools will have their own
+      templateFiles:
+        - src: sasslintrc
+          dest: (configDir)verify/.sasslintrc
+    stylus:
+      # No packages to install, as the build-tools will have their own
+      templateFiles:
+        - src: stylintrc
+          dest: (configDir)verify/.stylintrc

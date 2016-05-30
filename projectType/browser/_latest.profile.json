@@ -1,9 +1,9 @@
 {
-  "name": "Webpack",
+  "name": "Latest",
   "description": "Webpack-based build profile (23 Dec 2015)",
   "toolMap": {
     "app": "webpack",
-    "build": "webpack",
+    "buildBrowser": "webpack",
     "buildAssets": "webpack",
     "buildCSS": "webpack",
     "buildHTML": "webpack",

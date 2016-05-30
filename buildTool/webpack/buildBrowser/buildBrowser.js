@@ -3,8 +3,8 @@
 module.exports = function() {
 
   function write() {
-    this.log('Writing Webpack app options');
-    let toolResources = this.buildTool.getResources().app;
+    this.log('Writing Webpack buildBrowser options');
+    let toolResources = this.buildTool.getResources().buildBrowser;
     this.writeBuildToolConfig(toolResources);
   }
 

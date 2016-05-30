@@ -1,15 +1,15 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
-var fs = require('fs');
-var _ = require('lodash');
-var path = require('path');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
+const fs = require('fs');
+const _ = require('lodash');
+const path = require('path');
 
 
-var frameworkScriptMap;
-var frameworkNames;       // The names of the frameworks ['frameworkName', ...]
-var frameworkScriptObjs;  // The framework script packages {ModuleName: 'version'}
-var frameworkScripts;     // The framework script names ['ModuleName', ...]
+let frameworkScriptMap;
+let frameworkNames;       // The names of the frameworks ['frameworkName', ...]
+let frameworkScriptObjs;  // The framework script packages {ModuleName: 'version'}
+let frameworkScripts;     // The framework script names ['ModuleName', ...]
 
 module.exports = confitGen.create({
   initializing: {
@@ -40,11 +40,11 @@ module.exports = confitGen.create({
 
     this.log(chalk.underline.bold.green('Build JS Generator'));
 
-    var done = this.async();
-    var self = this;
-    var res = this.getResources().buildJS;
+    let done = this.async();
+    let self = this;
+    let res = this.getResources().buildJS;
 
-    var prompts = [
+    let prompts = [
       {
         type: 'list',
         name: 'sourceFormat',
@@ -72,9 +72,9 @@ module.exports = confitGen.create({
         message: 'Vendor scripts OR module-names to include ' + chalk.bold.green('(edit in ' + self.configFile + ')') + ':',
         choices: function() {
           // Get a list of the vendor scripts
-          var vendorScripts = (self.getConfig('vendorScripts') || []);
-          var cbItems = [];
-          var index = 0;
+          let vendorScripts = (self.getConfig('vendorScripts') || []);
+          let cbItems = [];
+          let index = 0;
           vendorScripts.forEach(function(script) {
             index++;
             cbItems.push({
@@ -84,7 +84,7 @@ module.exports = confitGen.create({
             });
           });
 
-          var headerLabel = (vendorScripts.length) ? 'Vendor Scripts' : '(No vendor scripts defined)';
+          let headerLabel = (vendorScripts.length) ? 'Vendor Scripts' : '(No vendor scripts defined)';
 
           cbItems.unshift(headerLabel);   // Stick this label "bundles" onto the front of the list to allow the spacebar to be pressed without causing an exception
           return cbItems;

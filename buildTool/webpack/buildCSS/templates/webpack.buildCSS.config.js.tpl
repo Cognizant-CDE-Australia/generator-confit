@@ -4,9 +4,9 @@ if (buildCSS.autoprefixer) {
 
   var browserStringArray = [];
 
-  app.browserSupport.forEach(function(item) {
-    if (resources.app.supportedBrowsers[item]) {
-      browserStringArray = browserStringArray.concat(resources.app.supportedBrowsers[item].browserList);
+  buildBrowser.browserSupport.forEach(function(item) {
+    if (resources.buildBrowser.supportedBrowsers[item]) {
+      browserStringArray = browserStringArray.concat(resources.buildBrowser.supportedBrowsers[item].browserList);
     }
   });
 -%>

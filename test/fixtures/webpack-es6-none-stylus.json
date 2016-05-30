@@ -1,14 +1,18 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "2737946baf689a3448fd973acac152906b10af1c",
+      "_version": "f680e74c66b40b33a55479761bb1690d40fd06e7",
+      "buildProfile": "Latest",
+      "projectType": "browser"
+    },
+    "buildBrowser": {
+      "_version": "e4ba1cd74468c99ced49bac2dd3634122918e331",
       "browserSupport": [
         "latest"
-      ],
-      "buildProfile": "Latest"
+      ]
     },
     "paths": {
-      "_version": "a7fbbf6a129b3b6ac4b325b3b9f51bbbb4a398b4",
+      "_version": "f463a21ee74bb26df9401c2ca7f4affe36951845",
       "config": {
         "configDir": "config/",
         "tempDir": ".tmp/"
@@ -36,12 +40,12 @@
     },
     "buildAssets": {},
     "buildCSS": {
-      "_version": "51acf34bcc4ca869a9f3ed932f4b0808a6fd4b37",
+      "_version": "cddb64b4f796acedc045f1a0e3a16bf2bff1f012",
       "autoprefixer": true,
       "sourceFormat": "stylus"
     },
     "buildJS": {
-      "_version": "7ecf24894a3d1dd6be5ff8acc76fdc2da2aba089",
+      "_version": "7b45f397fc28ab3a9bfcd8d1e2ce7e4cd88d9f78",
       "framework": [],
       "outputFormat": "ES5",
       "sourceFormat": "ES6",

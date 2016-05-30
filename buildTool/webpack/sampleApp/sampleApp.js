@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+const _ = require('lodash');
 
 module.exports = function() {
 
@@ -16,7 +16,7 @@ module.exports = function() {
   }
 
 
-  function configuring() {
+  function configure() {
     // Generate a Webpack-specific version of the sample entry points
     var fullConfig = readConfit.apply(this);
     var config = fullConfig[this.getResources().rootGeneratorName];
@@ -74,33 +74,33 @@ module.exports = function() {
 
     // Copy JS files
     this.fs.copyTpl(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*.*'),
+      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir),
       config
     );
 
     // Copy unit test(s)
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*.*'),
+      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir)
     );
 
 
     // Copy TEMPLATE HTML files
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*.*'),
+      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*.*'),
       this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir)
     );
 
     // Copy Webpack specific index.html template
     this.fs.copy(
-      this.toolTemplatePath(selectedJSFrameworkDir + '*.*'),
+      this.getToolTemplatePath(selectedJSFrameworkDir + '*.*'),
       this.destinationPath(outputDir)
     );
   }
 
   return {
-    configure: configuring,
-    write: write
+    configure,
+    write
   };
 };

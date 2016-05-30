@@ -16,7 +16,7 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     beforeTestCb,
     assertionCb
   ).withGenerators([
-    [helpers.createDummyGenerator(), 'confit:build'],
+    [helpers.createDummyGenerator(), 'confit:buildBrowser'],
     [helpers.createDummyGenerator(), 'confit:buildAssets'],
     [helpers.createDummyGenerator(), 'confit:buildCSS'],
     [helpers.createDummyGenerator(), 'confit:buildHTML'],
@@ -40,21 +40,20 @@ describe('App Generator', function () {
   it('should add an "app" section to the confit.json file with valid data inside it', function(done) {
     runGenerator('app-config.json',
       function beforeTest() {
-        var confit = fs.readJsonSync('confit.json');
+        let confit = fs.readJsonSync('confit.json');
         assert.equal(confit['generator-confit'].app, undefined);
       },
       function afterTest() {
-        var confit = fs.readJsonSync('confit.json');
-        assert.equal(typeof confit['generator-confit'].app, 'object');
-        assert.equal(typeof confit['generator-confit'].app.buildProfile, 'string');
-        assert.equal(typeof confit['generator-confit'].app.browserSupport, 'object');
-        assert(confit['generator-confit'].app.browserSupport.length > 0, 'browser support length is greater than 0');
-        assert.equal(typeof confit['generator-confit'].app._version, 'string');
+        let confit = fs.readJsonSync('confit.json');
+        let app = confit['generator-confit'].app;
 
-        // Verify that the buildProfile and browser support values have no spaces in them
-        // (they should be the simple key, not the label)
-        assert(confit['generator-confit'].app.buildProfile.indexOf(' ') === -1, 'buildProfile is a simple key');
-        assert(confit['generator-confit'].app.browserSupport[0].indexOf(' ') === -1, 'browserSupport is a simple key');
+        assert.equal(typeof app, 'object');
+        assert.equal(typeof app.buildProfile, 'string');
+        assert.equal(typeof app.projectType, 'string');
+        assert.equal(typeof app._version, 'string');
+
+        // Verify that the buildProfile values have no spaces in them (they should be the simple key, not the label)
+        assert(app.buildProfile.indexOf(' ') === -1, 'buildProfile is a simple key');
 
         //fs.readdirSync(testDir).forEach(file => console.log(file));
         done();
