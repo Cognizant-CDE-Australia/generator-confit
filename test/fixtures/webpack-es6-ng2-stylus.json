@@ -16,8 +16,7 @@
     "paths": {
       "_version": "f463a21ee74bb26df9401c2ca7f4affe36951845",
       "config": {
-        "configDir": "config/",
-        "tempDir": ".tmp/"
+        "configDir": "config/"
       },
       "input": {
         "assetsDir": "assets/",

@@ -76,7 +76,6 @@ module.exports = confitGen.create({
 
     // Generate this variable to maintain compatibility with existing build-code
     config.input.modulesDir = config.input.srcDir + config.input.modulesSubDir;
-    config.config.tempDir = filterPath.call(this, defaultPaths.config.tempDir, 'config.tempDir');
 
     // Only if we prompted for answers should we re-call the build tool
     if (this.answers) {

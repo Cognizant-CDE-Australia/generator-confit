@@ -136,7 +136,6 @@ paths:
 
     config:
       configDir: config/
-      tempDir: .tmp/
 
   templateFiles:
     - src: gitignore
