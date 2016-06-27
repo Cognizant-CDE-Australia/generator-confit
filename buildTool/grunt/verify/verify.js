@@ -8,22 +8,21 @@ module.exports = function() {
 
     // Write global verify config...
     let config = this.getGlobalConfig();
-    let demoDir = this.getResources().sampleApp.demoDir;  // We want to ignore this directory when linting, initially!
-    demoDir = this.renderEJS(demoDir, config);     // This can contain an EJS template, so parse it directly
-
+    let resources = this.getResources().verify;
     let toolResources = this.buildTool.getResources().verify;
-    this.writeBuildToolConfig(toolResources, {demoDir: demoDir});
 
-    // ...then sub-configs for cssCodingStandard and jsCodingStandard
-    if (config.buildCSS && config.buildCSS.sourceFormat) {
-      let cssCodingStandard = config.buildCSS.sourceFormat;
-      this.writeBuildToolConfig(toolResources.cssCodingStandard[cssCodingStandard]);
-    }
+    // Evaluation-context for the codeConfig.codingStandardExpression
+    let context = {
+      config,
+      resources
+    };
 
-    if (config.verify.jsCodingStandard) {
-      let jsCodingStandard = config.verify.jsCodingStandard;
-      this.writeBuildToolConfig(toolResources.jsCodingStandard[jsCodingStandard]);
-    }
+    this.writeBuildToolConfig(toolResources);
+
+    // For-each source-code-type to verify, write build tool config
+    resources.codeToVerify.forEach(codeConfig => {
+      this.writeBuildToolConfig(toolResources[codeConfig.configKey][_.get(context, codeConfig.codingStandardExpression)]);
+    });
   }
 
   return {

@@ -645,6 +645,13 @@ serverProd:
 testBrowser: {}
 
 verify:
+  codeToVerify:
+    - configKey: cssCodingStandard
+      codingStandardExpression: config.buildCSS.sourceFormat
+
+    - configKey: jsCodingStandard
+      codingStandardExpression: config.verify.jsCodingStandard
+
   jsCodingStandard:
     none:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -655,7 +662,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     AirBnB:
       supportedSourceFormat: ['ES6']
@@ -668,7 +675,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     Google:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -679,7 +686,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     StandardJS:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -690,7 +697,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     TypeScript:
       supportedSourceFormat: ['TypeScript']
@@ -698,7 +705,7 @@ verify:
         - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
-          dest: (configDir)/verify/tslint.json
+          dest: <%= paths.config.configDir %>verify/tslint.json
 
 
   cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
@@ -708,9 +715,9 @@ verify:
       # No packages to install, as the build-tools will have their own
       templateFiles:
         - src: sasslintrc
-          dest: (configDir)verify/.sasslintrc
+          dest: <%= paths.config.configDir %>verify/.sasslintrc
     stylus:
       # No packages to install, as the build-tools will have their own
       templateFiles:
         - src: stylintrc
-          dest: (configDir)verify/.stylintrc
+          dest: <%= paths.config.configDir %>verify/.stylintrc

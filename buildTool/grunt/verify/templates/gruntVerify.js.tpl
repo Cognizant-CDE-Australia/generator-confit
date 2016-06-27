@@ -16,9 +16,6 @@ module.exports = function (grunt) {
     jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
     // Loop through extensions and generate jsFiles
     jsFiles = jsExtensions.map(ext => paths.input.srcDir + '**/*.' + ext).concat(jsExtensions.map(ext => paths.config.configDir + '**/*.' + ext));
-
-    // Ignore the demoDir directory (we don't want to start with a bunch of errors in the console)
-    jsFiles = jsFiles.concat(jsExtensions.map(ext => '!' + paths.input.srcDir + demoDir + '**/*.' + ext));
   }
 -%>
 <% if (hasJSConfig && buildJS.sourceFormat === 'ES5' || buildJS.sourceFormat === 'ES6') {

@@ -24,16 +24,15 @@ module.exports = confitGen.create({
 
       this.log(chalk.underline.bold.green('Verify Generator'));
 
-      var done = this.async();
-      var sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
-      var jsCodingStandardObjs = this.getResources().verify.jsCodingStandard;
+      let done = this.async();
+      let sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
+      let jsCodingStandardObjs = this.getResources().verify.jsCodingStandard;
       // Only show the linters that are applicable for the selected JS sourceFormat
-      var validJSStandards = _.pick(jsCodingStandardObjs, val => val.supportedSourceFormat.indexOf(sourceFormat) > -1);
-      var jsCodingStandards = _.keys(validJSStandards);
+      let validJSStandards = _.pick(jsCodingStandardObjs, val => val.supportedSourceFormat.indexOf(sourceFormat) > -1);
+      let jsCodingStandards = _.keys(validJSStandards);
 
       // Filter the list based on sourceFormat
-
-      var prompts = [
+      let prompts = [
         {
           type: 'list',
           name: 'jsCodingStandard',
@@ -63,29 +62,20 @@ module.exports = confitGen.create({
     // Copy the linting templates
     let config = this.config.getAll();
     let resources = this.getResources().verify;
-    let outputDir = config.paths.config.configDir;
-    let jsCodingStandard = this.getConfig('jsCodingStandard');
-    let cssCodingStandard = (config.buildCSS || {}).sourceFormat || resources.defaultCSSCodingStandard;
 
-    // This is project-specific:
-    let cssTemplateFiles = resources.cssCodingStandard[cssCodingStandard].templateFiles;
-    let jsTemplateFiles = resources.jsCodingStandard[jsCodingStandard].templateFiles;
-    let allTemplateFiles = [].concat(cssTemplateFiles, jsTemplateFiles);
+    // Evaluation-context for the codeConfig.codingStandardExpression
+    let context = {
+      config,
+      resources
+    };
 
-    // This is project-specific
-    let demoDir = this.getResources().sampleApp.demoDir;  // We want to ignore this directory when linting, initially!  // TODO: Do this in the sample app?
+    let demoDir = this.getResources().sampleApp.demoDir;  // We want to ignore this directory when linting, initially!
     demoDir = this.renderEJS(demoDir, config);            // This can contain an EJS template, so parse it directly
 
-    allTemplateFiles.forEach(templateFile => {
-      this.updateTextFile(
-        this.templatePath(templateFile.src),
-        this.destinationPath(templateFile.dest.replace('(configDir)', outputDir)),
-        _.merge({}, config, {demoDir: demoDir})
-      );
+    // For-each source-code-type to verify, write generator config
+    resources.codeToVerify.forEach(codeConfig => {
+      this.writeGeneratorConfig(resources[codeConfig.configKey][_.get(context, codeConfig.codingStandardExpression)], {demoDir: demoDir});
     });
-
-    // NPM dependencies only for jsCodingStandard - nothing for CSS? Correct. The buildTool has the CSS dependencies
-    this.setNpmDevDependenciesFromArray(resources.jsCodingStandard[jsCodingStandard].packages);
 
     this.buildTool.write.apply(this);
   },

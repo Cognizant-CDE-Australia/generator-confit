@@ -337,6 +337,10 @@ sampleApp:
     TypeScript: 'index.ts'
 
 verify:
+  codeToVerify:
+    - configKey: jsCodingStandard
+      codingStandardExpression: config.verify.jsCodingStandard
+
   jsCodingStandard:
     none:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -347,7 +351,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     AirBnB:
       supportedSourceFormat: ['ES6']
@@ -360,7 +364,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     Google:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -371,7 +375,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     StandardJS:
       supportedSourceFormat: ['ES5', 'ES6']
@@ -382,7 +386,7 @@ verify:
         - src: eslintignore.tpl
           dest: .eslintignore
         - src: eslint.yml
-          dest: (configDir)/verify/.eslintrc
+          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     TypeScript:
       supportedSourceFormat: ['TypeScript']
@@ -390,8 +394,4 @@ verify:
         - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
-          dest: (configDir)/verify/tslint.json
-
-  cssCodingStandard:  # No CSS linting - this is a Node library
-    css:
-      templateFiles: []
+          dest: <%= paths.config.configDir %>verify/tslint.json
