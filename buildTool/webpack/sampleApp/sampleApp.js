@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+let demoOutputModuleDir;    // We only want to calculate this once
 
 module.exports = function() {
 
@@ -18,9 +19,9 @@ module.exports = function() {
 
   function configure() {
     // Generate a Webpack-specific version of the sample entry points
-    var fullConfig = readConfit.apply(this);
-    var config = fullConfig[this.getResources().rootGeneratorName];
-    var modulesDir = config.paths.input.modulesSubDir;
+    let fullConfig = readConfit.apply(this);
+    let config = fullConfig[this.getResources().rootGeneratorName];
+    demoOutputModuleDir = this.renderEJS(this.getResources().sampleApp.demoDir, config);
 
     // Add a sampleApp entryPoint
     if (!config.entryPoint.entryPoints) {
@@ -29,7 +30,7 @@ module.exports = function() {
 
     // Get the sourceFormat, to use the appropriate extension for the entry point
     var entryPointFileName = this.getResources().sampleApp.entryPointFileName[config.buildJS.sourceFormat];
-    config.entryPoint.entryPoints.sampleApp = ['./' + modulesDir + this.demoOutputModuleDir + entryPointFileName];
+    config.entryPoint.entryPoints.sampleApp = ['./' + demoOutputModuleDir + entryPointFileName];
 
     // Get the sampleApp's JS Framework config
     var jsFrameworkConfig = this.buildTool.getResources().sampleApp.js.framework;
@@ -74,22 +75,22 @@ module.exports = function() {
 
     // Copy JS files
     this.fs.copyTpl(
-      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + '*.*'),
-      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir),
+      this.getToolTemplatePath(selectedJSFrameworkDir + 'demoModule/*.*'),
+      this.destinationPath(paths.input.srcDir + demoOutputModuleDir),
       config
     );
 
     // Copy unit test(s)
     this.fs.copy(
-      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'unitTest/*.*'),
-      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.unitTestDir)
+      this.getToolTemplatePath(selectedJSFrameworkDir + 'demoModule/unitTest/*.*'),
+      this.destinationPath(paths.input.srcDir + demoOutputModuleDir + paths.input.unitTestDir)
     );
 
 
     // Copy TEMPLATE HTML files
     this.fs.copy(
-      this.getToolTemplatePath(selectedJSFrameworkDir + this.demoOutputModuleDir + 'templates/*.*'),
-      this.destinationPath(paths.input.modulesDir + this.demoOutputModuleDir + paths.input.templateDir)
+      this.getToolTemplatePath(selectedJSFrameworkDir + 'demoModule/templates/*.*'),
+      this.destinationPath(paths.input.srcDir + demoOutputModuleDir + paths.input.templateDir)
     );
 
     // Copy Webpack specific index.html template

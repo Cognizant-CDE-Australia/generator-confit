@@ -2,9 +2,8 @@
 app:
   subGenerators:
     - confit:paths
+    - confit:buildJS
     - confit:entryPoint
-    - confit:serverDev
-    - confit:serverProd
     - confit:testUnit
     - confit:verify
     - confit:release
@@ -22,29 +21,36 @@ app:
       features:
 
     - name: dev
-      tasks: ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev']
-      description: Run project in development mode (verify code, create dev build into <%= paths.output.devDir %> folder, serve on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**, watch for changes and reload the browser automatically)
+      tasks: ['verify', '--parallel verify:watch']    # Later, add build task if required
+      description: Run project in development mode (verify code, and re-verify when code is changed)
       features:
 
-    - name: build
-      tasks: ['clean:prod', 'build:prod']
-      description: Generate production build into <%= link(paths.output.prodDir) %> folder
-      features:
+#    - name: build
+#      tasks: ['clean:prod']   # Later on, we may need to add a build-task here
+#      description: Generate production build into <%= link(paths.output.prodDir) %> folder
+#      features:
+#
+#    - name: clean:prod
+#      tasks: ['rimraf <%= paths.output.prodDir %>']
+#      description:
+#      features:
 
-    - name: build:serve
-      tasks: ['build', 'serve:prod']
-      description: Generate production build and serve on **<%= serverProd.protocol + '://' + serverProd.hostname + ':' + serverProd.port %>**'
-      features:
+buildJS:
+  sourceFormat:
+    ES6:
+      ext: ['js']
+      packages: []
+      templates: []
+      tasks: []
 
-    - name: clean:dev
-      tasks: ['rimraf <%= paths.output.devDir %>']
-      description:
-      features:
+  sourceFormatDefault: ES6
 
-    - name: clean:prod
-      tasks: ['rimraf <%= paths.output.prodDir %>']
-      description:
-      features:
+  outputFormat:
+    - ES6
+  outputFormatDefault: ES6
+
+  frameworks: {}
+
 
 entryPoint:
   readme:
@@ -60,82 +66,36 @@ entryPoint:
 paths:
   prompts:
     - name: input.srcDir
-      heading: |
-        Source-code paths
-
       message: Path to SOURCE directory (relative to the current directory)
 
-    - name: input.modulesSubDir
-      message: Path to MODULES directory (relative to the SOURCE directory)
-
-    - name: input.assetsDir
-      message: Name of module ASSETS directory (for images, fonts)
-
-    - name: input.stylesDir
-      message: Name of module STYLES directory (for CSS)
-
-    - name: input.templateDir
-      message: Name of module TEMPLATE directory (for component HTML templates)
-
     - name: input.unitTestDir
-      message: Name of module UNIT TEST directory
-
-    - name: input.browserTestDir
-      message: Name of module FUNCTIONAL TEST directory
-
-    - name: output.devDir
-      heading: |
-        Output paths
-
-      message: Path to DEV OUTPUT directory (relative to the current directory)
+      message: Name of UNIT TEST directory (relative to the current directory)
 
     - name: output.prodDir
-      message: Path to PRODUCTION OUTPUT directory (relative to the current directory)
-
-    - name: output.assetsSubDir
-      message: Path to ASSETS sub-directory (relative to the OUTPUT directory)
-
-    - name: output.cssSubDir
-      message: Path to CSS sub-directory (relative to the OUTPUT directory)
-
-    - name: output.jsSubDir
-      message: Path to JS sub-directory (relative to OUTPUT directory)
-
-    - name: output.vendorJSSubDir
-      message: Path to VENDOR JS libraries sub-directory (relative to OUTPUT directory)
+      message: Path to BUILD directory (relative to the current directory)
 
     - name: output.reportDir
       message: Path to TEST REPORTS directory (relative to the current directory)
 
     - name: config.configDir
-      heading: |
-        Config paths
-
       message: Path to CONFIG directory (relative to the current directory)
 
 
   defaults:
     input:
       srcDir: src/
-      modulesSubDir: modules/
-      assetsDir: assets/
-      stylesDir: styles/
-      templateDir: template/
-      unitTestDir: unitTest/
-      browserTestDir: browserTest/
+      unitTestDir: test/
 
     output:
-      devDir: dev/
       prodDir: dist/
-      assetsSubDir: assets/
-      cssSubDir: css/
-      jsSubDir: js/
-      vendorJSSubDir: vendor/
-      viewsSubDir: views/
       reportDir: reports/
 
     config:
       configDir: config/
+
+  pathsToGenerate:
+    - name: input.libDir
+      value: <%- paths.input.srcDir %>/lib
 
   templateFiles:
     - src: gitignore
@@ -160,30 +120,12 @@ readme:
      ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. grunt, webpack, verify, testUnit)
      │
      ├──<%- rpad(paths.input.srcDir, maxDirLen) %>* source code files should be here
-     │   └──<%- rpad(paths.input.modulesSubDir, maxDirLen - 4) %>* all source code modules|components|features should appear as sub-directories under this directory
-     │       ├──<%- rpad('common/', maxDirLen - 8) %>
-     │       ├──<%- rpad('featureA/', maxDirLen - 8) %>
-     │       └──<%- rpad('featureB/', maxDirLen - 8) %>
-     │           ├──<%- rpad(paths.input.assetsDir, maxDirLen - 12) %>
-     │           │   ├──<%- rpad('font', maxDirLen - 16) %>* fonts for this module
-     │           │   └──<%- rpad('img', maxDirLen - 16) %>* images for this module
-     │           ├──<%- rpad(paths.input.stylesDir, maxDirLen - 12) %>* css source code for this module
-     │           ├──<%- rpad(paths.input.templateDir, maxDirLen - 12) %>* HTML templates for this module
-     │           ├──<%- rpad(paths.input.unitTestDir, maxDirLen - 12) %>* unit test specs for this module
-     │           └──<%- rpad(paths.input.browserTestDir, maxDirLen - 12) %>* browser test specs for this module
      │
-     ├──<%- rpad(paths.output.devDir, maxDirLen) %>* development-build code is output here (Webpack may keep it in memory for speed)
-     ├──<%- rpad(paths.output.prodDir, maxDirLen) %>* production-build code is output here
-     │   ├──<%- rpad(paths.output.assetsSubDir, maxDirLen - 4) %>* all assets appear here, under module sub-folders. e.g.:
-     │   │   └──<%- rpad('featureB/', maxDirLen - 8) %>
-     │   │       ├──<%- rpad('font', maxDirLen - 12) %>
-     │   │       └──<%- rpad('img', maxDirLen - 12) %>
-     │   ├──<%- rpad(paths.output.cssSubDir, maxDirLen - 4) %>* compiled CSS files
-     │   ├──<%- rpad(paths.output.jsSubDir, maxDirLen - 4) %>* minified JS files
-     │   ├──<%- rpad(paths.output.vendorJSSubDir, maxDirLen - 4) %>* minified vendor JS files
-     │   └──<%- rpad(paths.output.viewsSubDir, maxDirLen - 4) %>* minified HTML files
+     ├──<%- rpad(paths.output.prodDir, maxDirLen) %>* production-build code should live here
      │
      ├──<%- rpad(paths.output.reportDir, maxDirLen) %>* test reports appear here
+     │
+     ├──<%- rpad(paths.input.unitTestDir, maxDirLen) %>* unit test specifications live here
      │
      ├──<%- rpad(configFile, maxDirLen) %>* The project config file generated by 'yo confit'
      ├──<%- rpad('CONTRIBUTING.md', maxDirLen) %>* how to contribute to the repo
@@ -205,33 +147,10 @@ readme:
     - [ ] Add a new **dependency** to your project:
       - For a **source-code** dependency:
         1. `npm i {nodeModule} --save`
-        <% if (buildJS.sourceFormat === 'TypeScript') {
-        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency <% } %>
-        1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `buildJS.vendorScripts` array
-        1. `yo confit` to regenerate your build configuration
       - For a **development** dependency:
         1. `npm i {nodeModule} --save-dev`
-        1. Edit the configuration file(s) that will need to use this dependency in the areas of the file that will not be overwritten when `yo confit` is run.
-         For example:
-         ```js
-
-         // Changes in this region will be preserved.
-
-         // START_CONFIT_GENERATED_CONTENT
-
-           // Changes in this region will be overwritten if `yo confit` is run again.
-
-         // END_CONFIT_GENERATED_CONTENT
-
-         // Changes in this region will be preserved.
-
-         ```
       - For a **test** dependency:
         1. `npm i {nodeModule} --save`
-        <% if (buildJS.sourceFormat === 'TypeScript') {
-        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency<% } %>
-        1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `testUnit.testDependencies` array
-        1. Run `yo confit` to regenerate your build configuration
     <% if (release.useSemantic) { %>- [ ] Complete the installation of the **semantic release** tool:
       1. Make sure you have:
         - a GitHub login
@@ -239,10 +158,7 @@ readme:
         - a TravisCI login (though you can still proceed if you use a different CI tool)
       1. Run `semantic-release-cli setup` to complete the installation
     <% } -%>
-    - [ ] Add a new module to `<%- paths.input.modulesDir %>`
-    - [ ] Run `npm start`, change the stylesheet and see the changes appear immediately
-    - [ ] Run `npm test` to execute the unit tests and see the test coverage
-    - [ ] Run `npm start &&test:browser` to execute the browser tests
+    - [ ] Run `npm test` to execute the tests and see the test coverage
     <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
     <% } -%>
 
@@ -414,70 +330,11 @@ readme:
 
 release: {}
 
-# Sample App
 sampleApp:
-  demoModuleDir: demoModule/
+  demoDir: <%= paths.input.srcDir %>
   entryPointFileName:
-    ES5: 'app.js'
-    ES6: 'app.js'
-    TypeScript: 'app.ts'
-
-  templateFiles:
-    - src: assets/**/*
-      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
-      overwrite: true
-      type: binary
-
-    - src: browserTest/*
-      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
-      overwrite: true
-      type: binary
-
-  cssSourceFormat:
-    css:
-      entryPointFileName: app.css
-      templateFiles:
-        - src: css/app.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
-          overwrite: true
-        - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
-          overwrite: true
-
-    sass:
-      entryPointFileName: app.sass
-      templateFiles:
-        - src: css/app.sass
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
-          overwrite: true
-        - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
-          overwrite: true
-
-    stylus:
-      entryPointFileName: app.styl
-      templateFiles:
-        - src: css/app.styl
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
-          overwrite: true
-        - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
-          overwrite: true
-
-# Server - Development
-serverDev:
-  defaults:
-    port: 3000
-    hostname: localhost
-    protocol: https
-
-serverProd:
-  defaults:
-    port: 3000
-    hostname: localhost
-    protocol: https
-
-testBrowser: {}
+    ES6: 'index.js'
+    TypeScript: 'index.ts'
 
 verify:
   jsCodingStandard:
@@ -535,17 +392,6 @@ verify:
         - src: tslint.json
           dest: (configDir)/verify/tslint.json
 
-
-  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+  cssCodingStandard:  # No CSS linting - this is a Node library
     css:
       templateFiles: []
-    sass:
-      # No packages to install, as the build-tools will have their own
-      templateFiles:
-        - src: sasslintrc
-          dest: (configDir)verify/.sasslintrc
-    stylus:
-      # No packages to install, as the build-tools will have their own
-      templateFiles:
-        - src: stylintrc
-          dest: (configDir)verify/.stylintrc

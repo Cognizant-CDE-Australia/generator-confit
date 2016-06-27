@@ -12,7 +12,7 @@
       ]
     },
     "paths": {
-      "_version": "f463a21ee74bb26df9401c2ca7f4affe36951845",
+      "_version": "b4e5c78d66af79f1f996ac83ca9aff17da0e0b00",
       "config": {
         "configDir": "config/"
       },
@@ -44,7 +44,7 @@
       "sourceFormat": "stylus"
     },
     "buildJS": {
-      "_version": "7b45f397fc28ab3a9bfcd8d1e2ce7e4cd88d9f78",
+      "_version": "63b58af50b2d46f5f30a7318102fd9a195f650b7",
       "framework": [],
       "outputFormat": "ES5",
       "sourceFormat": "ES6",
@@ -72,11 +72,11 @@
       "protocol": "https"
     },
     "testUnit": {
-      "_version": "de2fb819f5057b6f8c9a86d042efc711588a3e0c"
+      "_version": "62de2b61885aea97ebcd68f2dd4df1842d2ef842"
     },
     "testBrowser": {},
     "verify": {
-      "_version": "9ecb0d40688a5dd4c56404f8c1e647e1ec86f934",
+      "_version": "710a14907d50ed88f2647d0ea24d369d357c22e2",
       "jsCodingStandard": "Google"
     },
     "release": {
@@ -86,7 +86,7 @@
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "b2ed6d3c5d23eb5dea9ace37dd16171a6b666941",
+      "_version": "2c7a70febdd9c393d4d7b4d41a8c361cac2ee976",
       "createSampleApp": true
     },
     "zzfinish": {}

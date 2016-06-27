@@ -144,6 +144,8 @@ buildJS:
     - ES6
   outputFormatDefault: ES5
 
+  showVendorScripts: true     # Flag to indicate that whether the vendorScripts question in buildJS should be shown or not
+
   frameworks:
     AngularJS 1.x:
       packages:
@@ -296,6 +298,10 @@ paths:
     config:
       configDir: config/
 
+  pathsToGenerate:
+    - name: input.modulesDir
+      value: <%- paths.input.srcDir + '/' + paths.input.modulesSubDir %>
+
   templateFiles:
     - src: gitignore
       dest: .gitignore
@@ -401,7 +407,7 @@ readme:
     - [ ] Add a new module to `<%- paths.input.modulesDir %>`
     - [ ] Run `npm start`, change the stylesheet and see the changes appear immediately
     - [ ] Run `npm test` to execute the unit tests and see the test coverage
-    - [ ] Run `npm start &&test:browser` to execute the browser tests
+    - [ ] Run `npm start && test:browser` to execute the browser tests
     <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
     <% } -%>
 
@@ -575,7 +581,7 @@ release: {}
 
 # Sample App
 sampleApp:
-  demoModuleDir: demoModule/
+  demoDir: <%= paths.input.modulesSubDir %>demoModule/
   entryPointFileName:
     ES5: 'app.js'
     ES6: 'app.js'

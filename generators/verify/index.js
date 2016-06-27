@@ -1,8 +1,8 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
-var fs = require('fs');
-var _ = require('lodash');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
+const fs = require('fs');
+const _ = require('lodash');
 
 module.exports = confitGen.create({
   initializing: {
@@ -61,25 +61,31 @@ module.exports = confitGen.create({
 
   writing: function () {
     // Copy the linting templates
-    var config = this.config.getAll();
-    var outputDir = config.paths.config.configDir;
-    var jsCodingStandard = this.getConfig('jsCodingStandard');
+    let config = this.config.getAll();
+    let resources = this.getResources().verify;
+    let outputDir = config.paths.config.configDir;
+    let jsCodingStandard = this.getConfig('jsCodingStandard');
+    let cssCodingStandard = (config.buildCSS || {}).sourceFormat || resources.defaultCSSCodingStandard;
 
-    var cssTemplateFiles = this.getResources().verify.cssCodingStandard[config.buildCSS.sourceFormat].templateFiles;
-    var jsTemplateFiles = this.getResources().verify.jsCodingStandard[jsCodingStandard].templateFiles;
-    var allTemplateFiles = [].concat(cssTemplateFiles, jsTemplateFiles);
-    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
+    // This is project-specific:
+    let cssTemplateFiles = resources.cssCodingStandard[cssCodingStandard].templateFiles;
+    let jsTemplateFiles = resources.jsCodingStandard[jsCodingStandard].templateFiles;
+    let allTemplateFiles = [].concat(cssTemplateFiles, jsTemplateFiles);
+
+    // This is project-specific
+    let demoDir = this.getResources().sampleApp.demoDir;  // We want to ignore this directory when linting, initially!  // TODO: Do this in the sample app?
+    demoDir = this.renderEJS(demoDir, config);            // This can contain an EJS template, so parse it directly
 
     allTemplateFiles.forEach(templateFile => {
       this.updateTextFile(
         this.templatePath(templateFile.src),
         this.destinationPath(templateFile.dest.replace('(configDir)', outputDir)),
-        _.merge({}, config, {demoModuleDir: demoModuleDir})
+        _.merge({}, config, {demoDir: demoDir})
       );
     });
 
     // NPM dependencies only for jsCodingStandard - nothing for CSS? Correct. The buildTool has the CSS dependencies
-    this.setNpmDevDependenciesFromArray(this.getResources().verify.jsCodingStandard[jsCodingStandard].packages);
+    this.setNpmDevDependenciesFromArray(resources.jsCodingStandard[jsCodingStandard].packages);
 
     this.buildTool.write.apply(this);
   },

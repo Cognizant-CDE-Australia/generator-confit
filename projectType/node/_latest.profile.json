@@ -1,15 +1,14 @@
 {
   "name": "Latest",
-  "description": "Node build profile (28 May 2016)",
+  "description": "Node build profile (2 June 2016)",
   "toolMap": {
     "app": "npm",
-    "build": "npm",
+    "buildJS": "",
     "entryPoint": "npm",
     "paths": "",
-    "release": "npm",
     "sampleApp": "npm",
-    "server": "npm",
-    "testUnit": "jasmine",
+    "release": "npm",
+    "testUnit": "npm",
     "verify": "grunt",
     "zzfinish": "npm"
   }

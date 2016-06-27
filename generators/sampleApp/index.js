@@ -1,7 +1,7 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
-var _ = require('lodash');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
+const _ = require('lodash');
 
 module.exports = confitGen.create({
   initializing: {
@@ -9,11 +9,10 @@ module.exports = confitGen.create({
       // Check if this component has an existing config. If it doesn't even if we are asked to rebuild, don't rebuild
       this.hasExistingConfig = this.hasExistingConfig();
       this.rebuildFromConfig = !!this.options.rebuildFromConfig && this.hasExistingConfig;
-      this.demoOutputModuleDir = this.getResources().sampleApp.demoModuleDir;
     }
   },
 
-  // We need to run this AFTER the buildJS generator, in order to read the buildJS.sourceFormat
+  // We need to run this AFTER the buildJS generator and paths generator, in order to read the buildJS.sourceFormat
   // property. Hence, the 'configuring' task contains the prompts, to allow access to the buildJS config.
   configuring: {
     prompting: function() {
@@ -22,13 +21,13 @@ module.exports = confitGen.create({
         return;
       }
 
-      // Check if the build-profile's buildTool's sampleApp generator supports the selected buildJS configuration
-      var buildJS = this.getGlobalConfig().buildJS;
-      var sampleAppFrameworks = this.buildTool.getResources().sampleApp.js.framework;
-      var jsSourceFormat = buildJS.sourceFormat;
-      var selectedFramework = buildJS.framework[0] || '';
+      // Check if the build-profile's buildTool's sampleApp generator supports the selected configuration
+      let buildJS = this.getGlobalConfig().buildJS;
+      let sampleAppFrameworks = this.buildTool.getResources().sampleApp.js.framework;
+      let selectedFramework = buildJS.framework[0] || '';
+      let jsSourceFormat = buildJS.sourceFormat;
 
-      if (_.get(sampleAppFrameworks, [selectedFramework, 'sourceFormat', jsSourceFormat, 'hasSampleApp']) !== true) {
+      if (!_.get(sampleAppFrameworks, [selectedFramework, 'sourceFormat', jsSourceFormat])) {
         this.log(chalk.bgRed.bold.white('A complete sample application is not available for the selected JS Framework and source code language.'));
         this.answers = {
           createSampleApp: false
@@ -77,14 +76,16 @@ module.exports = confitGen.create({
     let resources = this.getResources().sampleApp;
     this.writeGeneratorConfig(resources);
 
-    // Write the css-specific config
-    let config = this.getGlobalConfig();
-    let cssSourceFormat = config.buildCSS.sourceFormat;
-    let cssResources = resources.cssSourceFormat[cssSourceFormat];
-    this.writeGeneratorConfig(cssResources);
+    // Write the css-sourceFormat-specific sampleApp stuff, if there is CSS build config
+    let buildCSSConfig = this.getGlobalConfig().buildCSS;
+    if (buildCSSConfig) {
+      let cssSourceFormat = buildCSSConfig.sourceFormat;
+      let cssResources = resources.cssSourceFormat[cssSourceFormat];
+      this.writeGeneratorConfig(cssResources);
 
-    // Make CSSEntryPointFiles a member property so that the build tool can use it too
-    this.CSSEntryPointFiles = [cssResources.entryPointFileName];
+      // Make CSSEntryPointFiles a member property so that the build tool can use it too
+      this.CSSEntryPointFiles = [cssResources.entryPointFileName];
+    }
     this.buildTool.write.apply(this);
   },
 

@@ -37,3 +37,6 @@ app:
       - src: LICENSE.txt
         dest: LICENSE
         overwrite: false    # We only want to generate this file once. To change it, delete the file then re-run confit
+
+verify:
+  defaultCSSCodingStandard: 'css'

@@ -64,7 +64,8 @@ module.exports = confitGen.create({
         name: 'framework',
         message: 'JavaScript Framework (optional)',
         choices: frameworkNames,
-        default: this.getConfig('framework') || []
+        default: this.getConfig('framework') || [],
+        when: () => frameworkNames.length
       },
       {
         type: 'checkbox',
@@ -92,7 +93,8 @@ module.exports = confitGen.create({
         // Use the original answer, or generate a default one
         filter: function() {
           return self.getConfig('vendorScripts') || [];
-        }
+        },
+        when: () => res.showVendorScripts
       }
     ];
 
@@ -106,9 +108,10 @@ module.exports = confitGen.create({
   configuring: function() {
     // If we have new answers, then change the config
     let config = this.answers || this.getConfig();
+    config.framework = config.framework || [];    // We may have skipped this question, so just make sure we have an answer
 
     // Update the frameworkScripts answer, based on the chosen framework
-    let getScriptsForFramework = (framework) =>frameworkScriptMap[framework].packages.map((obj) => obj.name);
+    let getScriptsForFramework = (framework) => frameworkScriptMap[framework].packages.map((obj) => obj.name);
 
     // Add/Change the frameworkScripts property
     let activeFrameworkScripts = _.flatten(_.flatten(config.framework.map(getScriptsForFramework)));
