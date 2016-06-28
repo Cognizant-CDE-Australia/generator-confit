@@ -80,49 +80,135 @@ sampleApp:
   js:
     framework:
       '':
-        sampleDir: noFramework/
-        vendorScripts: []
-        typeLibs: []
         sourceFormat:
           ES6:
-            hasSampleApp: true
+            packages: []
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: noFramework/ES6/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: noFramework/ES6/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: noFramework/ES6/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: noFramework/ES6/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
+
           TypeScript:
-            hasSampleApp: true
+            packages: []
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: noFramework/TypeScript/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: noFramework/TypeScript/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: noFramework/TypeScript/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: noFramework/TypeScript/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
+
 
       AngularJS 1.x:
-        sampleDir: ng1/
-        vendorScripts:
-          - <<: *pkg_angular-route
-        testVendorScripts:
-          - <<: *pkg_angular-route
-        typeLibs:
-          - name: angular-route
-            key: ambientDependencies
-            version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
         sourceFormat:
           ES6:
-            hasSampleApp: true
+            packages:
+              - <<: *pkg_angular-route
+            testPackages:
+              - <<: *pkg_angular-route
+            typeLibs: []
+            templateFiles:
+              - src: ng1/ES6/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: ng1/ES6/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: ng1/ES6/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: ng1/ES6/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
+
           TypeScript:
-            hasSampleApp: true
+            packages:
+              - <<: *pkg_angular-route
+            testPackages:
+              - <<: *pkg_angular-route
+            typeLibs:
+              - name: angular-route
+                key: ambientDependencies
+                version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
+            templateFiles:
+              - src: ng1/TypeScript/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: ng1/TypeScript/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: ng1/TypeScript/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: ng1/TypeScript/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
 
       AngularJS 2.x:
-        sampleDir: ng2/
-        vendorScripts:
-          # This should just be the framework files + sample-specific files
-          # Need to load ALL the libraries that are used in polyfills.ts and vendor.ts
-#          - <<: *pkg_core-js
-#          - <<: *pkg_zone.js
-#          - <<: *pkg_rxjs
-#          - <<: *pkg_angular2/platform/browser
-#          - <<: *pkg_angular2/platform/common_dom
-#          - <<: *pkg_angular2/core
-#          - <<: *pkg_angular2/common
-          - <<: *pkg_angular2/router
-        typeLibs: []
-
         sourceFormat:
+          ES6:
+            packages:
+              - <<: *pkg_angular2/router
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: ng2/ES6/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: ng2/ES6/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: ng2/ES6/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: ng2/ES6/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
+
           TypeScript:
-            hasSampleApp: true
+            packages:
+              - <<: *pkg_angular2/router
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: ng2/TypeScript/*
+                dest: <%= paths.input.srcDir %>
+                overwrite: true
+                noParse: true
+              - src: ng2/TypeScript/demoModule/*
+                dest: <%= paths.input.modulesDir %>demoModule/
+                overwrite: true
+              - src: ng2/TypeScript/demoModule/unitTest/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                overwrite: true
+              - src: ng2/TypeScript/demoModule/templates/*
+                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                overwrite: true
+
             testUnitConfig: |
               // Load Angular 2's Jasmine helper methods:
               var testing = require('angular2/testing');
@@ -138,13 +224,8 @@ sampleApp:
               pre:
                 - './polyfills.ts'
               post: []
-          ES6:
-            hasSampleApp: true
 
       React (latest):
-        sampleDir: react/
-        vendorScripts: []
-        typeLibs: []
         sourceFormat: {}
 
 serverDev:

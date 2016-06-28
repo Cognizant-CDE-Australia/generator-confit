@@ -73,19 +73,22 @@ module.exports = confitGen.create({
     }
 
     // Write the common generator config
+    let config = this.config.getAll();
     let resources = this.getResources().sampleApp;
+
+    // Evaluation-context for the codeConfig.codingStandardExpression
+    let context = {
+      config,
+      resources
+    };
+
     this.writeGeneratorConfig(resources);
 
-    // Write the css-sourceFormat-specific sampleApp stuff, if there is CSS build config
-    let buildCSSConfig = this.getGlobalConfig().buildCSS;
-    if (buildCSSConfig) {
-      let cssSourceFormat = buildCSSConfig.sourceFormat;
-      let cssResources = resources.cssSourceFormat[cssSourceFormat];
-      this.writeGeneratorConfig(cssResources);
+    // Write any code-specific sampleApp things...
+    resources.additionalConfig.forEach(codeConfig => {
+      this.writeGeneratorConfig(resources[codeConfig.configKey][_.get(context, codeConfig.codingStandardExpression)]);
+    });
 
-      // Make CSSEntryPointFiles a member property so that the build tool can use it too
-      this.CSSEntryPointFiles = [cssResources.entryPointFileName];
-    }
     this.buildTool.write.apply(this);
   },
 

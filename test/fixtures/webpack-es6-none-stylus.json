@@ -76,7 +76,7 @@
     },
     "testBrowser": {},
     "verify": {
-      "_version": "710a14907d50ed88f2647d0ea24d369d357c22e2",
+      "_version": "f6e2574ca51269d2e6caca2925d84098dd9c409c",
       "jsCodingStandard": "Google"
     },
     "release": {
@@ -86,7 +86,7 @@
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "2c7a70febdd9c393d4d7b4d41a8c361cac2ee976",
+      "_version": "0162c3b0bed752ef24954b9e954e52e037c606d3",
       "createSampleApp": true
     },
     "zzfinish": {}

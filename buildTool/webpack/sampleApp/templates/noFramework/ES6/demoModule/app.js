@@ -2,8 +2,13 @@
 
 import demoModule from './demoModule';
 
-// Require the CSS file explicitly (or it could be defined as an entry-point too.
-<% $CSSEntryPoints.forEach(function(file) { -%>
+// Require the CSS file explicitly (or it could be defined as an entry-point too).
+<%
+var cssEntryPointFiles = resources.sampleApp.cssSourceFormat[buildCSS.sourceFormat].entryPointFileNames.map(function(file) {
+  return paths.input.stylesDir + file;
+});
+
+cssEntryPointFiles.forEach(function(file) { -%>
 require('./<%= file %>');
 <% }); -%>
 

@@ -59,7 +59,6 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
-    // Copy the linting templates
     let config = this.config.getAll();
     let resources = this.getResources().verify;
 

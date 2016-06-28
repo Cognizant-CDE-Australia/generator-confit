@@ -172,7 +172,6 @@ buildJS:
         - <<: *pkg_core-js          # In polyfills.ts
         - <<: *pkg_zone.js          # In polyfills.ts
         - <<: *pkg_rxjs             # In vendor.ts
-#        - <<: *pkg_angular2
         - <<: *pkg_angular2/platform/browser
         - <<: *pkg_angular2/platform/common_dom
         - <<: *pkg_angular2/core
@@ -587,20 +586,27 @@ sampleApp:
     ES6: 'app.js'
     TypeScript: 'app.ts'
 
+  # An array of optional configuration
+  additionalConfig:
+    - configKey: cssSourceFormat
+      codingStandardExpression: config.buildCSS.sourceFormat
+
+
   templateFiles:
     - src: assets/**/*
       dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
       overwrite: true
-      type: binary
+      noParse: true
 
     - src: browserTest/*
       dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
       overwrite: true
-      type: binary
+      noParse: true
 
   cssSourceFormat:
     css:
-      entryPointFileName: app.css
+      entryPointFileNames:
+        - app.css
       templateFiles:
         - src: css/app.css
           dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
@@ -610,7 +616,8 @@ sampleApp:
           overwrite: true
 
     sass:
-      entryPointFileName: app.sass
+      entryPointFileNames:
+        - app.sass
       templateFiles:
         - src: css/app.sass
           dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
@@ -620,7 +627,8 @@ sampleApp:
           overwrite: true
 
     stylus:
-      entryPointFileName: app.styl
+      entryPointFileNames:
+        - app.styl
       templateFiles:
         - src: css/app.styl
           dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
