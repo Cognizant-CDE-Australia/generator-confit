@@ -1,3 +1,7 @@
+entryPoint:
+  packageJsonConfig:
+    - main: <%= entryPoint.entryPoints.main %>
+
 release:
   commitMessageFormat:
     Conventional:
@@ -7,12 +11,12 @@ release:
         - <<: *pkg_ghooks
         - <<: *pkg_cz-customizable-ghooks
 
-      npmConfig:
-        - commitizen:
+      packageJsonConfig:
+        - config.commitizen:
             path: node_modules/cz-customizable
-        - cz-customizable:
+        - config.cz-customizable:
             config: <%= paths.config.configDir %>release/commitMessageConfig.js
-        - ghooks:
+        - config.ghooks:
             commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
 
       templateFiles:
@@ -94,25 +98,29 @@ sampleApp:
   js:
     framework:
       '':
-        sampleDir: noFramework/
-        vendorScripts: []
-        typeLibs: []
         sourceFormat:
-          ES6: {}
+          ES6:
+            entryPointFileName: <%= paths.input.srcDir + paths.input.libDir %>demo/index.js
+            packages: []
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: noFramework/ES6/*
+                dest: <%= paths.input.srcDir + paths.input.libDir %>demo/
+                overwrite: true
+              - src: noFramework/ES6/unitTest/*
+                dest: <%= paths.input.unitTestDir %>
+                overwrite: true
 
 testUnit:
   packages:
-    - <<: *pkg_karma
-    - <<: *pkg_karma-chrome-launcher
-    - <<: *pkg_karma-coverage
-    - <<: *pkg_karma-jasmine
-    - <<: *pkg_karma-junit-reporter
-    - <<: *pkg_karma-phantomjs-launcher
-    - <<: *pkg_karma-spec-reporter
-    - <<: *pkg_karma-threshold-reporter
-    - <<: *pkg_jasmine-core
-    - <<: *pkg_phantomjs-prebuilt
-    - <<: *pkg_phantomjs-polyfill
+    - <<: *pkg_mocha
+    - <<: *pkg_istanbul
+
+  templateFiles:
+    - src: '*'
+      dest: <%= paths.config.configDir %>testUnit/
+      overwrite: true
 
   tasks:
     - name: test
@@ -121,39 +129,33 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      tasks: ['mocha --opts <%= paths.config.configDir %>testUnit/mocha.opts -w']
       description: Run unit tests whenever JS source or tests change
       features:
-        - Uses Karma and Jasmine 2
+        - Uses Mocha
         - Code coverage
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
+      tasks: ['istanbul cover --config <%= paths.config.configDir %>testUnit/istanbul.yml _mocha -- --opts <%= paths.config.configDir %>testUnit/mocha.opts']
       description: Run unit tests once
       features:
+        - Uses Mocha
+        - Code coverage
 
-    - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
-      description: Run unit tests but disable code coverage to make debugging in a browser easier
+    - name: test:coverage
+      tasks: ['npm run test:unit:once']
+      description: Alias for `npm run test:unit:once`
       features:
-        - no code coverage to make it easier to read source code
 
-  templateFiles:
-    - src: karma.common.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/karma.common.js
-      overwrite: true
+    - name: test:check-coverage
+      tasks: ['istanbul check-coverage <%= paths.output.reportDir %>/coverage.json --config <%= paths.config.configDir %>testUnit/istanbul.yml']
+      description:
+      features:
 
-
-  readme:
-    extensionPoint:
-      testUnit: >
-        `npm test:unit` can be extended by modifying
-        <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
-        <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
-        It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
-
-        Note that it is possible to run a subset of unit tests by passing a command line argument to Karma, and then modifying the `testFilesRegEx`
-        variable in <%= link(paths.config.configDir + 'testUnit/karma.common.js') %> to refer to the command line argument value.
-        For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
-        which can then be used to change the default value of `testFilesRegEx`.
+    - name: coverage
+      tasks: ['npm-run-all test:coverage test:check-coverage']
+      description: Run instrumented unit tests then verify coverage meets defined thresholds
+      features:
+        - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)

@@ -1,0 +1,4 @@
+<%= paths.input.unitTestDir %>**/*.spec.js
+--reporter list
+--no-timeouts
+--ui bdd

@@ -186,6 +186,10 @@ $packages:
     name: isparta-instrumenter-loader
     version: 1.0.0
 
+  - &pkg_istanbul
+    name: istanbul
+    version: 0.4.4
+
   - &pkg_istanbul-instrumenter-loader
     name: istanbul-instrumenter-loader
     version: 0.2.0
@@ -253,6 +257,10 @@ $packages:
   - &pkg_lodash
     name: lodash
     version: 3.10.1
+
+  - &pkg_mocha
+    name: mocha
+    version: 2.5.3
 
   - &pkg_node-sass
     name: node-sass

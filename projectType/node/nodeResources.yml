@@ -25,15 +25,15 @@ app:
       description: Run project in development mode (verify code, and re-verify when code is changed)
       features:
 
-#    - name: build
-#      tasks: ['clean:prod']   # Later on, we may need to add a build-task here
-#      description: Generate production build into <%= link(paths.output.prodDir) %> folder
-#      features:
-#
-#    - name: clean:prod
-#      tasks: ['rimraf <%= paths.output.prodDir %>']
-#      description:
-#      features:
+    - name: build
+      tasks: ['clean:prod']   # Later on, we may need to add a build-task here
+      description: Generate production build into <%= link(paths.output.prodDir) %> folder
+      features:
+
+    - name: clean:prod
+      tasks: ['rimraf <%= paths.output.prodDir %>']
+      description:
+      features:
 
 buildJS:
   sourceFormat:
@@ -53,14 +53,16 @@ buildJS:
 
 
 entryPoint:
+  defaultEntryPointFileName: # This should be used
+    ES6: index.js
+    TypeScript: index.ts
+
   readme:
     extensionPoint:
       entryPoint: >
-        The `entryPoint.entryPoints` object in <%= link(configFile) %> is designed to be edited manually.
-        It represents the starting-point(s) of the application (like a `main()` function). Normally an application has
-        one entry point, but it is possible to have more than one.
-        `entryPoint.entryPoints` must have at-least one property (e.g. `property: [file]`), where `file` is a list
-        of NPM module names and/or references to JavaScript files (file references must start with `./`);
+        The `entryPoint.entryPoints` string in <%= link(configFile) %> is designed to be edited manually.
+        It represents the starting-point(s) of the application (like a `main()` function). A NodeJS application has
+        one entry point. E.g. `src/index.js`.
 
 # Path Defaults
 paths:
@@ -95,7 +97,7 @@ paths:
 
   pathsToGenerate:
     - name: input.libDir
-      value: <%- paths.input.srcDir %>/lib
+      value: lib/
 
   templateFiles:
     - src: gitignore
@@ -331,10 +333,10 @@ readme:
 release: {}
 
 sampleApp:
-  demoDir: <%= paths.input.srcDir %>
-  entryPointFileName:
-    ES6: 'index.js'
-    TypeScript: 'index.ts'
+  demoDir: <%= paths.input.libDir %>demo/   # This is ALWAYS a subdirectory of the srcDir directory
+
+  # An array of optional configuration
+  additionalConfig: []
 
 verify:
   codeToVerify:
