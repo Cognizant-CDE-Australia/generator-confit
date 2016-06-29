@@ -1,6 +1,6 @@
 entryPoint:
   packageJsonConfig:
-    - main: <%= entryPoint.entryPoints.main %>
+    - main: <%- entryPoint.entryPoints.main[0] %>
 
 release:
   commitMessageFormat:
@@ -15,13 +15,13 @@ release:
         - config.commitizen:
             path: node_modules/cz-customizable
         - config.cz-customizable:
-            config: <%= paths.config.configDir %>release/commitMessageConfig.js
+            config: <%- paths.config.configDir %>release/commitMessageConfig.js
         - config.ghooks:
             commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
 
       templateFiles:
         - src: commitMessageConfig.js
-          dest: <%= paths.config.configDir %>release/commitMessageConfig.js
+          dest: <%- paths.config.configDir %>release/commitMessageConfig.js
           overwrite: false
 
       readme:
@@ -32,7 +32,7 @@ release:
               description: Commit changes to local repository using Commitizen
               features:
                 - Asks questions about the change to generate a valid conventional commit message
-                - Can be customised by modifying <%= link(paths.config.configDir + 'release/commitMessageConfig.js') %>
+                - Can be customised by modifying <%- link(paths.config.configDir + 'release/commitMessageConfig.js') %>
 
       onInstall:
         - cmd: git    # It is safe to run this multiple times
@@ -100,16 +100,16 @@ sampleApp:
       '':
         sourceFormat:
           ES6:
-            entryPointFileName: <%= paths.input.srcDir + paths.input.libDir %>demo/index.js
+            entryPointFileName: <%- paths.input.srcDir + resources.sampleApp.demoDir %>index.js
             packages: []
             testPackages: []
             typeLibs: []
             templateFiles:
               - src: noFramework/ES6/*
-                dest: <%= paths.input.srcDir + paths.input.libDir %>demo/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: noFramework/ES6/unitTest/*
-                dest: <%= paths.input.unitTestDir %>
+                dest: <%- paths.input.unitTestDir %>
                 overwrite: true
 
 testUnit:
@@ -119,7 +119,7 @@ testUnit:
 
   templateFiles:
     - src: '*'
-      dest: <%= paths.config.configDir %>testUnit/
+      dest: <%- paths.config.configDir %>testUnit/
       overwrite: true
 
   tasks:
@@ -129,7 +129,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['mocha --opts <%= paths.config.configDir %>testUnit/mocha.opts -w']
+      tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Mocha
@@ -138,7 +138,7 @@ testUnit:
 
     - name: test:unit:once
       # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
-      tasks: ['istanbul cover --config <%= paths.config.configDir %>testUnit/istanbul.yml _mocha -- --opts <%= paths.config.configDir %>testUnit/mocha.opts']
+      tasks: ['istanbul cover --config <%- paths.config.configDir %>testUnit/istanbul.yml _mocha -- --opts <%- paths.config.configDir %>testUnit/mocha.opts']
       description: Run unit tests once
       features:
         - Uses Mocha
@@ -150,7 +150,7 @@ testUnit:
       features:
 
     - name: test:check-coverage
-      tasks: ['istanbul check-coverage <%= paths.output.reportDir %>/coverage.json --config <%= paths.config.configDir %>testUnit/istanbul.yml']
+      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>/coverage.json --config <%- paths.config.configDir %>testUnit/istanbul.yml']
       description:
       features:
 

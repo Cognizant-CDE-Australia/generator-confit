@@ -82,6 +82,7 @@ sampleApp:
       '':
         sourceFormat:
           ES6:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
             packages: []
             testPackages: []
             typeLibs: []
@@ -91,16 +92,17 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: noFramework/ES6/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: noFramework/ES6/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: noFramework/ES6/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
           TypeScript:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
             packages: []
             testPackages: []
             typeLibs: []
@@ -110,19 +112,20 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: noFramework/TypeScript/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: noFramework/TypeScript/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: noFramework/TypeScript/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
 
       AngularJS 1.x:
         sourceFormat:
           ES6:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
             packages:
               - <<: *pkg_angular-route
             testPackages:
@@ -134,16 +137,17 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: ng1/ES6/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: ng1/ES6/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: ng1/ES6/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
           TypeScript:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
             packages:
               - <<: *pkg_angular-route
             testPackages:
@@ -158,18 +162,19 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: ng1/TypeScript/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: ng1/TypeScript/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: ng1/TypeScript/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
       AngularJS 2.x:
         sourceFormat:
           ES6:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
             packages:
               - <<: *pkg_angular2/router
             testPackages: []
@@ -180,16 +185,17 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: ng2/ES6/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: ng2/ES6/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: ng2/ES6/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
           TypeScript:
+            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
             packages:
               - <<: *pkg_angular2/router
             testPackages: []
@@ -200,13 +206,13 @@ sampleApp:
                 overwrite: true
                 noParse: true
               - src: ng2/TypeScript/demoModule/*
-                dest: <%= paths.input.modulesDir %>demoModule/
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
                 overwrite: true
               - src: ng2/TypeScript/demoModule/unitTest/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.unitTestDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
                 overwrite: true
               - src: ng2/TypeScript/demoModule/templates/*
-                dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.templateDir %>
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
                 overwrite: true
 
             testUnitConfig: |

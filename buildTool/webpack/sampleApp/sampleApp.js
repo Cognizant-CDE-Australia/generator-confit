@@ -28,7 +28,9 @@ module.exports = function() {
 
     let fullConfig = readConfit.apply(this);
     let config = fullConfig[this.getResources().rootGeneratorName];
-    let demoOutputModuleDir = this.renderEJS(this.getResources().sampleApp.demoDir, config);
+    let selectedFrameworkConfig = getFrameworkConfig.call(this, config);
+    //let demoOutputModuleDir = this.renderEJS(this.getResources().sampleApp.demoDir, config);
+    let templateData = this.getStandardTemplateData();
 
     // Add a sampleApp entryPoint
     if (!config.entryPoint.entryPoints) {
@@ -36,12 +38,9 @@ module.exports = function() {
     }
 
     // Get the sampleApp's JS Framework config
-    let selectedFrameworkConfig = getFrameworkConfig.call(this, config);
-    // Get the sourceFormat, to use the appropriate entryPoint file name
-    let sourceFormat = config.buildJS.sourceFormat;
-    let entryPointFileName = this.getResources().sampleApp.entryPointFileName[sourceFormat];
+    let entryPointFileName = this.renderEJS(selectedFrameworkConfig.entryPointFileName, templateData);
 
-    config.entryPoint.entryPoints.sampleApp = ['./' + demoOutputModuleDir + entryPointFileName];
+    config.entryPoint.entryPoints.sampleApp = [entryPointFileName];
 
     // Add any vendor scripts that the sampleApp for the selected framework needs
     let vendorScripts = (selectedFrameworkConfig.packages || []).map((pkg) => pkg.name);

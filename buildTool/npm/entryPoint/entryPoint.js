@@ -9,10 +9,9 @@ module.exports = function() {
 
 
 function configure() {
-  console.log(this.answers);
   if (!this.answers.entryPoints.main) {
     let config = this.getGlobalConfig();
-    this.answers.entryPoints.main = config.paths.input.srcDir + this.getResources().entryPoint.defaultEntryPointFileName[config.buildJS.sourceFormat];
+    this.answers.entryPoints.main = [config.paths.input.srcDir + this.getResources().entryPoint.defaultEntryPointFileName[config.buildJS.sourceFormat]];
   }
 }
 
@@ -20,10 +19,6 @@ function configure() {
 function write() {
   this.log('Writing NPM entryPoint options');
   let toolResources = this.buildTool.getResources().entryPoint;
-
-  // Update the toolResources.packageJsonConfig.main property with the entryPoint value
-
-  toolResources.packageJsonConfig.main = this.getConfig().entryPoints;
 
   this.writeBuildToolConfig(toolResources);
 }

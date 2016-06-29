@@ -581,25 +581,20 @@ release: {}
 # Sample App
 sampleApp:
   demoDir: <%= paths.input.modulesSubDir %>demoModule/
-  entryPointFileName:
-    ES5: 'app.js'
-    ES6: 'app.js'
-    TypeScript: 'app.ts'
 
   # An array of optional configuration
   additionalConfig:
     - configKey: cssSourceFormat
       codingStandardExpression: config.buildCSS.sourceFormat
 
-
   templateFiles:
     - src: assets/**/*
-      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.assetsDir %>
+      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.assetsDir %>
       overwrite: true
       noParse: true
 
     - src: browserTest/*
-      dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.browserTestDir %>
+      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.browserTestDir %>
       overwrite: true
       noParse: true
 
@@ -609,10 +604,10 @@ sampleApp:
         - app.css
       templateFiles:
         - src: css/app.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.css
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.css
           overwrite: true
         - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
     sass:
@@ -620,10 +615,10 @@ sampleApp:
         - app.sass
       templateFiles:
         - src: css/app.sass
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.sass
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.sass
           overwrite: true
         - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
     stylus:
@@ -631,11 +626,12 @@ sampleApp:
         - app.styl
       templateFiles:
         - src: css/app.styl
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>app.styl
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.styl
           overwrite: true
         - src: css/iconFont.css
-          dest: <%= paths.input.modulesDir %>demoModule/<%= paths.input.stylesDir %>iconFont.css
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
+
 
 # Server - Development
 serverDev:

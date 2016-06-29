@@ -1,5 +1,4 @@
 'use strict';
-const _ = require('lodash');
 
 module.exports = function() {
   return {
@@ -30,17 +29,15 @@ function getFrameworkConfig(config) {
 function configure() {
   let fullConfig = readConfit.apply(this);
   let config = fullConfig[this.getResources().rootGeneratorName];
-  let demoOutputModuleDir = this.renderEJS(this.getResources().sampleApp.demoDir, config);
+  let selectedFrameworkConfig = getFrameworkConfig.call(this, config);
+  let templateData = this.getStandardTemplateData();
 
-  // Add a sampleApp entryPoint
+  // Make sure entryPoint.entryPoints is an object
   if (!config.entryPoint.entryPoints) {
     config.entryPoint.entryPoints = {};
   }
 
-  // Get the sourceFormat, to use the appropriate entryPoint file name
-  let selectedFrameworkConfig = getFrameworkConfig.call(this, config);
-
-  config.entryPoint.entryPoints.main = this.renderEJS(selectedFrameworkConfig.entryPointFileName, config);
+  config.entryPoint.entryPoints.main = [this.renderEJS(selectedFrameworkConfig.entryPointFileName, templateData)];
 
   writeConfit.apply(this, [fullConfig]);
 }
