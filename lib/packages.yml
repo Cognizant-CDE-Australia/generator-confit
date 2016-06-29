@@ -311,9 +311,13 @@ $packages:
     name: style-loader
     version: 0.13.0
 
+  - &pkg_stylus
+    name: stylus
+    version: 0.54.5
+
   - &pkg_stylus-loader
     name: stylus-loader
-    version: 1.4.3
+    version: 2.1.1
 
   - &pkg_tslint
     name: tslint

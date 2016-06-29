@@ -41,6 +41,7 @@ buildCSS:
 
     stylus:
       packages:
+        - <<: *pkg_stylus
         - <<: *pkg_stylus-loader
 
     sass:
