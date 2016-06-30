@@ -6,12 +6,12 @@ const fs = require('fs-extra');
 
 const GENERATOR_UNDER_TEST = 'paths';
 
-describe('Paths Generator', () => {
+describe('Node Paths Generator', () => {
 
   it('should should generate default path values', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'node-paths-config.json',
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
@@ -23,14 +23,12 @@ describe('Paths Generator', () => {
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
-        assert.equal(paths.input.srcDir, 'src/');
-        assert.equal(paths.input.modulesDir, 'src/modules/');
-        assert.equal(paths.input.assetsDir, 'assets/');
 
-        assert.equal(paths.output.devDir, 'dev/');
+        assert.equal(paths.input.srcDir, 'src/');
+        assert.equal(paths.input.libDir, 'lib/');
+        assert.equal(paths.input.unitTestDir, 'test/');
         assert.equal(paths.output.prodDir, 'dist/');
         assert.equal(paths.output.reportDir, 'reports/');
-
         assert.equal(paths.config.configDir, 'config/');
         done();
       }
@@ -41,7 +39,7 @@ describe('Paths Generator', () => {
   it('should allow the default paths to be changed', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'node-paths-config.json',
       function before() {},
       function after() {
         yoassert.file(['confit.json']);
@@ -49,15 +47,6 @@ describe('Paths Generator', () => {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
         assert.equal(paths.input.srcDir, 'willy/');
-        assert.equal(paths.input.modulesDir, 'willy/modules/');
-
-        // The rest of the default value are used
-        assert.equal(paths.input.assetsDir, 'assets/');
-        assert.equal(paths.output.devDir, 'dev/');
-        assert.equal(paths.output.prodDir, 'dist/');
-        assert.equal(paths.output.reportDir, 'reports/');
-
-        assert.equal(paths.config.configDir, 'config/');
         done();
       }
     ).withPrompts({
@@ -70,7 +59,7 @@ describe('Paths Generator', () => {
   it('should convert invalid paths into valid paths', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'node-paths-config.json',
       function before() {},
       function after() {
         yoassert.file(['confit.json']);
@@ -78,22 +67,22 @@ describe('Paths Generator', () => {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
         assert.equal(paths.input.srcDir, 'dotSlash/');
-        assert.equal(paths.input.modulesSubDir, '');      // This is the only directory that can be blank
-        assert.equal(paths.output.devDir, 'dev/');        // Changed to the default directory
+        assert.equal(paths.output.reportDir, 'reports/');        // Changed to the default directory
         done();
       }
     ).withPrompts({
       useDefaults: false,
       'input.srcDir': './dotSlash/',
       'input.modulesSubDir': '   ',
-      'output.devDir': '   '
+      'output.reportDir': '   '
     });
   });
+
 
   it('should throw an error if a path contains ../', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'node-paths-config.json',
       function before() {},
       function after() {},
       function error(err) {
@@ -106,10 +95,11 @@ describe('Paths Generator', () => {
     });
   });
 
+
   it('should throw an error if a path is an absolute path', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'node-paths-config.json',
       function before() {},
       function after() {},
       function error(err) {

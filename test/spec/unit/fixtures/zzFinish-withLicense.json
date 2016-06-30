@@ -2,6 +2,7 @@
   "generator-confit": {
     "app": {
       "buildProfile": "null",
+      "projectType": "node",
       "license": "MIT"
     },
     "buildJS": {

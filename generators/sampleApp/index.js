@@ -16,6 +16,7 @@ module.exports = confitGen.create({
   // property. Hence, the 'configuring' task contains the prompts, to allow access to the buildJS config.
   configuring: {
     prompting: function() {
+      console.log('sampleApp');
       // Bail out if we just want to rebuild from the configuration file
       if (this.rebuildFromConfig && this.getConfig('createSampleApp') === false) {
         return;

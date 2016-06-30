@@ -2,10 +2,7 @@
   "generator-confit": {
     "app": {
       "buildProfile": "null",
-      "projectType": "browser"
-    },
-    "buildJS": {
-      "framework": []
+      "projectType": "node"
     }
   }
 }

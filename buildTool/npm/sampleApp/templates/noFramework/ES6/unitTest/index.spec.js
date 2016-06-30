@@ -1,5 +1,5 @@
 'use strict';
-const componentUnderTest = require('../<%= paths.input.srcDir%>index');
+const componentUnderTest = require('../<%= paths.input.srcDir + paths.input.libDir %>demo/index');
 const assert = require('assert');   // Node's assert library
 
 describe('Sample App', () => {

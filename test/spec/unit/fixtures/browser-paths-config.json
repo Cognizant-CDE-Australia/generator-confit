@@ -3,9 +3,6 @@
     "app": {
       "buildProfile": "null",
       "projectType": "browser"
-    },
-    "buildJS": {
-      "framework": ["AngularJS 1.x"]
     }
   }
 }

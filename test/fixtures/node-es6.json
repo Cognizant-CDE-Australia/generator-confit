@@ -1,0 +1,56 @@
+{
+  "generator-confit": {
+    "app": {
+      "_version": "ebce580adeb628817d97f2278cb1cb89f0e32170",
+      "buildProfile": "Latest",
+      "copyrightOwner": "Brett Uglow",
+      "license": "UNLICENSED",
+      "projectType": "node"
+    },
+    "paths": {
+      "_version": "b4e5c78d66af79f1f996ac83ca9aff17da0e0b00",
+      "config": {
+        "configDir": "config/"
+      },
+      "input": {
+        "libDir": "lib/",
+        "srcDir": "src/",
+        "unitTestDir": "test/"
+      },
+      "output": {
+        "prodDir": "dist/",
+        "reportDir": "reports/"
+      }
+    },
+    "buildJS": {
+      "_version": "63b58af50b2d46f5f30a7318102fd9a195f650b7",
+      "framework": [],
+      "frameworkScripts": [],
+      "outputFormat": "ES6",
+      "sourceFormat": "ES6"
+    },
+    "entryPoint": {
+      "_version": "a5743aa6ec32330496ed3f9a4215a456239e5639",
+      "entryPoints": {}
+    },
+    "testUnit": {
+      "_version": "62de2b61885aea97ebcd68f2dd4df1842d2ef842",
+      "testDependencies": []
+    },
+    "verify": {
+      "_version": "f6e2574ca51269d2e6caca2925d84098dd9c409c",
+      "jsCodingStandard": "Google"
+    },
+    "release": {
+      "_version": "56bbc396bc335ba0a6b6da908998fd650277086a",
+      "commitMessageFormat": "Conventional",
+      "repositoryType": "GitHub",
+      "useSemantic": false
+    },
+    "sampleApp": {
+      "_version": "8c879ea90b8ef61378c8692b6e2c4d95de5d9892",
+      "createSampleApp": true
+    },
+    "zzfinish": {}
+  }
+}

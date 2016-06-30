@@ -47,9 +47,9 @@ module.exports = confitGen.create({
     promptForProjectType: function() {
       // Bail out if we just want to rebuild from the configuration file
       // AND we have a project type
-      let projectType = this.getConfig('projectType');
-      if (this.rebuildFromConfig && projectType) {
-        this.getBuildProfiles(projectType);
+      //let projectType = this.getConfig('projectType');
+      if (this.rebuildFromConfig && this.projectType) {
+        this.getBuildProfiles(this.projectType);
         this.updateBuildTool();
         return;
       }
@@ -63,7 +63,7 @@ module.exports = confitGen.create({
           name: 'projectType',
           message: 'Choose the project type',
           choices: resources.projectTypeList,
-          default: projectType || resources.defaultProjectType
+          default: this.projectType || resources.defaultProjectType
         }
       ];
 
