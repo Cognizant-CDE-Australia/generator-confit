@@ -1,7 +1,7 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "ebce580adeb628817d97f2278cb1cb89f0e32170",
+      "_version": "9f12bb60833d78f6c932caff0c45a6a9d6b4b0aa",
       "buildProfile": "Latest",
       "projectType": "browser"
     },
@@ -90,7 +90,7 @@
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "8c879ea90b8ef61378c8692b6e2c4d95de5d9892",
+      "_version": "0162c3b0bed752ef24954b9e954e52e037c606d3",
       "createSampleApp": true
     },
     "zzfinish": {}

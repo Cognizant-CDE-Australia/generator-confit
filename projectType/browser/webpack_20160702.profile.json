@@ -1,7 +1,7 @@
 {
-  "name": "Webpack",
-  "priority": "3",
-  "description": "Original Webpack-based build profile (23 Dec 2015)",
+  "name": "Webpack (2 July 2016)",
+  "priority": "2",
+  "description": "Webpack & NPM-based build profile (no Grunt)",
   "toolMap": {
     "app": "webpack",
     "buildBrowser": "webpack",
@@ -17,7 +17,7 @@
     "serverProd": "grunt",
     "testBrowser": "protractor",
     "testUnit": "webpack",
-    "verify": "grunt",
+    "verify": "npm",
     "zzfinish": "webpack"
   }
 }

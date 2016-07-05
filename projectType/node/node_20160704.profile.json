@@ -1,6 +1,7 @@
 {
-  "name": "Latest",
-  "description": "Node build profile (2 June 2016)",
+  "name": "Node (4 July 2016)",
+  "priority": "2",
+  "description": "Original Node build profile",
   "toolMap": {
     "app": "npm",
     "buildJS": "",
@@ -9,7 +10,7 @@
     "sampleApp": "npm",
     "release": "npm",
     "testUnit": "npm",
-    "verify": "grunt",
+    "verify": "npm",
     "zzfinish": "npm"
   }
 }

@@ -95,9 +95,7 @@ paths:
     config:
       configDir: config/
 
-  pathsToGenerate:
-    - name: input.libDir
-      value: lib/
+  pathsToGenerate: []
 
   templateFiles:
     - src: gitignore
@@ -330,10 +328,16 @@ readme:
     <% }); %>
 
 
-release: {}
+release:
+  packages:
+    - <<: *pkg_ghooks
+
+  packageJsonConfig:
+    - config.ghooks:
+        pre-push: npm-run-all verify test:unit:once --silent
 
 sampleApp:
-  demoDir: <%= paths.input.libDir %>demo/   # This is ALWAYS a subdirectory of the srcDir directory
+  demoDir: demo/   # This is ALWAYS a subdirectory of the srcDir directory
 
   # An array of optional configuration
   additionalConfig: []
@@ -341,6 +345,7 @@ sampleApp:
 verify:
   codeToVerify:
     - configKey: jsCodingStandard
+      taskName: verify:js
       codingStandardExpression: config.verify.jsCodingStandard
 
   jsCodingStandard:

@@ -85,7 +85,14 @@ module.exports = confitGen.create({
       // Sort out the build profiles
       let projectType = this.projectType || this.getConfig('projectType');
       let buildProfiles = this.getBuildProfiles(projectType);
-      let profileDescriptions = buildProfiles.map(profile => { return { value: profile.name, name: profile.name + ' - ' + profile.description };});
+      let profileDescriptions = buildProfiles.sort((a, b) => {
+        return a.priority - b.priority;
+      }).map(profile => {
+        return {
+          value: profile.name,
+          name: profile.name + ' - ' + profile.description
+        };
+      });
       let resources = this.getResources().app;
 
       let popularLicenses = resources.licenses.popular;

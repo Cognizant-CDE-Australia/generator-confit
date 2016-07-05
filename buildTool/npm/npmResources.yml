@@ -112,8 +112,33 @@ sampleApp:
                 dest: <%- paths.input.unitTestDir %>
                 overwrite: true
 
+serverProd:
+  packages:
+    - <<: *pkg_serve-https
+    - <<: *pkg_serve
+
+  tasks:
+    - name: serve:prod
+      tasks:
+        - >
+          <%
+            if (config.serverProd) {
+              var serverProdCmd;
+              if (serverProd.protocol === 'https') {
+                serverProdCmd = 'serve-https -p ' + serverProd.port + ' -d ' + paths.output.prodDir + ' --servername ' + serverProd.hostname;
+              } else {
+                serverProdCmd = 'serve -C -p ' + serverProd.port + ' ' + paths.output.prodDir;
+              }
+          -%><%- serverProdCmd -%><% } -%>
+      description: <% if (config.serverProd) { %>Runs a production server on **<%= config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port %>**<% } -%>
+      features:
+        - HTTP or HTTPS
+        - 'Port can be overridden on command line: `-- -port=1234`'
+        - 'Browser can be opened to a specific path via command line: `-- -url=sub/path`'
+
 testUnit:
   packages:
+    - <<: *pkg_chokidar-cli
     - <<: *pkg_mocha
     - <<: *pkg_istanbul
 
@@ -129,7 +154,19 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
+      tasks:
+        - >
+          <%
+            var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+            var testWatchPaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.'];
+            var completeTestPaths = [];
+            testWatchPaths.forEach(function(path) {
+              jsExtensions.forEach(function(ext) {
+                completeTestPaths.push(path + ext);
+              });
+            });
+          %>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent
+      #tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Mocha
@@ -159,3 +196,178 @@ testUnit:
       description: Run instrumented unit tests then verify coverage meets defined thresholds
       features:
         - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)
+
+
+verify:
+  # Common packages
+  packages:
+    - <<: *pkg_chokidar-cli
+
+  tasks:
+    - name: verify
+      tasks: # "--silent" makes it easier to see program errors
+        - >
+          <% var verifyTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName);
+             var verifyCmd = (verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + verifyTasks.join(' ');
+          %><%- verifyCmd -%> --silent
+      description: Verify code style and syntax
+      features:
+        - Verifies source *and test code* aginst customisable rules (unlike Webpack loaders)
+
+    - name: verify:watch
+      tasks:
+        - >
+          <% var verifyWatchTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName + ':watch');
+             var verifyCmdWatch = (verifyWatchTasks.length > 1 ? 'npm-run-all --parallel ' : 'npm run ') + verifyWatchTasks.join(' ');
+          %><%- verifyCmdWatch -%> --silent
+      description: Runs verify task whenever JS or CSS code is changed
+      features: []
+
+  jsCodingStandard:
+    none: &verify:js
+      tasks:
+        - name: verify:js
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"
+          description: Verify Javascript code style and syntax
+
+        - name: verify:js:watch
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+          description: Verify Javascript code style and syntax and watch files for changes
+
+    AirBnB:
+      <<: *verify:js
+
+    Google:
+      <<: *verify:js
+
+    StandardJS:
+      <<: *verify:js
+
+    TypeScript:
+      tasks:
+        - name: verify:js
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>tslint -c <%- paths.config.configDir %>verify/tslint.json "<%- completeJSPaths.join('" "') -%>"
+          description: Verify Typescript code style and syntax
+
+        - name: verify:js:watch
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+          description: Verify Typescript code style and syntax and watch files for changes
+
+
+  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+    css:
+      tasks: # dummy tasks to preserve task interface
+        - name: verify:css
+          tasks: ['echo']
+        - name: verify:css:watch
+          tasks: ['echo']
+
+    sass:
+      packages:
+        - <<: *pkg_sass-lint
+
+      tasks:
+        - name: verify:css
+          tasks:
+            - >
+              <%
+                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
+                if (hasCSSConfig) {
+                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
+                  var completeCSSPaths = [];
+                  cssSourcePaths.forEach(function(path) {
+                    cssExtensions.forEach(function(ext) {
+                      completeCSSPaths.push(path + ext);
+                    });
+                  });
+              %>sass-lint -c <%- paths.config.configDir %>verify/.sasslintrc "<%- completeCSSPaths.join('" "') %>"<% } -%>
+          description: Verify CSS code style and syntax
+
+        - name: verify:css:watch
+          tasks:
+            - >
+              <%
+                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
+                if (hasCSSConfig) {
+                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
+                  var completeCSSPaths = [];
+                  cssSourcePaths.forEach(function(path) {
+                    cssExtensions.forEach(function(ext) {
+                      completeCSSPaths.push(path + ext);
+                    });
+                  });
+              %>chokidar '<%- completeCSSPaths.join('\' \'') -%>' -c 'npm run verify:css' --initial --silent<% } -%>
+          description: Verify CSS code style and syntax and watch files for changes
+
+    stylus:
+      packages:
+        - <<: *pkg_stylint
+
+      tasks:
+        - name: verify:css
+          tasks:
+            - stylint -c <%- paths.config.configDir %>verify/.stylintrc <%- paths.input.srcDir -%>
+          description: Verify CSS code style and syntax
+
+        - name: verify:css:watch
+          tasks:
+            - >
+              <%
+                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
+                if (hasCSSConfig) {
+                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
+                  var completeCSSPaths = [];
+                  cssSourcePaths.forEach(function(path) {
+                    cssExtensions.forEach(function(ext) {
+                      completeCSSPaths.push(path + ext);
+                    });
+                  });
+              %>chokidar '<%- completeCSSPaths.join('\' \'') -%>' -c 'npm run verify:css' --initial --silent<% } -%>
+          description: Verify CSS code style and syntax and watch files for changes

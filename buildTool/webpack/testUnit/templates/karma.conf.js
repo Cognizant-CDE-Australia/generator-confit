@@ -4,6 +4,7 @@
 // START_CONFIT_GENERATED_CONTENT
 var commonConfig = require('./karma.common.js');
 var debugMode = process.argv.indexOf('--debug') > -1;
+var noCoverage = process.argv.indexOf('--no-coverage') > -1;
 
 function getConfitConfig(config) {
   // level of logging
@@ -22,6 +23,12 @@ function getConfitConfig(config) {
     // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
     commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %> = commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %>.filter(function (loader) {
       return (loader.loader.indexOf('<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderName %>') === -1);
+    });
+  }
+
+  if (noCoverage) {
+    commonConfig.reporters = commonConfig.reporters.filter(function(reporter) {
+      return reporter !== 'threshold';
     });
   }
 

@@ -3,7 +3,7 @@ const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
 
-const UNIT_TEST_CMD = 'npm run test:unit:once';
+const UNIT_TEST_CMD = 'npm run test:unit:once -- --no-coverage';
 const FIXTURE_DIR = __dirname + '/fixtures/';
 
 // Pass the confit config to this module... (use module.exports

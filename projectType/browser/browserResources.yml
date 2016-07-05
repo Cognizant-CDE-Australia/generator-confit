@@ -576,7 +576,13 @@ readme:
     <% }); %>
 
 
-release: {}
+release:
+  packages:
+    - <<: *pkg_ghooks
+
+  packageJsonConfig:
+    - config.ghooks:
+        pre-push: npm-run-all verify test:unit:once --silent
 
 # Sample App
 sampleApp:
@@ -652,9 +658,11 @@ verify:
   codeToVerify:
     - configKey: cssCodingStandard
       codingStandardExpression: config.buildCSS.sourceFormat
+      taskName: verify:css
 
     - configKey: jsCodingStandard
       codingStandardExpression: config.verify.jsCodingStandard
+      taskName: verify:js
 
   jsCodingStandard:
     none:

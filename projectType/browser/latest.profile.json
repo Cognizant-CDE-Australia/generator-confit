@@ -1,6 +1,7 @@
 {
   "name": "Latest",
-  "description": "Webpack-based build profile (23 Dec 2015)",
+  "priority": "1",
+  "description": "Latest Webpack-based build profile (2 July 2016)",
   "toolMap": {
     "app": "webpack",
     "buildBrowser": "webpack",
@@ -16,7 +17,7 @@
     "serverProd": "grunt",
     "testBrowser": "protractor",
     "testUnit": "webpack",
-    "verify": "grunt",
+    "verify": "npm",
     "zzfinish": "webpack"
   }
 }

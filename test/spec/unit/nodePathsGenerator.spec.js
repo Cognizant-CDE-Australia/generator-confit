@@ -25,7 +25,6 @@ describe('Node Paths Generator', () => {
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'src/');
-        assert.equal(paths.input.libDir, 'lib/');
         assert.equal(paths.input.unitTestDir, 'test/');
         assert.equal(paths.output.prodDir, 'dist/');
         assert.equal(paths.output.reportDir, 'reports/');
