@@ -324,7 +324,7 @@ $packages:
     version: 1.4.0
 
   - &pkg_serve-https
-    name: serve
+    name: serve-https
     version: 1.5.3
 
   - &pkg_style-loader

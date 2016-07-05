@@ -4,6 +4,7 @@ const assert = require('assert');
 const server = require('./server');
 const childProc = require('child_process');
 const tempTestDir = process.env.TEST_DIR;
+const fs = require('fs-extra');
 
 function runBrowserTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
@@ -21,13 +22,29 @@ function runBrowserTest(baseUrl) {
 
 module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
-  describe('npm run dev', function() {
+  describe('npm run dev', () => {
 
     let baseUrl;
 
-    before(function() {
+    before(() => {
+      // Determine if we are dealing with the grunt server, or the NPM server
+      const pkg = fs.readJsonSync(tempTestDir + 'package.json');
+      let serverStartedRegEx;
+      let configFn;
+      let configData;
+
+      if (pkg.scripts['serve:dev:https']) {
+        configFn = modifyPackageServerConfig;
+        configData = 'serve:dev';
+        serverStartedRegEx = /Serving .* at http(s)?:\/\//;
+      } else {
+        configFn = modifyConfitServerConfig;
+        configData = 'serverDev';
+        serverStartedRegEx = /webpack: bundle is now VALID\.\n$/;
+      }
+
       // Start up the confit DEV webserver
-      return server.start('npm start', tempTestDir, 'serverDev', /webpack: bundle is now VALID\.\n$/, SERVER_MAX_WAIT_TIME).then(function success(result) {
+      return server.start('npm start', tempTestDir, configData, serverStartedRegEx, SERVER_MAX_WAIT_TIME, configFn).then(function success(result) {
         baseUrl = result.baseUrl;
       });
     });
@@ -41,3 +58,27 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     });
   });
 };
+
+
+function modifyConfitServerConfig(testDir, port, configData) {
+  // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
+  let confitJson = fs.readJsonSync(testDir + 'confit.json');
+  let server = confitJson['generator-confit'][configData];
+  server.port = port;
+  fs.writeJsonSync(testDir + 'confit.json', confitJson);
+
+  return {
+    baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
+    details: server
+  };
+}
+
+function modifyPackageServerConfig(testDir, port, configData) {
+  // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
+  const pkg = fs.readJsonSync(testDir + 'package.json');
+  pkg.scripts[configData + ':https'] = pkg.scripts[configData + ':https'].replace(/-p \d*/, '-p ' + port);
+  pkg.scripts[configData + ':http'] = pkg.scripts[configData + ':http'].replace(/-p \d*/, '-p ' + port);
+  fs.writeJsonSync(testDir + 'package.json', pkg);
+
+  return modifyConfitServerConfig(testDir, port, 'serverProd');
+}

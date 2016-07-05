@@ -119,22 +119,17 @@ serverProd:
 
   tasks:
     - name: serve:prod
-      tasks:
-        - >
-          <%
-            if (config.serverProd) {
-              var serverProdCmd;
-              if (serverProd.protocol === 'https') {
-                serverProdCmd = 'serve-https -p ' + serverProd.port + ' -d ' + paths.output.prodDir + ' --servername ' + serverProd.hostname;
-              } else {
-                serverProdCmd = 'serve -C -p ' + serverProd.port + ' ' + paths.output.prodDir;
-              }
-          -%><%- serverProdCmd -%><% } -%>
+      tasks: ["<%- (config.serverProd && config.serverProd.protocol === 'https') ? 'npm run serve:prod:https' : 'npm run serve:prod:http' -%>"]
       description: <% if (config.serverProd) { %>Runs a production server on **<%= config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port %>**<% } -%>
       features:
         - HTTP or HTTPS
-        - 'Port can be overridden on command line: `-- -port=1234`'
-        - 'Browser can be opened to a specific path via command line: `-- -url=sub/path`'
+
+    - name: serve:prod:https
+      tasks: ["<% if (config.serverProd) { %><%- 'serve-https -p ' + serverProd.port + ' -d ' + paths.output.prodDir + ' --servername ' + serverProd.hostname -%><% } -%>"]
+
+    - name: serve:prod:http
+      tasks: ["<% if (config.serverProd) { %><%- 'serve -C -p ' + serverProd.port + ' ' + paths.output.prodDir -%><% } -%>"]
+
 
 testUnit:
   packages:

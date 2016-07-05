@@ -1,0 +1,98 @@
+{
+  "generator-confit": {
+    "app": {
+      "_version": "9f12bb60833d78f6c932caff0c45a6a9d6b4b0aa",
+      "buildProfile": "Webpack",
+      "projectType": "browser"
+    },
+    "buildBrowser": {
+      "_version": "e4ba1cd74468c99ced49bac2dd3634122918e331",
+      "browserSupport": [
+        "latest"
+      ]
+    },
+    "paths": {
+      "_version": "b4e5c78d66af79f1f996ac83ca9aff17da0e0b00",
+      "config": {
+        "configDir": "config/"
+      },
+      "input": {
+        "assetsDir": "assets/",
+        "browserTestDir": "browserTest/",
+        "modulesDir": "src/modules/",
+        "modulesSubDir": "modules/",
+        "srcDir": "src/",
+        "stylesDir": "styles/",
+        "templateDir": "template/",
+        "unitTestDir": "unitTest/"
+      },
+      "output": {
+        "assetsSubDir": "assets/",
+        "cssSubDir": "css/",
+        "devDir": "dev/",
+        "jsSubDir": "js/",
+        "prodDir": "prod/",
+        "reportDir": "reports/",
+        "vendorJSSubDir": "vendor/",
+        "viewsSubDir": "views/"
+      }
+    },
+    "buildAssets": {},
+    "buildCSS": {
+      "_version": "cddb64b4f796acedc045f1a0e3a16bf2bff1f012",
+      "autoprefixer": true,
+      "sourceFormat": "stylus"
+    },
+    "buildJS": {
+      "_version": "63b58af50b2d46f5f30a7318102fd9a195f650b7",
+      "framework": [
+        "AngularJS 1.x"
+      ],
+      "outputFormat": "ES5",
+      "sourceFormat": "ES6",
+      "vendorScripts": [
+        "angular"
+      ]
+    },
+    "buildHTML": {
+      "_version": "3044ad9ab5bb860ddacfc268b5e03fe7f2948361",
+      "extension": ".html"
+    },
+    "build": {},
+    "entryPoint": {
+      "_version": "a5743aa6ec32330496ed3f9a4215a456239e5639",
+      "entryPoints": {}
+    },
+    "serverDev": {
+      "_version": "db06861d68613ebfe14a49745c03783c05d9310a",
+      "hostname": "localhost",
+      "port": 3000,
+      "protocol": "https"
+    },
+    "serverProd": {
+      "_version": "4dbbaaa4d00c979746568aa32ef21425e2fe560d",
+      "hostname": "localhost",
+      "port": 3000,
+      "protocol": "https"
+    },
+    "testUnit": {
+      "_version": "62de2b61885aea97ebcd68f2dd4df1842d2ef842"
+    },
+    "testBrowser": {},
+    "verify": {
+      "_version": "f6e2574ca51269d2e6caca2925d84098dd9c409c",
+      "jsCodingStandard": "AirBnB"
+    },
+    "release": {
+      "_version": "56bbc396bc335ba0a6b6da908998fd650277086a",
+      "commitMessageFormat": "None",
+      "repositoryType": "Other",
+      "useSemantic": false
+    },
+    "sampleApp": {
+      "_version": "0162c3b0bed752ef24954b9e954e52e037c606d3",
+      "createSampleApp": true
+    },
+    "zzfinish": {}
+  }
+}

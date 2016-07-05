@@ -14,7 +14,7 @@
     "release": "npm",
     "sampleApp": "webpack",
     "serverDev": "webpack",
-    "serverProd": "grunt",
+    "serverProd": "npm",
     "testBrowser": "protractor",
     "testUnit": "webpack",
     "verify": "npm",
