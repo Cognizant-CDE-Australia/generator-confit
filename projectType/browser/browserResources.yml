@@ -703,6 +703,7 @@ verify:
     StandardJS:
       supportedSourceFormat: ['ES5', 'ES6']
       packages:
+        - <<: *pkg_eslint
         - <<: *pkg_eslint-config-standard
         - <<: *pkg_eslint-plugin-standard
       templateFiles:
