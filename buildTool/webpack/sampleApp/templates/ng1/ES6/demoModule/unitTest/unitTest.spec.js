@@ -30,3 +30,20 @@ describe('Test imported module', function () {
     expect(typeof demoService.demo).toEqual('function');
   });
 });
+
+
+describe('Changing pages', function () {
+  var $location;
+
+  beforeEach(function() {
+    angular.mock.module(demoModule);
+
+    angular.mock.inject(function(_$location_) {
+      $location = _$location_;
+    });
+  });
+
+  it('should go to the default page', function () {
+    $location.path('/');
+  });
+});

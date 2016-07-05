@@ -3,8 +3,10 @@
 module.exports = function() {
 
   function write() {
-    this.log('Writing Webpack build options');
-    let toolResources = this.buildTool.getResources().build;
+    this.log('Writing NPM testUnit options');
+
+    let toolResources = this.buildTool.getResources().testUnit;
+
     this.writeBuildToolConfig(toolResources);
   }
 

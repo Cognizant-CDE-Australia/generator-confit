@@ -14,23 +14,14 @@ let child;
  * @param serverStartTimeout  The amount of time to wait before returning control to the parent program. Usually allow enough time
  * @returns {Promise}         Promise that is fullfilled once the server has started
  */
-function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateServerReady, serverStartTimeout) {
+function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateServerReady, serverStartTimeout, configFn) {
   let SERVER_STARTED_RE = regExForStdioToIndicateServerReady;    // A string to search for in the stdout, which indicates the server has started.
   let resolveFn, rejectFn;
   let result = {};
   let resolveCalled = false;
 
   getFreePort().then((port) => {
-    // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
-    let confitJson = fs.readJsonSync(testDir + 'confit.json');
-    let server = confitJson['generator-confit'][confitServerToStart];
-    server.port = port;
-    fs.writeJsonSync(testDir + 'confit.json', confitJson);
-
-    result = {
-      baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
-      details: server
-    };
+    result = configFn(testDir, port, confitServerToStart);
 
     let cmdParams = cmd.split(' ');
     let mainCmd = cmdParams.shift();

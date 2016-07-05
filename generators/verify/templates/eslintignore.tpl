@@ -7,5 +7,5 @@ bower_components/*
 
 <% if (sampleApp.createSampleApp) { %>
 # Sample project
-<%= paths.input.modulesDir %>**/<%= demoModuleDir %>*
+<%= paths.input.srcDir + demoDir %>*
 <% } -%>

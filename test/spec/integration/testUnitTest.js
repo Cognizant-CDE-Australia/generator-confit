@@ -3,7 +3,7 @@ const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
 
-const UNIT_TEST_CMD = 'npm run test:unit:once';
+const UNIT_TEST_CMD = 'npm run test:unit:once -- --no-coverage';
 const FIXTURE_DIR = __dirname + '/fixtures/';
 
 // Pass the confit config to this module... (use module.exports
@@ -17,7 +17,7 @@ function runCommand() {
 }
 
 
-module.exports = function(confitConfig) {
+module.exports = function(confitConfig, unitTestPath) {
 
   describe('npm run test:unit:once', () => {
 
@@ -51,8 +51,7 @@ module.exports = function(confitConfig) {
 
     describe('with a unit test that finds a failure', function() {
       var jsFixtureFile = 'unitTest-fail.js';   // If this file is named 'unitTest-fail.spec.js', Mocha will try to run it as a unit/integration test!
-      var destFixtureFile = process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
-                            confitConfig.paths.input.unitTestDir + jsFixtureFile;
+      var destFixtureFile = unitTestPath + jsFixtureFile;
 
       before(function() {
         // Need to create a JS AND TypeScript version of this spec

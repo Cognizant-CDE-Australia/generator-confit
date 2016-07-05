@@ -1,0 +1,16 @@
+{
+  "name": "Latest",
+  "priority": "1",
+  "description": "Node build profile (4 July 2016)",
+  "toolMap": {
+    "app": "npm",
+    "buildJS": "",
+    "entryPoint": "npm",
+    "paths": "",
+    "sampleApp": "npm",
+    "release": "npm",
+    "testUnit": "npm",
+    "verify": "npm",
+    "zzfinish": "npm"
+  }
+}

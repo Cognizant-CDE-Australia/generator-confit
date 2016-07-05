@@ -1,0 +1,22 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Latest",
+      "projectType": "node"
+    },
+    "buildJS": {
+      "framework": [],
+      "sourceFormat": "ES6"
+    },
+    "paths": {
+      "input": {
+        "srcDir": "abc/"
+      }
+    },
+    "entryPoint": {
+      "entryPoints": {
+        "main": [""]
+      }
+    }
+  }
+}

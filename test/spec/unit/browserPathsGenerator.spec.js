@@ -6,12 +6,12 @@ const fs = require('fs-extra');
 
 const GENERATOR_UNDER_TEST = 'paths';
 
-describe('Paths Generator', () => {
+describe('Browser Paths Generator', () => {
 
   it('should should generate default path values', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'browser-paths-config.json',
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
@@ -41,7 +41,7 @@ describe('Paths Generator', () => {
   it('should allow the default paths to be changed', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'browser-paths-config.json',
       function before() {},
       function after() {
         yoassert.file(['confit.json']);
@@ -70,7 +70,7 @@ describe('Paths Generator', () => {
   it('should convert invalid paths into valid paths', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'browser-paths-config.json',
       function before() {},
       function after() {
         yoassert.file(['confit.json']);
@@ -93,7 +93,7 @@ describe('Paths Generator', () => {
   it('should throw an error if a path contains ../', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'browser-paths-config.json',
       function before() {},
       function after() {},
       function error(err) {
@@ -109,7 +109,7 @@ describe('Paths Generator', () => {
   it('should throw an error if a path is an absolute path', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'paths-config.json',
+      'browser-paths-config.json',
       function before() {},
       function after() {},
       function error(err) {

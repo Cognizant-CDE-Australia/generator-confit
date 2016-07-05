@@ -17,9 +17,9 @@ function runCommand() {
 }
 
 
-module.exports = function(confitConfig) {
+module.exports = function(confitConfig, srcDir) {
 
-  describe('npm run verify', function() {
+  describe('npm run verify', () => {
 
     it('should not find errors in the sampleApp code', function() {
       assert.doesNotThrow(runCommand);
@@ -27,9 +27,9 @@ module.exports = function(confitConfig) {
 
 
     if (confitConfig.verify.jsCodingStandard !== 'none') {
-      describe('- JS Coding Standards', function() {
-        var jsFixtureFile = 'js-syntax-fail.js';
-        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + jsFixtureFile;
+      describe('- JS Coding Standards', () => {
+        let jsFixtureFile = 'js-syntax-fail.js';
+        let destFixtureFile =  srcDir + jsFixtureFile;
 
         before(function() {
           fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile);
@@ -48,7 +48,7 @@ module.exports = function(confitConfig) {
       });
     }
 
-    if (confitConfig.buildCSS.sourceFormat !== 'css') {
+    if (confitConfig.buildCSS && confitConfig.buildCSS.sourceFormat !== 'css') {
       describe('- CSS Linting', function() {
         var cssFixtureFile = 'css-lint-fail.css';
         var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +

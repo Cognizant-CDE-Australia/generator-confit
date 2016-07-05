@@ -46,6 +46,7 @@
     "buildTool",
     "generators",
     "lib",
+    "projectType",
     "test",
     "*.md"
   ],

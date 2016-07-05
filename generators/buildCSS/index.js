@@ -1,6 +1,6 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
 
 module.exports = confitGen.create({
   initializing: {
@@ -19,10 +19,10 @@ module.exports = confitGen.create({
 
     this.log(chalk.underline.bold.green('Build CSS Generator'));
 
-    var done = this.async();
-    var resources = this.getResources().buildCSS;
+    let done = this.async();
+    let resources = this.getResources().buildCSS;
 
-    var prompts = [
+    let prompts = [
       {
         type: 'list',
         name: 'sourceFormat',

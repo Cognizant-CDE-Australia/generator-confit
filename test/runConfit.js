@@ -51,7 +51,7 @@ function install(resolve, reject) {
     helpers.run(generatorName, {tmpdir: false})   // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withGenerators([
-        path.join(__dirname, '../generators/build'),
+        path.join(__dirname, '../generators/buildBrowser'),
         path.join(__dirname, '../generators/buildAssets'),
         path.join(__dirname, '../generators/buildCSS'),
         path.join(__dirname, '../generators/buildHTML'),

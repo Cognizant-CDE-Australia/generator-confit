@@ -29,7 +29,7 @@ module.exports = confitGen.create({
 
     let resources = this.getResources().paths;
     let pathPrompts = resources.prompts.map(pathObj => {
-      pathObj.message = chalk.cyan(pathObj.heading) + pathObj.message;
+      pathObj.message = chalk.cyan(pathObj.heading || '') + pathObj.message;
       pathObj.default = _.get(defaultPaths, pathObj.name);
       pathObj.validate = validatePath;
       pathObj.when = (answers) => !answers.useDefaults;
@@ -68,15 +68,18 @@ module.exports = confitGen.create({
     let config = this.answers || this.getConfig();
 
     // Apply the filters to the pathPrompts and the generated paths
-    let pathPrompts = this.getResources().paths.prompts;
+    let resources = this.getResources().paths;
+    let pathPrompts = resources.prompts;
 
     pathPrompts.forEach((pathObj) => {
       _.set(config, pathObj.name, filterPath.call(this, _.get(config, pathObj.name), pathObj.name));
     });
 
-    // Generate this variable to maintain compatibility with existing build-code
-    config.input.modulesDir = config.input.srcDir + config.input.modulesSubDir;
-    config.config.tempDir = filterPath.call(this, defaultPaths.config.tempDir, 'config.tempDir');
+    // Generate any other paths needed
+    let pathsToGenerate = resources.pathsToGenerate || [];
+    pathsToGenerate.map(pathObj => {
+      _.set(config, pathObj.name, filterPath.call(this, this.renderEJS(pathObj.value, {paths: config}), pathObj.name));
+    });
 
     // Only if we prompted for answers should we re-call the build tool
     if (this.answers) {

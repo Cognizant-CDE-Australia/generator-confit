@@ -1,17 +1,20 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "2737946baf689a3448fd973acac152906b10af1c",
+      "_version": "9f12bb60833d78f6c932caff0c45a6a9d6b4b0aa",
+      "buildProfile": "Latest",
+      "projectType": "browser"
+    },
+    "buildBrowser": {
+      "_version": "e4ba1cd74468c99ced49bac2dd3634122918e331",
       "browserSupport": [
         "latest"
-      ],
-      "buildProfile": "Latest"
+      ]
     },
     "paths": {
-      "_version": "a7fbbf6a129b3b6ac4b325b3b9f51bbbb4a398b4",
+      "_version": "b4e5c78d66af79f1f996ac83ca9aff17da0e0b00",
       "config": {
-        "configDir": "config/",
-        "tempDir": ".tmp/"
+        "configDir": "config/"
       },
       "input": {
         "assetsDir": "assets/",
@@ -36,12 +39,12 @@
     },
     "buildAssets": {},
     "buildCSS": {
-      "_version": "51acf34bcc4ca869a9f3ed932f4b0808a6fd4b37",
+      "_version": "cddb64b4f796acedc045f1a0e3a16bf2bff1f012",
       "autoprefixer": true,
       "sourceFormat": "stylus"
     },
     "buildJS": {
-      "_version": "7ecf24894a3d1dd6be5ff8acc76fdc2da2aba089",
+      "_version": "63b58af50b2d46f5f30a7318102fd9a195f650b7",
       "framework": [],
       "outputFormat": "ES5",
       "sourceFormat": "ES6",
@@ -69,21 +72,21 @@
       "protocol": "https"
     },
     "testUnit": {
-      "_version": "de2fb819f5057b6f8c9a86d042efc711588a3e0c"
+      "_version": "62de2b61885aea97ebcd68f2dd4df1842d2ef842"
     },
     "testBrowser": {},
     "verify": {
-      "_version": "9ecb0d40688a5dd4c56404f8c1e647e1ec86f934",
+      "_version": "f6e2574ca51269d2e6caca2925d84098dd9c409c",
       "jsCodingStandard": "Google"
     },
     "release": {
       "_version": "56bbc396bc335ba0a6b6da908998fd650277086a",
-      "commitMessageFormat": "Conventional",
+      "commitMessageFormat": "None",
       "repositoryType": "Other",
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "b2ed6d3c5d23eb5dea9ace37dd16171a6b666941",
+      "_version": "0162c3b0bed752ef24954b9e954e52e037c606d3",
       "createSampleApp": true
     },
     "zzfinish": {}

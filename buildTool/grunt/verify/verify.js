@@ -7,16 +7,22 @@ module.exports = function() {
     this.log('Writing Grunt verify options');
 
     // Write global verify config...
+    let config = this.getGlobalConfig();
+    let resources = this.getResources().verify;
     let toolResources = this.buildTool.getResources().verify;
+
+    // Evaluation-context for the codeConfig.codingStandardExpression
+    let context = {
+      config,
+      resources
+    };
+
     this.writeBuildToolConfig(toolResources);
 
-    // ...then sub-configs for cssCodingStandard and jsCodingStandard
-    let config = this.getGlobalConfig();
-    let cssCodingStandard = config.buildCSS.sourceFormat;
-    let jsCodingStandard = config.verify.jsCodingStandard;
-
-    this.writeBuildToolConfig(toolResources.cssCodingStandard[cssCodingStandard]);
-    this.writeBuildToolConfig(toolResources.jsCodingStandard[jsCodingStandard]);
+    // For-each source-code-type to verify, write build tool config
+    resources.codeToVerify.forEach(codeConfig => {
+      this.writeBuildToolConfig(toolResources[codeConfig.configKey][_.get(context, codeConfig.codingStandardExpression)]);
+    });
   }
 
   return {

@@ -1,9 +1,10 @@
 {
-  "name": "Latest",
-  "description": "Webpack-based build profile (23 Dec 2015)",
+  "name": "Webpack",
+  "priority": "3",
+  "description": "Original Webpack-based build profile (23 Dec 2015)",
   "toolMap": {
     "app": "webpack",
-    "build": "webpack",
+    "buildBrowser": "webpack",
     "buildAssets": "webpack",
     "buildCSS": "webpack",
     "buildHTML": "webpack",

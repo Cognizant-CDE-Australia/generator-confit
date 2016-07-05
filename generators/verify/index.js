@@ -1,8 +1,8 @@
 'use strict';
-var confitGen = require('../../lib/ConfitGenerator.js');
-var chalk = require('chalk');
-var fs = require('fs');
-var _ = require('lodash');
+const confitGen = require('../../lib/ConfitGenerator.js');
+const chalk = require('chalk');
+const fs = require('fs');
+const _ = require('lodash');
 
 module.exports = confitGen.create({
   initializing: {
@@ -24,16 +24,15 @@ module.exports = confitGen.create({
 
       this.log(chalk.underline.bold.green('Verify Generator'));
 
-      var done = this.async();
-      var sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
-      var jsCodingStandardObjs = this.getResources().verify.jsCodingStandard;
+      let done = this.async();
+      let sourceFormat = this.getGlobalConfig().buildJS.sourceFormat;
+      let jsCodingStandardObjs = this.getResources().verify.jsCodingStandard;
       // Only show the linters that are applicable for the selected JS sourceFormat
-      var validJSStandards = _.pick(jsCodingStandardObjs, val => val.supportedSourceFormat.indexOf(sourceFormat) > -1);
-      var jsCodingStandards = _.keys(validJSStandards);
+      let validJSStandards = _.pick(jsCodingStandardObjs, val => val.supportedSourceFormat.indexOf(sourceFormat) > -1);
+      let jsCodingStandards = _.keys(validJSStandards);
 
       // Filter the list based on sourceFormat
-
-      var prompts = [
+      let prompts = [
         {
           type: 'list',
           name: 'jsCodingStandard',
@@ -60,26 +59,22 @@ module.exports = confitGen.create({
   },
 
   writing: function () {
-    // Copy the linting templates
-    var config = this.config.getAll();
-    var outputDir = config.paths.config.configDir;
-    var jsCodingStandard = this.getConfig('jsCodingStandard');
+    let config = this.config.getAll();
+    let resources = this.getResources().verify;
 
-    var cssTemplateFiles = this.getResources().verify.cssCodingStandard[config.buildCSS.sourceFormat].templateFiles;
-    var jsTemplateFiles = this.getResources().verify.jsCodingStandard[jsCodingStandard].templateFiles;
-    var allTemplateFiles = [].concat(cssTemplateFiles, jsTemplateFiles);
-    var demoModuleDir = this.getResources().sampleApp.demoModuleDir;  // We want to ignore this directory when linting!  // TODO: Do this in the sample app?
+    // Evaluation-context for the codeConfig.codingStandardExpression
+    let context = {
+      config,
+      resources
+    };
 
-    allTemplateFiles.forEach(templateFile => {
-      this.updateTextFile(
-        this.templatePath(templateFile.src),
-        this.destinationPath(templateFile.dest.replace('(configDir)', outputDir)),
-        _.merge({}, config, {demoModuleDir: demoModuleDir})
-      );
+    let demoDir = this.getResources().sampleApp.demoDir;  // We want to ignore this directory when linting, initially!
+    demoDir = this.renderEJS(demoDir, config);            // This can contain an EJS template, so parse it directly
+
+    // For-each source-code-type to verify, write generator config
+    resources.codeToVerify.forEach(codeConfig => {
+      this.writeGeneratorConfig(resources[codeConfig.configKey][_.get(context, codeConfig.codingStandardExpression)], {demoDir: demoDir});
     });
-
-    // NPM dependencies only for jsCodingStandard - nothing for CSS? Correct. The buildTool has the CSS dependencies
-    this.setNpmDevDependenciesFromArray(this.getResources().verify.jsCodingStandard[jsCodingStandard].packages);
 
     this.buildTool.write.apply(this);
   },

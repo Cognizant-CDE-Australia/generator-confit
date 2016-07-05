@@ -1,7 +1,7 @@
 'use strict';
 
 // START_CONFIT_GENERATED_CONTENT
-<% include ../../build/templates/webpack.build.config.js.tpl %>
+<% include ../../buildBrowser/templates/webpack.build.config.js.tpl %>
 <% include ../../entryPoint/templates/webpack.entryPoint.config.js.tpl %>
 <% include ../../buildJS/templates/webpack.buildJS.config.js.tpl %>
 <% include ../../testUnit/templates/webpack.testUnit.config.js.tpl %>

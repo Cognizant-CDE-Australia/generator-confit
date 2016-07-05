@@ -1,0 +1,23 @@
+{
+  "name": "Latest",
+  "priority": "1",
+  "description": "Latest Webpack-based build profile (2 July 2016)",
+  "toolMap": {
+    "app": "webpack",
+    "buildBrowser": "webpack",
+    "buildAssets": "webpack",
+    "buildCSS": "webpack",
+    "buildHTML": "webpack",
+    "buildJS": "webpack",
+    "entryPoint": "webpack",
+    "paths": "",
+    "release": "npm",
+    "sampleApp": "webpack",
+    "serverDev": "webpack",
+    "serverProd": "npm",
+    "testBrowser": "protractor",
+    "testUnit": "webpack",
+    "verify": "npm",
+    "zzfinish": "webpack"
+  }
+}
