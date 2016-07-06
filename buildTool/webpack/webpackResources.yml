@@ -11,6 +11,7 @@ buildBrowser:
       features:
         - Sourcemaps
         - Hot reloading of source code
+
     - name: build:prod
       tasks: ['webpack -p --progress --config <%= paths.config.configDir %>webpack/prod.webpack.config.js']
       description: Create a production build using Webpack
