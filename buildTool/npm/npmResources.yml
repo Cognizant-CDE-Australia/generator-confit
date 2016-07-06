@@ -12,12 +12,9 @@ release:
         - <<: *pkg_cz-customizable-ghooks
 
       packageJsonConfig:
-        - config.commitizen:
-            path: node_modules/cz-customizable
-        - config.cz-customizable:
-            config: <%- paths.config.configDir %>release/commitMessageConfig.js
-        - config.ghooks:
-            commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
+        - config.commitizen.path: node_modules/cz-customizable
+        - config.cz-customizable.config: <%- paths.config.configDir %>release/commitMessageConfig.js
+        - config.ghooks.commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
 
       templateFiles:
         - src: commitMessageConfig.js

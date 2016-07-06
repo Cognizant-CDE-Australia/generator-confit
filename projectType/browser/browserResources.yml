@@ -492,7 +492,7 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build)).forEach(function(value) {
+    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build), objectValues(readme.buildTask.buildBrowser)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
@@ -581,8 +581,7 @@ release:
     - <<: *pkg_ghooks
 
   packageJsonConfig:
-    - config.ghooks:
-        pre-push: npm-run-all verify test:unit:once --silent
+    - config.ghooks.pre-push: npm-run-all verify test:unit:once --silent
 
 # Sample App
 sampleApp:

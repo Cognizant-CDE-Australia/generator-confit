@@ -9,7 +9,31 @@ const GENERATOR_UNDER_TEST = 'release';
 
 describe('Release Generator', function () {
 
-  it('should generate a commit message template when using conventional commit messages', (done) => {
+  it('should generate a pre-push hook', (done) => {
+    utils.runGenerator(
+      GENERATOR_UNDER_TEST,
+      'release-conventional-commit.json',
+      function before() {
+        yoassert.noFile(['package.json']);
+      },
+      function after() {
+        yoassert.file(['package.json']);
+
+        // There should also be some configuration in package.json/config
+        let pkg = fs.readJsonSync('package.json');
+
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
+
+        done();
+      }
+    ).withPrompts({
+      repositoryType: 'Other',
+      useSemantic: false,
+      commitMessageFormat: 'Conventional'
+    });
+  });
+
+  it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-conventional-commit.json',
@@ -22,8 +46,10 @@ describe('Release Generator', function () {
 
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
-        assert(pkg.config.commitizen.path === 'node_modules/cz-customizable');
-        assert(pkg.config['cz-customizable'].config === 'config/release/commitMessageConfig.js');
+        assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
+        assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
+        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/index.js $2');
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
 
         done();
       }
@@ -48,7 +74,9 @@ describe('Release Generator', function () {
 
         // There should not be also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
-        assert(pkg.config === undefined);
+        assert.equal(pkg.config.commitizen, undefined);
+        assert.equal(pkg.config['cz-customizable'], undefined);
+        assert.equal(pkg.config.ghooks['commit-msg'], undefined);
 
         done();
       }
