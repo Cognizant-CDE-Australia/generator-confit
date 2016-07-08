@@ -68,6 +68,7 @@
     "sort-keys": "1.1.1",
     "sort-package-json": "1.4.0",
     "spdx-license-list": "2.1.0",
+    "update-notifier": "1.0.2",
     "yeoman-generator": "0.22.5"
   },
   "devDependencies": {
