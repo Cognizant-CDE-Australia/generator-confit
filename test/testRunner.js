@@ -138,8 +138,10 @@ function getFixtures(dir) {
 
   // Check if there is TEST_SUITE variable. If so, use it instead
   if (TEST_SUITE_M_OF_N) {
-    let [suiteNum, totalSuites] = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
-    console.log(suiteNum, totalSuites);
+    let parts = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
+    let suiteNum = parts[0];
+    let totalSuites = parts[1];
+
     let chunk = chunkify(files, totalSuites)[suiteNum - 1];
     console.info(chalk.white.bold('Using test fixtures:\n-', chunk.join('\n- ')));
     return chunk;
