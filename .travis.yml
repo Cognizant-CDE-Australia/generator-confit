@@ -1,18 +1,17 @@
 sudo: false
 language: node_js
 node_js:
-  - "5.11.0"
+  - "4"
   - "6.2"
 
 # Need to specify a GCC compiler now!
 # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
 env:
   # Create a build matrix from the available test files
-  - CXX=g++-4.8 TEST_SUITE_CHUNKS=5 TEST_SUITE=1
-  - CXX=g++-4.8 TEST_SUITE_CHUNKS=5 TEST_SUITE=2
-  - CXX=g++-4.8 TEST_SUITE_CHUNKS=5 TEST_SUITE=3
-  - CXX=g++-4.8 TEST_SUITE_CHUNKS=5 TEST_SUITE=4
-  - CXX=g++-4.8 TEST_SUITE_CHUNKS=5 TEST_SUITE=5
+  - CXX=g++-4.8 TEST_SUITE_M_OF_N=1-4
+  - CXX=g++-4.8 TEST_SUITE_M_OF_N=2-4
+  - CXX=g++-4.8 TEST_SUITE_M_OF_N=3-4
+  - CXX=g++-4.8 TEST_SUITE_M_OF_N=4-4
 
 matrix:
   fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing

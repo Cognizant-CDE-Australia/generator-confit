@@ -26,8 +26,7 @@ const TICK = chalk.green('\u2713');
 const CROSS = chalk.red('x');
 
 const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
-const TEST_SUITE_CHUNKS = process.env.TEST_SUITE_CHUNKS;
-const TEST_SUITE = process.env.TEST_SUITE;
+const TEST_SUITE_M_OF_N = process.env.TEST_SUITE_M_OF_N;
 
 
 /**
@@ -138,8 +137,10 @@ function getFixtures(dir) {
     .filter(file => fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null));
 
   // Check if there is TEST_SUITE variable. If so, use it instead
-  if (TEST_SUITE_CHUNKS && TEST_SUITE) {
-    let chunk = chunkify(files, TEST_SUITE_CHUNKS)[Number(TEST_SUITE) - 1];
+  if (TEST_SUITE_M_OF_N) {
+    let [suiteNum, totalSuites] = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
+    console.log(suiteNum, totalSuites);
+    let chunk = chunkify(files, totalSuites)[suiteNum - 1];
     console.info(chalk.white.bold('Using test fixtures:\n-', chunk.join('\n- ')));
     return chunk;
   }
