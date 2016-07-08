@@ -26,6 +26,8 @@ const TICK = chalk.green('\u2713');
 const CROSS = chalk.red('x');
 
 const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
+const TEST_SUITE_M_OF_N = process.env.TEST_SUITE_M_OF_N;
+
 
 /**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
@@ -134,6 +136,18 @@ function getFixtures(dir) {
   let files = fs.readdirSync(dir)
     .filter(file => fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null));
 
+  // Check if there is TEST_SUITE variable. If so, use it instead
+  if (TEST_SUITE_M_OF_N) {
+    let parts = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
+    let suiteNum = parts[0];
+    let totalSuites = parts[1];
+
+    let chunk = chunkify(files, totalSuites)[suiteNum - 1];
+    console.info(chalk.white.bold('Using test fixtures:\n-', chunk.join('\n- ')));
+    return chunk;
+  }
+
+
   // get a list of the files that start with '-'. If there are any return them, otherwise return everything
   let soloFiles = files.filter(file => file.charAt(0) === '-');
 
@@ -144,5 +158,47 @@ function getFixtures(dir) {
 function confitMsg() {
   console.info.apply(this, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
 }
+
+// Copied from: http://stackoverflow.com/questions/8188548/splitting-a-js-array-into-n-arrays
+function chunkify(a, n, balanced) {
+
+  if (n < 2)
+    return [a];
+
+  var len = a.length,
+    out = [],
+    i = 0,
+    size;
+
+  if (len % n === 0) {
+    size = Math.floor(len / n);
+    while (i < len) {
+      out.push(a.slice(i, i += size));
+    }
+  }
+
+  else if (balanced) {
+    while (i < len) {
+      size = Math.ceil((len - i) / n--);
+      out.push(a.slice(i, i += size));
+    }
+  }
+
+  else {
+
+    n--;
+    size = Math.floor(len / n);
+    if (len % size === 0)
+      size--;
+    while (i < size * n) {
+      out.push(a.slice(i, i += size));
+    }
+    out.push(a.slice(size * n));
+
+  }
+
+  return out;
+}
+
 
 main();
