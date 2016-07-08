@@ -8,6 +8,16 @@ node_js:
 # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
 env:
   - CXX=g++-4.8
+  # Create a build matrix from the available test files
+  - TEST_SUITE_CHUNKS=5
+  - TEST_SUITE=1
+  - TEST_SUITE=2
+  - TEST_SUITE=3
+  - TEST_SUITE=4
+  - TEST_SUITE=5
+
+matrix:
+  fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
 
 addons:
   firefox: "45.0"
