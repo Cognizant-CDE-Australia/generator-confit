@@ -5,11 +5,22 @@ const _ = require('lodash');
 const inquirer = require('inquirer');
 const spdxLic = require('spdx-license-list');
 
+
+// Do some one-time checks
+const updateNotifier = require('update-notifier');
+const pkg = require('../../package.json');
+
+(function updateCheck() {
+  let version = pkg.version.indexOf('semantic') > -1 ? '0.0.0' : pkg.version; // Need 
+  let notifier = updateNotifier({packageName: pkg.name, packageVersion: version});
+
+  notifier.notify();
+})();
+
+
 // Yeoman calls each object-function sequentially, from top-to-bottom. Good to know.
 // This generator is a shell to call other generators and setup global config.
 // It doesn't do much other work.
-
-let userName;     // Transient - do not store in confit.json
 
 module.exports = confitGen.create({
   initializing: {
