@@ -24,12 +24,12 @@ describe('test "' + fixtureFileName + '"', () => {
     case 'browser':
       srcDir = process.env.TEST_DIR + confitConfig.paths.input.modulesDir;
       unitTestDir = srcDir + process.env.SAMPLE_APP_MODULE_DIR + confitConfig.paths.input.unitTestDir;
-      usesGrunt = confitConfig.app.buildProfile === 'Webpack' ? false : true;  // The OLD webpack profile uses Grunt
+      usesGrunt = confitConfig.app.buildProfile === 'Webpack';  // The OLD webpack profile uses Grunt
       hasCSS = !usesGrunt;  // The OLD webpack profile uses Grunt
 
       require('./testBrowserDev')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
-      require('./testVerify')(confitConfig, srcDir, usesGrunt, hasCSS);
+      require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
       require('./testUnitTest')(confitConfig, unitTestDir);
       break;
 
@@ -39,7 +39,7 @@ describe('test "' + fixtureFileName + '"', () => {
       usesGrunt = false;
       hasCSS = false;
 
-      require('./testVerify')(confitConfig, srcDir, usesGrunt, hasCSS);
+      require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
       require('./testUnitTest')(confitConfig, unitTestDir);
       break;
   }
