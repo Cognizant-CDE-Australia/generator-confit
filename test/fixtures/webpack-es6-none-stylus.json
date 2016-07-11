@@ -1,18 +1,18 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "857c9e60b1b1500d71d0e30b035d07c4edea88c1",
+      "_version": "7078f64f3813103208745763b5dc88f8caed6e68",
       "buildProfile": "Latest",
       "projectType": "browser"
     },
     "buildBrowser": {
-      "_version": "e4ba1cd74468c99ced49bac2dd3634122918e331",
+      "_version": "398414642158327b84a298317de54604cc472342",
       "browserSupport": [
         "latest"
       ]
     },
     "paths": {
-      "_version": "b4e5c78d66af79f1f996ac83ca9aff17da0e0b00",
+      "_version": "3634b8bdd63823bf5ace52233c84c35a5f89e1b8",
       "config": {
         "configDir": "config/"
       },
@@ -39,54 +39,54 @@
     },
     "buildAssets": {},
     "buildCSS": {
-      "_version": "cddb64b4f796acedc045f1a0e3a16bf2bff1f012",
+      "_version": "b53a9ae0aafb9e5d08c3235984c6b1f2a8636a81",
       "autoprefixer": true,
       "sourceFormat": "stylus"
     },
     "buildJS": {
-      "_version": "63b58af50b2d46f5f30a7318102fd9a195f650b7",
+      "_version": "80fb03c3215cbea78bbfaa217f6f3d6fcdbdc704",
       "framework": [],
       "outputFormat": "ES5",
       "sourceFormat": "ES6",
       "vendorScripts": []
     },
     "buildHTML": {
-      "_version": "3044ad9ab5bb860ddacfc268b5e03fe7f2948361",
+      "_version": "2163b3987674b577d8237a6dcb4db98e61ce69bd",
       "extension": ".html"
     },
     "build": {},
     "entryPoint": {
-      "_version": "a5743aa6ec32330496ed3f9a4215a456239e5639",
+      "_version": "215456d1f2bf3025b4b5386d5c226add17317dab",
       "entryPoints": {}
     },
     "serverDev": {
-      "_version": "db06861d68613ebfe14a49745c03783c05d9310a",
+      "_version": "531bf06036e04b6cecd7fef5c6271c33960cd262",
       "hostname": "localhost",
       "port": 3000,
       "protocol": "https"
     },
     "serverProd": {
-      "_version": "4dbbaaa4d00c979746568aa32ef21425e2fe560d",
+      "_version": "c0c8c3017cf16a7339e7664283ca588e7c76a978",
       "hostname": "localhost",
       "port": 3000,
       "protocol": "https"
     },
     "testUnit": {
-      "_version": "62de2b61885aea97ebcd68f2dd4df1842d2ef842"
+      "_version": "a9fb53457f1e75aa76c9ff1894ab9d2fab116420"
     },
     "testBrowser": {},
     "verify": {
-      "_version": "f6e2574ca51269d2e6caca2925d84098dd9c409c",
+      "_version": "479a3c93a588e1a0530e6d1546b41e74265cee67",
       "jsCodingStandard": "Google"
     },
     "release": {
-      "_version": "56bbc396bc335ba0a6b6da908998fd650277086a",
+      "_version": "f36f7a77e145bf2e75ab8e0a3200ac801dae13a9",
       "commitMessageFormat": "None",
       "repositoryType": "Other",
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "0162c3b0bed752ef24954b9e954e52e037c606d3",
+      "_version": "b69dbbc270865cb3eda3c520992bfa619193e603",
       "createSampleApp": true
     },
     "zzfinish": {}

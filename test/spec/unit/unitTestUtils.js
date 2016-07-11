@@ -11,7 +11,7 @@ module.exports = {
 };
 
 function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, errorCb) {
-  var generatorName = path.join(__dirname, '../../../generators/' + generatorName);
+  var generatorName = path.join(__dirname, '../../../lib/generators/' + generatorName);
   var testDir;
 
   try {

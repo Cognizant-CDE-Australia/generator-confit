@@ -7,11 +7,12 @@ const _ = require('lodash');
 
 // Global data
 const CONFIT_FILE_NAME = 'confit.json';
+const GENERATOR_PATH = path.join(__dirname, '../lib/generators/');
 
-var testDirName = process.env.TEST_DIR;
-var srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
-var useExistingNodeModules = true;    // Try to preserve node_modules between test runs
-var cleanTestDir = !(useExistingNodeModules || true);
+let testDirName = process.env.TEST_DIR;
+let srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
+let useExistingNodeModules = true;    // Try to preserve node_modules between test runs
+let cleanTestDir = !(useExistingNodeModules || true);
 
 /**
  * Runs the confit:app generator
@@ -27,8 +28,8 @@ function runGenerator() {
 
 
 function install(resolve, reject) {
-  var destConfitConfigPath = path.join(testDirName, CONFIT_FILE_NAME);
-  var previousCWD = process.cwd();  // Remember this, so we can return to this directory later
+  let destConfitConfigPath = path.join(testDirName, CONFIT_FILE_NAME);
+  let previousCWD = process.cwd();  // Remember this, so we can return to this directory later
 
   // This turns off the "May <packageName> ... insights?" prompt. See https://github.com/yeoman/insight/blob/master/lib/index.js#L106
   process.env.CI = true;
@@ -44,28 +45,28 @@ function install(resolve, reject) {
     fs.copySync(srcFixtureFile, destConfitConfigPath);
 
     // Determine whether we need to run the installer or not (compare confit.json.previous to confit.json)
-    var skipInstall = isConfigIdentical(destConfitConfigPath);
+    let skipInstall = isConfigIdentical(destConfitConfigPath);
 
     // Run the generator
-    var generatorName = path.join(__dirname, '../generators/app');
+    let generatorName = path.join(GENERATOR_PATH, 'app');
     helpers.run(generatorName, {tmpdir: false})   // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withGenerators([
-        path.join(__dirname, '../generators/buildBrowser'),
-        path.join(__dirname, '../generators/buildAssets'),
-        path.join(__dirname, '../generators/buildCSS'),
-        path.join(__dirname, '../generators/buildHTML'),
-        path.join(__dirname, '../generators/buildJS'),
-        path.join(__dirname, '../generators/entryPoint'),
-        path.join(__dirname, '../generators/paths'),
-        path.join(__dirname, '../generators/release'),
-        path.join(__dirname, '../generators/sampleApp'),
-        path.join(__dirname, '../generators/serverDev'),
-        path.join(__dirname, '../generators/serverProd'),
-        path.join(__dirname, '../generators/testBrowser'),
-        path.join(__dirname, '../generators/testUnit'),
-        path.join(__dirname, '../generators/verify'),
-        path.join(__dirname, '../generators/zzfinish')
+        path.join(GENERATOR_PATH, 'buildBrowser'),
+        path.join(GENERATOR_PATH, 'buildAssets'),
+        path.join(GENERATOR_PATH, 'buildCSS'),
+        path.join(GENERATOR_PATH, 'buildHTML'),
+        path.join(GENERATOR_PATH, 'buildJS'),
+        path.join(GENERATOR_PATH, 'entryPoint'),
+        path.join(GENERATOR_PATH, 'paths'),
+        path.join(GENERATOR_PATH, 'release'),
+        path.join(GENERATOR_PATH, 'sampleApp'),
+        path.join(GENERATOR_PATH, 'serverDev'),
+        path.join(GENERATOR_PATH, 'serverProd'),
+        path.join(GENERATOR_PATH, 'testBrowser'),
+        path.join(GENERATOR_PATH, 'testUnit'),
+        path.join(GENERATOR_PATH, 'verify'),
+        path.join(GENERATOR_PATH, 'zzfinish')
       ])
       .withOptions({
         configFile: CONFIT_FILE_NAME,
