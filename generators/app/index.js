@@ -7,12 +7,14 @@ const spdxLic = require('spdx-license-list');
 
 
 // Do some one-time checks
-const updateNotifier = require('update-notifier');
-const pkg = require('../../package.json');
-
 (function updateCheck() {
-  let version = pkg.version.indexOf('semantic') > -1 ? '0.0.0' : pkg.version; // Need 
-  let notifier = updateNotifier({packageName: pkg.name, packageVersion: version});
+  const updateNotifier = require('update-notifier');
+  const pkg = require('../../package.json');
+  let options = {
+    name: pkg.name,
+    version: pkg.version.indexOf('semantic') > -1 ? '0.0.0' : pkg.version
+  };
+  let notifier = updateNotifier({pkg: options});
 
   notifier.notify();
 })();

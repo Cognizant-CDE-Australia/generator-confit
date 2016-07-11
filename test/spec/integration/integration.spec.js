@@ -17,23 +17,29 @@ describe('test "' + fixtureFileName + '"', () => {
   // Depending on the kind of Confit config, run different tests
   let projectType = confitConfig.app.projectType;
   let unitTestDir, srcDir;
+  let hasCSS;
+  let usesGrunt;
 
   switch (projectType) {
     case 'browser':
       srcDir = process.env.TEST_DIR + confitConfig.paths.input.modulesDir;
       unitTestDir = srcDir + process.env.SAMPLE_APP_MODULE_DIR + confitConfig.paths.input.unitTestDir;
+      usesGrunt = confitConfig.app.buildProfile === 'Webpack' ? false : true;  // The OLD webpack profile uses Grunt
+      hasCSS = !usesGrunt;  // The OLD webpack profile uses Grunt
 
       require('./testBrowserDev')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
-      require('./testVerify')(confitConfig, srcDir);
+      require('./testVerify')(confitConfig, srcDir, usesGrunt, hasCSS);
       require('./testUnitTest')(confitConfig, unitTestDir);
       break;
 
     case 'node':
       srcDir = process.env.TEST_DIR + confitConfig.paths.input.srcDir;
       unitTestDir = process.env.TEST_DIR + confitConfig.paths.input.unitTestDir;
+      usesGrunt = false;
+      hasCSS = false;
 
-      require('./testVerify')(confitConfig, srcDir);
+      require('./testVerify')(confitConfig, srcDir, usesGrunt, hasCSS);
       require('./testUnitTest')(confitConfig, unitTestDir);
       break;
   }

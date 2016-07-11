@@ -230,7 +230,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"
+              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
 
         - name: verify:js:watch
@@ -271,7 +271,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>tslint -c <%- paths.config.configDir %>verify/tslint.json "<%- completeJSPaths.join('" "') -%>"
+              %>tslint -c <%- paths.config.configDir %>verify/tslint.json "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Typescript code style and syntax
 
         - name: verify:js:watch
@@ -294,9 +294,11 @@ verify:
     css:
       tasks: # dummy tasks to preserve task interface
         - name: verify:css
-          tasks: ['echo']
+          tasks:
+            - echo <%- onSuccessCmd('verify:css success') -%>
         - name: verify:css:watch
-          tasks: ['echo']
+          tasks:
+            - echo <%- onSuccessCmd('verify:css success') -%>
 
     sass:
       packages:
@@ -317,7 +319,7 @@ verify:
                       completeCSSPaths.push(path + ext);
                     });
                   });
-              %>sass-lint -c <%- paths.config.configDir %>verify/.sasslintrc "<%- completeCSSPaths.join('" "') %>"<% } -%>
+              %>sass-lint -c <%- paths.config.configDir %>verify/.sasslintrc "<%- completeCSSPaths.join('" "') %>"<%- onSuccessCmd('verify:css success') -%><% } -%>
           description: Verify CSS code style and syntax
 
         - name: verify:css:watch
@@ -344,7 +346,7 @@ verify:
       tasks:
         - name: verify:css
           tasks:
-            - stylint -c <%- paths.config.configDir %>verify/.stylintrc <%- paths.input.srcDir -%>
+            - stylint -c <%- paths.config.configDir %>verify/.stylintrc <%- paths.input.srcDir -%><%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
 
         - name: verify:css:watch

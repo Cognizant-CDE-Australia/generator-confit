@@ -8,21 +8,34 @@ const FIXTURE_DIR = __dirname + '/fixtures/';
 
 // Pass the confit config to this module... (use module.exports
 
-function runCommand() {
+function runCommand(ioMode) {
   // If there is an error, an exception will be thrown
-  childProc.execSync(VERIFY_CMD, {
-    stdio: 'inherit',
+  return childProc.execSync(VERIFY_CMD, {
+    stdio: ioMode || 'inherit',
     cwd: process.env.TEST_DIR
   });
 }
 
 
-module.exports = function(confitConfig, srcDir) {
+module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
 
   describe('npm run verify', () => {
 
     it('should not find errors in the sampleApp code', function() {
-      assert.doesNotThrow(runCommand);
+      // The verify command should contain the "thumbs-up" code when there are no errors
+      let consoleData;
+      assert.doesNotThrow(() => {
+        consoleData = runCommand('pipe').toString();
+        console.log(consoleData);
+      });
+
+      // NOTE: I'm not a fan of conditional logic in tests, but this is a small exception
+      if (hasJS) {
+        assert.equal(consoleData.indexOf('\ud83d\udc4d verify:js success') > -1, true, 'expected "verify:js success" to be printed in the console');
+      }
+      if (hasCSS) {
+        assert.equal(consoleData.indexOf('\ud83d\udc4d verify:css success') > -1, true, 'expected "verify:css success" to be printed in the console');
+      }
     });
 
 
