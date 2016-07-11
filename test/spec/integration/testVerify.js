@@ -31,10 +31,10 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
 
       // NOTE: I'm not a fan of conditional logic in tests, but this is a small exception
       if (hasJS) {
-        assert.equal(consoleData.indexOf('\ud83d\udc4d verify:js success') > -1, true, 'expected "verify:js success" to be printed in the console');
+        assert.equal(consoleData.indexOf('\u2705 verify:js success') > -1, true, 'expected "verify:js success" to be printed in the console');
       }
       if (hasCSS) {
-        assert.equal(consoleData.indexOf('\ud83d\udc4d verify:css success') > -1, true, 'expected "verify:css success" to be printed in the console');
+        assert.equal(consoleData.indexOf('\u2705 verify:css success') > -1, true, 'expected "verify:css success" to be printed in the console');
       }
     });
 
