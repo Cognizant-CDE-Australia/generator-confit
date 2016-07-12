@@ -726,8 +726,8 @@ verify:
     sass:
       # No packages to install, as the build-tools will have their own
       templateFiles:
-        - src: sasslintrc
-          dest: <%= paths.config.configDir %>verify/.sasslintrc
+        - src: sasslint.yml
+          dest: <%= paths.config.configDir %>verify/sasslint.yml
     stylus:
       # No packages to install, as the build-tools will have their own
       templateFiles:

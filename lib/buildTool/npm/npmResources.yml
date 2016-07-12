@@ -307,19 +307,7 @@ verify:
       tasks:
         - name: verify:css
           tasks:
-            - >
-              <%
-                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
-                if (hasCSSConfig) {
-                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
-                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
-                  var completeCSSPaths = [];
-                  cssSourcePaths.forEach(function(path) {
-                    cssExtensions.forEach(function(ext) {
-                      completeCSSPaths.push(path + ext);
-                    });
-                  });
-              %>sass-lint -c <%- paths.config.configDir %>verify/.sasslintrc "<%- completeCSSPaths.join('" "') %>"<%- onSuccessCmd('verify:css success') -%><% } -%>
+            - sass-lint -c <%- paths.config.configDir %>verify/sasslint.yml --verbose <%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
 
         - name: verify:css:watch

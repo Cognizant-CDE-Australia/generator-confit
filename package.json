@@ -2,15 +2,16 @@
   "name": "generator-confit",
   "version": "0.0.0-semantically-released",
   "description": "Yeoman generator for creating the development process, tools and a sample project for current-generation web applications",
-  "license": "Apache-2.0",
-  "main": "generators/app/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/odecee/generator-confit.git"
-  },
+  "keywords": [
+    "build-system",
+    "webpack",
+    "yeoman",
+    "yeoman-generator"
+  ],
   "bugs": {
     "url": "https://github.com/odecee/generator-confit/issues"
   },
+  "license": "Apache-2.0",
   "contributors": [
     {
       "name": "Brett Uglow",
@@ -31,17 +32,6 @@
       "email": "kburshtein@odecee.com.au"
     }
   ],
-  "engines": {
-    "node": ">=4.x"
-  },
-  "scripts": {
-    "commit": "git-cz",
-    "updateFixtures": "node test/updateFixtures.js",
-    "test": "npm run updateFixtures && npm run test:unit && npm run test:seq",
-    "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
-    "test:unit": "mocha --reporter list --no-timeouts test/spec/unit/*.spec.js --MAX_LOG=false --no-logo",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
-  },
   "files": [
     "buildTool",
     "generators",
@@ -50,12 +40,44 @@
     "test",
     "*.md"
   ],
-  "keywords": [
-    "build-system",
-    "yeoman-generator",
-    "yeoman",
-    "webpack"
-  ],
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/odecee/generator-confit.git"
+  },
+  "scripts": {
+    "build": "clean:prod",
+    "clean:prod": "rimraf dist/",
+    "coverage": "npm-run-all test:coverage test:check-coverage",
+    "dev": "npm-run-all verify:watch",
+    "release": "npm-run-all build verify test:unit:once",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "start": "npm run dev",
+    "test": "npm-run-all updateFixtures test:unit:once test:seq",
+    "test:check-coverage": "istanbul check-coverage reports//coverage.json --config config/testUnit/istanbul.yml",
+    "test:coverage": "npm run test:unit:once",
+    "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
+    "test:unit": "chokidar 'lib/**/*.js' 'test/**/*.js' -c 'npm run test:unit:once' --initial --silent",
+    "test:unit:once": "istanbul cover --config config/testUnit/istanbul.yml _mocha -- --opts config/testUnit/mocha.opts",
+    "updateFixtures": "node test/updateFixtures.js",
+    "verify": "npm run verify:js --silent",
+    "verify:js": "eslint -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js success",
+    "verify:js:watch": "chokidar 'lib/**/*.js' 'test/**/*.js' 'config/**/*.js' -c 'npm run verify:js' --initial --silent",
+    "verify:watch": "npm run verify:js:watch --silent"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/release/commitMessageConfig.js"
+    },
+    "ghooks": {
+      "pre-commit": "exact-semver",
+      "commit-msg": "./node_modules/cz-customizable-ghooks/index.js $2",
+      "pre-push": "npm-run-all verify test:unit:once --silent"
+    }
+  },
   "dependencies": {
     "chalk": "0.5.0",
     "checksum": "0.1.1",
@@ -73,31 +95,28 @@
   },
   "devDependencies": {
     "async": "1.5.2",
+    "chokidar-cli": "1.2.0",
     "commitizen": "2.5.0",
     "cz-customizable": "4.0.0",
     "cz-customizable-ghooks": "1.1.2",
+    "eslint": "1.10.3",
+    "eslint-config-defaults": "8.0.2",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
-    "ghooks": "1.0.1",
+    "ghooks": "1.2.1",
+    "istanbul": "0.4.4",
     "jasmine-reporters": "2.1.1",
     "jasmine-spec-reporter": "2.4.0",
-    "mocha": "2.3.4",
+    "mocha": "2.5.3",
     "npm-module-checklist": "1.6.0",
+    "npm-run-all": "2.1.1",
     "protractor": "3.2.1",
+    "rimraf": "2.5.2",
     "semantic-release": "4.3.5",
     "yeoman-assert": "2.1.2",
     "yeoman-test": "1.1.0"
   },
-  "config": {
-    "ghooks": {
-      "pre-commit": "exact-semver",
-      "commit-msg": "./node_modules/cz-customizable-ghooks/index.js $2"
-    },
-    "commitizen": {
-      "path": "node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "config/release/commitMessageConfig.js"
-    }
+  "engines": {
+    "node": ">=4.x"
   }
 }

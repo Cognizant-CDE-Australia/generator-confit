@@ -21,7 +21,7 @@ app:
       features:
 
     - name: dev
-      tasks: ['verify', '--parallel verify:watch']    # Later, add build task if required
+      tasks: ['verify:watch']    # Later, add build task if required
       description: Run project in development mode (verify code, and re-verify when code is changed)
       features:
 
