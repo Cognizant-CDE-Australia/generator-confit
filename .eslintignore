@@ -5,3 +5,7 @@ bower_components/*
 # Config folder (optional - you might want to lint this...)
 config/*
 
+# ignore the test fixtures which are designed to trigger errors
+test/spec/integration/fixtures/*
+lib/buildTool/webpack/sampleApp/templates/*
+

@@ -2,12 +2,13 @@
 extends: defaults/configurations/google
 
 env:
+  mocha: true
   jasmine: true
   node: true
   browser: true
   commonjs: true    # For Webpack, CommonJS
   protractor: true
-  es6: true 
+  es6: true
 
 confit-globals: &confit-globals
 
@@ -22,3 +23,10 @@ rules:
   max-len:
     - 2       # Warning
     - 200     # Line Length
+
+  dot-location:
+    - 1       #error
+    - property
+
+  no-unused-vars:
+    - 1

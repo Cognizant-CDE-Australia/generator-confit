@@ -318,7 +318,7 @@ testUnit:
       version: github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
 
   templateFiles:
-    - src: karma.conf.js
+    - src: karma.conf.js.tpl
       dest: <%= paths.config.configDir %>testUnit/karma.conf.js
       overwrite: true
 

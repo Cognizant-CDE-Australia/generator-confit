@@ -21,9 +21,10 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
 
   describe('npm run verify', () => {
 
-    it('should not find errors in the sampleApp code', function() {
+    it('should not find errors in the sampleApp code', () => {
       // The verify command should contain the "thumbs-up" code when there are no errors
       let consoleData;
+
       assert.doesNotThrow(() => {
         consoleData = runCommand('pipe').toString();
         console.log(consoleData);
@@ -44,27 +45,27 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
         let jsFixtureFile = 'js-syntax-fail.js';
         let destFixtureFile =  srcDir + jsFixtureFile;
 
-        before(function() {
+        before(() => {
           fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile);
           fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile.replace('.js', '.ts'));
         });
 
-        after(function() {
+        after(() => {
           fs.removeSync(destFixtureFile);
           fs.removeSync(destFixtureFile.replace('.js', '.ts'));
         });
 
 
-        it('should throw an error when the code fails to lint', function() {
+        it('should throw an error when the code fails to lint', () => {
           assert.throws(runCommand, Error);
         });
       });
     }
 
     if (confitConfig.buildCSS && confitConfig.buildCSS.sourceFormat !== 'css') {
-      describe('- CSS Linting', function() {
-        var cssFixtureFile = 'css-lint-fail.css';
-        var destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
+      describe('- CSS Linting', () => {
+        let cssFixtureFile = 'css-lint-fail.css';
+        let destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
                                confitConfig.paths.input.stylesDir + cssFixtureFile;
 
         before(function() {
@@ -80,7 +81,7 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
         });
 
 
-        it('should throw an error when the code fails to lint', function() {
+        it('should throw an error when the code fails to lint', () => {
           assert.throws(runCommand, Error);
         });
       });

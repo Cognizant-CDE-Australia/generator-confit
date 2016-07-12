@@ -7,7 +7,7 @@ const fs = require('fs-extra');
 
 const GENERATOR_UNDER_TEST = 'release';
 
-describe('Release Generator', function () {
+describe('Release Generator', () => {
 
   it('should generate a pre-push hook', (done) => {
     utils.runGenerator(
@@ -46,6 +46,7 @@ describe('Release Generator', function () {
 
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
+
         assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
         assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
         assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/index.js $2');
@@ -74,6 +75,7 @@ describe('Release Generator', function () {
 
         // There should not be also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
+
         assert.equal(pkg.config.commitizen, undefined);
         assert.equal(pkg.config['cz-customizable'], undefined);
         assert.equal(pkg.config.ghooks['commit-msg'], undefined);
@@ -98,6 +100,7 @@ describe('Release Generator', function () {
 
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
+
         assert(pkg.scripts.release.length > 0, 'scripts.release exists');
         assert(pkg.scripts['semantic-release'].length > 0, 'scripts.semantic-release exists');
 
@@ -121,6 +124,7 @@ describe('Release Generator', function () {
 
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
+
         assert(pkg.scripts.release.length > 0, 'scripts.release exists');
         assert(pkg.scripts['semantic-release'] === undefined, 'scripts.semantic-release does not exist');
 

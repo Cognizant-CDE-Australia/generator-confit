@@ -38,20 +38,23 @@ module.exports = function(confitConfig, unitTestPath) {
 
     it('should have 100% branch coverage for the test files', () => {
       let result = runCommand().toString();
+
       console.log(result);
       result = result.split('\n');
       let resultLine = result.filter(item => item.indexOf('All files') === 0);
+
       assert(resultLine.length === 1, 'Result line array contains 1 item');
 
       let resultParts = resultLine[0].split('|');
+
       assert(resultParts[0].indexOf('All files') === 0);
       assert(parseFloat(resultParts[2], 10) === 100, 'Branches have 100% coverage');
     });
 
 
     describe('with a unit test that finds a failure', function() {
-      var jsFixtureFile = 'unitTest-fail.js';   // If this file is named 'unitTest-fail.spec.js', Mocha will try to run it as a unit/integration test!
-      var destFixtureFile = unitTestPath + jsFixtureFile;
+      let jsFixtureFile = 'unitTest-fail.js';   // If this file is named 'unitTest-fail.spec.js', Mocha will try to run it as a unit/integration test!
+      let destFixtureFile = unitTestPath + jsFixtureFile;
 
       before(function() {
         // Need to create a JS AND TypeScript version of this spec

@@ -35,12 +35,13 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
 }
 
 
-describe('App Generator', function () {
+describe('App Generator', () => {
 
-  it('should add an "app" section to the confit.json file with valid data inside it', function(done) {
+  it('should add an "app" section to the confit.json file with valid data inside it', (done) => {
     runGenerator('app-config.json',
       function beforeTest() {
         let confit = fs.readJsonSync('confit.json');
+
         assert.equal(confit['generator-confit'].app, undefined);
       },
       function afterTest() {
@@ -65,8 +66,9 @@ describe('App Generator', function () {
   });
 
 
-  it('should create an .editorConfig and package.json file when they do not exist', function(done) {
-    var filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
+  it('should create an .editorConfig and package.json file when they do not exist', (done) => {
+    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
+
     runGenerator('app-config.json',
       function beforeTest() {
         yoassert.noFile(filesThatShouldBeGenerated);
@@ -82,7 +84,7 @@ describe('App Generator', function () {
   });
 
 
-  it('should not create a license file when the license type is UNLICENSED', function(done) {
+  it('should not create a license file when the license type is UNLICENSED', (done) => {
     runGenerator('app-config.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
@@ -98,20 +100,22 @@ describe('App Generator', function () {
   });
 
 
-  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', function(done) {
+  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', (done) => {
     runGenerator('app-withCopyrightOwner.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
       },
-      function afterTest(dir) {
+      function afterTest(/*dir*/) {
         yoassert.file('LICENSE');
 
         let confit = fs.readJsonSync('confit.json');
         let expectedCopyrightOwner = confit['generator-confit'].app.copyrightOwner;
+
         assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
 
         let licenseText = fs.readFileSync('LICENSE', 'utf-8');
         let year = (new Date()).getFullYear();
+
         assert.notEqual(licenseText.indexOf('Copyright (c) ' + year + ' ' + expectedCopyrightOwner), -1, 'Copyright message is in the correct format');
         done();
       }
@@ -122,15 +126,16 @@ describe('App Generator', function () {
   });
 
 
-  it('should not overwrite an existing .editorconfig file', function(done) {
-    var originalContents = 'dummy data' + (new Date());
+  it('should not overwrite an existing .editorconfig file', (done) => {
+    let originalContents = 'dummy data' + new Date();
 
     runGenerator('app-config.json',
       function beforeTest(testDir) {
         fs.writeFileSync(path.join(testDir, '.editorconfig'), originalContents);
       },
       function afterTest(testDir) {
-        var newContents = fs.readFileSync(path.join(testDir, '.editorconfig'));
+        let newContents = fs.readFileSync(path.join(testDir, '.editorconfig'));
+
         assert.equal(originalContents, newContents);
         done();
       }
@@ -141,17 +146,18 @@ describe('App Generator', function () {
   });
 
 
-  it('should not overwrite an existing package.json file with a template, but will add additional data', function(done) {
-    var originalContents = { name: 'name-is-required', description: 'abc' };
+  it('should not overwrite an existing package.json file with a template, but will add additional data', (done) => {
+    let originalContents = {name: 'name-is-required', description: 'abc'};
 
     runGenerator('app-config.json',
       function beforeTest(testDir) {
         fs.writeJsonSync(testDir + '/package.json', originalContents);
         //fs.readdirSync(testDir).forEach(file => console.log('b', file));
-        //var contents = fs.readJsonSync(path.join(testDir, 'package.json'));
+        //let contents = fs.readJsonSync(path.join(testDir, 'package.json'));
       },
       function afterTest(testDir) {
-        var newContents = fs.readJsonSync(testDir + '/package.json');
+        let newContents = fs.readJsonSync(testDir + '/package.json');
+
         assert.equal(newContents.name, originalContents.name);
         assert.equal(newContents.description, originalContents.description);
         assert.equal(typeof newContents.devDependencies, 'object');
@@ -163,7 +169,7 @@ describe('App Generator', function () {
     });
   });
 
-  it('should generate scripts in package.json', function(done) {
+  it('should generate scripts in package.json', (done) => {
     runGenerator('app-config.json',
       function before(testDir) {
         yoassert.noFile(['package.json']);
@@ -176,7 +182,8 @@ describe('App Generator', function () {
         yoassert.file(['package.json']);
       },
       function after() {
-        var pkg = fs.readJsonSync('package.json');
+        let pkg = fs.readJsonSync('package.json');
+
         assert.equal(pkg.scripts.start, 'npm run dev');
         assert.ok(pkg.scripts.dev);
         assert.ok(pkg.scripts.build);

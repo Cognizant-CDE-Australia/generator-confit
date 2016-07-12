@@ -3,10 +3,11 @@
 env:
   jasmine: true
   node: true
-  browser: true
+  <% if (app.projectType === 'browser') { -%>browser: true <% } %>
   commonjs: true    # For Webpack, CommonJS
-  protractor: true
+  <% if (app.projectType === 'browser') { -%>protractor: true <% } %>
   <% if (buildJS.sourceFormat === 'ES6') { -%>es6: true <% } %>
+  <% if (app.projectType === 'node') { -%>mocha: true <% } %>
 
 confit-globals: &confit-globals
 <%

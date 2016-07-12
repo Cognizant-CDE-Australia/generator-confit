@@ -8,7 +8,6 @@ let originalSepValue = path.sep;
 
 describe('Webpack Helpers', () => {
 
-
   afterEach(() => {
     path.sep = originalSepValue;
   });
@@ -18,16 +17,16 @@ describe('Webpack Helpers', () => {
     it('should convert a regular expression written in Unix/OSX format into a platform specific format', () => {
       path.sep = '_'; // Can use any separator, but in practice, the path.sep separator will be used
       let actual = helpers.pathRegEx(/a\/b/);
-      assert.strictEqual(actual.source, /a_b/.source);
 
+      assert.strictEqual(actual.source, /a_b/.source);
       assert.strictEqual(actual.toString(), '/a_b/');
     });
 
     it('should leave unchanged a RegEx written in Unix/OSX format when the platform is also Unix/OSX', () => {
       path.sep = '/';
       let actual = helpers.pathRegEx(/a\/b/);
-      assert.strictEqual(actual.source, /a\/b/.source);
 
+      assert.strictEqual(actual.source, /a\/b/.source);
       assert.strictEqual(actual.test('z/x/a/b'), true);
       assert.strictEqual(actual.test('c:\\z\\x\\a\\b'), false);
     });
@@ -35,8 +34,8 @@ describe('Webpack Helpers', () => {
     it('should convert a RegEx written in Unix/OSX format when the platform is Windows', () => {
       path.sep = '\\';
       let actual = helpers.pathRegEx(/a\/b/);
-      assert.strictEqual(actual.source, /a\\b/.source);
 
+      assert.strictEqual(actual.source, /a\\b/.source);
       assert.strictEqual(actual.test('z/x/a/b'), false);
       assert.strictEqual(actual.test('c:\\z\\x\\a\\b'), true);
     });
@@ -45,6 +44,7 @@ describe('Webpack Helpers', () => {
       // If the regexp is already a string, it should return a string back
       path.sep = '\\';
       let actual = helpers.pathRegEx('modules/(.*)/assets/font/.*');
+
       assert.strictEqual(actual, 'modules\\\\(.*)\\\\assets\\\\font\\\\.*');
     });
   });

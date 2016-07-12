@@ -19,7 +19,9 @@ function main() {
       resources.readYaml(baseDir + 'lib/projectType/node/nodeResources.yml').app.subGenerators
     ))
     .map(item => item.split(':')[1])
-    .map(name => { return {name: name, file: path.resolve(baseDir + 'lib/generators/' + name + '/index.js') }; });
+    .map(name => {
+      return {name: name, file: path.resolve(baseDir + 'lib/generators/' + name + '/index.js')};
+    });
 
   let generatorName = resources.readYaml(baseDir + 'lib/core/resources.yml').rootGeneratorName;
 
@@ -36,9 +38,9 @@ function main() {
 function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
   // Get the files
   let files = fs.readdirSync(dir)
-    .filter(function(file) {
-      return fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null);
-    });
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/ !== null));
+
+  let filesChanged = 0;
 
   // Update each file
   files.forEach(file => {
@@ -60,6 +62,7 @@ function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
       }
 
       let origConfig = JSON.stringify(confit[item.name]);
+
       confit[item.name] = sortKeys(confit[item.name], {deep: true});
       let sortedConfig = JSON.stringify(confit[item.name]);
 
@@ -71,6 +74,11 @@ function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
     if (fileChanged) {
       fs.writeJsonSync(path.join(dir, file), json);
       console.log(file + ' updated');
+      filesChanged++;
     }
   });
+
+  if (!filesChanged) {
+    console.log('All fixtures already up-to-date');
+  }
 }

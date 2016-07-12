@@ -8,9 +8,9 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'buildBrowser';
 
 
-describe('buildBrowser Generator', function () {
+describe('buildBrowser Generator', () => {
 
-  it('should have a default browser support value', function(done) {
+  it('should have a default browser support value', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'buildBrowser-config.json',
@@ -30,5 +30,4 @@ describe('buildBrowser Generator', function () {
       }
     );
   });
-
 });

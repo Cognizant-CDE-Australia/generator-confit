@@ -3,7 +3,7 @@ app:
   subGenerators:
     - confit:paths
     - confit:buildJS
-    - confit:entryPoint
+    - confit:entryPoint      # Something is going wrong here
     - confit:testUnit
     - confit:verify
     - confit:release

@@ -3,6 +3,7 @@
 const helpers = require('yeoman-test');
 const path = require('path');
 const fs = require('fs-extra');
+const assert = require('assert');
 const _ = require('lodash');
 
 // Global data
@@ -14,7 +15,7 @@ let srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
 let useExistingNodeModules = true;    // Try to preserve node_modules between test runs
 let cleanTestDir = !(useExistingNodeModules || true);
 
-/**
+/*
  * Runs the confit:app generator
  *
  * @param testDir                Where to run the generator
@@ -49,11 +50,12 @@ function install(resolve, reject) {
 
     // Run the generator
     let generatorName = path.join(GENERATOR_PATH, 'app');
+
     helpers.run(generatorName, {tmpdir: false})   // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withGenerators([
-        path.join(GENERATOR_PATH, 'buildBrowser'),
         path.join(GENERATOR_PATH, 'buildAssets'),
+        path.join(GENERATOR_PATH, 'buildBrowser'),
         path.join(GENERATOR_PATH, 'buildCSS'),
         path.join(GENERATOR_PATH, 'buildHTML'),
         path.join(GENERATOR_PATH, 'buildJS'),
@@ -82,7 +84,7 @@ function install(resolve, reject) {
         assert.ifError(err);
       })
       .on('end', function() {
-        var config = require(destConfitConfigPath)['generator-confit'];
+        let config = require(destConfitConfigPath)['generator-confit'];
 
         // Create a confit.json.previous file, to help us speed up installation next time.
         // Next run, look for this file. If it exists, don't do an install
@@ -106,10 +108,7 @@ function clean(dir, cleanEverything) {
     fs.emptyDirSync(dir);
   } else {
     // Keep the node_modules directory and CONFIT_FILE_NAME + .previous
-    var files = fs.readdirSync(dir)
-      .filter(function(file) {
-        return (file !== 'node_modules' && file !== CONFIT_FILE_NAME + '.previous');
-      });
+    let files = fs.readdirSync(dir).filter(file => file !== 'node_modules' && file !== CONFIT_FILE_NAME + '.previous');
 
     //console.log('Deleting:', files.join('\n'));
     files.forEach(function(file) {
@@ -120,7 +119,7 @@ function clean(dir, cleanEverything) {
 
 
 function isConfigIdentical(newConfigName) {
-  var oldConfigName = newConfigName + '.previous';
+  let oldConfigName = newConfigName + '.previous';
 
   try {
     fs.statSync(oldConfigName).isFile();    // Produces an error if the file does not exist

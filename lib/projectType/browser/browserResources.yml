@@ -28,7 +28,7 @@ app:
       features:
 
     - name: dev
-      tasks: ['clean:dev', 'verify', '--parallel verify:watch build:dev serve:dev']
+      tasks: ['clean:dev', '--parallel verify:watch build:dev serve:dev']
       description: Run project in development mode (verify code, create dev build into <%= paths.output.devDir %> folder, serve on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**, watch for changes and reload the browser automatically)
       features:
 

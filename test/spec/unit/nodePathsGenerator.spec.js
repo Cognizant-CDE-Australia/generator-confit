@@ -15,8 +15,8 @@ describe('Node Paths Generator', () => {
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
-        assert.equal(paths, undefined);
 
+        assert.equal(paths, undefined);
       },
       function after() {
         yoassert.file(['confit.json']);
@@ -45,6 +45,7 @@ describe('Node Paths Generator', () => {
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
+
         assert.equal(paths.input.srcDir, 'willy/');
         done();
       }
@@ -65,6 +66,7 @@ describe('Node Paths Generator', () => {
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
+
         assert.equal(paths.input.srcDir, 'dotSlash/');
         assert.equal(paths.output.reportDir, 'reports/');        // Changed to the default directory
         done();

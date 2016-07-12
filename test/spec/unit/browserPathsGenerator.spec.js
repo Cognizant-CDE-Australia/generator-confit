@@ -15,14 +15,15 @@ describe('Browser Paths Generator', () => {
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
-        assert.equal(paths, undefined);
 
+        assert.equal(paths, undefined);
       },
       function after() {
         yoassert.file(['confit.json']);
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
+
         assert.equal(paths.input.srcDir, 'src/');
         assert.equal(paths.input.modulesDir, 'src/modules/');
         assert.equal(paths.input.assetsDir, 'assets/');
@@ -48,6 +49,7 @@ describe('Browser Paths Generator', () => {
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
+
         assert.equal(paths.input.srcDir, 'willy/');
         assert.equal(paths.input.modulesDir, 'willy/modules/');
 
@@ -77,6 +79,7 @@ describe('Browser Paths Generator', () => {
 
         let confit = fs.readJsonSync('confit.json');
         let paths = confit['generator-confit'].paths;
+
         assert.equal(paths.input.srcDir, 'dotSlash/');
         assert.equal(paths.input.modulesSubDir, '');      // This is the only directory that can be blank
         assert.equal(paths.output.devDir, 'dev/');        // Changed to the default directory
@@ -121,5 +124,4 @@ describe('Browser Paths Generator', () => {
       'config.configDir': '/up/a/dir'
     });
   });
-
 });
