@@ -1,3 +1,5 @@
+'use strict';
+
 const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');

@@ -1,4 +1,5 @@
 'use strict';
+
 const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
