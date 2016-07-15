@@ -173,18 +173,13 @@ testUnit:
         - Uses Mocha
         - Code coverage
 
-    - name: test:coverage
-      tasks: ['npm run test:unit:once']
-      description: Alias for `npm run test:unit:once`
-      features:
-
     - name: test:check-coverage
-      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>/coverage.json --config <%- paths.config.configDir %>testUnit/istanbul.yml']
+      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir %>testUnit/istanbul.yml']
       description:
       features:
 
-    - name: coverage
-      tasks: ['npm-run-all test:coverage test:check-coverage']
+    - name: test:coverage
+      tasks: ['npm-run-all test:unit:once test:check-coverage --silent']
       description: Run instrumented unit tests then verify coverage meets defined thresholds
       features:
         - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)

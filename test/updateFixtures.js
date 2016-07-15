@@ -38,7 +38,7 @@ function main() {
 function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
   // Get the files
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/ !== null));
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/) !== null);
 
   let filesChanged = 0;
 

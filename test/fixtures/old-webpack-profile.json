@@ -1,18 +1,18 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "7078f64f3813103208745763b5dc88f8caed6e68",
+      "_version": "c96bd0f404fe7ff977d75a8e3fe6d216111c1fcf",
       "buildProfile": "Webpack",
       "projectType": "browser"
     },
     "buildBrowser": {
-      "_version": "398414642158327b84a298317de54604cc472342",
+      "_version": "35792fb70fd86518ee3082b701551bf0708b7331",
       "browserSupport": [
         "latest"
       ]
     },
     "paths": {
-      "_version": "3634b8bdd63823bf5ace52233c84c35a5f89e1b8",
+      "_version": "f04a8acc4c638da8bcca2621a2cb38265f57c301",
       "config": {
         "configDir": "config/"
       },
@@ -39,12 +39,12 @@
     },
     "buildAssets": {},
     "buildCSS": {
-      "_version": "b53a9ae0aafb9e5d08c3235984c6b1f2a8636a81",
+      "_version": "55bd24c0b8fd60d2bff03315bc4386faf9fab49a",
       "autoprefixer": true,
       "sourceFormat": "stylus"
     },
     "buildJS": {
-      "_version": "80fb03c3215cbea78bbfaa217f6f3d6fcdbdc704",
+      "_version": "609437824e3cfa104a7b905806e1cfe625feaff8",
       "framework": [
         "AngularJS 1.x"
       ],
@@ -55,42 +55,42 @@
       ]
     },
     "buildHTML": {
-      "_version": "2163b3987674b577d8237a6dcb4db98e61ce69bd",
+      "_version": "f466c7ad915e56939c7201ba00d576563068a1d3",
       "extension": ".html"
     },
     "build": {},
     "entryPoint": {
-      "_version": "215456d1f2bf3025b4b5386d5c226add17317dab",
+      "_version": "5c4e4dbb4067006012b6a8c7a191f434c713da11",
       "entryPoints": {}
     },
     "serverDev": {
-      "_version": "531bf06036e04b6cecd7fef5c6271c33960cd262",
+      "_version": "51908fc3d53aa77d7060d4a4cc5b55062699b89b",
       "hostname": "localhost",
       "port": 3000,
       "protocol": "https"
     },
     "serverProd": {
-      "_version": "c0c8c3017cf16a7339e7664283ca588e7c76a978",
+      "_version": "a62adead21a308b05636af79d9f625e00bafe571",
       "hostname": "localhost",
       "port": 3000,
       "protocol": "https"
     },
     "testUnit": {
-      "_version": "a9fb53457f1e75aa76c9ff1894ab9d2fab116420"
+      "_version": "0d5f4bebd3e49bca25e66571a691997ea22f7cef"
     },
     "testBrowser": {},
     "verify": {
-      "_version": "479a3c93a588e1a0530e6d1546b41e74265cee67",
+      "_version": "1e639144bb1cd7981594644824fdc8000ef1bfb0",
       "jsCodingStandard": "AirBnB"
     },
     "release": {
-      "_version": "f36f7a77e145bf2e75ab8e0a3200ac801dae13a9",
+      "_version": "fc6ed50f369ea100b01f99f0e7eb6bac2351f545",
       "commitMessageFormat": "None",
       "repositoryType": "Other",
       "useSemantic": false
     },
     "sampleApp": {
-      "_version": "b69dbbc270865cb3eda3c520992bfa619193e603",
+      "_version": "72b220804413bb00a0877fcc06d58b0a877af43c",
       "createSampleApp": true
     },
     "zzfinish": {}

@@ -24,6 +24,11 @@ function getConfitConfig(config) {
     commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %> = commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %>.filter(function (loader) {
       return (loader.loader.indexOf('<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderName %>') === -1);
     });
+
+    // No point checking threshold if we removing the the coverage tool
+    commonConfig.reporters = commonConfig.reporters.filter(function(reporter) {
+      return reporter !== 'threshold' || reporter !== 'coverage';
+    });
   }
 
   if (noCoverage) {

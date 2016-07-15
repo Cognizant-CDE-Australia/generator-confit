@@ -305,12 +305,15 @@ testUnit:
       tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.conf.js']
       description: Run unit tests once
       features:
+        - Tests are run a single time
+        - Good command for continuous integration testing
 
     - name: test:unit:debug
       tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
-        - no code coverage to make it easier to read source code
+        - Runs continuously (best to run in a separate window)
+        - No code coverage to make it easier to read source & testcode
 
   typeLibs:
     - name: jasmine

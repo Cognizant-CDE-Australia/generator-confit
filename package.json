@@ -54,7 +54,7 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "npm run dev",
     "test": "npm-run-all updateFixtures test:unit:once test:seq",
-    "test:check-coverage": "istanbul check-coverage reports//coverage.json --config config/testUnit/istanbul.yml",
+    "test:check-coverage": "istanbul check-coverage reports/coverage.json --config config/testUnit/istanbul.yml",
     "test:coverage": "npm run test:unit:once",
     "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
     "test:unit": "chokidar 'lib/**/*.js' 'test/**/*.js' -c 'npm run test:unit:once' --initial --silent",
