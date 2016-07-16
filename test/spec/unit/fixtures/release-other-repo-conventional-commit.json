@@ -2,7 +2,8 @@
   "generator-confit": {
     "app": {
       "buildProfile": "Latest",
-      "projectType": "node"
+      "projectType": "node",
+      "repositoryType": "Other"
     },
     "paths": {
       "config": {

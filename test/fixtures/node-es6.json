@@ -1,11 +1,12 @@
 {
   "generator-confit": {
     "app": {
-      "_version": "c96bd0f404fe7ff977d75a8e3fe6d216111c1fcf",
+      "_version": "1badba7e99feff4b2e72e16de38c66f73757e1dc",
       "buildProfile": "Latest",
       "copyrightOwner": "Brett Uglow",
       "license": "UNLICENSED",
-      "projectType": "node"
+      "projectType": "node",
+      "repositoryType": "GitHub"
     },
     "paths": {
       "_version": "f04a8acc4c638da8bcca2621a2cb38265f57c301",
@@ -41,9 +42,8 @@
       "jsCodingStandard": "Google"
     },
     "release": {
-      "_version": "fc6ed50f369ea100b01f99f0e7eb6bac2351f545",
+      "_version": "14180bef508f4e2c75c2d88f33d7c7a4b5f78e15",
       "commitMessageFormat": "Conventional",
-      "repositoryType": "GitHub",
       "useSemantic": false
     },
     "sampleApp": {

@@ -60,9 +60,9 @@ release:
 
       manual:
         tasks:
-          - name: release
-            tasks: ['build', 'verify', 'test:unit:once']
-            description: Create production version of software, verify code, run unit tests.
+          - name: pre-release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            description: Verify code, run unit tests, check test coverage, build software.
             features:
               - Define another script-task called `postrelease` to define the rest of your release process
 
@@ -76,7 +76,7 @@ release:
             tasks: ['corp-semantic-release']
 
           - name: release
-            tasks: ['build', 'verify', 'test:unit:once', 'semantic-release']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>', 'semantic-release']
             description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
             features:
               - Generates `CHANGELOG.md`
@@ -87,7 +87,7 @@ release:
       manual:
         tasks:
           - name: release
-            tasks: ['build', 'verify', 'test:unit:once']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
             description: Create production version of software, verify code, run unit tests.
             features:
               - Define another script-task called `postrelease` to define the rest of your release process

@@ -88,6 +88,7 @@ describe('zzFinish Generator', () => {
         let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
 
         assert.notEqual(readmeText.indexOf('<!--[CN_HEADING]-->'), -1);
+        // TODO: might want to test some of the sections that have logic in them
         done();
       }
     );

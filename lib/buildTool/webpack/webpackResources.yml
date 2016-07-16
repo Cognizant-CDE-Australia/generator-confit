@@ -314,6 +314,10 @@ testUnit:
         - Runs continuously (best to run in a separate window)
         - No code coverage to make it easier to read source & testcode
 
+    - name: test:coverage   # Used by the pre-release / release task
+      tasks: ['npm run test:unit:once']
+      description: Alias for test:unit:once, which also does test coverage checks and will fail if test coverage is not sufficient
+
   typeLibs:
     - name: jasmine
       key: ambientDependencies

@@ -12,7 +12,7 @@ describe('Release Generator', () => {
   it('should generate a pre-push hook', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'release-conventional-commit.json',
+      'release-other-repo-conventional-commit.json',
       function before() {
         yoassert.noFile(['package.json']);
       },
@@ -27,7 +27,6 @@ describe('Release Generator', () => {
         done();
       }
     ).withPrompts({
-      repositoryType: 'Other',
       useSemantic: false,
       commitMessageFormat: 'Conventional'
     });
@@ -36,7 +35,7 @@ describe('Release Generator', () => {
   it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'release-conventional-commit.json',
+      'release-other-repo-conventional-commit.json',
       function before() {
         yoassert.noFile(['config/release/commitMessageConfig.js']);
       },
@@ -55,7 +54,6 @@ describe('Release Generator', () => {
         done();
       }
     ).withPrompts({
-      repositoryType: 'Other',
       useSemantic: false,
       commitMessageFormat: 'Conventional'
     });
@@ -65,7 +63,7 @@ describe('Release Generator', () => {
   it('should NOT generate a commit message template when NOT using conventional commit messages', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'release-conventional-commit.json',
+      'release-other-repo-conventional-commit.json',
       function before() {
         yoassert.noFile(['config/release/commitMessageConfig.js']);
       },
@@ -83,7 +81,6 @@ describe('Release Generator', () => {
         done();
       }
     ).withPrompts({
-      repositoryType: 'Other',
       useSemantic: false,
       commitMessageFormat: 'None'
     });
@@ -93,7 +90,7 @@ describe('Release Generator', () => {
   it('should generate a "release" and a "semantic-release" script for semantic releases', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'release-conventional-commit.json',
+      'release-other-repo-conventional-commit.json',
       function before() { },
       function after() {
         yoassert.file(['package.json']);
@@ -107,7 +104,6 @@ describe('Release Generator', () => {
         done();
       }
     ).withPrompts({
-      repositoryType: 'Other',
       useSemantic: true,
       commitMessageFormat: 'Conventional'
     });
@@ -117,7 +113,7 @@ describe('Release Generator', () => {
   it('should generate only a "release" script for non-semantic releases', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'release-conventional-commit.json',
+      'release-other-repo-conventional-commit.json',
       function before() { },
       function after() {
         yoassert.file(['package.json']);
@@ -131,8 +127,55 @@ describe('Release Generator', () => {
         done();
       }
     ).withPrompts({
-      repositoryType: 'Other',
       useSemantic: false,
+      commitMessageFormat: 'Conventional'
+    });
+  });
+
+
+  it('should generate a "pre-release" script for non-semantic releases on GitHub and does not use the semantic-release-cli module', (done) => {
+    utils.runGenerator(
+      GENERATOR_UNDER_TEST,
+      'release-github-repo-conventional-commit.json',
+      function before() { },
+      function after() {
+        yoassert.file(['package.json']);
+
+        // And there should be some scripts
+        let pkg = fs.readJsonSync('package.json');
+
+        assert(pkg.scripts['pre-release'].length > 0, 'scripts.release exists');
+        assert(pkg.scripts['semantic-release'] === undefined, 'scripts.semantic-release does not exist');
+
+        done();
+      }
+    ).withPrompts({
+      useSemantic: false,
+      commitMessageFormat: 'Conventional'
+    });
+  });
+
+
+  it('should generate a "pre-release" script for semantic releases on GitHub and use semantic-release-cli module', (done) => {
+    utils.runGenerator(
+      GENERATOR_UNDER_TEST,
+      'release-github-repo-conventional-commit.json',
+      function before() { },
+      function after(/*testDir*/) {
+        yoassert.file(['package.json']);
+        //fs.readdirSync(testDir).forEach(file => console.log(file));
+
+        // And there should be some scripts
+        let pkg = fs.readJsonSync('package.json');
+
+        assert(pkg.scripts['pre-release'].length > 0, 'scripts.release exists');
+        assert(pkg.scripts['semantic-release'] === undefined, 'scripts.semantic-release does not exist');
+        // This package is scheduled to be installed globally, so it doesn't show up in the dependency list
+        //assert(pkg.devDependencies['semantic-release-cli'] !== undefined, 'semantic-release-cli package exists');
+        done();
+      }
+    ).withPrompts({
+      useSemantic: true,
       commitMessageFormat: 'Conventional'
     });
   });

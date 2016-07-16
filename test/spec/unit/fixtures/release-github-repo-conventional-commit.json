@@ -1,0 +1,14 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Latest",
+      "projectType": "node",
+      "repositoryType": "GitHub"
+    },
+    "paths": {
+      "config": {
+        "configDir": "config/"
+      }
+    }
+  }
+}
