@@ -429,7 +429,8 @@ readme:
 
     ```
     git clone <this repo>
-    npm install
+    <% globalPackages.forEach(function(pkg) {%>npm install -g <%- pkg.name %>
+    <% }); %>npm install
     ```
 
   CN_GITFLOW_PROCESS: |
