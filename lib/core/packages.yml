@@ -242,10 +242,6 @@ $packages:
     name: karma-sourcemap-loader
     version: 0.3.7
 
-  - &pkg_karma-spec-reporter
-    name: karma-spec-reporter
-    version: 0.0.23
-
   - &pkg_karma-threshold-reporter
     name: karma-threshold-reporter
     version: 0.1.15

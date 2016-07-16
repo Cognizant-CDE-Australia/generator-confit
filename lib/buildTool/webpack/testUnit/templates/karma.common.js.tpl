@@ -60,7 +60,6 @@ var karmaConfig = {
     'karma-coverage',
     'karma-chrome-launcher',
     require('karma-webpack'),
-    'karma-spec-reporter',
     'karma-sourcemap-loader',
     'karma-threshold-reporter'
   ],

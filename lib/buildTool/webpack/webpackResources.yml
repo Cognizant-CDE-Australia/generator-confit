@@ -280,7 +280,6 @@ testUnit:
     - <<: *pkg_karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional? Or is it even needed with Webpack, if you require() HTML templates?
     - <<: *pkg_karma-phantomjs-launcher
     - <<: *pkg_karma-sourcemap-loader
-    - <<: *pkg_karma-spec-reporter
     - <<: *pkg_karma-threshold-reporter
     - <<: *pkg_karma-webpack
     - <<: *pkg_jasmine-core
