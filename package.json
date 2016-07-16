@@ -40,22 +40,22 @@
     "test",
     "*.md"
   ],
-  "main": "src/index.js",
+  "main": "lib/generators/app/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/odecee/generator-confit.git"
   },
   "scripts": {
-    "build": "clean:prod",
+    "pre-release": "npm-run-all verify test:coverage updateFixtures test:seq build",
+    "build": "npm run clean:prod",
     "clean:prod": "rimraf dist/",
     "coverage": "npm-run-all test:coverage test:check-coverage",
-    "dev": "npm-run-all verify:watch",
-    "release": "npm-run-all build verify test:unit:once",
+    "dev": "npm run verify:watch",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "npm run dev",
     "test": "npm-run-all updateFixtures test:unit:once test:seq",
     "test:check-coverage": "istanbul check-coverage reports/coverage.json --config config/testUnit/istanbul.yml",
-    "test:coverage": "npm run test:unit:once",
+    "test:coverage": "npm-run-all test:unit:once test:check-coverage --silent",
     "test:seq": "node test/testRunner.js --sequence --MAX_LOG=true",
     "test:unit": "chokidar 'lib/**/*.js' 'test/**/*.js' -c 'npm run test:unit:once' --initial --silent",
     "test:unit:once": "istanbul cover --config config/testUnit/istanbul.yml _mocha -- --opts config/testUnit/mocha.opts",

@@ -46,16 +46,17 @@ release:
           - <<: *pkg_semantic-release-cli
 
         tasks:
-          - name: release
-            tasks: ['build', 'verify', 'test:unit:once']
+          - name: pre-release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
             description: |
-              Create production version of software, verify code, run unit tests. This task is designed to be run before
+              Verify code, run unit tests, check test coverage, build software. This task is designed to be run before
               the `semantic-release` task.
             features:
-              - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details
-              - Generates release notes against each release in the "Releases" section in GitHub
-              - Publishes package to NPM
-              - Integrates with Travis CI
+              - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details.
+              - |
+                Semantic-release integrates with Travis CI (or similar tools) to generate release notes
+                for each release (which appears in the "Releases" section in GitHub) and
+                publishes the package to NPM (when all the tests are successful) with a semantic version number.
 
       manual:
         tasks:

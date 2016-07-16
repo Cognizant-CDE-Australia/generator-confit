@@ -21,12 +21,12 @@ app:
       features:
 
     - name: dev
-      tasks: ['verify:watch']    # Later, add build task if required
+      tasks: ['npm run verify:watch']    # Later, add build task if required
       description: Run project in development mode (verify code, and re-verify when code is changed)
       features:
 
     - name: build
-      tasks: ['clean:prod']   # Later on, we may need to add a build-task here
+      tasks: ['npm run clean:prod']   # Later on, we may need to add a build-task here
       description: Generate production build into <%= link(paths.output.prodDir) %> folder
       features:
 

@@ -7,10 +7,10 @@ check:
     branches: 60
     lines: 80
   each:
-    statements: 72
+    statements: 40
     functions: 50
-    branches: 72
-    lines: 72
+    branches: 20
+    lines: 40
 
 reporting:
   print: both
