@@ -1,0 +1,28 @@
+instrumentation:
+  root: lib/
+check:
+  global:
+    statements: 80
+    functions: 80
+    branches: 60
+    lines: 80
+  each:
+    statements: 40
+    functions: 50
+    branches: 20
+    lines: 40
+
+reporting:
+  print: both
+  dir: reports/
+  reports:
+    - cobertura
+    - html
+    - lcovonly
+    - html
+    - json
+  report-config:
+    cobertura: {file: cobertura/coverage.xml}
+    json: {file: json/coverage.json}
+    lcovonly: {file: lcov/lcov.info}
+    text: {file: null}

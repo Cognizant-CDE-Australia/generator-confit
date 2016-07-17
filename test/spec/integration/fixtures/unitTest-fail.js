@@ -1,8 +1,8 @@
 'use strict';
 
-describe('Failure test', function () {
+describe('Failure test', () => {
 
-  it('should fail', function () {
+  it('should fail', () => {
     expect(true).toEqual(false);
   });
 });

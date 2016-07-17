@@ -1,0 +1,19 @@
+$cbg: #dde
+$ch1: rgba(40, 50, 60, 1)
+
+.css-type
+  &::after
+    content: 'CSS Preprocessor: SASS'
+
+h1
+  color: $ch1
+
+a
+  &.icon
+    &::before
+      font-size: 2rem
+
+.btn
+  display: inline-block
+
+@import 'iconFont.css'

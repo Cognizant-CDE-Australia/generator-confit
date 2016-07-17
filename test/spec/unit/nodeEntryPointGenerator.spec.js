@@ -1,4 +1,5 @@
 'use strict';
+
 const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
@@ -15,8 +16,8 @@ describe('Node EntryPoint Generator', () => {
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let entryPoint = confit['generator-confit'].entryPoint.entryPoints;
-        assert.equal(entryPoint, undefined);
 
+        assert.equal(entryPoint, undefined);
       },
       function after() {
         yoassert.file(['confit.json', 'package.json']);
@@ -44,8 +45,8 @@ describe('Node EntryPoint Generator', () => {
       function before() {
         let confit = fs.readJsonSync('confit.json');
         let entryPoint = confit['generator-confit'].entryPoint.entryPoints;
-        assert.equal(entryPoint, undefined);
 
+        assert.equal(entryPoint, undefined);
       },
       function after() {
         yoassert.file(['confit.json', 'package.json']);
@@ -84,8 +85,6 @@ describe('Node EntryPoint Generator', () => {
       }
     ).withPrompts({
       createSampleApp: true
-    })
+    });
   });
-
-
 });

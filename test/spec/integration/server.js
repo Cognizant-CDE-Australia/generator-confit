@@ -1,13 +1,15 @@
 'use strict';
 
-const path = require('path');
 const spawn = require('child_process').spawn;
 const freeport = require('freeport');
-const fs = require('fs-extra');
 let child;
 
+module.exports = {
+  start: startServer,
+  stop: stopServer
+};
 
-/**
+/*
  * Runs `npm start` which *should* create a webserver which runs forever.
  *
  * @param testDir             Where the test application is located (where to run `npm start`)
@@ -31,16 +33,17 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
       detached: true
     });
 
-    child.on('exit', function(reason) {
+    child.on('exit', (reason) => {
       console.log('Server exited:', reason);
     });
 
-    child.on('error', function (err) {
+    child.on('error', (err) => {
       console.log('Failed to start server process:', err);
     });
 
-    child.stdout.on('data', function (data) {
+    child.stdout.on('data', (data) => {
       let dataStr = '' + data;
+
       console.info('Server: ' + dataStr);
       // If we detect from the stdout that the server has started, resolve immediately
       if (dataStr.match(SERVER_STARTED_RE)) {
@@ -52,8 +55,10 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
 
     // Webpack is logging the %-complete on stderr! Filter out these messages
     let filterRE = /^\d*%/;
-    child.stderr.on('data', function (data) {
+
+    child.stderr.on('data', (data) => {
       let msg = data.toString();
+
       if (filterRE.test(msg)) {
         console.error(msg);
       }
@@ -69,6 +74,7 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
     // If we timeout, still call the call rejectFn
     setTimeout(() => {
       let msg = `Server: Failed to start after ${serverStartTimeout}ms timeout`;
+
       if (!resolveCalled) {
         rejectFn(msg);
       }
@@ -95,9 +101,3 @@ function getFreePort() {
     });
   });
 }
-
-
-module.exports = {
-  start: startServer,
-  stop: stopServer
-};

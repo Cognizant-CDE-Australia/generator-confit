@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const assert = require('assert');
 const helpers = require('yeoman-test');
 const fs = require('fs-extra');
 const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
@@ -11,11 +12,11 @@ module.exports = {
 };
 
 function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, errorCb) {
-  var generatorName = path.join(__dirname, '../../../generators/' + generatorName);
-  var testDir;
+  let generatorFullName = path.join(__dirname, '../../../lib/generators/' + generatorName);
+  let testDir;
 
   try {
-    return helpers.run(generatorName)
+    return helpers.run(generatorFullName)
       .inTmpDir(function(dir) {
         // Copy the confit.json fixture here
         if (confitFixture) {

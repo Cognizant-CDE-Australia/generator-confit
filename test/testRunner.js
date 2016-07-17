@@ -29,7 +29,7 @@ const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
 const TEST_SUITE_M_OF_N = process.env.TEST_SUITE_M_OF_N;
 
 
-/**
+/*
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
  *
  * node testRunner.js [--sequence]
@@ -41,25 +41,25 @@ function main() {
   let procSuccess = 0;
   let results = [];
 
-  let runInSequence = process.argv.filter(function (arg) { return arg === '--sequence'; }).length === 1;
-  let processRunner = (runInSequence) ? 'spawnSync' : 'spawn';
-  let asyncMethod = (runInSequence) ? 'waterfall' : 'parallel';
+  let runInSequence = process.argv.filter(arg => arg === '--sequence').length === 1;
+  let processRunner = runInSequence ? 'spawnSync' : 'spawn';
+  let asyncMethod = runInSequence ? 'waterfall' : 'parallel';
 
 
   function promiseRunner(cmd, cmdParams, envData) {
     return new Promise(function(resolve, reject) {
 
-      var proc = childProc[processRunner](cmd, cmdParams, {
+      let proc = childProc[processRunner](cmd, cmdParams, {
         stdio: 'inherit',    // send the child console output to the parent process (us)
         // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
         env: _.merge({}, process.env, envData)
       });
 
       if (runInSequence) {
-        (proc.status === 0) ? resolve(proc.status) : reject(proc.status);
+        proc.status === 0 ? resolve(proc.status) : reject(proc.status);
       } else {
         proc.on('close', function(code) {
-          (code === 0) ? resolve(code) : reject(code);
+          code === 0 ? resolve(code) : reject(code);
         });
       }
     });
@@ -88,23 +88,24 @@ function main() {
 
 
   function processResults(code) {
-    let isSuccess = (code === 0);
+    let isSuccess = code === 0;
+
     procComplete++;
-    procSuccess += (code === 0) ? 1 : 0;
+    procSuccess += code === 0 ? 1 : 0;
     results.push(isSuccess ? TICK : CROSS);
 
-    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount + '.', 'Result:'), (isSuccess ? LABEL_SUCCESS : LABEL_FAILED), results.join(''));
+    confitMsg(chalk.white('Executed spec', procComplete, 'of', procCount + '.', 'Result:'), isSuccess ? LABEL_SUCCESS : LABEL_FAILED, results.join(''));
 
     if (procComplete === procCount) {
-      confitMsg(chalk.white.bold('Overall Result:'), (procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED), results.join(''), BLACK_END);
-      process.exit((procCount === procSuccess) ? 0 : 1);  // Return a non-zero code for a failure
+      confitMsg(chalk.white.bold('Overall Result:'), procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED, results.join(''), BLACK_END);
+      process.exit(procCount === procSuccess ? 0 : 1);  // Return a non-zero code for a failure
     }
   }
 
 
   function testConfitFixture(fixture) {
     confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
-    let testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/')
+    let testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/');
 
     // Install Confit first, wait for it to complete, then start the Mocha spec
     confitMsg(chalk.white('Running Confit generator...'));
@@ -124,7 +125,7 @@ function main() {
   })));
 }
 
-/**
+/*
  * Get a list of fixture files from a directory that do NOT start with x but end with '.json'.
  * Additionally, if a fixture starts with '-' it is a 'solo' fixture... ONLY run this fixture.
  *
@@ -134,15 +135,15 @@ function main() {
 function getFixtures(dir) {
   // Get a list of files that end in '.json' from the directory, that do not start with 'x'
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && (file.match(/^[^x]+\.json$/) !== null));
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/) !== null);
 
   // Check if there is TEST_SUITE variable. If so, use it instead
   if (TEST_SUITE_M_OF_N) {
     let parts = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
     let suiteNum = parts[0];
     let totalSuites = parts[1];
-
     let chunk = chunkify(files, totalSuites)[suiteNum - 1];
+
     console.info(chalk.white.bold('Using test fixtures:\n-', chunk.join('\n- ')));
     return chunk;
   }
@@ -151,21 +152,22 @@ function getFixtures(dir) {
   // get a list of the files that start with '-'. If there are any return them, otherwise return everything
   let soloFiles = files.filter(file => file.charAt(0) === '-');
 
-  return (soloFiles.length) ? soloFiles : files;
+  return soloFiles.length ? soloFiles : files;
 }
 
 
 function confitMsg() {
-  console.info.apply(this, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
+  console.info.apply(null, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
 }
 
 // Copied from: http://stackoverflow.com/questions/8188548/splitting-a-js-array-into-n-arrays
 function chunkify(a, n, balanced) {
 
-  if (n < 2)
+  if (n < 2) {
     return [a];
+  }
 
-  var len = a.length,
+  let len = a.length,
     out = [],
     i = 0,
     size;
@@ -175,26 +177,21 @@ function chunkify(a, n, balanced) {
     while (i < len) {
       out.push(a.slice(i, i += size));
     }
-  }
-
-  else if (balanced) {
+  } else if (balanced) {
     while (i < len) {
       size = Math.ceil((len - i) / n--);
       out.push(a.slice(i, i += size));
     }
-  }
-
-  else {
-
+  } else {
     n--;
     size = Math.floor(len / n);
-    if (len % size === 0)
+    if (len % size === 0) {
       size--;
+    }
     while (i < size * n) {
       out.push(a.slice(i, i += size));
     }
     out.push(a.slice(size * n));
-
   }
 
   return out;

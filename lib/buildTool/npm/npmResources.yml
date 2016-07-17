@@ -1,0 +1,351 @@
+entryPoint:
+  packageJsonConfig:
+    - main: <%- entryPoint.entryPoints.main[0] %>
+
+release:
+  commitMessageFormat:
+    Conventional:
+      packages:
+        - <<: *pkg_cz-customizable
+        - <<: *pkg_commitizen
+        - <<: *pkg_ghooks
+        - <<: *pkg_cz-customizable-ghooks
+
+      packageJsonConfig:
+        - config.commitizen.path: node_modules/cz-customizable
+        - config.cz-customizable.config: <%- paths.config.configDir %>release/commitMessageConfig.js
+        - config.ghooks.commit-msg: ./node_modules/cz-customizable-ghooks/index.js $2
+
+      templateFiles:
+        - src: commitMessageConfig.js
+          dest: <%- paths.config.configDir %>release/commitMessageConfig.js
+          overwrite: false
+
+      readme:
+        buildTask:  # This is a "special" task in that it is designed to appear only in the Readme, not in package.json
+          commit:
+            commit:
+              command: git cz
+              description: Commit changes to local repository using Commitizen
+              features:
+                - Asks questions about the change to generate a valid conventional commit message
+                - Can be customised by modifying <%- link(paths.config.configDir + 'release/commitMessageConfig.js') %>
+
+      onInstall:
+        - cmd: git    # It is safe to run this multiple times
+          args: ['init']
+
+    None:
+      packages: []
+
+
+  repositoryType:
+    GitHub:
+      semantic:
+        packages:
+          - <<: *pkg_semantic-release-cli
+
+        tasks:
+          - name: pre-release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            description: |
+              Verify code, run unit tests, check test coverage, build software. This task is designed to be run before
+              the `semantic-release` task.
+            features:
+              - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details.
+              - |
+                Semantic-release integrates with Travis CI (or similar tools) to generate release notes
+                for each release (which appears in the "Releases" section in GitHub) and
+                publishes the package to NPM (when all the tests are successful) with a semantic version number.
+
+      manual:
+        tasks:
+          - name: pre-release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            description: Verify code, run unit tests, check test coverage, build software.
+            features:
+              - Define another script-task called `postrelease` to define the rest of your release process
+
+    Other:
+      semantic:
+        packages:
+          - <<: *pkg_corp-semantic-release
+
+        tasks:
+          - name: semantic-release
+            tasks: ['corp-semantic-release']
+
+          - name: release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>', 'semantic-release']
+            description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
+            features:
+              - Generates `CHANGELOG.md`
+              - Bumps `package.json`
+              - Tags the changes with the release
+              - Requires conventional commit messages to be used
+
+      manual:
+        tasks:
+          - name: release
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            description: Create production version of software, verify code, run unit tests.
+            features:
+              - Define another script-task called `postrelease` to define the rest of your release process
+
+sampleApp:
+  js:
+    framework:
+      '':
+        sourceFormat:
+          ES6:
+            entryPointFileName: <%- paths.input.srcDir + resources.sampleApp.demoDir %>index.js
+            packages: []
+            testPackages: []
+            typeLibs: []
+            templateFiles:
+              - src: noFramework/ES6/*
+                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+                overwrite: true
+              - src: noFramework/ES6/unitTest/*
+                dest: <%- paths.input.unitTestDir %>
+                overwrite: true
+
+serverProd:
+  packages:
+    - <<: *pkg_serve-https
+    - <<: *pkg_serve
+
+  tasks:
+    - name: serve:prod
+      tasks: ["<%- (config.serverProd && config.serverProd.protocol === 'https') ? 'npm run serve:prod:https' : 'npm run serve:prod:http' -%>"]
+      description: <% if (config.serverProd) { %>Runs a production server on **<%= config.serverProd.protocol + '://' + config.serverProd.hostname + ':' + config.serverProd.port %>**<% } -%>
+      features:
+        - HTTP or HTTPS
+
+    - name: serve:prod:https
+      tasks: ["<% if (config.serverProd) { %><%- 'serve-https -p ' + serverProd.port + ' -d ' + paths.output.prodDir + ' --servername ' + serverProd.hostname -%><% } -%>"]
+
+    - name: serve:prod:http
+      tasks: ["<% if (config.serverProd) { %><%- 'serve -C -p ' + serverProd.port + ' ' + paths.output.prodDir -%><% } -%>"]
+
+
+testUnit:
+  packages:
+    - <<: *pkg_chokidar-cli
+    - <<: *pkg_mocha
+    - <<: *pkg_istanbul
+
+  templateFiles:
+    - src: '*'
+      dest: <%- paths.config.configDir %>testUnit/
+      overwrite: true
+
+  tasks:
+    - name: test
+      tasks: ['npm run test:unit']
+      description: Alias for `npm run test:unit` task
+      features: []
+
+    - name: test:unit
+      tasks:
+        - >
+          <%
+            var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+            var testWatchPaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.'];
+            var completeTestPaths = [];
+            testWatchPaths.forEach(function(path) {
+              jsExtensions.forEach(function(ext) {
+                completeTestPaths.push(path + ext);
+              });
+            });
+          %>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent
+      #tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
+      description: Run unit tests whenever JS source or tests change
+      features:
+        - Uses Mocha
+        - Code coverage
+        - Runs continuously (best to run in a separate window)
+
+    - name: test:unit:once
+      # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
+      tasks: ['istanbul cover --config <%- paths.config.configDir %>testUnit/istanbul.yml _mocha -- --opts <%- paths.config.configDir %>testUnit/mocha.opts']
+      description: Run unit tests once
+      features:
+        - Uses Mocha
+        - Code coverage
+
+    - name: test:check-coverage
+      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir %>testUnit/istanbul.yml']
+      description:
+      features:
+
+    - name: test:coverage
+      tasks: ['npm-run-all test:unit:once test:check-coverage --silent']
+      description: Run instrumented unit tests then verify coverage meets defined thresholds
+      features:
+        - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)
+
+
+verify:
+  # Common packages
+  packages:
+    - <<: *pkg_chokidar-cli
+
+  tasks:
+    - name: verify
+      tasks: # "--silent" makes it easier to see program errors
+        - >
+          <% var verifyTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName);
+             var verifyCmd = (verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + verifyTasks.join(' ');
+          %><%- verifyCmd -%> --silent
+      description: Verify code style and syntax
+      features:
+        - Verifies source *and test code* aginst customisable rules (unlike Webpack loaders)
+
+    - name: verify:watch
+      tasks:
+        - >
+          <% var verifyWatchTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName + ':watch');
+             var verifyCmdWatch = (verifyWatchTasks.length > 1 ? 'npm-run-all --parallel ' : 'npm run ') + verifyWatchTasks.join(' ');
+          %><%- verifyCmdWatch -%> --silent
+      description: Runs verify task whenever JS or CSS code is changed
+      features: []
+
+  jsCodingStandard:
+    none: &verify:js
+      tasks:
+        - name: verify:js
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+          description: Verify Javascript code style and syntax
+
+        - name: verify:js:watch
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+          description: Verify Javascript code style and syntax and watch files for changes
+
+    AirBnB:
+      <<: *verify:js
+
+    Google:
+      <<: *verify:js
+
+    StandardJS:
+      <<: *verify:js
+
+    TypeScript:
+      tasks:
+        - name: verify:js
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>tslint -c <%- paths.config.configDir %>verify/tslint.json "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+          description: Verify Typescript code style and syntax
+
+        - name: verify:js:watch
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+          description: Verify Typescript code style and syntax and watch files for changes
+
+
+  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
+    css:
+      tasks: # dummy tasks to preserve task interface
+        - name: verify:css
+          tasks:
+            - echo <%- onSuccessCmd('verify:css success') -%>
+        - name: verify:css:watch
+          tasks:
+            - echo <%- onSuccessCmd('verify:css success') -%>
+
+    sass:
+      packages:
+        - <<: *pkg_sass-lint
+
+      tasks:
+        - name: verify:css
+          tasks:
+            - sass-lint -c <%- paths.config.configDir %>verify/sasslint.yml --verbose <%- onSuccessCmd('verify:css success') -%>
+          description: Verify CSS code style and syntax
+
+        - name: verify:css:watch
+          tasks:
+            - >
+              <%
+                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
+                if (hasCSSConfig) {
+                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
+                  var completeCSSPaths = [];
+                  cssSourcePaths.forEach(function(path) {
+                    cssExtensions.forEach(function(ext) {
+                      completeCSSPaths.push(path + ext);
+                    });
+                  });
+              %>chokidar '<%- completeCSSPaths.join('\' \'') -%>' -c 'npm run verify:css' --initial --silent<% } -%>
+          description: Verify CSS code style and syntax and watch files for changes
+
+    stylus:
+      packages:
+        - <<: *pkg_stylint
+
+      tasks:
+        - name: verify:css
+          tasks:
+            - stylint -c <%- paths.config.configDir %>verify/.stylintrc <%- paths.input.srcDir -%><%- onSuccessCmd('verify:css success') -%>
+          description: Verify CSS code style and syntax
+
+        - name: verify:css:watch
+          tasks:
+            - >
+              <%
+                var hasCSSConfig = !!resources.buildCSS && buildCSS.sourceFormat;
+                if (hasCSSConfig) {
+                  var cssExtensions = resources.buildCSS.sourceFormat[buildCSS.sourceFormat].ext;
+                  var cssSourcePaths = [paths.input.srcDir + '**/*.'];
+                  var completeCSSPaths = [];
+                  cssSourcePaths.forEach(function(path) {
+                    cssExtensions.forEach(function(ext) {
+                      completeCSSPaths.push(path + ext);
+                    });
+                  });
+              %>chokidar '<%- completeCSSPaths.join('\' \'') -%>' -c 'npm run verify:css' --initial --silent<% } -%>
+          description: Verify CSS code style and syntax and watch files for changes

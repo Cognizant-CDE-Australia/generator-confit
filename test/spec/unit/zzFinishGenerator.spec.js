@@ -1,3 +1,5 @@
+'use strict';
+
 const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
@@ -5,10 +7,9 @@ const fs = require('fs-extra');
 
 const GENERATOR_UNDER_TEST = 'zzfinish';
 
-describe('zzFinish Generator', function () {
+describe('zzFinish Generator', () => {
 
-
-  it('should generate a README.md file with the appropriate sections and content', function(done) {
+  it('should generate a README.md file with the appropriate sections and content', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'zzFinish-config.json',
@@ -25,7 +26,8 @@ describe('zzFinish Generator', function () {
       function after() {
         yoassert.file(['README.md']);
 
-        var readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+        let readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+
         assert.notEqual(readmeText.indexOf('<!--[RM_HEADING]-->'), -1);
         assert.notEqual(readmeText.indexOf('# some-name'), -1);
         assert.notEqual(readmeText.indexOf('<!--[RM_DESCRIPTION]-->'), -1);
@@ -40,7 +42,7 @@ describe('zzFinish Generator', function () {
     );
   });
 
-  it('should generate a README.md file with different license content when the app has a license', function(done) {
+  it('should generate a README.md file with different license content when the app has a license', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'zzFinish-withLicense.json',
@@ -57,7 +59,8 @@ describe('zzFinish Generator', function () {
       function after() {
         yoassert.file(['README.md']);
 
-        var readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+        let readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+
         assert.notEqual(readmeText.indexOf('<!--[RM_LICENSE]-->'), -1);
         assert.notEqual(readmeText.indexOf('This software is licensed under the MIT Licence. See [LICENSE](LICENSE).'), -1, 'correct license text when LICENSED');
         done();
@@ -65,7 +68,7 @@ describe('zzFinish Generator', function () {
     );
   });
 
-  it('should generate a CONTRIBUTING.md file with the appropriate sections and content', function(done) {
+  it('should generate a CONTRIBUTING.md file with the appropriate sections and content', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'zzFinish-config.json',
@@ -82,8 +85,10 @@ describe('zzFinish Generator', function () {
       function after() {
         yoassert.file(['CONTRIBUTING.md']);
 
-        var readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
+        let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
+
         assert.notEqual(readmeText.indexOf('<!--[CN_HEADING]-->'), -1);
+        // TODO: might want to test some of the sections that have logic in them
         done();
       }
     );

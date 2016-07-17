@@ -17,24 +17,33 @@ describe('test "' + fixtureFileName + '"', () => {
   // Depending on the kind of Confit config, run different tests
   let projectType = confitConfig.app.projectType;
   let unitTestDir, srcDir;
+  let hasCSS;
+  let usesGrunt;
 
   switch (projectType) {
-    case 'browser':
-      srcDir = process.env.TEST_DIR + confitConfig.paths.input.modulesDir;
-      unitTestDir = srcDir + process.env.SAMPLE_APP_MODULE_DIR + confitConfig.paths.input.unitTestDir;
+  case 'browser':
+    srcDir = process.env.TEST_DIR + confitConfig.paths.input.modulesDir;
+    unitTestDir = srcDir + process.env.SAMPLE_APP_MODULE_DIR + confitConfig.paths.input.unitTestDir;
+    usesGrunt = confitConfig.app.buildProfile === 'Webpack';  // The OLD webpack profile uses Grunt
+    hasCSS = !usesGrunt;  // The OLD webpack profile uses Grunt
 
-      require('./testBrowserDev')(confitConfig, SERVER_MAX_WAIT_TIME);
-      require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
-      require('./testVerify')(confitConfig, srcDir);
-      require('./testUnitTest')(confitConfig, unitTestDir);
-      break;
+    require('./testBrowserDev')(confitConfig, SERVER_MAX_WAIT_TIME);
+    require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
+    require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
+    require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage');
+    break;
 
-    case 'node':
-      srcDir = process.env.TEST_DIR + confitConfig.paths.input.srcDir;
-      unitTestDir = process.env.TEST_DIR + confitConfig.paths.input.unitTestDir;
+  case 'node':
+    srcDir = process.env.TEST_DIR + confitConfig.paths.input.srcDir;
+    unitTestDir = process.env.TEST_DIR + confitConfig.paths.input.unitTestDir;
+    usesGrunt = false;
+    hasCSS = false;
 
-      require('./testVerify')(confitConfig, srcDir);
-      require('./testUnitTest')(confitConfig, unitTestDir);
-      break;
+    require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
+    require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once');
+    break;
+
+  default:
+    throw new Error(`Project type ${projectType} is not valid`);
   }
 });
