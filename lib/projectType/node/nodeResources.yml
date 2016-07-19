@@ -334,7 +334,7 @@ release:
     - <<: *pkg_ghooks
 
   packageJsonConfig:
-    - config.ghooks.pre-push: npm-run-all verify test:unit:once --silent
+    - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
 sampleApp:
   demoDir: demo/   # This is ALWAYS a subdirectory of the srcDir directory

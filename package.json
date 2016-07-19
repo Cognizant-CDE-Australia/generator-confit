@@ -75,7 +75,7 @@
     "ghooks": {
       "pre-commit": "exact-semver",
       "commit-msg": "./node_modules/cz-customizable-ghooks/lib/index.js $2",
-      "pre-push": "npm-run-all verify test:unit:once --silent"
+      "pre-push": "npm-run-all verify test:coverage --silent"
     }
   },
   "dependencies": {

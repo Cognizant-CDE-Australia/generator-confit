@@ -22,7 +22,7 @@ describe('Release Generator', () => {
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();
       }
@@ -31,6 +31,7 @@ describe('Release Generator', () => {
       commitMessageFormat: 'Conventional'
     });
   });
+
 
   it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
     utils.runGenerator(
@@ -49,7 +50,7 @@ describe('Release Generator', () => {
         assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
         assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
         assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
-        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();
       }
