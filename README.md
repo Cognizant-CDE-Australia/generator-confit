@@ -142,21 +142,21 @@ aimed at developers who need to modify the package.
 
 Tag | Description | Example
 :-- | :-----------| :------
-<pre><!--[RM_HEADING]-->&#10;<%- RM_HEADING %>&#10;&#10;<!--[]--></pre> | The package *name* as captured in the `package.json`, rendered as a H1 heading | # package-name
-<pre><!--[RM_DESCRIPTION]-->&#10;<%- RM_DESCRIPTION %>&#10;&#10;<!--[]--></pre> | The package *description* as captured in the `package.json`, rendered as a block quote | > A description of my awesome package
-<pre><!--[RM_INSTALL]-->&#10;<%- RM_INSTALL %>&#10;&#10;<!--[]--></pre> | The installation commands for the package, from a consumer's perspective | `npm install sample-app`
-<pre><!--[RM_DIR_STRUCTURE]-->&#10;<%- RM_DIR_STRUCTURE %>&#10;&#10;<!--[]--></pre> | A tree representation of the directory structure | 
-<pre><!--[RM_CONTRIBUTING]-->&#10;<%- RM_CONTRIBUTING %>&#10;&#10;<!--[]--></pre> | A link to `CONTRIBUTING.md` | ## Contributing<br><br>See [CONTRIBUTING.md](CONTRIBUTING.md).
-<pre><!--[RM_LICENSE]-->&#10;<%- RM_LICENSE %>&#10;&#10;<!--[]--></pre> | A link to the `LICENSE` file | ## License<br><br>This software is licensed under the MIT Licence. See [LICENSE](LICENSE).
-<pre><!--[CN_HEADING]-->&#10;<%- CN_HEADING %>&#10;&#10;<!--[]--></pre> | Heading for `CONTRIBUTING.md` | # Contributing<br><br>Welcome! Thanks for taking some time to find out more about how you can make **package-name** even better.
-<pre><!--[CN_GETTING_STARTED]-->&#10;<%- CN_GETTING_STARTED %>&#10;&#10;<!--[]--></pre> | Getting started with contributing to the project | # Getting Started.
-<pre><!--[CN_GITFLOW_PROCESS]-->&#10;<%- CN_GITFLOW_PROCESS %>&#10;&#10;<!--[]--></pre> | Description of the GitFlow development process | # GitFlow Development Process<br><br>This project uses the [GitHub Flow](https://guides.github.com/introduction/flow/index.html) workflow...
-<pre><!--[CN_BUILD_TASKS]-->&#10;<%- CN_BUILD_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *build*-related commands | `npm run build`
-<pre><!--[CN_TEST_TASKS]-->&#10;<%- CN_TEST_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *test*-related commands | `npm test`
-<pre><!--[CN_VERIFY_TASKS]-->&#10;<%- CN_VERIFY_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *verify*-related commands | `npm run verify`
-<pre><!--[CN_COMMIT_TASKS]-->&#10;<%- CN_COMMIT_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *commit*-related commands | `git status`
-<pre><!--[CN_RELEASE_TASKS]-->&#10;<%- CN_RELEASE_TASKS %>&#10;&#10;<!--[]--></pre> | A list of the *release*-related commands | `npm run release`
-<pre><!--[CN_CHANGING_BUILD_TOOL_CONFIG]-->&#10;<%- CN_CHANGING_BUILD_TOOL_CONFIG %>&#10;&#10;<!--[]--></pre> | Information on how to safely change the generated configuration | ## Changing build-tool configuration<br><br>There are 3 ways you can change the build-tool configuration for this project...
+<pre>&lt;!--[RM_HEADING]-->&#10;&lt;%- RM_HEADING %&gt;&#10;&#10;<!--[]--></pre> | The package *name* as captured in the `package.json`, rendered as a H1 heading | # package-name
+<pre>&lt;!--[RM_DESCRIPTION]-->&#10;&lt;%- RM_DESCRIPTION %&gt;&#10;&#10;<!--[]--></pre> | The package *description* as captured in the `package.json`, rendered as a block quote | > A description of my awesome package
+<pre>&lt;!--[RM_INSTALL]-->&#10;&lt;%- RM_INSTALL %&gt;&#10;&#10;<!--[]--></pre> | The installation commands for the package, from a consumer's perspective | `npm install sample-app`
+<pre>&lt;!--[RM_DIR_STRUCTURE]-->&#10;&lt;%- RM_DIR_STRUCTURE %&gt;&#10;&#10;<!--[]--></pre> | A tree representation of the directory structure | 
+<pre>&lt;!--[RM_CONTRIBUTING]-->&#10;&lt;%- RM_CONTRIBUTING %&gt;&#10;&#10;<!--[]--></pre> | A link to `CONTRIBUTING.md` | ## Contributing<br><br>See [CONTRIBUTING.md](CONTRIBUTING.md).
+<pre>&lt;!--[RM_LICENSE]-->&#10;&lt;%- RM_LICENSE %&gt;&#10;&#10;<!--[]--></pre> | A link to the `LICENSE` file | ## License<br><br>This software is licensed under the MIT Licence. See [LICENSE](LICENSE).
+<pre>&lt;!--[CN_HEADING]-->&#10;&lt;%- CN_HEADING %&gt;&#10;&#10;<!--[]--></pre> | Heading for `CONTRIBUTING.md` | # Contributing<br><br>Welcome! Thanks for taking some time to find out more about how you can make **package-name** even better.
+<pre>&lt;!--[CN_GETTING_STARTED]-->&#10;&lt;%- CN_GETTING_STARTED %&gt;&#10;&#10;<!--[]--></pre> | Getting started with contributing to the project | # Getting Started.
+<pre>&lt;!--[CN_GITFLOW_PROCESS]-->&#10;&lt;%- CN_GITFLOW_PROCESS %&gt;&#10;&#10;<!--[]--></pre> | Description of the GitFlow development process | # GitFlow Development Process<br><br>This project uses the [GitHub Flow](https://guides.github.com/introduction/flow/index.html) workflow...
+<pre>&lt;!--[CN_BUILD_TASKS]-->&#10;&lt;%- CN_BUILD_TASKS %&gt;&#10;&#10;<!--[]--></pre> | A list of the *build*-related commands | `npm run build`
+<pre>&lt;!--[CN_TEST_TASKS]-->&#10;&lt;%- CN_TEST_TASKS %&gt;&#10;&#10;<!--[]--></pre> | A list of the *test*-related commands | `npm test`
+<pre>&lt;!--[CN_VERIFY_TASKS]-->&#10;&lt;%- CN_VERIFY_TASKS %&gt;&#10;&#10;<!--[]--></pre> | A list of the *verify*-related commands | `npm run verify`
+<pre>&lt;!--[CN_COMMIT_TASKS]-->&#10;&lt;%- CN_COMMIT_TASKS %&gt;&#10;&#10;<!--[]--></pre> | A list of the *commit*-related commands | `git status`
+<pre>&lt;!--[CN_RELEASE_TASKS]-->&#10;&lt;%- CN_RELEASE_TASKS %&gt;&#10;&#10;<!--[]--></pre> | A list of the *release*-related commands | `npm run release`
+<pre>&lt;!--[CN_CHANGING_BUILD_TOOL_CONFIG]-->&#10;&lt;%- CN_CHANGING_BUILD_TOOL_CONFIG %&gt;&#10;&#10;<!--[]--></pre> | Information on how to safely change the generated configuration | ## Changing build-tool configuration<br><br>There are 3 ways you can change the build-tool configuration for this project...
 
 
 #### Why the strange template syntax?
@@ -169,4 +169,6 @@ These are the companies that are sponsoring the development of Confit:
 
 <a href="https://www.nab.com.au"><img src="http://developer.nab.com.au/images/5a2a9621.nab-logo-horizontal.png" height="100"></a>
 [![Odecee](http://odecee.com.au/wp-content/themes/odecee/library/images/logo.svg)](http://www.odecee.com.au)
+
+
 

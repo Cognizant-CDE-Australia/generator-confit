@@ -104,7 +104,7 @@ $packages:
 
   - &pkg_cz-customizable-ghooks
     name: cz-customizable-ghooks
-    version: 1.1.2
+    version: 1.2.0
 
   - &pkg_eslint
     name: eslint

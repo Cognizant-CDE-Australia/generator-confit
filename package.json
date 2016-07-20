@@ -74,7 +74,7 @@
     },
     "ghooks": {
       "pre-commit": "exact-semver",
-      "commit-msg": "./node_modules/cz-customizable-ghooks/index.js $2",
+      "commit-msg": "./node_modules/cz-customizable-ghooks/lib/index.js $2",
       "pre-push": "npm-run-all verify test:unit:once --silent"
     }
   },
@@ -98,7 +98,7 @@
     "chokidar-cli": "1.2.0",
     "commitizen": "2.8.1",
     "cz-customizable": "4.0.0",
-    "cz-customizable-ghooks": "1.1.2",
+    "cz-customizable-ghooks": "1.2.0",
     "eslint": "1.10.3",
     "eslint-config-defaults": "8.0.2",
     "exact-semver": "1.2.0",
