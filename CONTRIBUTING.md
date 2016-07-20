@@ -1,5 +1,3 @@
-# Contributing
-
 Welcome! Thanks for taking some time to find out more about how you can make Confit even better.
 
 ## Before you start
@@ -114,14 +112,3 @@ But basically:
 
 Yeoman generators have [several key methods](http://yeoman.io/authoring/running-context.html) that will be called in a specific order. Respect this order.
 
-
-## Architecture
-
-Confit is made up of multiple generators:
-
-- `app` - the main generator which loads sub-generators
-  - is different from the sub-generators because it doesn't use buildTools nor is it associated with a project-type
-- `<sub-generators>` - each sub generator:
-  - can have common behaviour regardless of the project type
-  - can be a project-type-specific generator (e.g. `buildBrowser`)
-  - has a `buildTool` (e.g. `buildTool/<tool>/<generatorName>/<generatorName>.js`)

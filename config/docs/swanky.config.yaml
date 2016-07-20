@@ -1,0 +1,24 @@
+title: Confit
+repo: https://github.com/odecee/generator-confit.git
+version: 2.0.0
+src: docs
+snippets: docs/snippets
+outputDir: website   # Not yet supported, so need to override Webpack config
+
+sections:
+
+  - title: Overview
+    content: docs/content/overview.md
+
+  - title: How it works
+    content: docs/content/architecture.md
+
+  - title: Contributing
+    content: CONTRIBUTING.md
+
+    # Add sub-sections later
+
+  - title: API Doc
+    content: lib/core/*.js
+    processor:
+      ngdocs: null
