@@ -48,7 +48,7 @@ describe('Release Generator', () => {
 
         assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
         assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
-        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/index.js $2');
+        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
         assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
 
         done();
