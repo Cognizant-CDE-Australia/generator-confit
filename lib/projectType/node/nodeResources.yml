@@ -71,7 +71,7 @@ paths:
       message: Path to SOURCE directory (relative to the current directory)
 
     - name: input.unitTestDir
-      message: Name of UNIT TEST directory (relative to the current directory)
+      message: Path to UNIT TEST directory (relative to the current directory)
 
     - name: output.prodDir
       message: Path to BUILD directory (relative to the current directory)

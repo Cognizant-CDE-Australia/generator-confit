@@ -23,11 +23,13 @@ To help you develop code, Confit asks the following questions
 
 
 Tasks:
-- Generate a sample application
+- Generating a new project with Confit
 - Writing code
 - Verifying code
 - Testing code
 - Generating documentation
 - Creating a package & releasing it
 
+- Adding Confit to an existing NodeJS project
+- Adding Confit to an existing Browser project
 

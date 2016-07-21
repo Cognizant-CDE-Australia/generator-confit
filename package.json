@@ -120,10 +120,10 @@
     "protractor": "3.2.1",
     "rimraf": "2.5.2",
     "semantic-release": "4.3.5",
-    "swanky-core": "0.14.3",
+    "swanky-core": "0.15.0",
     "swanky-processor-ngdocs": "1.2.1",
     "swanky-server": "1.11.0",
-    "swanky-theme": "1.8.1",
+    "swanky-theme": "1.9.1",
     "swanky-webpack-plugin": "1.16.0",
     "yeoman-assert": "2.1.2",
     "yeoman-test": "1.1.0"
