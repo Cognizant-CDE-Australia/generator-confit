@@ -4,6 +4,9 @@ version: 2.0.0
 src: docs
 snippets: docs/snippets
 outputDir: website   # Not yet supported, so need to override Webpack config
+theme: node_modules/swanky-theme
+layouts: node_modules/swanky-theme/templates/layouts
+partials: node_modules/swanky-theme/templates/partials
 
 sections:
 
