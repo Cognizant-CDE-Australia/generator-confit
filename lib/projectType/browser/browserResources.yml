@@ -291,7 +291,6 @@ paths:
       cssSubDir: css/
       jsSubDir: js/
       vendorJSSubDir: vendor/
-      viewsSubDir: views/
       reportDir: reports/
 
     config:
@@ -344,8 +343,7 @@ readme:
      │   │       └──<%- rpad('img', maxDirLen - 12) %>
      │   ├──<%- rpad(paths.output.cssSubDir, maxDirLen - 4) %>* compiled CSS files
      │   ├──<%- rpad(paths.output.jsSubDir, maxDirLen - 4) %>* minified JS files
-     │   ├──<%- rpad(paths.output.vendorJSSubDir, maxDirLen - 4) %>* minified vendor JS files
-     │   └──<%- rpad(paths.output.viewsSubDir, maxDirLen - 4) %>* minified HTML files
+     │   └──<%- rpad(paths.output.vendorJSSubDir, maxDirLen - 4) %>* minified vendor JS files
      │
      ├──<%- rpad(paths.output.reportDir, maxDirLen) %>* test reports appear here
      │
