@@ -58,8 +58,10 @@ var config = {
 
 
   onPrepare: function() {
-    <% if (buildJS.framework[0] && buildJS.framework[0].toLowerCase().search('angular') === -1) { %>
-    // Turn off the angular-sync part-of-Protractor, as we are using Protractor in a generic way
+    <% if (buildJS.framework[0] && buildJS.framework[0].toLowerCase().search('angular') > -1) { %>
+    // Turn on the Angular-sync part-of-Protractor when using Protractor
+    browser.ignoreSynchronization = false;
+    <% } else { %>
     browser.ignoreSynchronization = true;
     <% } %>
     return browser.getProcessedConfig().then(function(config) {
