@@ -58,12 +58,10 @@ var config = {
 
 
   onPrepare: function() {
-    <% if (buildJS.framework[0] && buildJS.framework[0].toLowerCase().search('angular') > -1) { %>
-    // Turn on the Angular-sync part-of-Protractor when using Protractor
-    browser.ignoreSynchronization = false;
-    <% } else { %>
-    browser.ignoreSynchronization = true;
-    <% } %>
+    <% var ignoreSync = !(buildJS.framework[0] && buildJS.framework[0].search('AngularJS 1.x') > -1); %>
+    // Turn off the Angular-sync part-of-Protractor when not using AngularJS 1.x
+    browser.ignoreSynchronization = <%= ignoreSync %>;
+
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters
       config.reportWriters.forEach(function(fn) {
