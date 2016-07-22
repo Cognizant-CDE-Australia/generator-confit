@@ -58,8 +58,9 @@ var config = {
 
 
   onPrepare: function() {
-    // Turn off the angular-sync part-of-Protractor, as we are using Protractor in a generic way
-    browser.ignoreSynchronization = true;
+    <% var ignoreSync = !(buildJS.framework[0] && buildJS.framework[0].search('AngularJS 1.x') > -1); %>
+    // Turn off the Angular-sync part-of-Protractor when not using AngularJS 1.x
+    browser.ignoreSynchronization = <%= ignoreSync %>;
 
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters

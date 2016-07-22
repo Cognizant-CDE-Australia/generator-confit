@@ -82,7 +82,7 @@ $packages:
 
   - &pkg_commitizen
     name: commitizen
-    version: 2.8.1
+    version: 2.8.2
     global: true
 
   - &pkg_core-js
