@@ -1,0 +1,17 @@
+<div class="<%-styles['code-snippet']-%>">
+  <div class="<%-styles['window-bar']-%>">
+    <div class="<%-styles.circles-%>">
+      <span class="<%-styles.circle-%> <%-styles['circle-red']-%>"></span>
+      <span class="<%-styles.circle-%> <%-styles['circle-yellow']-%>"></span>
+      <span class="<%-styles.circle-%> <%-styles['circle-green']-%>"></span>
+    </div>
+  </div>
+  <div class="<%- styles['example-wrapper'] -%>">
+    <div class="<%- isolateScopeCssWrapperClass -%>">
+      <div class="<%- isolateScopeCssClass -%>"><%- template -%></div>
+    </div>
+  </div>
+  <div class="<%- styles['code-wrapper'] -%>">
+    <pre class="line-numbers"><code class="language-markup"><%- encode(template) -%></code></pre>
+  </div>
+</div>

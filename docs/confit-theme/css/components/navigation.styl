@@ -1,0 +1,54 @@
+/*
+ * Swanky Theme
+ * Navigation
+ */
+
+.navigation
+  width 100%
+
+.navigation > ul
+  a
+    display block
+    position relative
+    color $black
+    text-decoration none
+    transition: background $duration;
+
+    &:hover
+      background $white
+
+  li.active > a
+    background $white
+    border-left 2px solid $brand-primary
+
+  > li > a
+    text-transform uppercase
+    font-weight 600
+    padding 25px 20px 25px 30px
+    border-bottom 1px solid darken($block-background-colour, 5%)
+
+  // Sub navigation
+  li > ul
+    margin-bottom 0
+    display none
+    border-bottom 1px solid darken($block-background-colour, 5%)
+
+  li.active > ul
+    display block
+
+
+  li li.active a
+    border-left none
+    &:before
+      content ' '
+      position absolute
+      left 20px
+      top 18px
+      width 6px
+      height 6px
+      border-radius 100%
+      background-color $brand-primary
+
+  li li > a
+    font-weight 300
+    padding 12px 20px 12px 50px

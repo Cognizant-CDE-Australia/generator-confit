@@ -352,6 +352,7 @@ testUnit:
         which can then be used to change the default value of `testFilesRegEx`.
 
 zzfinish:
+  # TODO: Move this to the buildBrowser tool, except for the onEnd command
   packages:
     - <<: *pkg_extract-text-webpack-plugin
 

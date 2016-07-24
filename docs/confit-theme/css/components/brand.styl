@@ -1,0 +1,35 @@
+/*
+ * Swanky Theme
+ * Branding
+ */
+
+ .brand
+  position fixed
+  z-index 5
+  top 0
+  left 0
+  background $white
+  height $header-height-mobile
+  width 100%
+  box-sizing border-box
+  border-bottom 1px solid darken($block-background-colour, 5%)
+
+  .logo
+    width 169px
+    height 51px
+    display block
+    background url('../img/confit-large.png') no-repeat
+    background-size @width @height
+    margin 1.5rem auto 0 auto
+
+   &:hover, &:focus
+    text-decoration none
+
+
+.brand
+  @media screen and (min-width: $screen-is-bigger-than-tablet)
+    width $sidebar-width
+    height $header-height
+
+    .logo
+      margin 4rem 0 0 3rem

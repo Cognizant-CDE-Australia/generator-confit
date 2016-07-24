@@ -13,7 +13,8 @@ Each generator creates configuration and tooling for a discrete part of the deve
 
 This section describes the purpose and behaviour of each generator. 
 
-### **app**
+<h3><strong>app</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+
 
 The `app` generator is all about capturing application-wide settings and generating application-wide tools & config.
 
@@ -24,7 +25,7 @@ The `app` generator is all about capturing application-wide settings and generat
 
 **Choose the project type**: [**Browser**, NodeJS]  `app.projectType`
 - Browser projects are projects that produce websites, or web-based libraries
-- Node projects are purely JavaScript-based and typically require fewer build steps.
+- NodeJS projects are purely JavaScript-based and typically require fewer build steps.
 
 **Choose a build profile**: [**Latest**, *list of older profiles...*] `app.buildProfile`
 - Over time, Confit will update the tools that are used to produce different kinds of projects.
@@ -45,26 +46,27 @@ The `app` generator is all about capturing application-wide settings and generat
 - Adds the copyright owner information to the license file (if one exists).
 
 #### Build Tools
-None
+- None
 
 ---
 
+<h3><strong>buildAssets</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
 
-### **buildAssets**
-
-This generator is only used by **Browser** projects.
+Generator for building assets (media files) for web applications.
 
 #### Questions
 None
 
 #### Build Tools
-- **Webpack** build tool uses the Confit path information to create Webpack loaders for fonts and images. 
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses the Confit path information to create Webpack loaders for fonts and images.</li>
+</ul>
 
 ---
 
-### **buildBrowser**
+<h3><strong>buildBrowser</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
 
-This generator is only used by **Browser** projects.
+Browser-specific build configuration generator.
 
 #### Questions
 
@@ -72,13 +74,15 @@ This generator is only used by **Browser** projects.
 - You must select at least one option.
 
 #### Build Tools
-- **Webpack** build tool generates the foundational config for `webpack.config.js`.
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates the foundational config for `webpack.config.js`.</li>
+</ul>
 
 ---
 
-### **buildCSS**
+<h3><strong>buildCSS</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
 
-This generator is only used by **Browser** projects.
+CSS-tool generator.
 
 #### Questions
 
@@ -87,13 +91,13 @@ This generator is only used by **Browser** projects.
 - Choosing "css" means there is no compiler (or linter) for the CSS code.
 
 #### Build Tools
-- **Webpack** build tool generates Webpack loaders for the chosen CSS language and target browser support.
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen CSS language and target browser support.</li>
+</ul>
 
 ---
 
-### **buildHTML**
-
-This generator is only used by **Browser** projects.
+<h3><strong>buildHTML</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
 
 #### Questions
 
@@ -101,16 +105,16 @@ This generator is only used by **Browser** projects.
 - This question is designed to support other HTML source code formats (e.g. Jade) in the future.
 
 #### Build Tools
-- **Webpack** build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.</li>
+</ul>
 
 ---
 
-### **buildJS**
+<h3><strong>buildJS</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
 
-This generator is used by both **Browser** and **NodeJS** projects. This is one of the most important generators as it is
-used to determine how to process the source code into the desired output format. It affects the verification (linting) tool selection,
-code coverage tools and which files to watch for changes.
-
+This important generators is used to determine how to process the source code into the desired output format.
+It affects the verification (linting) tool selection, code coverage tools and which files to watch for changes.
 
 #### Questions
 
@@ -132,13 +136,13 @@ code coverage tools and which files to watch for changes.
 - A list of the NPM modules / JS files that are required at run-time for the browser-application to run.
 
 #### Build Tools
-- **Webpack** build tool uses this information extensively to determine which loaders, configuration and files are required to compile source code.
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses this information extensively to determine which loaders, configuration and files are required to compile source code.</li>
+</ul>
 
 ---
 
-### **entryPoint**
-
-This generator is used by both **Browser** and **NodeJS** projects.
+<h3><strong>entryPoint</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
 
 #### Questions
 
@@ -148,14 +152,14 @@ This generator is used by both **Browser** and **NodeJS** projects.
 - For NodeJS projects, only one entry-point called `main` is supported. It must contain a single file reference inside the array.
 
 #### Build Tools
-- **Webpack** build tool generates the `entryPoint` configuration from the `entryPoint.entryPoints`. An additional entry-point is also created if `vendorScripts` or `frameworkScripts` are supplied.
-- **NPM** build tool generates the `main` property inside `package.json` from `entryPoint.entryPoints`.
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates the `entryPoint` configuration from the `entryPoint.entryPoints`. An additional entry-point is also created if `vendorScripts` or `frameworkScripts` are supplied.</li>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool generates the `main` property inside `package.json` from `entryPoint.entryPoints`.</li>
+</ul>
 
 ---
 
-### **paths**
-
-This generator is used by both **Browser** and **NodeJS** projects.
+<h3><strong>paths</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
 
 #### Questions
 
@@ -236,13 +240,13 @@ This generator is used by both **Browser** and **NodeJS** projects.
 - Moving configuration files out of the root folder and into a configuration directory makes the codebase cleaner.
 
 #### Build Tools
-None - but this configuration is used extensively by all build tools.
+- None - but this configuration is used extensively by all build tools.
 
 ---
 
-### **release**
+<h3><strong>releases</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
 
-This generator is used by both **Browser** and **NodeJS** projects.
+Generates release-related configuration and tooling.
 
 #### Questions
 
@@ -252,36 +256,139 @@ This generator is used by both **Browser** and **NodeJS** projects.
 - Use this in conjunction with Conventional commit messages (see next question).
 
 **Commit message format**: [**Conventional**, None] `release.commitMessageFormat`
-- Semantic releasing mandates the use of Conventional commit messages. If `release.useSemantic` is "Y", the only available selection is "Conventional".
+- Semantic releasing mandates the use of conventional commit messages. If `release.useSemantic` is "Y", the only available selection is "Conventional".
 - If `release.useSemantic` is "N", then the "None" option becomes available.
+- Using conventional commit messages adds the `git cz` command, which helps you create the conventional commit message according to customisable rules.
 
 #### Build Tools
-- **NPM** build tool installs the global "semantic-release-cli" package, which requires further setup post installation. If conventional commit messages are used, some Git hooks and tools are installed to support this.
+<ul>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool installs the global "semantic-release-cli" package, which requires further setup post installation. If conventional commit messages are used, some Git hooks and tools are installed to support this. </li>
+</ul>
 
 ---
 
-### **sampleApp**
+<h3><strong>sampleApp</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+ 
+It is one of the more-complex generators because it is dependent on the answers captured by other generators.
+
+#### Questions
+
+**Create a sample app?** [**Y**, N] `sampleApp.createSampleApp`
+- If the Confit has a sample application for the chosen configuration, then a sample application will be generated.
+- Sample apps are designed to provide initial guidance on how to structure a program and demonstrate that the tooling is working correctly.
+- Each time Confit is run, it will re-ask this question (even when you've indicated you wish to build from the existing configuration). This is to encourage the user to select "N" once they are happy with the generated sample app. 
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool creates a web application which demonstrates all of the tools working together.</li>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool creates a NodeJS application which demonstrates all the tools working together. Currently no build step is required, but that is likely to change in future versions.</li>
+</ul>
+
 
 ---
 
-### **serverDev**
+<h3><strong>serverDev</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+ 
+Captures server settings for serving the the web application in a development-mode.
+
+#### Questions
+
+**Server port**: [**3000**] `serverDev.port`
+- The port of the development web server.
+
+**Server hostname**: [**localhost**] `serverDev.hostname`
+- The host-name of the development web server.
+
+**Server protocol**: [**https**, http] `serverDev.protocol`
+- The protocol of the development web server.
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a development web server which supports CORS request and other middleware.</li>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
+</ul>
 
 ---
 
-### **serverProd**
+<h3><strong>serverProd</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+ 
+Captures server settings for serving the the web application in a production-mode.
+
+#### Questions
+
+**Server port**: [**3000**] `serverProd.port`
+- The port of the production web server.
+
+**Server hostname**: [**localhost**] `serverProd.hostname`
+- The host-name of the production web server.
+
+**Server protocol**: [**https**, http] `serverProd.protocol`
+- The protocol of the production web server.
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a production web server which supports CORS request and other middleware.</li>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
+</ul>
 
 ---
 
-### **testBrowser**
+<h3><strong>testBrowser</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+
+Generates browser testing tools and configuration.
+
+#### Questions
+None
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__protractor -%>"></div> build tool sets up Protractor configuration for testing web application. synchronises with Angular 1.x framework if framework is selected in `buildJS` generator.</li>
+</ul>
 
 ---
 
-### **testUnit**
+<h3><strong>testUnit</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+
+Generates unit-testing tools and configuration.
+
+#### Questions
+None
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool installs Mocha test framework with code coverage.</li>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool creates Webpack and Karma configuration (using Jasmine as test framework) with code coverage.</li>
+</ul>
 
 ---
 
-### **verify**
+<h3><strong>verify</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+
+Generates code syntax and style-verification tools for JavaScript (and CSS <div class="<%- styles.badge__browser -%>"></div> only).
+
+#### Questions
+**JavaScript coding standard**: [**None**, AirBnb, Google, StandardJS, TypeScript] `verify.jsCodingStandard`
+- The linting rules that will be applied to JavaScript code.
+- "TypeScript" is only available for TypeScript projects.
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__npm -%>"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
+<li><em>(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool creates `verify:*` tasks to verify source code in the `paths.input.srcDir` and `paths.input.configDir`.</li>
+</ul>
 
 ---
 
-### **zzfinish**
+<h3><strong>zzfinish</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+
+<p>A hook to allow different build tools to generate config after all other generators have run. Note that the <div class="<%- styles.badge__node -%>"></div> 
+version currently does nothing (it does not use <div class="<%- styles.badge__grunt -%>"></div> or <div class="<%- styles.badge__webpack -%>"></div>).</p>
+
+#### Questions
+- None
+
+#### Build Tools
+<ul>
+<li><div class="<%- styles.badge__webpack -%>"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
+<li><em>(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool runs the `grunt dev` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
+</ul>

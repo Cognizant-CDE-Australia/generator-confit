@@ -1,0 +1,30 @@
+.nav-toggle
+  padding 9px 10px
+  background-color transparent
+  background-image none
+  border 1px solid $border-colour
+  border-radius 3px
+  position fixed
+  left 2rem
+  top 2.2rem
+  z-index 15
+
+  &:hover
+    cursor pointer
+
+  &:focus
+    background $alabaster
+
+  @media screen and (min-width: $screen-is-bigger-than-tablet)
+    display none
+
+.icon-bar
+  display block
+  margin-bottom 4px
+  width 22px
+  height 2px
+  border-radius 1px
+  background #ccc
+
+  &:last-child
+    margin-bottom 0
