@@ -1,0 +1,6 @@
+<%
+var badges = data.list.split('|')
+
+badges.forEach(function(name) { -%>
+<div class="badge__<%- name -%>"></div>
+<% });-%>

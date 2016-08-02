@@ -3,28 +3,25 @@ repo: https://github.com/odecee/generator-confit
 version: 2.0.0
 src: docs
 snippets: docs/snippets
-outputDir: website   # Not yet supported, so need to override Webpack config
-#theme: node_modules/swanky-theme
-#layouts: node_modules/swanky-theme/templates/layouts
-#partials: node_modules/swanky-theme/templates/partials
+output: website
 theme: docs/confit-theme
-layouts: docs/confit-theme/templates/layouts
-partials: docs/confit-theme/templates/partials
 
 sections:
 
-  - title: Overview
-    content: docs/content/overview.md
-
-  - title: How it works
-    content: docs/content/architecture.md
-
-  - title: Contributing
-    content: CONTRIBUTING.md
+#  - title: Overview
+#    content: docs/content/overview.md
+#
+#  - title: How it works
+#    content: docs/content/architecture.md
+#
+#  - title: Contributing
+#    content: CONTRIBUTING.md
+#  - title: Test
+#    content: docs/content/test.md
 
     # Add sub-sections later
 
   - title: API Doc
-    content: lib/core/*.js
+    content: lib/core/buildToolUtils.js
     processor:
       ngdocs: null
