@@ -4,6 +4,7 @@ const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'buildBrowser';
 
@@ -16,8 +17,8 @@ describe('buildBrowser Generator', () => {
       'buildBrowser-config.json',
       utils.noop,
       function after() {
-        yoassert.file(['confit.json']);
-        let confit = fs.readJsonSync('confit.json');
+        yoassert.file(['confit.yml']);
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'].buildBrowser;
 
         assert.equal(typeof config.browserSupport, 'object');

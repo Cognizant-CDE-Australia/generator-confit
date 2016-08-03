@@ -4,6 +4,7 @@ const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'testUnit';
 
@@ -16,8 +17,8 @@ describe('testUnit Generator', () => {
       'testUnit-no-test-deps.json',
       utils.noop,
       function after() {
-        yoassert.file(['confit.json']);
-        let confit = fs.readJsonSync('confit.json');
+        yoassert.file(['confit.yml']);
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
 
         assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 0);
 
@@ -35,9 +36,9 @@ describe('testUnit Generator', () => {
       'testUnit-framework-with-test-deps.json',
       utils.noop,
       function after() {
-        // Confit.json should now have an angular-mocks reference
-        yoassert.file(['confit.json']);
-        let confit = fs.readJsonSync('confit.json');
+        // Confit.yml should now have an angular-mocks reference
+        yoassert.file(['confit.yml']);
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
 
         assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 2);
         assert.equal(confit['generator-confit'].testUnit.testDependencies[0], 'angular');

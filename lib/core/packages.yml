@@ -210,6 +210,10 @@ $packages:
     name: jasmine-spec-reporter
     version: 2.4.0
 
+  - &pkg_js-yaml
+    name: js-yaml
+    version: 3.6.1
+
   - &pkg_karma
     name: karma
     version: 0.13.22
@@ -264,7 +268,7 @@ $packages:
 
   - &pkg_node-sass
     name: node-sass
-    version: 3.4.2
+    version: 3.8.0
 
   - &pkg_npm-run-all
     name: npm-run-all

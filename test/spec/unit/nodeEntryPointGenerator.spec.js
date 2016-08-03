@@ -4,6 +4,7 @@ const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'entryPoint';
 
@@ -20,9 +21,9 @@ describe('Node EntryPoint Generator', () => {
         assert.equal(entryPoint, undefined);
       },
       function after() {
-        yoassert.file(['confit.json', 'package.json']);
+        yoassert.file(['confit.yml', 'package.json']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'];
         let entryPoint = config.entryPoint.entryPoints;
         let epPath = config.paths.input.srcDir + 'index.js';
@@ -49,9 +50,9 @@ describe('Node EntryPoint Generator', () => {
         assert.equal(entryPoint, undefined);
       },
       function after() {
-        yoassert.file(['confit.json', 'package.json']);
+        yoassert.file(['confit.yml', 'package.json']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'];
         let entryPoint = config.entryPoint.entryPoints;
         let epPath = config.paths.input.srcDir + 'index.ts';
@@ -73,9 +74,9 @@ describe('Node EntryPoint Generator', () => {
       'node-entryPoint-sampleApp-config.json',
       function before() {},
       function after() {
-        yoassert.file(['confit.json']);
+        yoassert.file(['confit.yml']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'];
         let entryPoint = config.entryPoint.entryPoints;
         let epPath = config.paths.input.srcDir + 'demo/index.js';

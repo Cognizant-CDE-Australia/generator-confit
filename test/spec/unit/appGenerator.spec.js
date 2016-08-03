@@ -6,6 +6,7 @@ const path = require('path');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'app';
 
@@ -45,7 +46,7 @@ describe('App Generator', () => {
         assert.equal(confit['generator-confit'].app, undefined);
       },
       function afterTest() {
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let app = confit['generator-confit'].app;
 
         assert.equal(typeof app, 'object');
@@ -61,13 +62,14 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'Other',
       license: 'UNLICENSED'
     });
   });
 
 
-  it('should create an .editorConfig and package.json file when they do not exist', (done) => {
-    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json'];
+  it('should create an .editorConfig, package.json and confit.yml file when they do not exist', (done) => {
+    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml'];
 
     runGenerator('app-config.json',
       function beforeTest() {
@@ -79,6 +81,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'GitHub',
       license: 'UNLICENSED'
     });
   });
@@ -95,6 +98,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'GitHub',
       license: 'UNLICENSED'
     });
   });
@@ -108,7 +112,7 @@ describe('App Generator', () => {
       function afterTest(/*dir*/) {
         yoassert.file('LICENSE');
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let expectedCopyrightOwner = confit['generator-confit'].app.copyrightOwner;
 
         assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
@@ -121,6 +125,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'Other',
       license: 'MIT'
     });
   });
@@ -141,6 +146,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'Other',
       license: 'UNLICENSED'
     });
   });
@@ -165,6 +171,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'Other',
       license: 'UNLICENSED'
     });
   });
@@ -194,6 +201,7 @@ describe('App Generator', () => {
       }
     ).withPrompts({
       buildProfile: 'Latest',
+      repositoryType: 'GitHub',
       license: 'UNLICENSED'
     });
   });

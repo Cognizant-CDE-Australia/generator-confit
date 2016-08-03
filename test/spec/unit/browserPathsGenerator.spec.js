@@ -4,6 +4,7 @@ const utils = require('./unitTestUtils');
 const yoassert = require('yeoman-assert');
 const assert = require('assert');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'paths';
 
@@ -20,9 +21,9 @@ describe('Browser Paths Generator', () => {
         assert.equal(paths, undefined);
       },
       function after() {
-        yoassert.file(['confit.json']);
+        yoassert.file(['confit.json', 'confit.yml']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'src/');
@@ -48,7 +49,7 @@ describe('Browser Paths Generator', () => {
       function after() {
         yoassert.file(['confit.json']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'willy/');
@@ -78,7 +79,7 @@ describe('Browser Paths Generator', () => {
       function after() {
         yoassert.file(['confit.json']);
 
-        let confit = fs.readJsonSync('confit.json');
+        let confit = yaml.load(fs.readFileSync('confit.yml'));
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'dotSlash/');

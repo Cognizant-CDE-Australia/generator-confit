@@ -6,6 +6,7 @@ const _ = require('lodash');
 const checksum = require('checksum');
 const async = require('async');
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const sortKeys = require('sort-keys');
 const FIXTURE_DIR = path.join(baseDir, 'test/fixtures/');
@@ -38,14 +39,14 @@ function main() {
 function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
   // Get the files
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/) !== null);
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
 
   let filesChanged = 0;
 
   // Update each file
   files.forEach(file => {
-    let json = fs.readJsonSync(path.join(dir, file));
-    let confit = json[rootGeneratorName];
+    let data = yaml.load(fs.readFileSync(path.join(dir, file)));
+    let confit = data[rootGeneratorName];
     let fileChanged = false;
 
     // Loop through the generator version information
@@ -72,7 +73,7 @@ function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
     });
 
     if (fileChanged) {
-      fs.writeJsonSync(path.join(dir, file), json);
+      fs.writeFileSync(path.join(dir, file), yaml.dump(data));
       console.log(file + ' updated');
       filesChanged++;
     }

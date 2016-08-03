@@ -20,7 +20,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, error
       .inTmpDir(function(dir) {
         // Copy the confit.json fixture here
         if (confitFixture) {
-          fs.copySync(path.join(__dirname, 'fixtures/', confitFixture), path.join(dir, 'confit.json'));
+          fs.copySync(path.join(__dirname, 'fixtures/', confitFixture), path.join(dir, 'confit.json'));   // TODO: Change this to confit.yml
         }
         if (MAX_LOG) {
           console.log('testdir', dir);

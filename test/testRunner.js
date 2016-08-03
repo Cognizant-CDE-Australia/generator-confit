@@ -105,7 +105,7 @@ function main() {
 
   function testConfitFixture(fixture) {
     confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
-    let testDir = path.join(TEST_DIR, fixture.replace('.json', ''), '/');
+    let testDir = path.join(TEST_DIR, fixture.replace('.yml', ''), '/');
 
     // Install Confit first, wait for it to complete, then start the Mocha spec
     confitMsg(chalk.white('Running Confit generator...'));
@@ -126,16 +126,16 @@ function main() {
 }
 
 /*
- * Get a list of fixture files from a directory that do NOT start with x but end with '.json'.
+ * Get a list of fixture files from a directory that do NOT start with x but end with '.yml'.
  * Additionally, if a fixture starts with '-' it is a 'solo' fixture... ONLY run this fixture.
  *
  * @param dir                 The directory to search
  * @returns {Array.<String>}  The list of files found that match the criteria
  */
 function getFixtures(dir) {
-  // Get a list of files that end in '.json' from the directory, that do not start with 'x'
+  // Get a list of files that end in '.yml' from the directory, that do not start with 'x'
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.json$/) !== null);
+    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
 
   // Check if there is TEST_SUITE variable. If so, use it instead
   if (TEST_SUITE_M_OF_N) {

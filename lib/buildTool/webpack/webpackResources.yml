@@ -236,7 +236,8 @@ sampleApp:
         sourceFormat: {}
 
 serverDev:
-  packages: []
+  packages:
+    - <<: *pkg_js-yaml
 
   tasks:
     - name: serve:dev

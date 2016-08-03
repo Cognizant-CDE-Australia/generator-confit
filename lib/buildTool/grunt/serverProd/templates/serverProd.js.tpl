@@ -3,7 +3,10 @@ module.exports = function (grunt) {
 
   // We make this configuration lively so that we can change it at runtime (for testing purposes)
   var path = require('path');
-  var confitConfig = require(path.join(process.cwd(), 'confit.json'))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
+  var yaml = require('js-yaml');
+  var fs = require('fs');
+  var confitConfig = yaml.load(fs.readFileSync(path.join(process.cwd(), 'confit.yml')))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
+
 
   grunt.extendConfig({
     connect: {
