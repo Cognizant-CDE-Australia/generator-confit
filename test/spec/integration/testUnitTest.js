@@ -41,7 +41,7 @@ module.exports = function(confitConfig, unitTestPath, commandToRun) {
 
       console.log(result);
       let results = result.split('\n');
-      let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
+      //let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
 
       // console.log(fileLine);
 
