@@ -43,7 +43,7 @@ module.exports = function(confitConfig, unitTestPath, commandToRun) {
       let results = result.split('\n');
       let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
 
-      console.log(fileLine);
+      // console.log(fileLine);
 
       let summaryLine = results.filter(item => item.indexOf('All files') === 0);
 

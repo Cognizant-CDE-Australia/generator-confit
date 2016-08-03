@@ -5,9 +5,10 @@ const path = require('path');
 const fs = require('fs-extra');
 const assert = require('assert');
 const _ = require('lodash');
+const yaml = require('js-yaml');
 
 // Global data
-const CONFIT_FILE_NAME = 'confit.json';
+const CONFIT_FILE_NAME = 'confit.yml';
 const GENERATOR_PATH = path.join(__dirname, '../lib/generators/');
 
 let testDirName = process.env.TEST_DIR;
@@ -45,7 +46,7 @@ function install(resolve, reject) {
     // Copy the fixture to the temporary directory
     fs.copySync(srcFixtureFile, destConfitConfigPath);
 
-    // Determine whether we need to run the installer or not (compare confit.json.previous to confit.json)
+    // Determine whether we need to run the installer or not (compare confit.yml.previous to confit.yml)
     let skipInstall = isConfigIdentical(destConfitConfigPath);
 
     // Run the generator
@@ -84,9 +85,9 @@ function install(resolve, reject) {
         assert.ifError(err);
       })
       .on('end', function() {
-        let config = require(destConfitConfigPath)['generator-confit'];
+        let config = yaml.load(fs.readFileSync(destConfitConfigPath))['generator-confit'];
 
-        // Create a confit.json.previous file, to help us speed up installation next time.
+        // Create a confit.yml.previous file, to help us speed up installation next time.
         // Next run, look for this file. If it exists, don't do an install
         fs.copySync(destConfitConfigPath, destConfitConfigPath + '.previous');
         process.chdir(previousCWD);
@@ -127,7 +128,7 @@ function isConfigIdentical(newConfigName) {
     return false;
   }
 
-  return _.isEqual(fs.readJsonSync(oldConfigName), fs.readJsonSync(newConfigName));
+  return _.isEqual(fs.readFileSync(oldConfigName), fs.readFileSync(newConfigName));
 }
 
 runGenerator();

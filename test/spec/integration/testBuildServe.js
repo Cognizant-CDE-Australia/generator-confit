@@ -5,6 +5,7 @@ const server = require('./server');
 const childProc = require('child_process');
 const tempTestDir = process.env.TEST_DIR;
 const fs = require('fs-extra');
+const yaml = require('js-yaml');
 
 const CONFIT_CMD = 'npm run build:serve';
 
@@ -69,11 +70,11 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
 function modifyConfitServerConfig(testDir, port, configData) {
   // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
-  let confitJson = fs.readJsonSync(testDir + 'confit.json');
-  let server = confitJson['generator-confit'][configData];
+  let confitData = yaml.load(fs.readFileSync(testDir + 'confit.yml'));
+  let server = confitData['generator-confit'][configData];
 
   server.port = port;
-  fs.writeJsonSync(testDir + 'confit.json', confitJson);
+  fs.writeFileSync(testDir + 'confit.yml', yaml.dump(confitData));
 
   return {
     baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,

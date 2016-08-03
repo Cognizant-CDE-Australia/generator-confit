@@ -1,6 +1,9 @@
 /** Server - DEV - START */
-<% // It is convinient to keep the config lively so that we can run integration tests and change the server ports easily -%>
-var confitConfig = require(path.join(process.cwd(), 'confit.json'))['generator-confit'];
+<% // It is convenient to keep the config lively so that we can run integration tests and change the server ports easily -%>
+var yaml = require('js-yaml');
+var fs = require('fs');
+var confitConfig = yaml.load(fs.readFileSync(path.join(process.cwd(), 'confit.yml')))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
+
 
 config.devServer = {
   contentBase: config.output.path,  // We want to re-use this path

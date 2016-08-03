@@ -94,7 +94,7 @@ tune correctly, into a 5 minute step. See the animated-gif above for an example.
 
 
 - Confit is a **web development-tool generator** that is designed to evolve as web technologies change.
-- Confit captures a project's build processes in a **build-tool-independent configuration file** (`confit.json`), so you can *migrate your configuration to use newer build-tools more-easily*.
+- Confit captures a project's build processes in a **build-tool-independent configuration file** (`confit.yml`), so you can *migrate your configuration to use newer build-tools more-easily*.
 - Confit is **aimed at** generating tools for single-page web applications (SPAs), but will soon support generating ES6 NodeJS libraries too (see issue #17)
 - Confit is **opinionated**. For example, Confit does not advocate the use of BowerJS. If you need it, look elsewhere. (Or create an NPM module if one doesn't already exist for the Bower library you need).
 - Confit-generated config can be customised AND still preserve your changes (so long as you make changes outside of the generated sections)
@@ -128,7 +128,7 @@ turn out how you expected, you can revert to the previous version of the code.*
 Each Confit generator (Confit is composed of multiple generators) contains a version identifier. 
 When you upgrade to a new version of Confit, if any of the new generators have changed, 
 Confit will detect this and the generator will re-ask the questions for that section. 
-That will cause the generator's version in your `confit.json` file to be updated, as well
+That will cause the generator's version in your `confit.yml` file to be updated, as well
  as new information being added to the file in some cases. Old / deprecated information will not be automatically removed.
 
 Similarly for the generated tools, if the tooling changes, or you choose to use a different build profile which 

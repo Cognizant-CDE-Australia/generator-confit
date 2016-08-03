@@ -2,8 +2,10 @@
 
 const fixtureFileName = process.env.FIXTURE;   // Passed from the testRunner
 const fs = require('fs');
+const yaml = require('js-yaml');
+
 let testDir = process.env.TEST_DIR;
-let confitConfig = require(testDir + 'confit.json')['generator-confit'];
+let confitConfig = yaml.load(fs.readFileSync(testDir + 'confit.yml'))['generator-confit'];
 
 const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
 
