@@ -25,7 +25,7 @@
   - [Usage](#usage)
   - [Contributing](#contributing)
 - [Background](#background)
-  - [Con-waaat?!?](#con-wat)
+  - [Con-waaat?!?](#con-waaat)
 - [Using Confit](#using-confit)
   - [Sample Projects](#sample-projects)
   - [Smart upgrading](#smart-upgrading)
@@ -41,7 +41,7 @@
 - Unit testing 
 - Browser testing
 - Support for releasing code using semantic releasing, conventional commits
-- Supports Angular 1.x and Angular 2.x frameworks 
+- Supports Angular 1.x and Angular 2.x frameworks, and more coming (PRs welcome!!!) 
 - Sample projects for some configurations (see below)
 - EXTENSIBLE! Decorate / extend configurations then re-run `yo confit` to re-generate configuration while preserving your changes (uses tags to identify generated-areas inside files) 
 
