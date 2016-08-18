@@ -21,6 +21,7 @@ generator-confit:
       stylesDir: styles/
       templateDir: template/
       unitTestDir: unitTest/
+      testDir: test/
     output:
       assetsSubDir: assets/
       cssSubDir: css/

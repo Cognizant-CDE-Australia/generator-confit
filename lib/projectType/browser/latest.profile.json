@@ -9,6 +9,7 @@
     "buildCSS": "webpack",
     "buildHTML": "webpack",
     "buildJS": "webpack",
+    "cssRegression": "webpack",
     "entryPoint": "webpack",
     "paths": "",
     "release": "npm",

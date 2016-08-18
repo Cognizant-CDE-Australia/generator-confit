@@ -60,6 +60,7 @@ function install(resolve, reject) {
         path.join(GENERATOR_PATH, 'buildCSS'),
         path.join(GENERATOR_PATH, 'buildHTML'),
         path.join(GENERATOR_PATH, 'buildJS'),
+        path.join(GENERATOR_PATH, 'cssRegression'),
         path.join(GENERATOR_PATH, 'entryPoint'),
         path.join(GENERATOR_PATH, 'paths'),
         path.join(GENERATOR_PATH, 'release'),

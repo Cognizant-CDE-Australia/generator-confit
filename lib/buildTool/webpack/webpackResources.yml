@@ -75,6 +75,33 @@ buildJS:
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
 
+cssRegression:
+  packages:
+    - <<: *pkg_backstopjs
+
+  tasks:
+      - name: test:css
+        tasks: ['cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir %>cssRegression/backstop.config.js']
+        description: Run css regression tests
+        features: []
+      - name: test:css:ref
+        tasks: ['cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir %>cssRegression/backstop.config.js']
+        description: Creates css regression testing references
+        features: []
+
+  templateFiles:
+      - src: backstop.config.js.tpl
+        dest: <%= paths.config.configDir %>cssRegression/backstop.config.js
+        overwrite: true
+      - src: scenarios.config.js
+        dest: <%= paths.input.testDir %>cssRegression/scenarios.config.js
+        overwrite: true
+      - src: scenarios.js
+        dest: <%= paths.input.testDir %>cssRegression/scenarios/index.js
+        overwrite: true
+      - src: exampleScenario.js
+        dest: <%= paths.input.testDir %>cssRegression/scenarios/HomePage.js
+        overwrite: true
 
 # sampleApp configuration
 sampleApp:

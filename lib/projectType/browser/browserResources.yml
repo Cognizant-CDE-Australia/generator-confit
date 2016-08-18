@@ -10,6 +10,7 @@ app:
     - confit:entryPoint
     - confit:serverDev
     - confit:serverProd
+    - confit:cssRegression
     - confit:testUnit
     - confit:testBrowser
     - confit:verify
@@ -283,6 +284,7 @@ paths:
       templateDir: template/
       unitTestDir: unitTest/
       browserTestDir: browserTest/
+      testDir: test/
 
     output:
       devDir: dev/
