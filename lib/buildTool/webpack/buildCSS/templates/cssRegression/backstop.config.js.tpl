@@ -1,4 +1,6 @@
 'use strict';
+const glob = require('glob');
+const path = require('path');
 const BASE_URL = '<%- serverDev.protocol %>://localhost:<%- serverDev.port %>';
 let config = {
   viewports: [
@@ -24,11 +26,21 @@ let config = {
   debug: false,
   port: 3002
 };
-let scenarios = require('../../<%- paths.input.unitTestDir %>cssRegression/scenarios');
+const scenarioDefaultConfig = {
+  readyEvent: null,
+  delay: 500,
+  misMatchThreshold: 0.1
+};
+let scenarioFiles = glob.sync('<%- paths.input.srcDir %>**/*/cssTest/*.?(js|json)');
+let scenarios = [];
+let srcDirRelativePath = path.relative('<%- paths.config.configDir %>cssRegression', '<%- paths.input.srcDir %>');
 
-scenarios.forEach((scenario) => {
-  scenario.url = `${BASE_URL}${scenario.url}`
+scenarioFiles.forEach((scenarioPath) => {
+  let scenario = require(`${srcDirRelativePath}${scenarioPath.replace('<%- paths.input.srcDir %>', '')}`);
+
+  scenario = Object.assign({}, scenarioDefaultConfig, scenario, {url: `${BASE_URL}${scenario.url}`});
+  scenarios.push(scenario);
 });
-config.scenarios = scenarios;
 
+config.scenarios = scenarios;
 module.exports = config;

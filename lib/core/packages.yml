@@ -142,6 +142,10 @@ $packages:
     name: ghooks
     version: 1.2.1
 
+  - &pkg_glob
+    name: glob
+    version: 7.0.5
+
   - &pkg_grunt
     name: grunt
     version: 0.4.5

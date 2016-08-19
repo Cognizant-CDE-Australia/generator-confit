@@ -10,7 +10,6 @@ app:
     - confit:entryPoint
     - confit:serverDev
     - confit:serverProd
-    - confit:cssRegression
     - confit:testUnit
     - confit:testBrowser
     - confit:verify
@@ -75,6 +74,7 @@ buildAssets: {}
 # CSS configuration
 buildCSS:
   defaultSourceFormat: stylus
+  useCssRegression: true
   sourceFormat:
     css:
       ext: ['css']
@@ -577,6 +577,29 @@ readme:
     %>- <%- value -%>
 
     <% }); %>
+
+  CN_CSS_REGRESSION_TEST: |
+    ## Adding css regression test
+
+    You can create some visual regression tests by placing them in a `cssTest` folder in any of your module folder (along with `browserTest` and `unitTest`)
+
+    There is an example of scenario you can run:
+
+    ```js
+    module.exports = {
+      label: 'My Homepage',
+      url: '/',
+      selectors: [
+        'header',
+        'footer',
+      ]
+    };
+    ```
+
+    You can either write your scenario in JSOn or JavaScript.
+    To run your visual regression tests you can use those commands:
+    <pre>npm run test:css:ref</pre> | Create reference data
+    <pre>npm run test:css</pre> | Run your visual regression tests against the reference data
 
 
 release:

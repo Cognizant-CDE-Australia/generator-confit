@@ -78,6 +78,7 @@ buildJS:
 cssRegression:
   packages:
     - <<: *pkg_backstopjs
+    - <<: *pkg_glob
 
   tasks:
       - name: test:css
@@ -90,17 +91,8 @@ cssRegression:
         features: []
 
   templateFiles:
-      - src: backstop.config.js.tpl
+      - src: cssRegression/backstop.config.js.tpl
         dest: <%= paths.config.configDir %>cssRegression/backstop.config.js
-        overwrite: true
-      - src: scenarios.config.js
-        dest: <%= paths.input.testDir %>cssRegression/scenarios.config.js
-        overwrite: true
-      - src: scenarios.js
-        dest: <%= paths.input.testDir %>cssRegression/scenarios/index.js
-        overwrite: true
-      - src: exampleScenario.js
-        dest: <%= paths.input.testDir %>cssRegression/scenarios/HomePage.js
         overwrite: true
 
 # sampleApp configuration
