@@ -10,7 +10,7 @@ if (sourceFormat === 'ES6' && outputFormat === 'ES5') {%>
 var srcLoader = {
   test: helpers.pathRegEx(<%= srcDirRegEx.toString() %>),
   loader: 'babel-loader',
-  exclude: ['node_modules'],    // There should be no need to exclude unit or browser tests because they should NOT be part of the source code dependency tree
+  exclude: moduleDirectories,    // There should be no need to exclude unit or browser tests because they should NOT be part of the source code dependency tree
   query: {
     // https://github.com/babel/babel-loader#options
     cacheDirectory: true,

@@ -1,4 +1,4 @@
 const devServer = require('swanky-server').devServer;
 
 // Start swanky dev server
-module.exports = devServer(__dirname + '/swanky.config.yaml');
+module.exports = devServer(__dirname + '/../../docs/swanky.config.yaml');

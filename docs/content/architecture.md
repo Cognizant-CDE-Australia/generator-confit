@@ -13,11 +13,7 @@ Each generator creates configuration and tooling for a discrete part of the deve
 
 This section describes the purpose and behaviour of each generator. 
 
-[render badge list="npm"]
-
-### *app* [render badge list="browser|node"]
-
-<h3><strong>app</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### app [render badge list="browser|node"]
 
 
 The `app` generator is all about capturing application-wide settings and generating application-wide tools & config.
@@ -54,7 +50,7 @@ The `app` generator is all about capturing application-wide settings and generat
 
 ---
 
-<h3><strong>buildAssets</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### buildAssets [render badge list="browser"]
 
 Generator for building assets (media files) for web applications.
 
@@ -68,7 +64,7 @@ None
 
 ---
 
-<h3><strong>buildBrowser</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### buildBrowser [render badge list="browser"]
 
 Browser-specific build configuration generator.
 
@@ -84,7 +80,7 @@ Browser-specific build configuration generator.
 
 ---
 
-<h3><strong>buildCSS</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### buildCSS [render badge list="browser"]
 
 CSS-tool generator.
 
@@ -101,7 +97,7 @@ CSS-tool generator.
 
 ---
 
-<h3><strong>buildHTML</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### buildHTML [render badge list="browser"]
 
 #### Questions
 
@@ -115,7 +111,7 @@ CSS-tool generator.
 
 ---
 
-<h3><strong>buildJS</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### buildJS [render badge list="browser|node"]
 
 This important generators is used to determine how to process the source code into the desired output format.
 It affects the verification (linting) tool selection, code coverage tools and which files to watch for changes.
@@ -146,7 +142,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 ---
 
-<h3><strong>entryPoint</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### entryPoint [render badge list="browser|node"]
 
 #### Questions
 
@@ -163,7 +159,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 ---
 
-<h3><strong>paths</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### paths [render badge list="browser|node"]
 
 #### Questions
 
@@ -248,7 +244,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 ---
 
-<h3><strong>releases</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### releases [render badge list="browser|node"]
 
 Generates release-related configuration and tooling.
 
@@ -271,7 +267,7 @@ Generates release-related configuration and tooling.
 
 ---
 
-<h3><strong>sampleApp</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### sampleApp [render badge list="browser|node"]
  
 It is one of the more-complex generators because it is dependent on the answers captured by other generators.
 
@@ -291,7 +287,7 @@ It is one of the more-complex generators because it is dependent on the answers 
 
 ---
 
-<h3><strong>serverDev</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### serverDev [render badge list="browser"]
  
 Captures server settings for serving the the web application in a development-mode.
 
@@ -314,7 +310,7 @@ Captures server settings for serving the the web application in a development-mo
 
 ---
 
-<h3><strong>serverProd</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### serverProd [render badge list="browser"]
  
 Captures server settings for serving the the web application in a production-mode.
 
@@ -337,7 +333,7 @@ Captures server settings for serving the the web application in a production-mod
 
 ---
 
-<h3><strong>testBrowser</strong> <div class="<%- styles.badge__browser -%>"></div></h3>
+### testBrowser [render badge list="browser"]
 
 Generates browser testing tools and configuration.
 
@@ -351,7 +347,7 @@ None
 
 ---
 
-<h3><strong>testUnit</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### testUnit [render badge list="browser|node"]
 
 Generates unit-testing tools and configuration.
 
@@ -366,7 +362,7 @@ None
 
 ---
 
-<h3><strong>verify</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### verify [render badge list="browser|node"]
 
 Generates code syntax and style-verification tools for JavaScript (and CSS <div class="<%- styles.badge__browser -%>"></div> only).
 
@@ -383,7 +379,7 @@ Generates code syntax and style-verification tools for JavaScript (and CSS <div 
 
 ---
 
-<h3><strong>zzfinish</strong> <div class="<%- styles.badge__browser -%>"></div> <div class="<%- styles.badge__node -%>"></div></h3>
+### zzfinish [render badge list="browser|node"]
 
 <p>A hook to allow different build tools to generate config after all other generators have run. Note that the <div class="<%- styles.badge__node -%>"></div> 
 version currently does nothing (it does not use <div class="<%- styles.badge__grunt -%>"></div> or <div class="<%- styles.badge__webpack -%>"></div>).</p>

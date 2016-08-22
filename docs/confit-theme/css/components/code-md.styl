@@ -2,7 +2,7 @@
 // Copied from https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css
 // ...and tweaked a little
 
-pre
+.pre
   margin-top: 0
   margin-bottom: 0
   word-wrap: normal
@@ -10,15 +10,15 @@ pre
   overflow: auto
   line-height: 1.45
   background-color: $alabaster
-  border-radius: 3px
+  font-family: 'Fira Mono', monospace;
 
-code
+.code
   padding: 0.2em
   margin: 0
   background-color: rgba(0,0,0,0.04)
-  border-radius: 3px
+  font-family: 'Fira Mono', monospace;
 
-pre > code
+.pre > code
   padding: 0
   margin: 0
   font-size: 100%
@@ -27,7 +27,7 @@ pre > code
   background: transparent
   border: 0
 
-pre code
+.pre .code
   display: inline
   max-width: auto
   padding: 0
@@ -37,4 +37,3 @@ pre code
   word-wrap: normal
   background-color: transparent
   border: 0
-

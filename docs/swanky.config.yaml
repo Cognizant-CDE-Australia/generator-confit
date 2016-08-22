@@ -8,19 +8,23 @@ theme: docs/confit-theme
 
 sections:
 
-#  - title: Overview
-#    content: docs/content/overview.md
-#
-#  - title: How it works
-#    content: docs/content/architecture.md
-#
-#  - title: Contributing
-#    content: CONTRIBUTING.md
+  - title: Overview
+    content: docs/content/overview.md
+
+  - title: Usage
+    content: docs/content/usage.md
+
+  - title: How it works
+    content: docs/content/architecture.md
+
+  - title: Contributing
+    content: CONTRIBUTING.md
+
 #  - title: Test
 #    content: docs/content/test.md
 
     # Add sub-sections later
-
+#
   - title: API Doc
     content: lib/core/buildToolUtils.js
     processor:

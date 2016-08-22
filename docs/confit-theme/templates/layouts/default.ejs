@@ -9,22 +9,24 @@
 <div class="<%- styles.brand -%>"><a href="<%- meta.serverPath -%>" class="<%- styles.logo -%>"></a></div>
 
 <% if (meta.repository) { %>
-<a href="<%- meta.repository -%>" title="<%-siteTitle-%> Github Repo" target="_blank" class="<%- styles.github -%>"></a>
+<a href="<%- meta.repository -%>" title="<%- meta.title -%> Github Repo" target="_blank" class="<%- styles.github -%>"></a>
 <% } %>
 
-<aside id="offCanvasNav" class="<%- styles.sidebar -%> <%- styles.col -%>">
+<aside id="offCanvasNav" class="<%- styles.sidebar -%>">
   <nav class="<%-styles.navigation-%>">
-    <ul class="<%-styles['list-reset'] -%>">
-      <% nav.forEach((item) => { %>
-        <li class="<%= (item.key === key || item.key === parentKey) ? styles.active : '' %>">
-        <a href="<%= (meta.production) ? meta.serverPath : '/' %><%-item.path-%>" title="<%-item.title-%>"><%-item.title-%></a>
+    <ul class="<%- styles.ul -%>">
+      <% meta.navigation.forEach((item) => { %>
+      <li class="<%- styles.li -%> <%= (item.key === key || item.key === parentKey) ? styles.active : '' %>">
+        <a href="<%= (meta.production) ? meta.serverPath : '/' %><%-item.url-%>" title="<%-item.title-%>" class="<%- styles.a -%>"><%-item.title-%></a>
         <% if (item.children) { %>
-        <ul class="<%-styles['list-reset'] -%>">
+        <ul class="<%- styles.ul -%>">
           <% item.children.forEach((child) => { %>
-          <li class="<%= (child.key === key) ? styles.active : '' %>">
-            <a href="<%= (meta.production) ? meta.serverPath : '/' %><%-child.path-%>" title="<%-child.title-%>">
+          <li class="<%- styles.li -%> <%= (child.key === key) ? styles.active : '' %>">
+
+            <a href="<%= (meta.production) ? meta.serverPath : '/' %><%-child.url-%>" title="<%-child.title-%>" class="<%- styles.a -%>">
               <%-child.title-%>
             </a>
+
           </li>
           <% }); %>
         </ul>
@@ -35,11 +37,30 @@
   </nav>
 </aside>
 
-<section class="<%- styles.main -%> <%- styles.clearfix -%> <%- styles.col -%>">
+<section class="<%- styles.main -%>">
   <article>
-    <h1 class="<%-styles['page-header']-%>"><%- title -%></h1>
-    <% contents.forEach((item) => { %>
-      <%- item -%>
+
+    <% if (hasAnchors) { %>
+    <div class="<%- styles.anchors -%>" data-gumshoe>
+      <% contents.forEach((item, index) => { %>
+      <% if (item.title) { %>
+      <a href="#<%- item.key -%>" class="<%- styles.a -%>" data-scroll><%- item.title -%></a>
+      <% } %>
+      <% }); %>
+    </div>
+    <% } %>
+    <% if (parentKey) { %>
+    <% meta.navigation.forEach((item, index) => { %>
+    <% if (item.key === parentKey) { %>
+    <h1 class="<%-styles['page-header']-%> <%- styles.h1 -%>" data-gumshoe-header><%- item.title -%></h1>
+    <% } %>
+    <% }); %>
+    <% } else { %>
+    <h1 class="<%-styles['page-header']-%> <%- styles.h1 -%>" data-gumshoe-header><%- title -%></h1>
+    <% } %>
+
+    <% contents.forEach((item, index) => { %>
+    <%- item.content -%>
     <% }); %>
   </article>
 </section>

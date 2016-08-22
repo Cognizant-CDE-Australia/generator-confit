@@ -20,7 +20,7 @@ A high level overview of our contributing guidelines.
   - [Before pushing changes](#before-pushing-changes)
 - [Signing the contributor license agreement](#signing-the-contributor-license-agreement)
 - [Submitting a Pull Request](#submitting-a-pull-request)
-- [Code Reviewing](#code-reviewing)
+- [ Code Reviewing](#code-reviewing)
   - [Getting to the Code Review Stage](#getting-to-the-code-review-stage)
   - [Reviewing Pull Requests](#reviewing-pull-requests)
 
