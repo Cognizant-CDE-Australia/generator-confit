@@ -42,6 +42,7 @@ describe('zzFinish Generator', () => {
     );
   });
 
+
   it('should generate a README.md file with different license content when the app has a license', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,

@@ -1,0 +1,22 @@
+.outer-wrap
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+
+// Main
+.main
+  width 100%
+  padding 100px 20px 20px
+  float: left
+  box-sizing: border-box
+
+  @media screen and (min-width: $screen-is-bigger-than-sm-desktop)
+    padding 160px 40px 40px ($sidebar-width + 60)px
+
+body.has-anchors
+  .main
+    @media screen and (min-width: $screen-is-bigger-than-tablet)
+      padding 160px 40px 40px ($sidebar-width + 60)px
+
+    @media screen and (min-width: $screen-is-bigger-than-sm-desktop)
+      padding 160px 240px 40px ($sidebar-width + 60)px

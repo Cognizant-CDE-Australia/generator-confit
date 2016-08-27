@@ -64,12 +64,13 @@
     "verify:js": "eslint -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js success",
     "verify:js:watch": "chokidar 'lib/**/*.js' 'test/**/*.js' 'config/**/*.js' -c 'npm run verify:js' --initial --silent",
     "verify:watch": "npm run verify:js:watch --silent",
-    "docs:serve": "NODE_ENV=development node config/docs/serve.dev.js",
+    "docs:dev": "NODE_ENV=development node config/docs/serve.dev.js",
     "predocs:build": "rimraf website/",
     "docs:build": "npm run docs:build:prod",
     "docs:build:serve": "npm-run-all docs:build docs:serve:prod",
     "docs:build:prod": "NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors",
-    "docs:serve:prod": "http-server website -o"
+    "docs:serve:prod": "http-server website -o",
+    "docs:publish": "gh-pages --help"
   },
   "config": {
     "commitizen": {
@@ -110,6 +111,7 @@
     "eslint-config-defaults": "8.0.2",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
+    "gh-pages": "0.11.0",
     "ghooks": "1.2.1",
     "http-server": "0.9.0",
     "istanbul": "0.4.4",

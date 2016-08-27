@@ -1,0 +1,36 @@
+title: test
+repo: 'https://github.com'
+version: 0.0.0
+src: docs
+theme: docs/themes/test-theme
+output: website
+sections:
+  - title: Foundation
+    content:
+      - src: docs/content/foundation/01-overview.md
+      - title: 01 Colour Palette
+        src: docs/content/foundation/02-colour-palette.md
+      - title: 02 Typography
+        src: docs/content/foundation/03-typography.md
+      - title: 03 Grid
+        src: docs/content/foundation/04-grid.md
+      - title: 04 Units
+        src: docs/content/foundation/05-units.md
+  - title: Components
+    content: docs/content/components/overview.md
+    subSections:
+      - title: Cards
+        bootstrap:
+          - src: docs/config/bootstrap/bootstrap-angular.js
+        content:
+          - src: docs/content/components/card/card-overview.md
+          - title: <strong>1.1</strong> Card Component
+            src: docs/content/angular-components/card/card.js
+            preprocessor:
+              swanky-processor-ngdocs: {}
+          - title: <strong>1.2</strong> Card Header
+            src: docs/content/angular-components/card/card-header.js
+            preprocessor:
+              swanky-processor-ngdocs: {}
+          - title: 1.3 Card Accessibility
+            src: docs/content/components/card/card-accessibility.md

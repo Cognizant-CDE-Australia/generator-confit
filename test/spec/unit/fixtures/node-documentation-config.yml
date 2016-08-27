@@ -1,0 +1,10 @@
+generator-confit:
+  app:
+    buildProfile: Latest
+    projectType: node
+
+  paths:
+    input: {}
+    output: {}
+    config:
+      configDir: config/

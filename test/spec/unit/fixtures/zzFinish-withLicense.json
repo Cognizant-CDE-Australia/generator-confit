@@ -8,6 +8,11 @@
     "buildJS": {
       "sourceFormat": "ES6"
     },
+    "documentation": {
+      "generateDocs": true,
+      "srcDir": "docs/",
+      "outputDir": "webdocs/"
+    },
     "paths": {
       "input": {},
       "output": {},

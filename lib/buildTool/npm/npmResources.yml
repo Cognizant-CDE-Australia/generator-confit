@@ -1,3 +1,78 @@
+documentation:
+  common:
+    packages:
+      - <<: *pkg_swanky-server
+      - <<: *pkg_http-server
+
+    tasks:
+      - name: docs:dev
+        tasks: ['NODE_ENV=development node <%- paths.config.configDir %>docs/serve.dev.js']
+        description: Creates a development-version of the documentation website and watches for changes.
+
+      - name: docs:build
+        tasks: ['NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir %>docs/swanky.webpack.config.js --colors']
+        description: Creates a production-version of the documentation website in the `<%- documentation.outputDir %>`.
+
+      - name: docs:build:serve
+        tasks: ['docs:build', 'docs:serve']
+        description: Builds then serves (via a web server) the production website.
+
+      - name: docs:serve
+        tasks: ['http-server <%- documentation.outputDir %> -o']
+        description: Builds then serves (via a web server) the production website.
+
+    templateFiles:
+      - src: config/serve.dev.js.tpl
+        dest: <%- paths.config.configDir %>docs/serve.dev.js
+        overwrite: true
+      - src: config/swanky.webpack.config.js.tpl
+        dest: <%- paths.config.configDir %>docs/swanky.config.js
+        overwrite: true
+
+
+  manual:
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:build', 'node <%- paths.config.configDir %>docs/publish.js']
+        description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
+
+    templateFiles:
+      - src: config/publish.js.tpl
+        dest: <%- paths.config.configDir %>docs/publish.js
+        overwrite: true
+
+  GitHub:
+    packages:
+      - <<: *pkg_gh-pages
+
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:build', 'node <%- paths.config.configDir %>docs/publish.js']
+        description: Publishes the documentation to GitHub's /gh-pages branch
+
+    templateFiles:
+      - src: config/publish.js.tpl
+        dest: <%- paths.config.configDir %>docs/publish.js
+        overwrite: true
+
+  cloud:
+    packages:
+      - <<: *pkg_now
+      - <<: *pkg_now-serve
+
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:build', 'ns <%- documentation.outputDir %>']
+        description: Publishes the documentation to the cloud using `now`
+
+  # If create sample
+  sampleDocs:
+    templateFiles:
+      - src: docs/**/*
+        dest: <%- documentation.srcDir %>
+        overwrite: true
+        noParse: true
+
 entryPoint:
   packageJsonConfig:
     - main: <%- entryPoint.entryPoints.main[0] %>

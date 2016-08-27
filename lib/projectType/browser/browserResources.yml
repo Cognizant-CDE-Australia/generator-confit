@@ -13,6 +13,7 @@ app:
     - confit:testUnit
     - confit:testBrowser
     - confit:verify
+    - confit:documentation
     - confit:release
     - confit:sampleApp
     - confit:zzfinish
@@ -205,6 +206,13 @@ buildJS:
       typeLibs: []
       testPackages: []
       testTypeLibs: []
+
+documentation:
+  defaults:
+    generate: true
+    srcDir: docs
+    outputDir: doc-website
+    publishToGithubPages: true
 
 entryPoint:
   readme:
@@ -491,12 +499,12 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build), objectValues(readme.buildTask.buildBrowser)).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.app).concat(objectValues(readme.buildTask.build), objectValues(readme.buildTask.buildBrowser)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
-    <% }); %>
+    <% });}; %>
 
 
   CN_COMMIT_TASKS: |
@@ -507,12 +515,12 @@ readme:
     <pre>git status</pre> | Lists the current branch and the status of changed files
     <pre>git log</pre> | Displays the commit log (press Q to quit viewing)
     <pre>git add .</pre> | Stages all modified & untracked files, ready to be committed
-    <% objectValues(readme.buildTask.commit).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.commit).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
-    <% }); -%>
+    <% });}; -%>
     <pre>git push</pre> | Push local repository changes to remote repository
 
 
@@ -521,24 +529,24 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask.release).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.release).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
-    <% }); %>
+    <% });}; %>
 
   CN_TEST_TASKS: |
     ## Test Tasks
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
-    <% }); %>
+    <% });}; %>
 
 
   CN_VERIFY_TASKS: |
@@ -546,12 +554,12 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% objectValues(readme.buildTask.verify).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.verify).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
       } %>
-    <% }); %>
+    <% });}; %>
 
 
   CN_CHANGING_BUILD_TOOL_CONFIG: |

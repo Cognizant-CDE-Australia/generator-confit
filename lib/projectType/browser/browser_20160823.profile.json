@@ -1,0 +1,24 @@
+{
+  "name": "Browser 20160823",
+  "priority": "2",
+  "description": "Latest Webpack-based browser profile (23 August 2016)",
+  "toolMap": {
+    "app": "webpack",
+    "buildBrowser": "webpack",
+    "buildAssets": "webpack",
+    "buildCSS": "webpack",
+    "buildHTML": "webpack",
+    "buildJS": "webpack",
+    "documentation": "npm",
+    "entryPoint": "webpack",
+    "paths": "",
+    "release": "npm",
+    "sampleApp": "webpack",
+    "serverDev": "webpack",
+    "serverProd": "npm",
+    "testBrowser": "protractor",
+    "testUnit": "webpack",
+    "verify": "npm",
+    "zzfinish": "webpack"
+  }
+}

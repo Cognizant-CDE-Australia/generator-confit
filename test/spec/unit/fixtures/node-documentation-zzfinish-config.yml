@@ -1,0 +1,27 @@
+generator-confit:
+  app:
+    buildProfile: 'null'
+    projectType: node
+
+  buildJS:
+    sourceFormat: ES6
+
+  documentation:
+    generateDocs: true
+    outputDir: website/
+    srcDir: docs/
+    publishMethod: GitHub
+
+  entryPoint:
+    entryPoints:
+      main:
+        - app.js
+
+  paths:
+    input: {}
+    output: {}
+    config:
+      configDir: config/
+
+  release:
+    useSemantic: false

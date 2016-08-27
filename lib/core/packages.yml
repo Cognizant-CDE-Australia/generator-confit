@@ -134,6 +134,10 @@ $packages:
     name: file-loader
     version: 0.8.5
 
+  - &pkg_gh-pages
+    name: gh-pges
+    version: 0.11.0
+
   - &pkg_ghooks
     name: ghooks
     version: 1.2.1
@@ -185,6 +189,10 @@ $packages:
   - &pkg_html-webpack-plugin
     name: html-webpack-plugin
     version: 2.7.1
+
+  - &pkg_http-server
+    name: http-server
+    version: 0.9.0
 
   - &pkg_isparta-instrumenter-loader    # Works with ES5/ES6 as a preloader, and Typescript as a post-loader
     name: isparta-instrumenter-loader
@@ -270,6 +278,16 @@ $packages:
     name: node-sass
     version: 3.8.0
 
+  - &pkg_now
+    name: now
+    version: 0.21.1
+    global: true
+
+  - &pkg_now-serve
+    name: now-serve
+    version: 0.3.1
+    global: true
+
   - &pkg_npm-run-all
     name: npm-run-all
     version: 2.1.1
@@ -342,6 +360,10 @@ $packages:
   - &pkg_stylus-loader
     name: stylus-loader
     version: 2.1.1
+
+  - &pkg_swanky-server
+    name: swanky-server
+    version: 1.20.2
 
   - &pkg_tslint
     name: tslint

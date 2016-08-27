@@ -9,7 +9,7 @@ generator-confit:
     browserSupport:
       - latest
   paths:
-    _version: f04a8acc4c638da8bcca2621a2cb38265f57c301
+    _version: e48a2a5b6b6869d2052b814bd3345c666810b40d
     config:
       configDir: config/
     input:
@@ -69,6 +69,6 @@ generator-confit:
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
-    _version: 72b220804413bb00a0877fcc06d58b0a877af43c
+    _version: aaa08066d492245c89778488919678516343a546
     createSampleApp: true
   zzfinish: {}
