@@ -8,6 +8,11 @@
 
 <!--[]-->
 
+<!--[RM_DIR_STRUCTURE]-->
+<%- RM_DIR_STRUCTURE %>
+
+<!--[]-->
+
 <!--[CN_GITFLOW_PROCESS]-->
 <%- CN_GITFLOW_PROCESS %>
 
