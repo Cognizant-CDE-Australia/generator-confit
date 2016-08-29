@@ -231,36 +231,4 @@ describe('Node Documentation Generator', () => {
     });
   });
 
-
-  it('should generate the correct README.md documentation', (done) => {
-    utils.runGenerator(
-      'zzfinish',
-      'node-documentation-zzfinish-config.yml',
-      // 'zzFinish-config.json',
-      function before(testDir) {
-        // Create a package.json file as the generator expects it will exist
-        fs.writeJsonSync(testDir + '/package.json', {
-          name: 'some-name',
-          description: 'desc'
-        });
-        yoassert.file(['package.json']);
-      },
-      function after() {
-        yoassert.file(['README.md', 'CONTRIBUTING.md']);
-
-        let text = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
-
-        console.log(fs.readFileSync('CONTRIBUTING.md', 'utf-8'));
-        // assert.notEqual(readmeText.indexOf('<!--[CN_HEADING]-->'), -1);
-        //
-        // assert.equal(pkg.scripts['docs:dev'], 'NODE_ENV=development node config/docs/serve.dev.js');
-        // assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
-        // assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
-        // assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
-        // assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:build node config/docs/publish.js');
-        done();
-      }
-    );
-  });
-
 });

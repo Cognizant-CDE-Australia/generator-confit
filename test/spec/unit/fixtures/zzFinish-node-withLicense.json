@@ -2,15 +2,30 @@
   "generator-confit": {
     "app": {
       "buildProfile": "null",
-      "projectType": "browser"
+      "projectType": "node",
+      "license": "MIT"
     },
     "buildJS": {
       "sourceFormat": "ES6"
     },
+    "documentation": {
+      "generateDocs": true,
+      "srcDir": "docs/",
+      "outputDir": "webdocs/"
+    },
     "paths": {
-      "input": {},
-      "output": {},
-      "config": {}
+      "input": {
+        "srcDir": "src/",
+        "unitTestDir": "unitTest/"
+      },
+      "output": {
+        "devDir": "dev/",
+        "prodDir": "dist/",
+        "reportDir": "reports/"
+      },
+      "config": {
+        "configDir": "config/"
+      }
     },
     "release": {
       "useSemantic": true

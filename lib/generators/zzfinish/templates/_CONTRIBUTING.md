@@ -38,6 +38,11 @@
 
 <!--[]-->
 
+<!--[CN_DOCUMENTATION_TASKS]-->
+<%- CN_DOCUMENTATION_TASKS %>
+
+<!--[]-->
+
 <!--[CN_RELEASE_TASKS]-->
 <%- CN_RELEASE_TASKS %>
 
