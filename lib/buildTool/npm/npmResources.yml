@@ -5,6 +5,7 @@ documentation:
       - <<: *pkg_swanky-processor-ngdocs
       - <<: *pkg_prismjs
       - <<: *pkg_http-server
+      - <<: *pkg_latest-version
 
     tasks:
       - name: docs:dev
@@ -23,6 +24,11 @@ documentation:
         tasks: ['http-server <%- documentation.outputDir %> -o']
         description: Builds then serves (via a web server) the production website.
 
+      - name: docs:updateVersion
+        tasks: ['node <%- paths.config.configDir %>docs/update.version.js']
+        description: Updates the documentation version flag in `swanky.config.yaml`. This is designed to allow the documentation to be generated AFTER the package has been successfully published.
+
+
     templateFiles:
       - src: config/serve.dev.js.tpl
         dest: <%- paths.config.configDir %>docs/serve.dev.js
@@ -30,12 +36,16 @@ documentation:
       - src: config/swanky.webpack.config.js.tpl
         dest: <%- paths.config.configDir %>docs/swanky.webpack.config.js
         overwrite: true
+      - src: config/update.version.js.tpl
+        dest: <%- paths.config.configDir %>docs/update.version.js
+        overwrite: true
+
 
 
   manual:
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', 'docs:publish']
+        tasks: ['docs:updateVersion', 'docs:build', 'docs:publish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
 
       - name: _docs:publish
@@ -53,7 +63,7 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', '_docs:publish']
+        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
         description: Publishes the documentation to GitHub's /gh-pages branch
 
       - name: _docs:publish
@@ -72,7 +82,7 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', 'docs:_publish']
+        tasks: ['docs:updateVersion', 'docs:build', 'docs:_publish']
         description: Publishes the documentation to the cloud using `now`
 
       - name: _docs:publish

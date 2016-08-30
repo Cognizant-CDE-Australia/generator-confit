@@ -28,7 +28,7 @@ describe('zzFinish Generator', () => {
         function after() {
           yoassert.file(['README.md']);
 
-          let readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+          let readmeText = fs.readFileSync('README.md', 'utf8').split('\n');
 
           assert.notEqual(readmeText.indexOf('<!--[RM_HEADING]-->'), -1);
           assert.notEqual(readmeText.indexOf('# some-name'), -1);
@@ -62,7 +62,7 @@ describe('zzFinish Generator', () => {
         function after() {
           yoassert.file(['README.md']);
 
-          let readmeText = fs.readFileSync('README.md', 'utf-8').split('\n');
+          let readmeText = fs.readFileSync('README.md', 'utf8').split('\n');
 
           assert.notEqual(readmeText.indexOf('<!--[RM_LICENSE]-->'), -1);
           assert.notEqual(readmeText.indexOf('This software is licensed under the MIT Licence. See [LICENSE](LICENSE).'), -1, 'correct license text when LICENSED');
@@ -92,7 +92,7 @@ describe('zzFinish Generator', () => {
         function after() {
           yoassert.file(['CONTRIBUTING.md']);
 
-          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8').split('\n');
+          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf8').split('\n');
 
           assert.notEqual(readmeText.indexOf('<!--[CN_HEADING]-->'), -1);
           assert.notEqual(readmeText.indexOf('<!--[CN_GETTING_STARTED]-->'), -1);
@@ -127,7 +127,7 @@ describe('zzFinish Generator', () => {
           yoassert.file(['package.json']);
         },
         function after() {
-          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8');
+          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf8');
 
           // The directory names come from the confit.json config (above)
           assert.notEqual(readmeText.search(/config\/.* configuration files live here/), -1, 'config dir');
@@ -176,7 +176,7 @@ describe('zzFinish Generator', () => {
           yoassert.file(['package.json']);
         },
         function after() {
-          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf-8');
+          let readmeText = fs.readFileSync('CONTRIBUTING.md', 'utf8');
 
           // The directory names come from the confit.json config (above)
           assert.notEqual(readmeText.search(/config\/.* configuration files live here/), -1, 'config dir');
