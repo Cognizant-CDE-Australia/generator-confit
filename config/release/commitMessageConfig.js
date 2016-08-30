@@ -21,6 +21,7 @@ module.exports = {
     {name: 'nodeApp'},
     {name: 'browserApp'},
     {name: 'build'},
+    {name: 'documentation'},
     {name: 'entryPoint'},
     {name: 'paths'},
     {name: 'release'},

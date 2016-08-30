@@ -135,7 +135,7 @@ $packages:
     version: 0.8.5
 
   - &pkg_gh-pages
-    name: gh-pges
+    name: gh-pages
     version: 0.11.0
 
   - &pkg_ghooks
@@ -307,6 +307,10 @@ $packages:
     name: postcss-loader
     version: 0.8.2
 
+  - &pkg_prismjs
+    name: prismjs
+    version: 1.5.0
+
   - &pkg_protractor
     name: protractor
     version: 3.2.1
@@ -364,6 +368,10 @@ $packages:
   - &pkg_swanky-server
     name: swanky-server
     version: 1.20.2
+
+  - &pkg_swanky-processor-ngdocs
+    name: swanky-processor-ngdocs
+    version: 1.7.0
 
   - &pkg_tslint
     name: tslint

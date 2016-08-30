@@ -2,6 +2,8 @@ documentation:
   common:
     packages:
       - <<: *pkg_swanky-server
+      - <<: *pkg_swanky-processor-ngdocs
+      - <<: *pkg_prismjs
       - <<: *pkg_http-server
 
     tasks:
@@ -26,15 +28,19 @@ documentation:
         dest: <%- paths.config.configDir %>docs/serve.dev.js
         overwrite: true
       - src: config/swanky.webpack.config.js.tpl
-        dest: <%- paths.config.configDir %>docs/swanky.config.js
+        dest: <%- paths.config.configDir %>docs/swanky.webpack.config.js
         overwrite: true
 
 
   manual:
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', 'node <%- paths.config.configDir %>docs/publish.js']
+        tasks: ['docs:build', 'docs:publish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
+
+      - name: _docs:publish
+        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        description:
 
     templateFiles:
       - src: config/publish.js.tpl
@@ -47,8 +53,12 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', 'node <%- paths.config.configDir %>docs/publish.js']
+        tasks: ['docs:build', '_docs:publish']
         description: Publishes the documentation to GitHub's /gh-pages branch
+
+      - name: _docs:publish
+        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        description:
 
     templateFiles:
       - src: config/publish.js.tpl
@@ -62,16 +72,35 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:build', 'ns <%- documentation.outputDir %>']
+        tasks: ['docs:build', 'docs:_publish']
         description: Publishes the documentation to the cloud using `now`
 
-  # If create sample
+      - name: _docs:publish
+        tasks: ['ns <%- documentation.outputDir %>']
+        description:
+
+  # If create sample app, copy everything under docs
   sampleDocs:
     templateFiles:
       - src: docs/**/*
         dest: <%- documentation.srcDir %>
         overwrite: true
         noParse: true
+
+      # Have a single, common swanky config file which has logic for each framework. This makes it easier to copy
+      # entire directory trees but treat this single file as special.
+      - src: swanky.config.yaml.tpl
+        dest: <%- documentation.srcDir %>/swanky.config.yaml
+        overwrite: true
+
+  # Framework-specific content
+  frameworks:
+    AngularJS 1.x:
+      templateFiles:
+        - src: ng1/docs/**/*
+          dest: <%- documentation.srcDir %>
+          overwrite: true
+          noParse: true
 
 entryPoint:
   packageJsonConfig:

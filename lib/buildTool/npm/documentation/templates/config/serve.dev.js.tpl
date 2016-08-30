@@ -7,7 +7,7 @@ var relativePath = configPath.replace(/([^/]+)/g, '..');
 -%>
 const devServer = require('swanky-server').devServer;
 
-let devServerInstance = devServer(__dirname + '<%- relativePath + documentation.srcDir %>swanky.config.yaml');
+let devServerInstance = devServer(__dirname + '/<%- relativePath + documentation.srcDir %>swanky.config.yaml');
 // END_CONFIT_GENERATED_CONTENT
 
 

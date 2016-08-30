@@ -5,12 +5,12 @@
 var configPath = paths.config.configDir + 'docs/';
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 %>
-const basePath = path.join(__dirname, '<%= relativePath %>');
+const path = require('path');
+const basePath = path.join(__dirname, '/<%= relativePath %>');
 
 // If the documentation.publish mechanism is GitHub, do this:
 <% if (documentation.publishMethod === 'GitHub') { -%>
 const ghpages = require('gh-pages');
-const path = require('path');
 const docOutputDir = path.join(basePath, '<%- documentation.outputDir %>');
 
 ghpages.publish(docOutputDir, (err) => {
