@@ -65,6 +65,13 @@ generator-confit:
   verify:
     _version: 1e639144bb1cd7981594644824fdc8000ef1bfb0
     jsCodingStandard: AirBnB
+  documentation:
+    _version: d971e8bf85f4928084ac403f09b527e4f427beb0
+    createSampleDocs: true
+    generateDocs: true
+    outputDir: website/a/b/
+    publishMethod: manual
+    srcDir: docola/bb/aa/
   release:
     _version: 14180bef508f4e2c75c2d88f33d7c7a4b5f78e15
     commitMessageFormat: None

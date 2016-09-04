@@ -9,3 +9,7 @@ generator-confit:
     output: {}
     config:
       configDir: config/
+
+  buildJS:
+    framework:
+      - AngularJS 1.x

@@ -1,7 +1,6 @@
 'use strict';
 
-// START_CONFIT_GENERATED_CONTENT
-<%
+// START_CONFIT_GENERATED_CONTENT<%
 var configPath = paths.config.configDir + 'docs/';
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 %>
@@ -13,13 +12,25 @@ const basePath = path.join(__dirname, '/<%= relativePath %>');
 const ghpages = require('gh-pages');
 const docOutputDir = path.join(basePath, '<%- documentation.outputDir %>');
 
-ghpages.publish(docOutputDir, (err) => {
+let callback = (err) => {
   if (!err) {
     console.info(`Published documentation from ${docOutputDir} to /gh-pages branch`);
   } else {
     console.error(err);
   }
-});
+}
+
+let options = {
+  logger: function(message) {
+    console.log(message);
+  }
+};
+// END_CONFIT_GENERATED_CONTENT
+
+
+// START_CONFIT_GENERATED_CONTENT
+ghpages.publish(docOutputDir, options, callback);
+
 <% } else if (documentation.publishMethod === 'cloud') { -%>
 
 <% } else { %>

@@ -33,6 +33,7 @@ describe('test "' + fixtureFileName + '"', () => {
     require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
     require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
     require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage');
+    require('./testDocumentation')(confitConfig);
     break;
 
   case 'node':
@@ -41,6 +42,7 @@ describe('test "' + fixtureFileName + '"', () => {
     usesGrunt = false;
     hasCSS = false;
 
+    require('./testDocumentation')(confitConfig);
     require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
     require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once');
     break;

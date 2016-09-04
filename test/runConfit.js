@@ -52,6 +52,8 @@ function install(resolve, reject) {
     // Run the generator
     let generatorName = path.join(GENERATOR_PATH, 'app');
 
+    // Need to update this every time there is a brand new confit:* generator, or you will get an error like this:
+    // "You don't seem to have a generator with the name <generator-name> installed"
     helpers.run(generatorName, {tmpdir: false})   // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withGenerators([
@@ -60,6 +62,7 @@ function install(resolve, reject) {
         path.join(GENERATOR_PATH, 'buildCSS'),
         path.join(GENERATOR_PATH, 'buildHTML'),
         path.join(GENERATOR_PATH, 'buildJS'),
+        path.join(GENERATOR_PATH, 'documentation'),
         path.join(GENERATOR_PATH, 'entryPoint'),
         path.join(GENERATOR_PATH, 'paths'),
         path.join(GENERATOR_PATH, 'release'),

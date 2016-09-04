@@ -207,12 +207,6 @@ buildJS:
       testPackages: []
       testTypeLibs: []
 
-documentation:
-  defaults:
-    generate: true
-    srcDir: docs
-    outputDir: doc-website
-    publishToGithubPages: true
 
 entryPoint:
   readme:
@@ -408,12 +402,6 @@ readme:
     <% } -%>
 
 
-release:
-  packages:
-    - <<: *pkg_ghooks
-
-  packageJsonConfig:
-    - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
 # Sample App
 sampleApp:

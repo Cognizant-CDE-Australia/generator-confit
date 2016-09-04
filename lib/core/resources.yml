@@ -1,3 +1,5 @@
+# Common configuration regardless of project type
+
 # Globals
 rootGeneratorName: generator-confit
 
@@ -37,6 +39,24 @@ app:
       - src: LICENSE.txt
         dest: LICENSE
         overwrite: false    # We only want to generate this file once. To change it, delete the file then re-run confit
+
+
+documentation:
+  defaults:
+    generateDocs: true
+    srcDir: docs/
+    outputDir: docs-website/
+    publishMethod: manual
+    createSampleDocs: true    # But we should ask the question everytime, until the user says "false"
+
+  publishMethods:
+    - value: GitHub
+      name: GitHub
+    - value: cloud
+      name: Publish to the cloud
+    - value: manual
+      name: Publish manually
+
 
 # README section for the template tags that will appear inside the README.md template
 # All of these properties are COMMON across all project types
@@ -230,3 +250,11 @@ readme:
     %>- <%- value -%>
 
     <% }); %>
+
+
+release:
+  packages:
+    - <<: *pkg_ghooks
+
+  packageJsonConfig:
+    - config.ghooks.pre-push: npm-run-all verify test:coverage --silent

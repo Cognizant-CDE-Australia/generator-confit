@@ -8,3 +8,5 @@ generator-confit:
     output: {}
     config:
       configDir: config/
+
+  buildJS: {}

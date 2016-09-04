@@ -41,11 +41,10 @@ documentation:
         overwrite: true
 
 
-
   manual:
     tasks:
       - name: docs:publish
-        tasks: ['docs:updateVersion', 'docs:build', 'docs:publish']
+        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
 
       - name: _docs:publish
@@ -82,7 +81,7 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:updateVersion', 'docs:build', 'docs:_publish']
+        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
         description: Publishes the documentation to the cloud using `now`
 
       - name: _docs:publish
@@ -97,7 +96,7 @@ documentation:
         overwrite: true
         noParse: true
 
-      # Have a single, common swanky config file which has logic for each framework. This makes it easier to copy
+      # Have a single, common Swanky config file which has logic for each framework. This makes it easier to copy
       # entire directory trees but treat this single file as special.
       - src: swanky.config.yaml.tpl
         dest: <%- documentation.srcDir %>/swanky.config.yaml

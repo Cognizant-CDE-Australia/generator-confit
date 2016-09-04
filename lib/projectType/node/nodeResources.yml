@@ -52,22 +52,6 @@ buildJS:
 
   frameworks: {}
 
-documentation:
-  defaults:
-    generateDocs: true
-    srcDir: docs/
-    outputDir: docs-website/
-    publishMethod: manual
-    createSampleDocs: true    # But we should ask the question everytime, until the user says "false"
-
-  publishMethods:
-    - value: GitHub
-      name: GitHub
-    - value: cloud
-      name: Publish to the cloud
-    - value: manual
-      name: Publish manually
-
 entryPoint:
   defaultEntryPointFileName: # This should be used
     ES6: index.js
@@ -171,13 +155,6 @@ readme:
     <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
     <% } -%>
 
-
-release:
-  packages:
-    - <<: *pkg_ghooks
-
-  packageJsonConfig:
-    - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
 sampleApp:
   demoDir: demo/   # This is ALWAYS a subdirectory of the srcDir directory
