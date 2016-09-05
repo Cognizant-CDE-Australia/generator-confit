@@ -47,8 +47,8 @@
 
 ## Pre-requisites
 
-- Node 4.x
-- NPM 3.x (especially for Windows users)
+- Node 4.x+
+- NPM 3.9+ (especially for Windows users)
 
 
 ## Install
