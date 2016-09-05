@@ -54,27 +54,27 @@ $packages:
 
   - &pkg_babel-core
     name: babel-core
-    version: 6.4.5
+    version: 6.14.0
 
-  - &pkg_babel-eslint
+  - &pkg_babel-eslint     # See https://github.com/babel/babel-eslint to choose the correct version based on version of ESLint
     name: babel-eslint
     version: 4.1.8
 
   - &pkg_babel-loader
     name: babel-loader
-    version: 6.2.1
+    version: 6.2.5
 
-  - &pkg_babel-preset-es2015
+  - &pkg_babel-plugin-istanbul    # For code coverage
+    name: babel-plugin-istanbul
+    version: 2.0.1
+
+  - &pkg_babel-preset-es2015    # Supports ES6 module transformation
     name: babel-preset-es2015
-    version: 6.3.13
-
-  - &pkg_babel-plugin-add-module-exports
-    name: babel-plugin-add-module-exports
-    version: 0.1.2
+    version: 6.14.0
 
   - &pkg_babel-runtime
     name: babel-runtime
-    version: 6.3.19
+    version: 6.11.6
 
   - &pkg_chokidar-cli
     name: chokidar-cli
@@ -96,7 +96,7 @@ $packages:
 
   - &pkg_css-loader
     name: css-loader
-    version: 0.23.1
+    version: 0.24.0
 
   - &pkg_cz-customizable
     name: cz-customizable
@@ -128,11 +128,11 @@ $packages:
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
-    version: 1.0.1
+    version: 2.0.0-beta.4
 
   - &pkg_file-loader
     name: file-loader
-    version: 0.8.5
+    version: 0.9.0
 
   - &pkg_gh-pages
     name: gh-pages
@@ -188,15 +188,11 @@ $packages:
 
   - &pkg_html-webpack-plugin
     name: html-webpack-plugin
-    version: 2.7.1
+    version: 2.22.0
 
   - &pkg_http-server
     name: http-server
     version: 0.9.0
-
-  - &pkg_isparta-instrumenter-loader    # Works with ES5/ES6 as a preloader, and Typescript as a post-loader
-    name: isparta-instrumenter-loader
-    version: 1.0.0
 
   - &pkg_istanbul
     name: istanbul
@@ -224,31 +220,27 @@ $packages:
 
   - &pkg_karma
     name: karma
-    version: 0.13.22
+    version: 1.2.0
 
   - &pkg_karma-chrome-launcher
     name: karma-chrome-launcher
-    version: 0.2.3
+    version: 2.0.0
 
   - &pkg_karma-coverage
     name: karma-coverage
-    version: 0.5.5
+    version: 1.1.1
 
   - &pkg_karma-jasmine
     name: karma-jasmine
-    version: 0.3.8
+    version: 1.0.2
 
   - &pkg_karma-junit-reporter
     name: karma-junit-reporter
-    version: 0.4.2
-
-  - &pkg_karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional?
-    name: karma-ng-html2js-preprocessor
-    version: 0.2.0
+    version: 1.1.0
 
   - &pkg_karma-phantomjs-launcher
     name: karma-phantomjs-launcher
-    version: 1.0.0
+    version: 1.0.2
 
   - &pkg_karma-sourcemap-loader
     name: karma-sourcemap-loader
@@ -260,7 +252,7 @@ $packages:
 
   - &pkg_karma-webpack
     name: karma-webpack
-    version: 1.7.0
+    version: 1.8.0
 
   - &pkg_latest-version
     name: latest-version
@@ -396,11 +388,11 @@ $packages:
 
   - &pkg_webpack
     name: webpack
-    version: 1.12.11
+    version: 2.1.0-beta.21
 
   - &pkg_webpack-dev-server
     name: webpack-dev-server
-    version: 1.14.1
+    version: 2.1.0-beta.2
 
   - &pkg_zone.js
     name: zone.js

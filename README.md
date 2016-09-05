@@ -35,7 +35,7 @@
 
 ## Features
 
-- Write code using ES5, ES6+ (using Babel) or TypeScript
+- Write code using ES6+ (using Babel) or TypeScript (pure ES5 support deprecated in Confit v7+)
 - Write plain CSS, SASS/SCSS or Stylus
 - Optional linting of CSS and JS code
 - Unit testing 

@@ -43,7 +43,7 @@ generator-confit:
     vendorScripts: []
   buildHTML:
     _version: f466c7ad915e56939c7201ba00d576563068a1d3
-    extension: .html
+    extension: .htm
   build: {}
   entryPoint:
     _version: 5c4e4dbb4067006012b6a8c7a191f434c713da11

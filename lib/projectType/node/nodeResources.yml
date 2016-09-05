@@ -40,8 +40,12 @@ buildJS:
   sourceFormat:
     ES6:
       ext: ['js']
-      packages: []
-      templates: []
+      packages:
+        # Add Babel as standard, to support experimental things that user may want.
+        - <<: *pkg_babel-core
+        - <<: *pkg_babel-runtime
+        - <<: *pkg_babel-loader
+        - <<: *pkg_babel-preset-es2015
       tasks: []
 
   sourceFormatDefault: ES6
@@ -170,7 +174,7 @@ verify:
 
   jsCodingStandard:
     none:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-defaults
@@ -194,7 +198,7 @@ verify:
           dest: <%= paths.config.configDir %>verify/.eslintrc
 
     Google:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-defaults
@@ -205,7 +209,7 @@ verify:
           dest: <%= paths.config.configDir %>verify/.eslintrc
 
     StandardJS:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-standard

@@ -101,16 +101,9 @@ buildJS:
         For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
 
   sourceFormat:
-    ES5:
-      ext: ['js']
-      packages: []
-      templates: []
-      tasks: []
-
     ES6:
       ext: ['js']
       packages: []
-      templates: []
       tasks: []
 
     TypeScript:
@@ -485,7 +478,7 @@ verify:
 
   jsCodingStandard:
     none:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-defaults
@@ -509,7 +502,7 @@ verify:
           dest: <%= paths.config.configDir %>verify/.eslintrc
 
     Google:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-defaults
@@ -520,7 +513,7 @@ verify:
           dest: <%= paths.config.configDir %>verify/.eslintrc
 
     StandardJS:
-      supportedSourceFormat: ['ES5', 'ES6']
+      supportedSourceFormat: ['ES6']
       packages:
         - <<: *pkg_eslint
         - <<: *pkg_eslint-config-standard

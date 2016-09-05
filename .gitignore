@@ -4,3 +4,4 @@ temp-test/
 log/
 .idea
 website/
+*.log

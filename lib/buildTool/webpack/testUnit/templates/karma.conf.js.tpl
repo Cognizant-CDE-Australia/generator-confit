@@ -20,10 +20,12 @@ function getConfitConfig(config) {
 
 
   if (debugMode) {
+    <% if (buildJS.sourceFormat === 'TypeScript') { %>
     // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
-    commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %> = commonConfig.webpack.module.<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderType %>.filter(function (loader) {
-      return (loader.loader.indexOf('<%= buildTool.testUnit.sourceFormat[buildJS.sourceFormat].loaderName %>') === -1);
+    commonConfig.webpack.module.postLoaders = commonConfig.webpack.module.postLoaders.filter(function (loader) {
+      return (loader.loader.indexOf('istanbul-instrumenter-loader') === -1);
     });
+    <% } -%>
 
     // No point checking threshold if we removing the the coverage tool
     commonConfig.reporters = commonConfig.reporters.filter(function(reporter) {

@@ -118,7 +118,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 #### Questions
 
-**Source code language**: [ES5, **ES6**, TypeScript] `buildJS.sourceFormat`
+**Source code language**: [**ES6**, TypeScript] `buildJS.sourceFormat`
 - The format that the source code will be written in
 
 **Target output language**: [**ES5 (Browser)**, **ES6 (NodeJS)**] `buildJS.outputFormat`

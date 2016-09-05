@@ -1,7 +1,7 @@
 {
   "name": "Latest",
   "priority": "1",
-  "description": "Latest Webpack-based browser profile (23 August 2016)",
+  "description": "Latest Webpack 2(beta)-based browser profile (23 August 2016)",
   "toolMap": {
     "app": "webpack",
     "buildBrowser": "webpack",

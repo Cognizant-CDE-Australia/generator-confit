@@ -22,25 +22,26 @@ config.postcss = [
 if (buildCSS.sourceFormat === 'sass') { %>
 var cssLoader = {
   test: helpers.pathRegEx(/\.(<%= resources.buildCSS.sourceFormat.sass.ext.join('|') %>)$/),
-  loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!sass-loader?indentedSyntax=true')
+  loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader!sass-loader?indentedSyntax=true'})
+  }
 };<%
 } else if (buildCSS.sourceFormat === 'stylus') {
 
 -%>
 var cssLoader = {
   test: helpers.pathRegEx(/\.(<%= resources.buildCSS.sourceFormat.stylus.ext.join('|') %>)/),
-  loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!stylus-loader')
+  loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader!stylus-loader'})
 };<%
 } else {
 
 -%>
 var cssLoader = {
   test: helpers.pathRegEx(/\.css$/),
-  loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+  loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader'})
 };<%}%>
 config.module.loaders.push(cssLoader);
 
 // For any entry-point CSS file definitions, extract them as text files as well
-var extractCSSTextPlugin = new ExtractTextPlugin('css/[name].[contenthash:8].css', { allChunks: true });
+var extractCSSTextPlugin = new ExtractTextPlugin({filename: 'css/[name].[contenthash:8].css', allChunks: true});
 config.plugins.push(extractCSSTextPlugin);
 /* **/
