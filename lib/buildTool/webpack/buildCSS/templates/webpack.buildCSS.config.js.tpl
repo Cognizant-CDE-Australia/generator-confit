@@ -23,7 +23,6 @@ if (buildCSS.sourceFormat === 'sass') { %>
 var cssLoader = {
   test: helpers.pathRegEx(/\.(<%= resources.buildCSS.sourceFormat.sass.ext.join('|') %>)$/),
   loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css-loader!postcss-loader!sass-loader?indentedSyntax=true'})
-  }
 };<%
 } else if (buildCSS.sourceFormat === 'stylus') {
 

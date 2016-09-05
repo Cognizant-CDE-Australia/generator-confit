@@ -272,7 +272,7 @@ $packages:
 
   - &pkg_node-sass
     name: node-sass
-    version: 3.8.0
+    version: 3.9.0
 
   - &pkg_now
     name: now
@@ -330,7 +330,7 @@ $packages:
 
   - &pkg_sass-loader
     name: sass-loader
-    version: 3.1.2
+    version: 4.0.1
 
   - &pkg_semantic-release-cli
     name: semantic-release-cli
