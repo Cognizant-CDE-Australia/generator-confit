@@ -9,5 +9,9 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": ">=4.x",
+    "npm": ">=3.9.5"
+  }
 }
