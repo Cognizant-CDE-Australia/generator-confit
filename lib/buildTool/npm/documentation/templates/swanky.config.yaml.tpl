@@ -1,13 +1,18 @@
 <%
 var selectedFramework = (config.buildJS.framework) ? config.buildJS.framework[0] : '' || '';
 var isNG1 = selectedFramework === 'AngularJS 1.x';
+
+// Need to trim the '/' character off the path for Swanky, as at September 7 2016
+function dropTrailingSlash(path) {
+  return path.substr(path.length - 1) === '/' ? path.substr(0, path.length - 1) : path;
+}
 -%>
 title: <%- pkg.name %>
 repo: <%- pkg.repository.url %>
 version: <%- pkg.version %>
-src: <%- documentation.srcDir %>
+src: <%- dropTrailingSlash(documentation.srcDir) %>
 theme: <%- documentation.srcDir %>themes/test-theme
-output: <%- documentation.outputDir %>
+output: <%- dropTrailingSlash(documentation.outputDir) %>
 # serverPath will only be set when publishing the documentation
 serverPath:
 
@@ -30,7 +35,7 @@ sections:
       - title: Cards
         <% if (isNG1) { %>
         bootstrap:
-          - src: <%- documentation.srcDir %>config/bootstrap/bootstrap-angular.js
+          - src: <%- documentation.srcDir %>config/bootstrap/angular.bootstrap.js
         <% } %>
         content:
           - src: <%- documentation.srcDir %>content/components/card/card-overview.md

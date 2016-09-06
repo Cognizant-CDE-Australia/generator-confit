@@ -41,7 +41,7 @@ describe('Documentation Generator', () => {
 
         assert.equal(docConfig.generateDocs, true);
         assert.equal(docConfig.srcDir, 'docs/');
-        assert.equal(docConfig.outputDir, 'docs-website/');
+        assert.equal(docConfig.outputDir, 'webdocs/');
         assert.equal(docConfig.publishMethod, 'manual');
         assert.equal(docConfig.createSampleDocs, true);
 
@@ -53,14 +53,14 @@ describe('Documentation Generator', () => {
 
         assert.equal(swanky.title, 'some-name');
         assert.equal(swanky.repo, 'https://blah/foo/bar');
-        assert.equal(swanky.src, docConfig.srcDir);
-        assert.equal(swanky.output, docConfig.outputDir);
+        assert.equal(swanky.src, 'docs');
+        assert.equal(swanky.output, 'webdocs');
         assert.equal(swanky.serverPath, null);    // Should be blank until we publish, THEN it will get a value
 
         // No Angular framework => no angular framework config
         assert.equal(confit['generator-confit'].buildJS.framework, undefined);
         assert.equal(swanky.sections[1].subSections[0].bootstrap, undefined);
-        yoassert.noFile(['docs/config/bootstrap/bootstrap-angular.js']);
+        yoassert.noFile(['docs/config/bootstrap/angular.bootstrap.js']);
 
         done();
       }
@@ -88,7 +88,7 @@ describe('Documentation Generator', () => {
 
         assert.equal(docConfig.generateDocs, true);
         assert.equal(docConfig.srcDir, 'docs/');
-        assert.equal(docConfig.outputDir, 'docs-website/');
+        assert.equal(docConfig.outputDir, 'webdocs/');
         assert.equal(docConfig.publishMethod, 'GitHub');
         assert.equal(docConfig.createSampleDocs, true);
 
@@ -174,7 +174,7 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:dev'], 'NODE_ENV=development node config/docs/serve.dev.js');
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
-        assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
+        assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
         assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
@@ -199,7 +199,7 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:dev'], 'NODE_ENV=development node config/docs/serve.dev.js');
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
-        assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
+        assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
         assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
@@ -226,9 +226,9 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:dev'], 'NODE_ENV=development node config/docs/serve.dev.js');
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
-        assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
+        assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
-        assert.equal(pkg.scripts['docs:_publish'], 'ns docs-website/');
+        assert.equal(pkg.scripts['docs:_publish'], 'ns webdocs/');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
       }
@@ -268,8 +268,8 @@ describe('Documentation Generator', () => {
         // AngularJS-specific content
         assert.equal(confit['generator-confit'].buildJS.framework[0], 'AngularJS 1.x');
         assert.equal(swanky.sections[1].title, 'Components');
-        assert.equal(swanky.sections[1].subSections[0].bootstrap[0].src, 'docs/config/bootstrap/bootstrap-angular.js');
-        yoassert.file(['docs/config/bootstrap/bootstrap-angular.js']);
+        assert.equal(swanky.sections[1].subSections[0].bootstrap[0].src, 'docs/config/bootstrap/angular.bootstrap.js');
+        yoassert.file(['docs/config/bootstrap/angular.bootstrap.js']);
 
         done();
       }
@@ -289,7 +289,7 @@ describe('Documentation Generator', () => {
         let docConfig = confit['generator-confit'].documentation;
 
         assert.equal(docConfig.srcDir, 'dotSlash/');
-        assert.equal(docConfig.outputDir, 'docs-website/');        // Changed to the default directory
+        assert.equal(docConfig.outputDir, 'webdocs/');        // Changed to the default directory
         done();
       }
     ).withPrompts({

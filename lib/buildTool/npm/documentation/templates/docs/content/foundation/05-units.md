@@ -9,7 +9,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 ##### __Pixels__
 Constant measurment based on screen pixel size.
 
-[wrap class="<%- styles.row -%>"]
+[wrap class="{$ styles.row $}"]
   [render unit size="10px" label="1 unit"]
   [render unit size="20px" label="2 units"]
   [render unit size="30px" label="3 units"]
@@ -19,7 +19,7 @@ Constant measurment based on screen pixel size.
 ##### __REM's__
 Relative to font size of root element.
 
-[wrap class="<%- styles.row -%>"]
+[wrap class="{$ styles.row $}"]
   [render unit size="1rem" label="1 unit"]
   [render unit size="2rem" label="2 units"]
   [render unit size="3rem" label="3 units"]
@@ -28,13 +28,13 @@ Relative to font size of root element.
 ##### __EM's__
 Relative to font size of parent element.
 
-[wrap class="<%- styles.row -%>"]
+[wrap class="{$ styles.row $}"]
   [render unit size="0.7142857em" label="1 unit"]
   [render unit size="1.428751em" label="2 units"]
   [render unit size="2.1428571em" label="3 units"]
 [/wrap]
 
-[wrap class="<%- styles.callout -%>"]
+[wrap class="{$ styles.callout $}"]
 ### __4.3__ Units
 
 __When to use what?__

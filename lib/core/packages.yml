@@ -363,11 +363,11 @@ $packages:
 
   - &pkg_swanky-server
     name: swanky-server
-    version: 1.20.2
+    version: 2.1.0
 
   - &pkg_swanky-processor-ngdocs
     name: swanky-processor-ngdocs
-    version: 1.7.0
+    version: 2.0.0
 
   - &pkg_tslint
     name: tslint

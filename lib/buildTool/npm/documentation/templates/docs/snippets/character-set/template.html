@@ -1,11 +1,11 @@
-<div class="character-set-wrapper" style="<%= data.style ? data.style : '' %>">
+<div class="character-set-wrapper" style="{$ data.style if data.style else '' $}">
   <div class="character-set-name">
     <div class="character-set-name-label">Font Family</div>
-    <%= data.label ? data.label : 'Default' %>
+    {$ data.label if data.label else 'Default' $}
   </div>
   <div class="character-set-example">
     <div class="character-large">
-      <%= data.characterSet ? data.characterSet : 'Aa' %>
+      {$ data.characterSet if data.characterSet else 'Aa' $}
     </div>
     <div class="character-set">
       <div class="character-set-lc">a b c d e f g h i j k l m n o p q r s t u v w x y z</div>

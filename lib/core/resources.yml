@@ -45,7 +45,7 @@ documentation:
   defaults:
     generateDocs: true
     srcDir: docs/
-    outputDir: docs-website/
+    outputDir: webdocs/
     publishMethod: manual
     createSampleDocs: true    # But we should ask the question everytime, until the user says "false"
 

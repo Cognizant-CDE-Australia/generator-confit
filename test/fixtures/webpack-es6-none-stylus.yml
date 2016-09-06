@@ -49,7 +49,7 @@ generator-confit:
     _version: d971e8bf85f4928084ac403f09b527e4f427beb0
     createSampleDocs: false
     generateDocs: true
-    outputDir: docs-website/
+    outputDir: webdocs/
     publishMethod: cloud
     srcDir: docs/
   entryPoint:
