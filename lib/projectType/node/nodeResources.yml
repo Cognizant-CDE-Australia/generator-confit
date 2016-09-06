@@ -40,12 +40,7 @@ buildJS:
   sourceFormat:
     ES6:
       ext: ['js']
-      packages:
-        # Add Babel as standard, to support experimental things that user may want.
-        - <<: *pkg_babel-core
-        - <<: *pkg_babel-runtime
-        - <<: *pkg_babel-loader
-        - <<: *pkg_babel-preset-es2015
+      packages: []
       tasks: []
 
   sourceFormatDefault: ES6

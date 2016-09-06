@@ -24,9 +24,13 @@ documentation:
         tasks: ['http-server <%- documentation.outputDir %> -o']
         description: Builds then serves (via a web server) the production website.
 
-      - name: docs:updateVersion
-        tasks: ['node <%- paths.config.configDir %>docs/update.version.js']
-        description: Updates the documentation version flag in `swanky.config.yaml`. This is designed to allow the documentation to be generated AFTER the package has been successfully published.
+      - name: docs:prepublish
+        tasks: ['node <%- paths.config.configDir %>docs/prepublish.js']
+        description: Updates the information in `swanky.config.yaml` with production settings. This is designed to allow the documentation to be generated AFTER the NPM package has been successfully published.
+
+      - name: docs:postpublish
+        tasks: ['node <%- paths.config.configDir %>docs/postpublish.js']
+        description: Updates the information in `swanky.config.yaml` back to the development settings.
 
 
     templateFiles:
@@ -36,18 +40,21 @@ documentation:
       - src: config/swanky.webpack.config.js.tpl
         dest: <%- paths.config.configDir %>docs/swanky.webpack.config.js
         overwrite: true
-      - src: config/update.version.js.tpl
-        dest: <%- paths.config.configDir %>docs/update.version.js
+      - src: config/prepublish.js.tpl
+        dest: <%- paths.config.configDir %>docs/prepublish.js
+        overwrite: true
+      - src: config/postpublish.js.tpl
+        dest: <%- paths.config.configDir %>docs/postpublish.js
         overwrite: true
 
 
   manual:
     tasks:
       - name: docs:publish
-        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
 
-      - name: _docs:publish
+      - name: docs:_publish
         tasks: ['node <%- paths.config.configDir %>docs/publish.js']
         description:
 
@@ -62,10 +69,10 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation to GitHub's /gh-pages branch
 
-      - name: _docs:publish
+      - name: docs:_publish
         tasks: ['node <%- paths.config.configDir %>docs/publish.js']
         description:
 
@@ -81,10 +88,10 @@ documentation:
 
     tasks:
       - name: docs:publish
-        tasks: ['docs:updateVersion', 'docs:build', '_docs:publish']
-        description: Publishes the documentation to the cloud using `now`
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        description: Publishes the documentation to the cloud using `now`. This will require some setup when using from a CI server.
 
-      - name: _docs:publish
+      - name: docs:_publish
         tasks: ['ns <%- documentation.outputDir %>']
         description:
 

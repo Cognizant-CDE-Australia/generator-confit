@@ -1,7 +1,7 @@
 generator-confit:
   app:
     buildProfile: Latest
-    projectType: node
+    projectType: browser
     repositoryType: GitHub
 
   paths:
@@ -10,4 +10,6 @@ generator-confit:
     config:
       configDir: config/
 
-  buildJS: {}
+  buildJS:
+    framework:
+      - AngularJS 1.x

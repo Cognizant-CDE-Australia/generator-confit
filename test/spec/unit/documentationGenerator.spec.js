@@ -8,7 +8,6 @@ const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'documentation';
 
-
 function writeBasicPackageJson(testDir) {
   // Create a package.json file with a name and repository, so that the swanky.config.yaml file is correct
   fs.writeJsonSync(testDir + '/package.json', {
@@ -19,7 +18,8 @@ function writeBasicPackageJson(testDir) {
   });
 }
 
-describe('Node Documentation Generator', () => {
+
+describe('Documentation Generator', () => {
 
   it('should should generate default documentation values when the project is not hosted on GitHub', (done) => {
     utils.runGenerator(
@@ -55,7 +55,7 @@ describe('Node Documentation Generator', () => {
         assert.equal(swanky.repo, 'https://blah/foo/bar');
         assert.equal(swanky.src, docConfig.srcDir);
         assert.equal(swanky.output, docConfig.outputDir);
-        assert.equal(swanky.serverPath, 'bar');    // the last bit of the repo URL
+        assert.equal(swanky.serverPath, null);    // Should be blank until we publish, THEN it will get a value
 
         // No Angular framework => no angular framework config
         assert.equal(confit['generator-confit'].buildJS.framework, undefined);
@@ -167,7 +167,7 @@ describe('Node Documentation Generator', () => {
         writeBasicPackageJson(testDir);
       },
       function after() {
-        yoassert.file(['package.json', 'config/docs/update.version.js', 'config/docs/publish.js', 'config/docs/serve.dev.js']);
+        yoassert.file(['package.json', 'config/docs/prepublish.js', 'config/docs/postpublish.js', 'config/docs/publish.js', 'config/docs/serve.dev.js']);
 
         let pkg = fs.readJsonSync('package.json');
 
@@ -175,9 +175,9 @@ describe('Node Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:updateVersion docs:build _docs:publish');
-        assert.equal(pkg.scripts['_docs:publish'], 'node config/docs/publish.js');
-        assert.equal(pkg.scripts['docs:updateVersion'], 'node config/docs/update.version.js');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
+        assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
       }
     );
@@ -200,9 +200,9 @@ describe('Node Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:updateVersion docs:build _docs:publish');
-        assert.equal(pkg.scripts['_docs:publish'], 'node config/docs/publish.js');
-        assert.equal(pkg.scripts['docs:updateVersion'], 'node config/docs/update.version.js');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
+        assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
       }
     ).withPrompts({
@@ -227,9 +227,9 @@ describe('Node Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server docs-website/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:updateVersion docs:build _docs:publish');
-        assert.equal(pkg.scripts['_docs:publish'], 'ns docs-website/');
-        assert.equal(pkg.scripts['docs:updateVersion'], 'node config/docs/update.version.js');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:_publish'], 'ns docs-website/');
+        assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
       }
     ).withPrompts({
@@ -241,7 +241,7 @@ describe('Node Documentation Generator', () => {
   it('should generate Angular-specific config and files when the framework is AngularJS 1.x', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'node-documentation-GitHub-config.yml',
+      'browser-documentation-GitHub-config.yml',
       function before(testDir) {
         let confit = yaml.load(fs.readFileSync('confit.yml'));
         let documentation = confit['generator-confit'].documentation;

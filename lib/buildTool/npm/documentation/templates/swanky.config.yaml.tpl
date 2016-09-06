@@ -8,7 +8,8 @@ version: <%- pkg.version %>
 src: <%- documentation.srcDir %>
 theme: <%- documentation.srcDir %>themes/test-theme
 output: <%- documentation.outputDir %>
-serverPath: <%- pkg.repository.url.substr(pkg.repository.url.lastIndexOf('/') + 1) %>
+# serverPath will only be set when publishing the documentation
+serverPath:
 
 sections:
   - title: Foundation

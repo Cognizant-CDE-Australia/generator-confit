@@ -41,21 +41,6 @@ app:
         overwrite: false    # We only want to generate this file once. To change it, delete the file then re-run confit
 
 
-buildJS:
-  sourceFormat:
-    ES6:  # We need to use Babel EVEN when outputFormat is NOT ES5 so that unit testing works (as the new unit testing plugin is tied to Babel)
-      templateFiles:
-        - src: .babelrc.tpl
-          dest: .babelrc
-          overwrite: true
-      packages:
-        - <<: *pkg_babel-core
-        - <<: *pkg_babel-runtime
-        - <<: *pkg_babel-loader
-        - <<: *pkg_babel-preset-es2015
-
-
-
 documentation:
   defaults:
     generateDocs: true
