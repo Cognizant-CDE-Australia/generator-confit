@@ -2,7 +2,7 @@ if (__DEV__) {
   module.hot.accept();
 }
 
-export default (() => {
+export default (function() {
 
   function requireAll(requireContext) {
     return requireContext.keys().map(requireContext);

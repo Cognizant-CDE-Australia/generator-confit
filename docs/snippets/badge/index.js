@@ -1,4 +1,4 @@
-import styles from './style.styl';
+import './style.styl';
 
 export default (() => {
   console.log('badge');

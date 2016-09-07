@@ -26,7 +26,7 @@
 
   .li.active > .a
     background $white
-    border-left 2px solid $brand-primary
+    border-left 2px solid $brand-secondary
 
   > .li > .a
     text-transform uppercase
@@ -48,15 +48,16 @@
 
   .li .li.active .a
     border-left none
+    background none
     &:before
       content ' '
       position absolute
-      left 20px
-      top 18px
+      left 30px
+      top 20px
       width 6px
       height 6px
       border-radius 100%
-      background-color $brand-primary
+      background-color $brand-secondary
 
   .li .li > .a
     font-weight 300
@@ -71,9 +72,34 @@
     &:before
       content ' '
       position absolute
-      left 20px
+      left 30px
       top 18px
       width 6px
       height 6px
       border-radius 100%
       background-color $brand-primary
+
+.anchors
+  @extend .clearfix
+  margin-bottom 4rem
+  width: 200px;
+  right: 0;
+  position: fixed;
+  top: 160px;
+  display: none
+
+  @media screen and (min-width: $screen-is-bigger-than-sm-desktop)
+    display block
+
+  .a
+    display block
+    float left
+    clear both
+    background $alabaster
+    padding: 1rem
+    margin-right .5rem
+    margin-bottom .5rem
+
+:global
+  a.sw-active
+    color: $brand-primary!important

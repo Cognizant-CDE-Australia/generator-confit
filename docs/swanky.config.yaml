@@ -4,7 +4,9 @@ version: 2.0.0
 src: docs
 snippets: docs/snippets
 output: website
-theme: docs/confit-theme
+theme: docs/themes/confit-theme
+# serverPath will only be set when publishing the documentation
+serverPath:
 
 sections:
 

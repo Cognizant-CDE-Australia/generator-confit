@@ -1,0 +1,69 @@
+{% include '../partials/header.html' -%}
+
+<button id="navToggle" class="{$ styles['nav-toggle'] $}" type="button">
+    <span class="{$ styles['icon-bar'] $}"></span>
+    <span class="{$ styles['icon-bar'] $}"></span>
+    <span class="{$ styles['icon-bar'] $}"></span>
+</button>
+
+<div class="{$ styles.brand $}"><a href="{$ meta.serverPath $}" class="{$ styles.logo $}"></a></div>
+
+{% if meta.repository %}
+    <a href="{$ meta.repository $}" title="{$ meta.title $} Github Repo" target="_blank" class="{$ styles.github $}"></a>
+{% endif %}
+
+<aside id="offCanvasNav" class="{$ styles.sidebar $}">
+    <nav class="{$ styles.navigation $}">
+        <ul class="{$ styles.ul $}">
+            {% for item in meta.navigation %}
+                <li class="{$ styles.li $} {$ styles.active if (item.key == key or item.key == parentKey) else '' $}">
+                    <a href="{$ meta.serverPath if meta.production else '/' $}{$ item.url $}" title="{$ item.title $}"
+                       class="{$ styles.a $}">{$ item.title $}</a>
+                    {% if item.children %}
+                        <ul class="{$ styles.ul $}">
+                            {% for child in item.children %}
+                                <li class="{$ styles.li $} {$ styles.active if (child.key == key) else '' $}">
+
+                                    <a href="{$ meta.serverPath if meta.production else '/' $}{$ child.url $}"
+                                       title="{$ child.title $}" class="{$ styles.a $}">
+                                        {$ child.title $}
+                                    </a>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</aside>
+
+<section class="{$ styles.main $}">
+    <article>
+        {% if hasAnchors %}
+            <div class="{$ styles.anchors $}" data-gumshoe>
+                {% for item in contents %}
+                    {% if item.title %}
+                        <a href="#{$ item.key $}" class="{$ styles.a $}" data-scroll>{$ item.title $}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if parentKey %}
+            {% for item in meta.navigation %}
+                {% if item.key == parentKey %}
+                    <h1 class="{$ styles['page-header'] $} {$ styles.h1 $}" data-gumshoe-header>{$ item.title $}</h1>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h1 class="{$ styles['page-header'] $} {$ styles.h1 $}" data-gumshoe-header>{$ title $}</h1>
+        {% endif %}
+
+        {% for item in contents %}
+            {$ item.content $}
+        {% endfor %}
+    </article>
+</section>
+
+{% include '../partials/footer.html' -%}
