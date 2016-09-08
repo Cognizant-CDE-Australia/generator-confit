@@ -7,5 +7,5 @@ config/*
 
 # ignore the test fixtures which are designed to trigger errors
 test/spec/integration/fixtures/*
-lib/buildTool/webpack/sampleApp/templates/*
+lib/buildTool/**/templates/**/*
 

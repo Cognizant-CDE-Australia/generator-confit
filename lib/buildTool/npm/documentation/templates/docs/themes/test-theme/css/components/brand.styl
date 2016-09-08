@@ -1,0 +1,37 @@
+/*
+ * Swanky Theme
+ * Branding
+ */
+
+.brand
+  position fixed
+  z-index 5
+  top 0
+  left 0
+  background $white
+  height $header-height-mobile
+  width 100%
+  box-sizing border-box
+  border-bottom 1px solid darken($block-background-colour, 5%)
+
+  .logo
+    width 160px
+    height 63px
+    display block
+    background url('../img/swanky-logo.svg') no-repeat
+    background-size @width @height
+    margin 0.85rem auto 0 auto
+
+    &:hover, &:focus
+      text-decoration none
+
+.brand
+  @media screen and (min-width: $screen-is-bigger-than-tablet)
+    width $sidebar-width + 60px
+    height $header-height
+
+    .logo
+      width 200px
+      height 79px
+      margin 2.7rem 0 0 3rem
+      background-size @width @height

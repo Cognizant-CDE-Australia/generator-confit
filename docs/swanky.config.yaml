@@ -1,0 +1,36 @@
+title: Confit
+repo: https://github.com/odecee/generator-confit
+version: 2.0.0
+src: docs
+snippets: docs/snippets
+output: website
+theme: docs/themes/confit-theme
+# serverPath will only be set when publishing the documentation
+serverPath:
+
+sections:
+
+  - title: Overview
+    content: docs/content/overview.md
+
+  - title: Usage
+    content: docs/content/usage.md
+
+  - title: Upgrading
+    content: docs/content/upgrading.md
+
+  - title: How it works
+    content: docs/content/architecture.md
+
+  - title: Contributing
+    content: CONTRIBUTING.md
+
+#  - title: Test
+#    content: docs/content/test.md
+
+    # Add sub-sections later
+#
+  - title: API Doc
+    content: lib/core/buildToolUtils.js
+    processor:
+      ngdocs: null

@@ -1,7 +1,7 @@
 /** HTML START */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var htmlLoader = {
-  test: /\.html$/,
+  test: /\<%= buildHTML.extension %>$/,
   loader: 'html-loader',
   exclude: /index-template.html$/
 };

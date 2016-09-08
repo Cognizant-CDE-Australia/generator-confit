@@ -26,6 +26,7 @@ addons:
       - g++-4.8
 
 before_install:
+  - if [[ `npm -v` != 3* ]]; then npm i -g npm@3.9.5; fi    # Install NPM 3.9.5
   - npm prune
   - npm set progress=false
 
@@ -44,6 +45,7 @@ script:
 
 after_success:
   - npm run semantic-release
+  - npm run docs:publish
 
 branches:
   except:

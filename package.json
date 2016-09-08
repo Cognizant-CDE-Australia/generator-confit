@@ -51,6 +51,15 @@
     "clean:prod": "rimraf dist/",
     "coverage": "npm-run-all test:coverage test:check-coverage",
     "dev": "npm run verify:watch",
+    "docs:_publish": "node config/docs/publish.js",
+    "predocs:build": "rimraf website/",
+    "docs:build": "NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors",
+    "docs:build:serve": "npm-run-all docs:build docs:serve",
+    "docs:dev": "NODE_ENV=development node config/docs/serve.dev.js",
+    "docs:postpublish": "node config/docs/postpublish.js",
+    "docs:prepublish": "node config/docs/prepublish.js",
+    "docs:publish": "npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish",
+    "docs:serve": "http-server webdocs/ -o",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "npm run dev",
     "test": "npm-run-all updateFixtures test:unit:once test:seq",
@@ -75,7 +84,7 @@
     "ghooks": {
       "pre-commit": "exact-semver",
       "commit-msg": "./node_modules/cz-customizable-ghooks/lib/index.js $2",
-      "pre-push": "npm-run-all verify test:unit:once --silent"
+      "pre-push": "npm-run-all verify test:coverage --silent"
     }
   },
   "dependencies": {
@@ -95,28 +104,37 @@
   },
   "devDependencies": {
     "async": "1.5.2",
+    "basscss": "8.0.1",
     "chokidar-cli": "1.2.0",
     "commitizen": "2.8.1",
     "cz-customizable": "4.0.0",
-    "cz-customizable-ghooks": "1.2.0",
+    "cz-customizable-ghooks": "1.3.0",
     "eslint": "1.10.3",
     "eslint-config-defaults": "8.0.2",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
+    "gh-pages": "0.11.0",
     "ghooks": "1.2.1",
+    "http-server": "0.9.0",
     "istanbul": "0.4.4",
     "jasmine-reporters": "2.1.1",
     "jasmine-spec-reporter": "2.4.0",
+    "latest-version": "2.0.0",
     "mocha": "2.5.3",
     "npm-module-checklist": "1.6.0",
-    "npm-run-all": "2.1.1",
+    "npm-run-all": "2.1.2",
+    "postcss": "5.0.21",
+    "prismjs": "1.5.0",
     "protractor": "3.2.1",
     "rimraf": "2.5.2",
     "semantic-release": "4.3.5",
+    "swanky-processor-ngdocs": "2.0.0",
+    "swanky-server": "2.1.0",
     "yeoman-assert": "2.1.2",
     "yeoman-test": "1.1.0"
   },
   "engines": {
-    "node": ">=4.x"
+    "node": ">=4.x",
+    "npm": ">=3.9.5"
   }
 }

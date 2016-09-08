@@ -5,13 +5,13 @@ var path = require('path');
 var helpers = require('./webpackHelpers');
 var basePath = process.cwd() + path.sep;
 
-// https://webpack.github.io/docs/configuration.html#resolve-extensions
+// https://gist.github.com/sokra/27b24881210b56bbaff7#resolving-options
 <%
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
-var extensions = ['', '.webpack.js', '.web.js', '.js'].concat(jsExtensions.map(function(ext) { return '.' + ext; }));
+var extensions = ['.json', '.js'].concat(jsExtensions.map(function(ext) { return '.' + ext; }));
 -%>
 var jsExtensions = <%- printJson(extensions, 4) %>;
-var moduleDirectories = ['node_modules', 'bower_components'];
+var moduleDirectories = ['node_modules', 'bower_components']; // Only needed to exclude directories for certain loaders, not for resolving modules.
 
 var config = {
   /**
@@ -30,13 +30,10 @@ var config = {
   module: {
     loaders: []
   },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(true)
-  ],
+  plugins: [],
 
   resolve: {
-    // https://webpack.github.io/docs/configuration.html#resolve-modulesdirectories
-    modulesDirectories: moduleDirectories,
+    //https://gist.github.com/sokra/27b24881210b56bbaff7#resolving-options
     extensions: jsExtensions
   },
 

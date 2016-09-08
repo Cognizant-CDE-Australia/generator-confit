@@ -1,0 +1,46 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "null",
+      "projectType": "node",
+      "license": "MIT"
+    },
+    "buildJS": {
+      "sourceFormat": "ES6"
+    },
+    "documentation": {
+      "generateDocs": true,
+      "srcDir": "docs/",
+      "outputDir": "webdocs/"
+    },
+    "paths": {
+      "input": {
+        "srcDir": "src/",
+        "unitTestDir": "unitTest/"
+      },
+      "output": {
+        "devDir": "dev/",
+        "prodDir": "dist/",
+        "reportDir": "reports/"
+      },
+      "config": {
+        "configDir": "config/"
+      }
+    },
+    "release": {
+      "useSemantic": true
+    },
+    "serverDev": {
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "af27305fe9c2705b8899a19343a386b709389156"
+    },
+    "serverProd": {
+      "port": 3000,
+      "hostname": "localhost",
+      "protocol": "https",
+      "_version": "01b15dd136236be875025175878631dc33d1fad7"
+    }
+  }
+}

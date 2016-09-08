@@ -1,0 +1,39 @@
+// Plain Markdown styles for `code` and code-blocks using ```
+// Copied from https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css
+// ...and tweaked a little
+
+.pre
+  margin-top: 0
+  margin-bottom: 0
+  word-wrap: normal
+  padding: 16px
+  overflow: auto
+  line-height: 1.45
+  background-color: $alabaster
+  font-family: 'Fira Mono', monospace;
+
+.code
+  padding: 0.2em
+  margin: 0
+  background-color: rgba(0,0,0,0.04)
+  font-family: 'Fira Mono', monospace;
+
+.pre > code
+  padding: 0
+  margin: 0
+  font-size: 100%
+  word-break: normal
+  white-space: pre
+  background: transparent
+  border: 0
+
+.pre .code
+  display: inline
+  max-width: auto
+  padding: 0
+  margin: 0
+  overflow: visible
+  line-height: inherit
+  word-wrap: normal
+  background-color: transparent
+  border: 0

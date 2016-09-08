@@ -22,6 +22,7 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:buildCSS'],
     [helpers.createDummyGenerator(), 'confit:buildHTML'],
     [helpers.createDummyGenerator(), 'confit:buildJS'],
+    [helpers.createDummyGenerator(), 'confit:documentation'],
     [helpers.createDummyGenerator(), 'confit:entryPoint'],
     [helpers.createDummyGenerator(), 'confit:paths'],
     [helpers.createDummyGenerator(), 'confit:release'],
@@ -117,7 +118,7 @@ describe('App Generator', () => {
 
         assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
 
-        let licenseText = fs.readFileSync('LICENSE', 'utf-8');
+        let licenseText = fs.readFileSync('LICENSE', 'utf8');
         let year = (new Date()).getFullYear();
 
         assert.notEqual(licenseText.indexOf('Copyright (c) ' + year + ' ' + expectedCopyrightOwner), -1, 'Copyright message is in the correct format');

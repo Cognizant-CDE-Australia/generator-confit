@@ -1,0 +1,15 @@
+// Github
+.github
+  position fixed
+  z-index 15
+  right 2rem
+  top 2.5rem
+  width (66 / 2)px
+  height (64 / 2)px
+  background url('../img/github.svg') no-repeat
+  background-size @width @height
+  display inline-block
+
+  @media screen and (min-width: $screen-is-bigger-than-tablet)
+    right rem(40)
+    top rem(50)

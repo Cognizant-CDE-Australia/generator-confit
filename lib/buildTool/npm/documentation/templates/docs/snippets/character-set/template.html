@@ -1,0 +1,16 @@
+<div class="character-set-wrapper" style="{$ data.style if data.style else '' $}">
+  <div class="character-set-name">
+    <div class="character-set-name-label">Font Family</div>
+    {$ data.label if data.label else 'Default' $}
+  </div>
+  <div class="character-set-example">
+    <div class="character-large">
+      {$ data.characterSet if data.characterSet else 'Aa' $}
+    </div>
+    <div class="character-set">
+      <div class="character-set-lc">a b c d e f g h i j k l m n o p q r s t u v w x y z</div>
+      <div class="character-set-uc">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</div>
+      <div class="character-set-no">1 2 3 4 5 6 7 8 9 0</div>
+    </div>
+  </div>
+</div>

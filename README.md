@@ -25,7 +25,7 @@
   - [Usage](#usage)
   - [Contributing](#contributing)
 - [Background](#background)
-  - [Con-waaat?!?](#con-wat)
+  - [Con-waaat?!?](#con-waaat)
 - [Using Confit](#using-confit)
   - [Sample Projects](#sample-projects)
   - [Smart upgrading](#smart-upgrading)
@@ -35,20 +35,20 @@
 
 ## Features
 
-- Write code using ES5, ES6+ (using Babel) or TypeScript
+- Write code using ES6+ (using Babel) or TypeScript (pure ES5 support deprecated in Confit v7+)
 - Write plain CSS, SASS/SCSS or Stylus
 - Optional linting of CSS and JS code
 - Unit testing 
 - Browser testing
 - Support for releasing code using semantic releasing, conventional commits
-- Supports Angular 1.x and Angular 2.x frameworks 
+- Supports Angular 1.x and Angular 2.x frameworks, and more coming (PRs welcome!!!) 
 - Sample projects for some configurations (see below)
 - EXTENSIBLE! Decorate / extend configurations then re-run `yo confit` to re-generate configuration while preserving your changes (uses tags to identify generated-areas inside files) 
 
 ## Pre-requisites
 
-- Node 4.x
-- NPM 3.x (especially for Windows users)
+- Node 4.x+
+- NPM 3.9+ (especially for Windows users)
 
 
 ## Install

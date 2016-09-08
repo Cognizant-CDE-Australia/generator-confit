@@ -1,0 +1,39 @@
+<div class="grid-wrapper">
+  <div class="psuedo-grid-columns">
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+    <div class="col col-1 px2"><div class="col-shadow"></div></div>
+  </div>
+  <div class="grid-shadow">
+
+    {% if data['column-one'] %}
+      <div class="{$ data['column-one'] $}">
+        <div class="col-shadow">
+          <div class="col-label">
+            {$ data['column-one'] $}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if data['column-two'] %}
+      <div class="{$ data['column-two'] $}">
+        <div class="col-shadow">
+          <div class="col-label">
+            {$ data['column-two'] $}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>

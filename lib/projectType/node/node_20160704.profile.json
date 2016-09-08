@@ -1,6 +1,6 @@
 {
   "name": "Node (4 July 2016)",
-  "priority": "2",
+  "priority": "3",
   "description": "Original Node build profile",
   "toolMap": {
     "app": "npm",
