@@ -45,6 +45,8 @@ script:
 
 after_success:
   - npm run semantic-release
+  - git config --global user.email "travis@confit.odecee.com"
+  - git config --global user.name "Odecee (via TravisCI)"
   - npm run docs:publish
 
 branches:
