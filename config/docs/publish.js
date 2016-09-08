@@ -1,15 +1,32 @@
 'use strict';
 
-const ghpages = require('gh-pages');
+// START_CONFIT_GENERATED_CONTENT
 const path = require('path');
-const yaml = require('js-yaml');
-const basePath = path.join(__dirname, '../../');
-let confit = yaml.load(fs.readFileSync(path.join(basePath + 'confit.yml')))['generator-confit'];
+const basePath = path.join(__dirname, '/../../');
 
-ghpages.publish(path.join(basePath, confit.paths.docDir), (err) => {
+// If the documentation.publish mechanism is GitHub, do this:
+const ghpages = require('gh-pages');
+const docOutputDir = path.join(basePath, 'webdocs/');
+
+let callback = (err) => {
   if (!err) {
-    console.info('Published documentation to /gh-pages branch');
+    console.info(`Published documentation from ${docOutputDir} to /gh-pages branch`);
   } else {
     console.error(err);
   }
-});
+}
+
+let options = {
+  logger: function(message) {
+    console.log(message);
+  }
+};
+// END_CONFIT_GENERATED_CONTENT
+
+
+// START_CONFIT_GENERATED_CONTENT
+ghpages.publish(docOutputDir, options, callback);
+
+
+// END_CONFIT_GENERATED_CONTENT
+

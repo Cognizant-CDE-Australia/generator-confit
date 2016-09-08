@@ -46,6 +46,11 @@ documentation:
       - src: config/postpublish.js.tpl
         dest: <%- paths.config.configDir %>docs/postpublish.js
         overwrite: true
+      # Have a single, common Swanky config file which has logic for each framework. This makes it easier to copy
+      # entire directory trees but treat this single file as special.
+      - src: swanky.config.yaml.tpl
+        dest: <%- documentation.srcDir %>/swanky.config.yaml
+        overwrite: true
 
 
   manual:
@@ -102,12 +107,6 @@ documentation:
         dest: <%- documentation.srcDir %>
         overwrite: true
         noParse: true
-
-      # Have a single, common Swanky config file which has logic for each framework. This makes it easier to copy
-      # entire directory trees but treat this single file as special.
-      - src: swanky.config.yaml.tpl
-        dest: <%- documentation.srcDir %>/swanky.config.yaml
-        overwrite: true
 
   # Framework-specific content
   frameworks:

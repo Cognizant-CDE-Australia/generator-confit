@@ -1,12 +1,15 @@
-title: Confit
-repo: https://github.com/odecee/generator-confit
-version: 2.0.0
+# START_CONFIT_GENERATED_CONTENT
+title: generator-confit
+repo: https://github.com/odecee/generator-confit.git
+version: 0.0.0-semantically-released
 src: docs
-snippets: docs/snippets
-output: website
-theme: docs/themes/confit-theme
+output: webdocs
 # serverPath will only be set when publishing the documentation
 serverPath:
+# END_CONFIT_GENERATED_CONTENT
+
+theme: docs/themes/confit-theme
+snippets: docs/snippets
 
 sections:
 

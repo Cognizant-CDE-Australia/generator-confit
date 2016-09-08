@@ -1,4 +1,4 @@
-<%
+# START_CONFIT_GENERATED_CONTENT<%
 var selectedFramework = (config.buildJS.framework) ? config.buildJS.framework[0] : '' || '';
 var isNG1 = selectedFramework === 'AngularJS 1.x';
 
@@ -6,15 +6,18 @@ var isNG1 = selectedFramework === 'AngularJS 1.x';
 function dropTrailingSlash(path) {
   return path.substr(path.length - 1) === '/' ? path.substr(0, path.length - 1) : path;
 }
--%>
+%>
 title: <%- pkg.name %>
 repo: <%- pkg.repository.url %>
 version: <%- pkg.version %>
 src: <%- dropTrailingSlash(documentation.srcDir) %>
-theme: <%- documentation.srcDir %>themes/test-theme
 output: <%- dropTrailingSlash(documentation.outputDir) %>
 # serverPath will only be set when publishing the documentation
 serverPath:
+# END_CONFIT_GENERATED_CONTENT
+
+theme: <%- documentation.srcDir %>themes/test-theme
+snippets: docs/snippets
 
 sections:
   - title: Foundation
