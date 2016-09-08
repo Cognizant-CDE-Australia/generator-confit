@@ -40,7 +40,7 @@ strong.strong
 
 // Links
 a.a, &:visited
-  color $brand-secondary
+  color $brand-primary
   text-decoration none
 
   &:hover
@@ -58,6 +58,11 @@ p.p
 
 p.p, ul.ul, ol.ol
   margin-bottom 1.5rem
+
+// For nested lists, reset the margin-bottom
+.li
+  & > ul.ul, & > ol.ol
+    margin-bottom inherit
 
 hr.hr
   margin-top 40px
@@ -102,6 +107,11 @@ pre.pre, code.code
     background #fff
     top 0;
     z-index 10
+
+// Rebrand section.section h1.h1's to be h2.h2s
+section.section h1.h1
+  //@extend h2.h2
+  display: none
 
 .text-block
   border-left 2px solid $brand-primary

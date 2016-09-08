@@ -16,6 +16,9 @@ sections:
   - title: Usage
     content: docs/content/usage.md
 
+  - title: Upgrading
+    content: docs/content/upgrading.md
+
   - title: How it works
     content: docs/content/architecture.md
 
