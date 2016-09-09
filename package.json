@@ -128,7 +128,7 @@
     "protractor": "3.2.1",
     "rimraf": "2.5.2",
     "semantic-release": "4.3.5",
-    "swanky-processor-ngdocs": "2.0.0",
+    "swanky-processor-ngdocs": "2.0.1",
     "swanky-server": "2.1.0",
     "yeoman-assert": "2.1.2",
     "yeoman-test": "1.1.0"

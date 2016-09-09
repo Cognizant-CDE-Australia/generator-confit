@@ -8,7 +8,10 @@ const path = require('path');
 const basePath = path.join(__dirname, '/<%= relativePath %>');
 
 // If the documentation.publish mechanism is GitHub, do this:
-<% if (documentation.publishMethod === 'GitHub') { -%>
+<% if (documentation.publishMethod === 'GitHub') {
+     var repoUrl = pkg.repository.url;
+     var CIRepoUrl = 'https://\' + process.env.GH_TOKEN + \'@github.com/' + repoUrl.split('github.com/')[1];
+%>
 const ghpages = require('gh-pages');
 const docOutputDir = path.join(basePath, '<%- documentation.outputDir %>');
 
@@ -18,13 +21,24 @@ let callback = (err) => {
   } else {
     console.error(err);
   }
-}
+};
 
 let options = {
   logger: function(message) {
     console.log(message);
   }
 };
+
+// If we are running inside Travis, send the token
+if (process.env.GH_TOKEN) {
+  options.repo = '<%- CIRepoUrl %>';
+
+  // Add some user information for the gh-pages commit
+  options.user = {
+    email: 'gh-pages@github',
+    name: 'GH Pages Committer'
+  };
+}
 // END_CONFIT_GENERATED_CONTENT
 
 
