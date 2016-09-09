@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>generator-confit - How it works</title>
+    <link rel="icon" href="/generator-confit.git/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="/generator-confit.git/theme.4ed0ae05.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit.git/docs.4ed0ae05.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600,600italic,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+</head>
+
+<body class="">
+    <div class="index_outer-wrap__2LWkg">
+        <div class="index_top-line__2AoVs"></div>
+<button id="navToggle" class="index_nav-toggle__1-CeE" type="button">
+    <span class="index_icon-bar__kKGpy"></span>
+    <span class="index_icon-bar__kKGpy"></span>
+    <span class="index_icon-bar__kKGpy"></span>
+</button>
+
+<div class="index_brand__MtOXZ"><a href="/generator-confit.git/" class="index_logo__1FDYG"></a></div>
+
+
+    <a href="https://github.com/odecee/generator-confit.git" title="generator-confit Github Repo" target="_blank" class="index_github__3R7ER"></a>
+
+
+<aside id="offCanvasNav" class="index_sidebar__28z0-">
+    <nav class="index_navigation__19FtP">
+        <ul class="index_ul__3J_wJ">
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/index.html" title="Overview"
+                       class="index_a__2K-in">Overview</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/usage.html" title="Usage"
+                       class="index_a__2K-in">Usage</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/upgrading.html" title="Upgrading"
+                       class="index_a__2K-in">Upgrading</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM index_active__3mkH3">
+                    <a href="/generator-confit.git/how-it-works.html" title="How it works"
+                       class="index_a__2K-in">How it works</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/contributing.html" title="Contributing"
+                       class="index_a__2K-in">Contributing</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/api-doc.html" title="API Doc"
+                       class="index_a__2K-in">API Doc</a>
+                    
+                </li>
+            
+        </ul>
+    </nav>
+</aside>
+
+<section class="index_main__DJ3rY">
+    <article>
+        
+        
+            <h1 class="index_page-header__f1wI9 index_h1__3Gr-M" data-gumshoe-header>How it works</h1>
+        
+
+        
+            <section id="sid-nn6xNNLr" class="index_section__2dFiP">
+    
+
+    <p class="index_p__3ks-u">Confit is a Yeoman generator, composed of multiple sub-generators that are further composed into project-specific build-tools. 
+Each generator creates configuration and tooling for a discrete part of the development process.</p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><code class="index_code__3I9A0">app</code> is the main generator which loads sub-generators. It is different from the sub-generators because it doesn't use <code class="index_code__3I9A0">buildTool</code>s nor is it associated with a project-type</li>
+
+<li class="index_li__1SGDM"><code class="index_code__3I9A0">&lt;sub-generators&gt;</code>:
+
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">can have common behaviour regardless of the project type</li>
+
+<li class="index_li__1SGDM">can be specific to a project-type (e.g. <code class="index_code__3I9A0">buildBrowser</code> is 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+ specific)</li>
+
+<li class="index_li__1SGDM">has a <code class="index_code__3I9A0">buildTool</code> (e.g. <code class="index_code__3I9A0">buildTool/&lt;tool&gt;/&lt;generatorName&gt;/&lt;generatorName&gt;.js</code>)</li></ul>
+</li>
+</ul>
+
+<h2 class="index_h2__14EQq" id="generators">Generators</h2>
+
+<p class="index_p__3ks-u">This section describes the purpose and behaviour of each generator. </p>
+
+<h3 class="index_h3__1a7-h" id="appswankymd1">app 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">The <code class="index_code__3I9A0">app</code> generator is all about capturing application-wide settings and generating application-wide tools &amp; config.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Would you like to rebuild from the existing configuration in <code class="index_code__3I9A0">confit.json</code>?</strong> [<strong class="index_strong__mvoi8">Y</strong>, N] (not stored in <code class="index_code__3I9A0">confit.json</code>)</p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">If <code class="index_code__3I9A0">confit.json</code> was created by the same version of Confit as the version you are using, this question will appear. If a newer (or older) version of Confit is being used than what was used to create <code class="index_code__3I9A0">confit.json</code>, this question is skipped.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Choose the project type</strong>: [<strong class="index_strong__mvoi8">Browser</strong>, NodeJS]  <code class="index_code__3I9A0">app.projectType</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Browser projects are projects that produce websites, or web-based libraries</li>
+
+<li class="index_li__1SGDM">NodeJS projects are purely JavaScript-based and typically require fewer build steps.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Choose a build profile</strong>: [<strong class="index_strong__mvoi8">Latest</strong>, <em class="index_em__3pkhd">list of older profiles...</em>] <code class="index_code__3I9A0">app.buildProfile</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Over time, Confit will update the tools that are used to produce different kinds of projects.</li>
+
+<li class="index_li__1SGDM">The <code class="index_code__3I9A0">Latest</code> build profile is an alias to the newest set of tools and config recommended for projects. It will change every few months as new &amp; better tooling arrives.</li>
+
+<li class="index_li__1SGDM">The other profiles will show the date that they were added. This allows projects to update their Confit-generator version but continue to use the same set of tools that were used by Confit on a certain date.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Where will this project be hosted?</strong> [<strong class="index_strong__mvoi8">GitHub</strong>, Other] <code class="index_code__3I9A0">app.repositoryType</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Repositories hosted on Github can take advantage of GitHub-specific integrations. E.g. <em class="index_em__3pkhd">semantic-release</em> can generate release information within the "Releases" tab in GitHub.</li>
+
+<li class="index_li__1SGDM">Non-GitHub repositories have fewer integration options. </li>
+
+<li class="index_li__1SGDM">Repositories hosted on "GitHub Enterprise" should choose "Other", as enterprise repositories are typically not public</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Choose a license</strong>: [<strong class="index_strong__mvoi8">UNLICENSED</strong>, <em class="index_em__3pkhd">common SPDX licences</em>, <em class="index_em__3pkhd">full SPDX licence list</em>] <code class="index_code__3I9A0">app.license</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Sets the <code class="index_code__3I9A0">package.json</code> <code class="index_code__3I9A0">license</code> field and optionally generates the license file (for every license type other than "UNLICENSED").</li>
+
+<li class="index_li__1SGDM">Popular licenses are listed first, such as Apache-2.0, GPL and MIT.</li>
+
+<li class="index_li__1SGDM">The licence files typically contain templates that must be completed for the licence to be valid.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Copyright owner</strong>: [<strong class="index_strong__mvoi8"><em class="index_em__3pkhd">Git user name</em></strong>] <code class="index_code__3I9A0">app.copyrightOwner</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Adds the copyright owner information to the license file (if one exists).</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">None</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="buildassetsswankymd2">buildAssets 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Generator for building assets (media files) for web applications.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-1">Questions</h4>
+
+<p class="index_p__3ks-u">None</p>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-1">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool uses the Confit path information to create Webpack loaders for fonts and images.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="buildbrowserswankymd3">buildBrowser 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Browser-specific build configuration generator.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-2">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Supported browsers</strong>: [latest, latest2, legacyIE, legacyMobile] <code class="index_code__3I9A0">buildBrowser.browserSupport</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">You must select at least one option.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-2">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool generates the foundational config for `webpack.config.js`.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="buildcssswankymd4">buildCSS 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">CSS-tool generator.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-3">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Source format</strong>: [css, sass, <strong class="index_strong__mvoi8">stylus</strong>] <code class="index_code__3I9A0">buildCSS.sourceFormat</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">"Stylus" has the best compiler and most flexibility around syntax (recommended).</li>
+
+<li class="index_li__1SGDM">Choosing "css" means there is no compiler (or linter) for the CSS code.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-3">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen CSS language and target browser support.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="buildhtmlswankymd5">buildHTML 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<h4 class="index_h4__2Mx7x" id="questions-4">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">HTML source file extension?</strong> [<strong class="index_strong__mvoi8">.html</strong>, .htm] <code class="index_code__3I9A0">buildHTML.extension</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">This question is designed to support other HTML source code formats (e.g. Jade) in the future.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-4">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="buildjsswankymd6">buildJS 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">This important generators is used to determine how to process the source code into the desired output format.
+It affects the verification (linting) tool selection, code coverage tools and which files to watch for changes.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-5">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Source code language</strong>: [<strong class="index_strong__mvoi8">ES6</strong>, TypeScript] <code class="index_code__3I9A0">buildJS.sourceFormat</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The format that the source code will be written in</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Target output language</strong>: [<strong class="index_strong__mvoi8">ES5 (Browser)</strong>, <strong class="index_strong__mvoi8">ES6 (NodeJS)</strong>] <code class="index_code__3I9A0">buildJS.outputFormat</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The format that the source code should be compiled to before the application is deployed/run</li>
+
+<li class="index_li__1SGDM">If the source code language does not equal the target output language, a transpiler (e.g. Babel) will be required.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">JavaScript framework</strong>: [AngularJS 1.x, AngularJS 2.x] <code class="index_code__3I9A0">buildJS.framework[]</code> and <code class="index_code__3I9A0">buildJS.frameworkScripts[]</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Optional - zero-to-many frameworks can be selected, but support for many frameworks is limited.</li>
+
+<li class="index_li__1SGDM">Designed to support new popular frameworks in the future (contributors wanted!).</li>
+
+<li class="index_li__1SGDM"><code class="index_code__3I9A0">buildJS.frameworkScripts[]</code> is derived from <code class="index_code__3I9A0">buildJS.framework[]</code></li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Vendor scripts OR module-names to include</strong>: [<em class="index_em__3pkhd">editable only within <code class="index_code__3I9A0">confit.json</code></em>] <code class="index_code__3I9A0">buildJS.vendorScripts[]</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">A list of the NPM modules / JS files that are required at run-time for the browser-application to run.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-5">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool uses this information extensively to determine which loaders, configuration and files are required to compile source code.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="entrypointswankymd7">entryPoint 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<h4 class="index_h4__2Mx7x" id="questions-6">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Entry-points for the application (edit in <code class="index_code__3I9A0">confit.json</code>)</strong>: [<em class="index_em__3pkhd">editable only within <code class="index_code__3I9A0">confit.json</code></em>] <code class="index_code__3I9A0">entryPoint.entryPoints</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">A map of entry-points for the application.</li>
+
+<li class="index_li__1SGDM">For Browser projects, many entry-points are supported. Each entry-point can have multiple files (specified as an array).</li>
+
+<li class="index_li__1SGDM">For NodeJS projects, only one entry-point called <code class="index_code__3I9A0">main</code> is supported. It must contain a single file reference inside the array.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-6">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool generates the `entryPoint` configuration from the `entryPoint.entryPoints`. An additional entry-point is also created if `vendorScripts` or `frameworkScripts` are supplied.</li>
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool generates the `main` property inside `package.json` from `entryPoint.entryPoints`.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="pathsswankymd8">paths 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<h4 class="index_h4__2Mx7x" id="questions-7">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Use default/existing paths?</strong> [<strong class="index_strong__mvoi8">Y</strong>, N] (not stored in <code class="index_code__3I9A0">confit.json</code>)</p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">If "Y", then the rest of the path questions are not asked and default values are used.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to SOURCE directory (relative to the current directory)</strong>: [src/] <code class="index_code__3I9A0">paths.input.srcDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Location of root source code directory within the application.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to MODULES directory (relative to the SOURCE directory)</strong>: [modules/] <code class="index_code__3I9A0">paths.input.modulesSubDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Location of modules sub-directory relative to the <code class="index_code__3I9A0">paths.input.srcDir</code> directory.</li>
+
+<li class="index_li__1SGDM">This is the only path that is optional.</li>
+
+<li class="index_li__1SGDM">Is used to generate <code class="index_code__3I9A0">paths.input.modulesDir</code>, which is a convenient concatenation of <code class="index_code__3I9A0">paths.input.srcDir</code> and <code class="index_code__3I9A0">paths.input.modulesSubDir</code>.</li>
+
+<li class="index_li__1SGDM">For browser projects, code is generally organised into modules (features/components) underneath the <code class="index_code__3I9A0">paths.input.modulesDir</code> directory.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module ASSETS directory (for images, fonts)</strong>: [assets/] <code class="index_code__3I9A0">input.assetsDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains assets (images, fonts).</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module STYLES directory (for CSS)</strong>: [styles/] <code class="index_code__3I9A0">input.stylesDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains stylesheets.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module TEMPLATE directory (for component HTML templates)</strong>: [template/] <code class="index_code__3I9A0">input.templateDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains HTML templates.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module UNIT TEST directory</strong>: [unitTest/] <code class="index_code__3I9A0">input.unitTestDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains the unit tests for the module.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module FUNCTIONAL TEST directory</strong>: [browserTest/] <code class="index_code__3I9A0">input.browserTestDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains the browser/functional tests for the module.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to UNIT TEST directory (relative to the current directory)</strong>: [unitTest/] <code class="index_code__3I9A0">input.unitTestDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">NodeJS</strong> projects.</li>
+
+<li class="index_li__1SGDM">Location of root test directory within the application.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to DEV OUTPUT directory (relative to the current directory)</strong>: [dev/] <code class="index_code__3I9A0">paths.output.devDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Location of development-build directory within the application.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to PRODUCTION OUTPUT directory (relative to the current directory)</strong>: [dist/] <code class="index_code__3I9A0">paths.output.prodDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Location of production-build directory within the application.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to BUILD directory (relative to the current directory)</strong>: [dist/] <code class="index_code__3I9A0">paths.output.prodDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">NodeJS</strong> projects.</li>
+
+<li class="index_li__1SGDM">Location of build directory within the application.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to ASSETS sub-directory (relative to the OUTPUT directory)</strong>: [assets/] <code class="index_code__3I9A0">paths.output.assetsSubDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory relative to <code class="index_code__3I9A0">paths.output.devDir</code> and <code class="index_code__3I9A0">paths.output.prodDir</code> where the built-asset files will be deployed.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to CSS sub-directory (relative to the OUTPUT directory)</strong>: [css/] <code class="index_code__3I9A0">paths.output.cssSubDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory relative to <code class="index_code__3I9A0">paths.output.devDir</code> and <code class="index_code__3I9A0">paths.output.prodDir</code> where the built-CSS files will be deployed.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to JS sub-directory (relative to the OUTPUT directory)</strong>: [js/] <code class="index_code__3I9A0">paths.output.jsSubDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory relative to <code class="index_code__3I9A0">paths.output.devDir</code> and <code class="index_code__3I9A0">paths.output.prodDir</code> where the built-JS files will be deployed.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to VENDOR JS sub-directory (relative to the OUTPUT directory)</strong>: [vendor/] <code class="index_code__3I9A0">paths.output.vendorJSSubDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
+
+<li class="index_li__1SGDM">Name of directory relative to <code class="index_code__3I9A0">paths.output.devDir</code> and <code class="index_code__3I9A0">paths.output.prodDir</code> where the vendor JS files will be deployed.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to TEST REPORTS directory (relative to the current directory)</strong>: [reports/] <code class="index_code__3I9A0">paths.output.reportDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Location of the test-reports directory within the application.</li>
+
+<li class="index_li__1SGDM">By placing all reports here, it makes it easier for CI systems to accurately find the test reports.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to CONFIG directory (relative to the current directory)</strong>: [config/] <code class="index_code__3I9A0">paths.output.reportDir</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Location of the configuration directory within the application.</li>
+
+<li class="index_li__1SGDM">Moving configuration files out of the root folder and into a configuration directory makes the codebase cleaner.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-7">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">None - but this configuration is used extensively by all build tools.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="releasesswankymd9">releases 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Generates release-related configuration and tooling.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-8">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Use semantic releasing?</strong> [<strong class="index_strong__mvoi8">Y</strong>, N] <code class="index_code__3I9A0">release.useSemantic</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><a class="index_a__2K-in" href="http://semantic-release.org/">Semantic releasing</a> is a development process with a supporting set-of-tools that allows
+software to be versioned &amp; released based automatically by following certain conventions.</li>
+
+<li class="index_li__1SGDM">Use this in conjunction with Conventional commit messages (see next question).</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Commit message format</strong>: [<strong class="index_strong__mvoi8">Conventional</strong>, None] <code class="index_code__3I9A0">release.commitMessageFormat</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Semantic releasing mandates the use of conventional commit messages. If <code class="index_code__3I9A0">release.useSemantic</code> is "Y", the only available selection is "Conventional".</li>
+
+<li class="index_li__1SGDM">If <code class="index_code__3I9A0">release.useSemantic</code> is "N", then the "None" option becomes available.</li>
+
+<li class="index_li__1SGDM">Using conventional commit messages adds the <code class="index_code__3I9A0">git cz</code> command, which helps you create the conventional commit message according to customisable rules.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-8">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool installs the global "semantic-release-cli" package, which requires further setup post installation. If conventional commit messages are used, some Git hooks and tools are installed to support this. </li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="sampleappswankymd10">sampleApp 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">It is one of the more-complex generators because it is dependent on the answers captured by other generators.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-9">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Create a sample app?</strong> [<strong class="index_strong__mvoi8">Y</strong>, N] <code class="index_code__3I9A0">sampleApp.createSampleApp</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">If the Confit has a sample application for the chosen configuration, then a sample application will be generated.</li>
+
+<li class="index_li__1SGDM">Sample apps are designed to provide initial guidance on how to structure a program and demonstrate that the tooling is working correctly.</li>
+
+<li class="index_li__1SGDM">Each time Confit is run, it will re-ask this question (even when you've indicated you wish to build from the existing configuration). This is to encourage the user to select "N" once they are happy with the generated sample app. </li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-9">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool creates a web application which demonstrates all of the tools working together.</li>
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool creates a NodeJS application which demonstrates all the tools working together. Currently no build step is required, but that is likely to change in future versions.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="serverdevswankymd11">serverDev 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Captures server settings for serving the the web application in a development-mode.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-10">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server port</strong>: [<strong class="index_strong__mvoi8">3000</strong>] <code class="index_code__3I9A0">serverDev.port</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The port of the development web server.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server hostname</strong>: [<strong class="index_strong__mvoi8">localhost</strong>] <code class="index_code__3I9A0">serverDev.hostname</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The host-name of the development web server.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server protocol</strong>: [<strong class="index_strong__mvoi8">https</strong>, http] <code class="index_code__3I9A0">serverDev.protocol</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The protocol of the development web server.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-10">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a development web server which supports CORS request and other middleware.</li>
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="serverprodswankymd12">serverProd 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Captures server settings for serving the the web application in a production-mode.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-11">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server port</strong>: [<strong class="index_strong__mvoi8">3000</strong>] <code class="index_code__3I9A0">serverProd.port</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The port of the production web server.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server hostname</strong>: [<strong class="index_strong__mvoi8">localhost</strong>] <code class="index_code__3I9A0">serverProd.hostname</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The host-name of the production web server.</li>
+</ul>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Server protocol</strong>: [<strong class="index_strong__mvoi8">https</strong>, http] <code class="index_code__3I9A0">serverProd.protocol</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The protocol of the production web server.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-11">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a production web server which supports CORS request and other middleware.</li>
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="testbrowserswankymd13">testBrowser 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Generates browser testing tools and configuration.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-12">Questions</h4>
+
+<p class="index_p__3ks-u">None</p>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-12">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__protractor -%>"></div> build tool sets up Protractor configuration for testing web application. synchronises with Angular 1.x framework if framework is selected in `buildJS` generator.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="testunitswankymd14">testUnit 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Generates unit-testing tools and configuration.</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-13">Questions</h4>
+
+<p class="index_p__3ks-u">None</p>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-13">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool installs Mocha test framework with code coverage.</li>
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool creates Webpack and Karma configuration (using Jasmine as test framework) with code coverage.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="verifyswankymd15">verify 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">Generates code syntax and style-verification tools for JavaScript (and CSS <div class="&lt;%- styles.badge__browser -%>"></div> only).</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-14">Questions</h4>
+
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">JavaScript coding standard</strong>: [<strong class="index_strong__mvoi8">None</strong>, AirBnb, Google, StandardJS, TypeScript] <code class="index_code__3I9A0">verify.jsCodingStandard</code></p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">The linting rules that will be applied to JavaScript code.</li>
+
+<li class="index_li__1SGDM">"TypeScript" is only available for TypeScript projects.</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-14">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
+<li class="index_li__1SGDM"><em class="index_em__3pkhd">(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool creates `verify:*` tasks to verify source code in the `paths.input.srcDir` and `paths.input.configDir`.</li>
+</ul>
+
+<hr class="index_hr__1Ve-V" />
+
+<h3 class="index_h3__1a7-h" id="zzfinishswankymd16">zzfinish 
+<div class="badge__browser" aria-label="browser"></div>
+
+<div class="badge__node" aria-label="node"></div>
+
+
+</h3>
+
+<p class="index_p__3ks-u">A hook to allow different build tools to generate config after all other generators have run. Note that the <div class="<%- styles.badge__node -%>"></div> 
+version currently does nothing (it does not use <div class="<%- styles.badge__grunt -%>"></div> or <div class="<%- styles.badge__webpack -%>"></div>).</p>
+
+<h4 class="index_h4__2Mx7x" id="questions-15">Questions</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">None</li>
+</ul>
+
+<h4 class="index_h4__2Mx7x" id="buildtools-15">Build Tools</h4>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
+<li class="index_li__1SGDM"><em class="index_em__3pkhd">(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool runs the `grunt dev` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
+</ul>
+</section>
+
+        
+    </article>
+</section>
+
+            <footer class="">
+                
+                    <div class="index_version___kU-4">version 7.0.4</div>
+                
+            </footer>
+        </div>
+    <script src="/generator-confit.git/theme.4ed0ae05.bundle.js"></script><script src="/generator-confit.git/snippets.4ed0ae05.bundle.js"></script><script src="/generator-confit.git/docs.4ed0ae05.bundle.js"></script></body>
+</html>

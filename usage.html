@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>generator-confit - Usage</title>
+    <link rel="icon" href="/generator-confit.git/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="/generator-confit.git/theme.4ed0ae05.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit.git/docs.4ed0ae05.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600,600italic,300' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+</head>
+
+<body class="">
+    <div class="index_outer-wrap__2LWkg">
+        <div class="index_top-line__2AoVs"></div>
+<button id="navToggle" class="index_nav-toggle__1-CeE" type="button">
+    <span class="index_icon-bar__kKGpy"></span>
+    <span class="index_icon-bar__kKGpy"></span>
+    <span class="index_icon-bar__kKGpy"></span>
+</button>
+
+<div class="index_brand__MtOXZ"><a href="/generator-confit.git/" class="index_logo__1FDYG"></a></div>
+
+
+    <a href="https://github.com/odecee/generator-confit.git" title="generator-confit Github Repo" target="_blank" class="index_github__3R7ER"></a>
+
+
+<aside id="offCanvasNav" class="index_sidebar__28z0-">
+    <nav class="index_navigation__19FtP">
+        <ul class="index_ul__3J_wJ">
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/index.html" title="Overview"
+                       class="index_a__2K-in">Overview</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM index_active__3mkH3">
+                    <a href="/generator-confit.git/usage.html" title="Usage"
+                       class="index_a__2K-in">Usage</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/upgrading.html" title="Upgrading"
+                       class="index_a__2K-in">Upgrading</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/how-it-works.html" title="How it works"
+                       class="index_a__2K-in">How it works</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/contributing.html" title="Contributing"
+                       class="index_a__2K-in">Contributing</a>
+                    
+                </li>
+            
+                <li class="index_li__1SGDM ">
+                    <a href="/generator-confit.git/api-doc.html" title="API Doc"
+                       class="index_a__2K-in">API Doc</a>
+                    
+                </li>
+            
+        </ul>
+    </nav>
+</aside>
+
+<section class="index_main__DJ3rY">
+    <article>
+        
+        
+            <h1 class="index_page-header__f1wI9 index_h1__3Gr-M" data-gumshoe-header>Usage</h1>
+        
+
+        
+            <section id="sid-N72cRmfs" class="index_section__2dFiP">
+    
+
+    <h2 class="index_h2__14EQq" id="installation">Installation</h2>
+
+<p class="index_p__3ks-u">Install Node.js 4+ or 6+ (this can be easily automated with tools such as <a class="index_a__2K-in" href="https://github.com/creationix/nvm">nvm</a>)</p>
+
+<pre class="index_pre__yuyC0"><code class="index_code__3I9A0" class="bash language-bash">nvm install 6
+#   OR
+nvm install 4
+</code></pre>
+
+<p class="index_p__3ks-u">Install  <a class="index_a__2K-in" href="https://yeoman.io">Yeoman</a> and then Confit:</p>
+
+<pre class="index_pre__yuyC0"><code class="index_code__3I9A0" class="bash language-bash">npm install -g yo
+npm install -g generator-confit
+</code></pre>
+
+<h2 class="index_h2__14EQq" id="generatinganewprojectwithconfit">Generating a new project with Confit</h2>
+
+<ol class="index_ol__2DMaR">
+<li class="index_li__1SGDM">Type <code class="index_code__3I9A0">yo confit</code></li>
+
+<li class="index_li__1SGDM">Answer questions about the kind of project you want.</li>
+
+<li class="index_li__1SGDM">Wait for the packages to be installed.</li>
+
+<li class="index_li__1SGDM">Type <code class="index_code__3I9A0">npm start</code> to start the project in a development mode.</li>
+</ol>
+
+<h2 class="index_h2__14EQq" id="writingcode">Writing code</h2>
+
+<p class="index_p__3ks-u">To write code, run <code class="index_code__3I9A0">npm start</code>. This starts the application in a development mode and watches for changes to code (and tests), verifies the code,
+and recompiles the application when changes are detected.</p>
+
+<h2 class="index_h2__14EQq" id="testingverifyingcode">Testing &amp; Verifying code</h2>
+
+<p class="index_p__3ks-u">When writing code there are two main things you usually want to check as you go:</p>
+
+<ol class="index_ol__2DMaR">
+<li class="index_li__1SGDM">Is my code styled correctly? <code class="index_code__3I9A0">npm run verify:watch</code>, or <code class="index_code__3I9A0">npm start</code></li>
+
+<li class="index_li__1SGDM">Are my tests breaking? <code class="index_code__3I9A0">npm test</code></li>
+</ol>
+
+<p class="index_p__3ks-u">To minimise the chance of errors scrolling off the screen, these two tasks are generally run in separate terminal windows.</p>
+
+<p class="index_p__3ks-u">You can also run these tasks on an ad-hoc basis:</p>
+
+<ol class="index_ol__2DMaR">
+<li class="index_li__1SGDM"><code class="index_code__3I9A0">npm run verify</code></li>
+
+<li class="index_li__1SGDM"><code class="index_code__3I9A0">npm run test:unit:once</code></li>
+</ol>
+
+<h2 class="index_h2__14EQq" id="testinginthebrowserswankymd0">Testing in the browser 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h2>
+
+<p class="index_p__3ks-u">You can run <code class="index_code__3I9A0">npm run test:browser</code> to run component and/or system tests in the browser.</p>
+
+<h2 class="index_h2__14EQq" id="generatingdocumentation">Generating documentation</h2>
+
+<p class="index_p__3ks-u"><code class="index_code__3I9A0">npm run docs:build</code> will create the documentation, while <code class="index_code__3I9A0">npm run docs:serve</code> will also serve it in a browser and watch for
+ changes. Documentation is generated using <a class="index_a__2K-in" href="https://github.com/swanky-docs">Swanky</a>.</p>
+
+<h2 class="index_h2__14EQq" id="creatingapackagereleasingit">Creating a package &amp; releasing it</h2>
+
+<p class="index_p__3ks-u">Depending on your configuration, you may delegate this process to your continuous integration system (like <a class="index_a__2K-in" href="https://travisci.io">Travis</a> or Jenkins),
+or you can publish manually (not recommended).</p>
+
+<p class="index_p__3ks-u"><code class="index_code__3I9A0">npm run pre-release</code> runs all of the unit tests, verifies code, checks test coverage and builds your software for production. If there were
+no errors, you can then run <code class="index_code__3I9A0">npm run semantic-release</code> if using semantic releasing.</p>
+
+<p class="index_p__3ks-u">If you are not using semantic releasing, you must define your own <code class="index_code__3I9A0">release</code> task in <code class="index_code__3I9A0">package.json</code> and then call it yourself.</p>
+
+<h2 class="index_h2__14EQq" id="addingconfittoanexistingproject">Adding Confit to an existing project</h2>
+
+<p class="index_p__3ks-u">Before adding Confit to an existing project, there are a few things you should know:</p>
+
+<ul class="index_ul__3J_wJ">
+<li class="index_li__1SGDM">Confit will create files if they don't exist (e.g. <code class="index_code__3I9A0">package.json</code>)</li>
+
+<li class="index_li__1SGDM">Confit will overwrite <em class="index_em__3pkhd">sections</em> within certain files, if those sections exist. This allows you to have a mixture of 
+generated configuration and custom configuration within the same file.</li>
+
+<li class="index_li__1SGDM">Confit will <em class="index_em__3pkhd">not</em> overwrite certain files if they already exist.</li>
+</ul>
+
+<p class="index_p__3ks-u">To get an idea of which files will be created by Confit, it is recommended to run Confit with your desired configuration 
+in an empty folder first. You can then take the generated <code class="index_code__3I9A0">confit.yml</code> file and place it into the existing folder once
+you are happy with the configuration.</p>
+
+<ol class="index_ol__2DMaR">
+<li class="index_li__1SGDM">Make sure you have no outstanding changes to make (<code class="index_code__3I9A0">git status</code> should indicate there is nothing staged or ready to be committed).</li>
+
+<li class="index_li__1SGDM">Run <code class="index_code__3I9A0">yo confit</code>, and choose the configuration you would like.</li>
+
+<li class="index_li__1SGDM">Answer <code class="index_code__3I9A0">Yes</code> to all of the prompts about overwriting files - it's ok, no changes will be committed at this stage </li>
+
+<li class="index_li__1SGDM">Review the changes that Confit has made. In some cases, you will not want Confit's changes. Use a merging/diffing tool
+(like SourceTree) to select which changes to keep, and which to reject.</li>
+
+<li class="index_li__1SGDM">When you are happy with the changes, commit them.</li>
+</ol>
+
+<p class="index_p__3ks-u">In the case where Confit does <em class="index_em__3pkhd">not</em> change one of your existing files (such as <code class="index_code__3I9A0">README.md</code>), you may wish to remove that 
+file and run <code class="index_code__3I9A0">yo confit</code> to see what Confit will generate. Then you can merge your changes back into the file as part of 
+the review process.</p>
+</section>
+
+        
+    </article>
+</section>
+
+            <footer class="">
+                
+                    <div class="index_version___kU-4">version 7.0.4</div>
+                
+            </footer>
+        </div>
+    <script src="/generator-confit.git/theme.4ed0ae05.bundle.js"></script><script src="/generator-confit.git/snippets.4ed0ae05.bundle.js"></script><script src="/generator-confit.git/docs.4ed0ae05.bundle.js"></script></body>
+</html>
