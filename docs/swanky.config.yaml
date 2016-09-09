@@ -33,7 +33,7 @@ sections:
 
     # Add sub-sections later
 #
-  - title: API Doc
-    content: lib/core/buildToolUtils.js
-    processor:
-      ngdocs: null
+#  - title: API Doc
+#    content: lib/core/buildToolUtils.js
+#    processor:
+#      ngdocs: null
