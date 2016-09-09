@@ -5,7 +5,7 @@
 const latestVersion = require('latest-version');
 const fs = require('fs');
 const pkgName = 'generator-confit';
-const pkgRepo = 'generator-confit.git';
+const pkgRepo = 'generator-confit';
 // END_CONFIT_GENERATED_CONTENT
 
 

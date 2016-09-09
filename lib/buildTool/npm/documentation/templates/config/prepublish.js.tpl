@@ -5,7 +5,7 @@
 const latestVersion = require('latest-version');
 const fs = require('fs');
 const pkgName = '<%- pkg.name %>';
-const pkgRepo = '<%- pkg.repository.url.substr(pkg.repository.url.lastIndexOf('/') + 1) %>';
+const pkgRepo = '<%- pkg.repository.url.substr(pkg.repository.url.lastIndexOf('/') + 1).replace('.git', '') %>';
 // END_CONFIT_GENERATED_CONTENT
 
 
