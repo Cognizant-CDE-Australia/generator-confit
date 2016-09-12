@@ -7,8 +7,7 @@ require('phantomjs-polyfill');
 
 // Load the test dependencies!<%
 testUnit.testDependencies.forEach(function(moduleName) { %>
-require('<%= moduleName -%>');
-<%
+require('<%= moduleName -%>');<%
 });
 
 // Add any Framework + SourceFormat -specific test unit config

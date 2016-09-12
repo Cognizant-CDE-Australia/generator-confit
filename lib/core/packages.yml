@@ -264,7 +264,7 @@ $packages:
 
   - &pkg_lodash
     name: lodash
-    version: 3.10.1
+    version: 4.15.0
 
   - &pkg_mocha
     name: mocha
