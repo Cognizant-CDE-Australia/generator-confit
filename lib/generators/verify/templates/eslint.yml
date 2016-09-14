@@ -1,32 +1,100 @@
 # START_CONFIT_GENERATED_CONTENT
-<%- include('eslint-' + verify.jsCodingStandard.toLowerCase() + '.yml.tpl') %>
-env:
-  jasmine: true
-  node: true
-  <% if (app.projectType === 'browser') { -%>browser: true <% } %>
-  commonjs: true    # For Webpack, CommonJS
-  <% if (app.projectType === 'browser') { -%>protractor: true <% } %>
-  <% if (buildJS.sourceFormat === 'ES6') { -%>es6: true <% } %>
-  <% if (app.projectType === 'node') { -%>mocha: true <% } %>
-
-confit-globals: &confit-globals
 <%
-if (buildJS.framework[0] === 'AngularJS 1.x') { -%>
-  angular: true
-<% }
+var plugins = [];
+var extendArr = [];
+var globals = [];
+var env = [];
+
+
+if (verify.jsCodingStandard === 'AirBnB') {
+  extendArr.push('airbnb');
+}
+if (verify.jsCodingStandard === 'ESLint') {
+  extendArr.push('eslint:recommended');
+}
+if (verify.jsCodingStandard === 'Google') {
+  extendArr.push('google');
+}
+if (verify.jsCodingStandard === 'StandardJS') {
+  extendArr.push('standard');
+}
+
+
+if (app.projectType === 'node') {
+  plugins.push('node');
+  extendArr.push('plugin:node/recommended');
+  env.push('node');
+  env.push('mocha');
+}
+
+if (app.projectType === 'browser') {
+  env.push('browser');
+  env.push('jasmine');
+  env.push('protractor');
+}
+
+if (buildJS.sourceFormat === 'ES6') {
+  env.push('es6');
+}
+
+
+if (buildJS.framework[0] === 'AngularJS 1.x') {
+  globals.push('angular');
+}
+
 -%>
+confit:
+  extends: &confit-extends <% if (!extendArr.length) { %>[]<% }  else { %>
+    <% extendArr.forEach(function(item) { %>- <%- item %>
+    <% }) %><% } -%>
 
-<%
-if (buildJS.sourceFormat === 'ES6') { -%>
-ecmaFeatures:
-  modules: true
-<% } -%>
+  plugins: &confit-plugins <% if (!plugins.length) { %>[]<% }  else { %>
+    <% plugins.forEach(function(item) { %>- <%- item %>
+    <% }) %><% } -%>
+
+  env: &confit-env
+    commonjs: true    # For Webpack, CommonJS
+    <% env.forEach(function(item) { %><%- item %>: true
+    <% }) %><% -%>
+
+  globals: &confit-globals <% if (!globals.length) { %>{}<% }  else { %>
+    <% globals.forEach(function(item) { %><%- item %>: true
+    <% }) %><% } -%>
+
+  parser: &confit-parser <%- (app.projectType === 'browser') ? 'babel-eslint' : 'espree' %>
+
+  parserOptions: &confit-parserOptions
+    ecmaVersion: 6
+    sourceType: module
+    ecmaFeatures:
+      globalReturn: false
+      impliedStrict: true
+      jsx: false
 
 # END_CONFIT_GENERATED_CONTENT
+
+# Customise this section to meet your needs...
+
+extends: *confit-extends
+  # Uncomment this next line if you need to add more items to the array, and remove the "*confit-extends" from the line above
+  # <<: *confit-extends
+
+plugins: *confit-plugins
+  # Uncomment this next line if you need to add more items to the array, and remove the "*confit-plugins" from the line above
+  # <<: *confit-extends
+
+env:
+  <<: *confit-env
+
 globals:
   <<: *confit-globals
 
+parser: *confit-parser
+
+parserOptions:
+  <<: *confit-parserOptions
+
 rules:
   max-len:
-    - 2       # Warning
+    - warn
     - 200     # Line Length

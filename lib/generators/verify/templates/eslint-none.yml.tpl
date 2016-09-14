@@ -1,1 +1,0 @@
-extends: defaults/configurations/off

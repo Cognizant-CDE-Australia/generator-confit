@@ -56,9 +56,9 @@ $packages:
     name: babel-core
     version: 6.14.0
 
-  - &pkg_babel-eslint     # See https://github.com/babel/babel-eslint to choose the correct version based on version of ESLint
+  - &pkg_babel-eslint
     name: babel-eslint
-    version: 4.1.8
+    version: 6.1.2
 
   - &pkg_babel-loader
     name: babel-loader
@@ -82,7 +82,7 @@ $packages:
 
   - &pkg_commitizen
     name: commitizen
-    version: 2.8.2
+    version: 2.8.6
     global: true
 
   - &pkg_core-js
@@ -108,23 +108,43 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 1.10.3
+    version: 3.5.0
 
-  - &pkg_eslint-config-defaults
-    name: eslint-config-defaults
-    version: 8.0.2
+  - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
+    name: eslint-config-airbnb
+    version: 11.1.0
 
-  - &pkg_eslint-plugin-react
+  - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
+    name: eslint-plugin-import
+    version: 1.14.0
+
+  - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
+    name: eslint-plugin-jsx-a11y
+    version: 2.2.2
+
+  - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
-    version: 3.16.1
+    version: 6.2.1
 
-  - &pkg_eslint-config-standard
+  - &pkg_eslint-config-google     # Required for Google
+    name: eslint-config-google
+    version: 0.6.0
+
+  - &pkg_eslint-config-standard   # Required for Standard
     name: eslint-config-standard
-    version: 4.4.0
+    version: 6.0.0
 
-  - &pkg_eslint-plugin-standard
+  - &pkg_eslint-plugin-node       # Required for Node
+    name: eslint-plugin-node
+    version: 2.0.0
+
+  - &pkg_eslint-plugin-standard   # Required by StandardJS
     name:  eslint-plugin-standard
-    version: 1.3.1
+    version: 2.0.0
+
+  - &pkg_eslint-plugin-promise    # Required by StandardJS
+    name: eslint-plugin-promise
+    version: 2.0.1
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin

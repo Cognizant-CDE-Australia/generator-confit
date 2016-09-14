@@ -37,7 +37,6 @@
     "generators",
     "lib",
     "projectType",
-    "test",
     "*.md"
   ],
   "main": "lib/generators/app/index.js",
@@ -71,7 +70,8 @@
     "updateFixtures": "node test/updateFixtures.js",
     "verify": "npm run verify:js --silent",
     "verify:js": "eslint -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js success",
-    "verify:js:watch": "chokidar 'lib/**/*.js' 'test/**/*.js' 'config/**/*.js' -c 'npm run verify:js' --initial --silent",
+    "verify:js:fix": "eslint --fix -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js:fix success",
+    "verify:js:watch": "chokidar 'lib/**/*.js' 'test/**/*.js' 'config/**/*.js' -c 'npm run verify:js:fix' --initial --silent",
     "verify:watch": "npm run verify:js:watch --silent"
   },
   "config": {
@@ -106,11 +106,11 @@
     "async": "1.5.2",
     "basscss": "8.0.1",
     "chokidar-cli": "1.2.0",
-    "commitizen": "2.8.1",
     "cz-customizable": "4.0.0",
     "cz-customizable-ghooks": "1.3.0",
-    "eslint": "1.10.3",
-    "eslint-config-defaults": "8.0.2",
+    "eslint": "3.5.0",
+    "eslint-config-google": "0.6.0",
+    "eslint-plugin-node": "2.0.0",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "gh-pages": "0.11.0",

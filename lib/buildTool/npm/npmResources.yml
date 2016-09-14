@@ -277,8 +277,7 @@ testUnit:
                 completeTestPaths.push(path + ext);
               });
             });
-          %>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent
-      #tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
+          -%>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent<% -%>
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Mocha
@@ -316,7 +315,7 @@ verify:
         - >
           <% var verifyTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName);
              var verifyCmd = (verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + verifyTasks.join(' ');
-          %><%- verifyCmd -%> --silent
+          -%><%- verifyCmd -%> --silent<% -%>
       description: Verify code style and syntax
       features:
         - Verifies source *and test code* aginst customisable rules (unlike Webpack loaders)
@@ -326,7 +325,7 @@ verify:
         - >
           <% var verifyWatchTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName + ':watch');
              var verifyCmdWatch = (verifyWatchTasks.length > 1 ? 'npm-run-all --parallel ' : 'npm run ') + verifyWatchTasks.join(' ');
-          %><%- verifyCmdWatch -%> --silent
+          -%><%- verifyCmdWatch -%> --silent<% -%>
       description: Runs verify task whenever JS or CSS code is changed
       features: []
 
@@ -345,8 +344,23 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+              -%>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
+
+        - name: verify:js:fix
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              -%>eslint --fix -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
+          description: Verify Javascript code style and syntax and fix any errors that can be fixed automatically
 
         - name: verify:js:watch
           tasks:
@@ -360,10 +374,13 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+              -%>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js:fix' --initial --silent<% -%>
           description: Verify Javascript code style and syntax and watch files for changes
 
     AirBnB:
+      <<: *verify:js
+
+    ESLint:
       <<: *verify:js
 
     Google:
