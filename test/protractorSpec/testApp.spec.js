@@ -1,7 +1,6 @@
 'use strict';
 
 describe('Verify App build', function() {
-
   var pages = require('./pages');
   var page1 = pages.page1();
   var page2 = pages.page2();
@@ -47,5 +46,4 @@ describe('Verify App build', function() {
     expect(browser.getCurrentUrl()).toContain('page1');
     expect(page1.heading.getText()).toEqual('This is page 1');
   });
-
 });

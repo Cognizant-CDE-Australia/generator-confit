@@ -11,6 +11,16 @@ module.exports = {
   runGenerator: runGenerator
 };
 
+/**
+ * Runs the generator
+ *
+ * @param {String} generatorName    The name of the generator to run
+ * @param {String} confitFixture    The name of the initial confit fixture
+ * @param {Function} beforeTestCb   Function to run before generator
+ * @param {Function} afterCb        Function to run after generator (contains expectations)
+ * @param {Function} errorCb        Function to run on error
+ * @return {GeneratorHelper}       The GeneratorHelper instance, to allow further function calls.
+ */
 function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, errorCb) {
   let generatorFullName = path.join(__dirname, '../../../lib/generators/' + generatorName);
   let testDir;
@@ -30,7 +40,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, error
         testDir = dir;
         try {
           beforeTestCb(testDir);
-        } catch(e) {
+        } catch (e) {
           console.error('generator before handler exception', e);
         }
       })
@@ -62,7 +72,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, error
         }
         try {
           afterCb(testDir);
-        } catch(e) {
+        } catch (e) {
           console.error('generator after handler exception', e);
         }
       });

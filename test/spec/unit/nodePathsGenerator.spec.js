@@ -9,8 +9,7 @@ const yaml = require('js-yaml');
 const GENERATOR_UNDER_TEST = 'paths';
 
 describe('Node Paths Generator', () => {
-
-  it('should should generate default path values', (done) => {
+  it('should should generate default path values', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -37,7 +36,7 @@ describe('Node Paths Generator', () => {
   });
 
 
-  it('should allow the default paths to be changed', (done) => {
+  it('should allow the default paths to be changed', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -52,13 +51,13 @@ describe('Node Paths Generator', () => {
         done();
       }
     ).withPrompts({
-      useDefaults: false,
+      'useDefaults': false,
       'input.srcDir': 'willy/'
     });
   });
 
 
-  it('should convert invalid paths into valid paths', (done) => {
+  it('should convert invalid paths into valid paths', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -74,7 +73,7 @@ describe('Node Paths Generator', () => {
         done();
       }
     ).withPrompts({
-      useDefaults: false,
+      'useDefaults': false,
       'input.srcDir': './dotSlash/',
       'input.modulesSubDir': '   ',
       'output.reportDir': '   '
@@ -82,7 +81,7 @@ describe('Node Paths Generator', () => {
   });
 
 
-  it('should throw an error if a path contains ../', (done) => {
+  it('should throw an error if a path contains ../', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -93,13 +92,13 @@ describe('Node Paths Generator', () => {
         done();
       }
     ).withPrompts({
-      useDefaults: false,
+      'useDefaults': false,
       'output.reportDir': 'a/../b//c/d'
     });
   });
 
 
-  it('should throw an error if a path is an absolute path', (done) => {
+  it('should throw an error if a path is an absolute path', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -110,9 +109,8 @@ describe('Node Paths Generator', () => {
         done();
       }
     ).withPrompts({
-      useDefaults: false,
+      'useDefaults': false,
       'config.configDir': '/up/a/dir'
     });
   });
-
 });

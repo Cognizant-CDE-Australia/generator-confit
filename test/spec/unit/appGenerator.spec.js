@@ -10,6 +10,13 @@ const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'app';
 
+/**
+ * Helper function to reduce boilerplate code
+ * @param {string} confitFixture    Fixture to use with Confit
+ * @param {Function} beforeTestCb   Function to call before running generator
+ * @param {Function} assertionCb    Function to call after running generator
+ * @return {GeneratorHelper}        Generator Helper object
+ */
 function runGenerator(confitFixture, beforeTestCb, assertionCb) {
   return utils.runGenerator(
     GENERATOR_UNDER_TEST,
@@ -38,8 +45,7 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
 
 
 describe('App Generator', () => {
-
-  it('should add an "app" section to the confit.json file with valid data inside it', (done) => {
+  it('should add an "app" section to the confit.json file with valid data inside it', done => {
     runGenerator('app-config.json',
       function beforeTest() {
         let confit = fs.readJsonSync('confit.json');
@@ -58,7 +64,7 @@ describe('App Generator', () => {
         // Verify that the buildProfile values have no spaces in them (they should be the simple key, not the label)
         assert(app.buildProfile.indexOf(' ') === -1, 'buildProfile is a simple key');
 
-        //fs.readdirSync(testDir).forEach(file => console.log(file));
+        // fs.readdirSync(testDir).forEach(file => console.log(file));
         done();
       }
     ).withPrompts({
@@ -69,7 +75,7 @@ describe('App Generator', () => {
   });
 
 
-  it('should create an .editorConfig, package.json and confit.yml file when they do not exist', (done) => {
+  it('should create an .editorConfig, package.json and confit.yml file when they do not exist', done => {
     let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml'];
 
     runGenerator('app-config.json',
@@ -88,7 +94,7 @@ describe('App Generator', () => {
   });
 
 
-  it('should not create a license file when the license type is UNLICENSED', (done) => {
+  it('should not create a license file when the license type is UNLICENSED', done => {
     runGenerator('app-config.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
@@ -105,12 +111,12 @@ describe('App Generator', () => {
   });
 
 
-  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', (done) => {
+  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', done => {
     runGenerator('app-withCopyrightOwner.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
       },
-      function afterTest(/*dir*/) {
+      function afterTest(/* dir*/) {
         yoassert.file('LICENSE');
 
         let confit = yaml.load(fs.readFileSync('confit.yml'));
@@ -132,7 +138,7 @@ describe('App Generator', () => {
   });
 
 
-  it('should not overwrite an existing .editorconfig file', (done) => {
+  it('should not overwrite an existing .editorconfig file', done => {
     let originalContents = 'dummy data' + new Date();
 
     runGenerator('app-config.json',
@@ -153,14 +159,14 @@ describe('App Generator', () => {
   });
 
 
-  it('should not overwrite an existing package.json file with a template, but will add additional data', (done) => {
+  it('should not overwrite an existing package.json file with a template, but will add additional data', done => {
     let originalContents = {name: 'name-is-required', description: 'abc'};
 
     runGenerator('app-config.json',
       function beforeTest(testDir) {
         fs.writeJsonSync(testDir + '/package.json', originalContents);
-        //fs.readdirSync(testDir).forEach(file => console.log('b', file));
-        //let contents = fs.readJsonSync(path.join(testDir, 'package.json'));
+        // fs.readdirSync(testDir).forEach(file => console.log('b', file));
+        // let contents = fs.readJsonSync(path.join(testDir, 'package.json'));
       },
       function afterTest(testDir) {
         let newContents = fs.readJsonSync(testDir + '/package.json');
@@ -177,7 +183,7 @@ describe('App Generator', () => {
     });
   });
 
-  it('should generate scripts in package.json', (done) => {
+  it('should generate scripts in package.json', done => {
     runGenerator('app-config.json',
       function before(testDir) {
         yoassert.noFile(['package.json']);

@@ -43,6 +43,7 @@ env:
 globals:
   <<: *confit-globals
   expect: true
+  jasmine: true
 
 parser: *confit-parser
 

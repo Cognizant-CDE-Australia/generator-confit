@@ -35,9 +35,10 @@ exports.config = {
   reportWriters: [
     function jUnitReporter(confitFixtureFileName) {
       var JasmineReporters = require('jasmine-reporters');
+      var path = require('path');
 
       jasmine.getEnv().addReporter(new JasmineReporters.JUnitXmlReporter({
-        savePath: __dirname + '/../reports/e2e',
+        savePath: path.join(__dirname, '/../reports/e2e'),
         filePrefix: 'junit-' + confitFixtureFileName + '-',
         consolidateAll: false
       }));
@@ -60,7 +61,7 @@ exports.config = {
     return browser.getProcessedConfig().then(function(config) {
       // Attach the reporters
       config.reportWriters.forEach(function(fn) {
-        fn.call(null, process.env.FIXTURE);
+        fn(process.env.FIXTURE);
       });
     });
   },

@@ -42,6 +42,8 @@ app:
 
 
 documentation:
+  GITHUB_PUBLISH_METHOD: GitHub   # This is a special documentation method, so this global is handy to refer to it in code
+
   defaults:
     generateDocs: true
     srcDir: docs/

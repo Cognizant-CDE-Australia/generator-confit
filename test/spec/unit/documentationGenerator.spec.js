@@ -8,20 +8,23 @@ const yaml = require('js-yaml');
 
 const GENERATOR_UNDER_TEST = 'documentation';
 
+/**
+ * Helper function to generate a package.json file
+ * @param {string} testDir    Directory to create the package.json file
+ */
 function writeBasicPackageJson(testDir) {
   // Create a package.json file with a name and repository, so that the swanky.config.yaml file is correct
   fs.writeJsonSync(testDir + '/package.json', {
     name: 'some-name',
     repository: {
-      'url': 'https://blah/foo/bar'
+      url: 'https://blah/foo/bar'
     }
   });
 }
 
 
 describe('Documentation Generator', () => {
-
-  it('should should generate default documentation values when the project is not hosted on GitHub', (done) => {
+  it('should should generate default documentation values when the project is not hosted on GitHub', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -68,7 +71,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should should generate different default documentation values when the project is hosted on GitHub', (done) => {
+  it('should should generate different default documentation values when the project is hosted on GitHub', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-GitHub-config.yml',
@@ -101,7 +104,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should not ask for extra values when the user does not want documentation', (done) => {
+  it('should not ask for extra values when the user does not want documentation', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -129,7 +132,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should allow the default values to be changed', (done) => {
+  it('should allow the default values to be changed', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -159,7 +162,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should generate the correct config for generating the documentation for the default settings', (done) => {
+  it('should generate the correct config for generating the documentation for the default settings', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -184,7 +187,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should generate the correct config for generating the documentation for Github publishing', (done) => {
+  it('should generate the correct config for generating the documentation for Github publishing', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -211,7 +214,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should generate the correct config for generating the documentation for cloud publishing', (done) => {
+  it('should generate the correct config for generating the documentation for cloud publishing', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -238,7 +241,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should generate Angular-specific config and files when the framework is AngularJS 1.x', (done) => {
+  it('should generate Angular-specific config and files when the framework is AngularJS 1.x', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'browser-documentation-GitHub-config.yml',
@@ -277,7 +280,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should convert invalid paths into valid paths', (done) => {
+  it('should convert invalid paths into valid paths', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -301,7 +304,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should throw an error if a path contains ../', (done) => {
+  it('should throw an error if a path contains ../', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -319,7 +322,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should throw an error if a path is an absolute path', (done) => {
+  it('should throw an error if a path is an absolute path', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -335,5 +338,4 @@ describe('Documentation Generator', () => {
       srcDir: '/full/path/dir'
     });
   });
-
 });

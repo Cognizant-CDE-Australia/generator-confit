@@ -8,7 +8,7 @@ const path = require('path');
 const basePath = path.join(__dirname, '/<%= relativePath %>');
 
 // If the documentation.publish mechanism is GitHub, do this:
-<% if (documentation.publishMethod === 'GitHub') {
+<% if (documentation.publishMethod === resources.documentation.GITHUB_PUBLISH_METHOD) {
      var repoUrl = pkg.repository.url;
      var CIRepoUrl = 'https://\' + process.env.GH_TOKEN + \'@github.com/' + repoUrl.split('github.com/')[1];
 %>
