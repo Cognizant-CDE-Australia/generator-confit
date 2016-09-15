@@ -29,7 +29,7 @@ const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
 const TEST_SUITE_M_OF_N = process.env.TEST_SUITE_M_OF_N;
 
 
-/*
+/**
  * Allow the test runner to run tests in series (helpful for debugging) or in parallel.
  *
  * node testRunner.js [--sequence]
@@ -45,10 +45,15 @@ function main() {
   let processRunner = runInSequence ? 'spawnSync' : 'spawn';
   let asyncMethod = runInSequence ? 'waterfall' : 'parallel';
 
-
+  /**
+   * Runs a command
+   * @param {string} cmd        Command to run
+   * @param {string} cmdParams  Parameters for the command
+   * @param {Object} envData    Environment variables to apply to the command's process
+   * @return {Promise}         Promise that will resolve when command completes/exits
+   */
   function promiseRunner(cmd, cmdParams, envData) {
     return new Promise(function(resolve, reject) {
-
       let proc = childProc[processRunner](cmd, cmdParams, {
         stdio: 'inherit',    // send the child console output to the parent process (us)
         // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
@@ -65,6 +70,13 @@ function main() {
     });
   }
 
+  /**
+   * Runs Confit
+   * @param {string} fixtureDir   Fixture directory
+   * @param {string} fixture      Fixture file name
+   * @param {string} testDir      Test directory
+   * @return {Promise}           Promise that will resolve when command completes/exits
+   */
   function runConfit(fixtureDir, fixture, testDir) {
     return promiseRunner(CONFIT_CMD, CONFIT_PARAMS, {
       FIXTURE: fixture,
@@ -75,7 +87,13 @@ function main() {
     });
   }
 
-
+  /**
+   * Runs Mocha
+   * @param {stiring} fixtureDir  Fixture directory
+   * @param {string} fixture      Fixture file name
+   * @param {string} testDir      Test directory
+   * @return {Promise}           Promise that will resolve when command completes/exits
+   */
   function runMocha(fixtureDir, fixture, testDir) {
     return promiseRunner(MOCHA_CMD, MOCHA_PARAMS, {
       FIXTURE: fixture,
@@ -87,6 +105,10 @@ function main() {
   }
 
 
+  /**
+   * Determines whether the test ended successfully or not
+   * @param {number} code   Exit code from the process
+   */
   function processResults(code) {
     let isSuccess = code === 0;
 
@@ -102,7 +124,11 @@ function main() {
     }
   }
 
-
+  /**
+   * Executes Confit with a test fixture
+   * @param {string} fixture    Fixture file name
+   * @return {Promise}         Promise that will resolve when command completes/exits
+   */
   function testConfitFixture(fixture) {
     confitMsg(chalk.white('Running test for'), chalk.white.bold(fixture));
     let testDir = path.join(TEST_DIR, fixture.replace('.yml', ''), '/');
@@ -110,27 +136,35 @@ function main() {
     // Install Confit first, wait for it to complete, then start the Mocha spec
     confitMsg(chalk.white('Running Confit generator...'));
 
-    return runConfit(FIXTURE_DIR, fixture, testDir).then(function success() {
-      confitMsg(chalk.white('... finished running Confit generator.'));
+    return runConfit(FIXTURE_DIR, fixture, testDir).then(
+      function success() {
+        confitMsg(chalk.white('... finished running Confit generator.'));
 
-      confitMsg(chalk.white('Running Mocha for', fixture, '...'));
-      return runMocha(FIXTURE_DIR, fixture, testDir);
-
-    }).then(function success(code) { processResults(code); }, function failure(code) { processResults(code); });
+        confitMsg(chalk.white('Running Mocha for', fixture, '...'));
+        return runMocha(FIXTURE_DIR, fixture, testDir);
+      }
+    ).then(
+      function success(code) {
+        processResults(code);
+      },
+      function failure(code) {
+        processResults(code);
+      }
+    );
   }
 
 
-  async[asyncMethod](fixtures.map((fixture) => async.asyncify(function() {
+  async[asyncMethod](fixtures.map(fixture => async.asyncify(function() {
     testConfitFixture(fixture);
   })));
 }
 
-/*
+/**
  * Get a list of fixture files from a directory that do NOT start with x but end with '.yml'.
  * Additionally, if a fixture starts with '-' it is a 'solo' fixture... ONLY run this fixture.
  *
- * @param dir                 The directory to search
- * @returns {Array.<String>}  The list of files found that match the criteria
+ * @param {String} dir        The directory to search
+ * @return {Array.<String>}   The list of files found that match the criteria
  */
 function getFixtures(dir) {
   // Get a list of files that end in '.yml' from the directory, that do not start with 'x'
@@ -148,29 +182,37 @@ function getFixtures(dir) {
     return chunk;
   }
 
-
   // get a list of the files that start with '-'. If there are any return them, otherwise return everything
   let soloFiles = files.filter(file => file.charAt(0) === '-');
 
   return soloFiles.length ? soloFiles : files;
 }
 
-
+/**
+ * Displays a Confit message to the console
+ */
 function confitMsg() {
   console.info.apply(null, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
 }
 
-// Copied from: http://stackoverflow.com/questions/8188548/splitting-a-js-array-into-n-arrays
+/**
+ * Splits an array into a number of chunks
+ * Copied from: http://stackoverflow.com/questions/8188548/splitting-a-js-array-into-n-arrays
+ *
+ * @param {Array} a           Source array
+ * @param {Number} n          Number of chunks to create
+ * @param {boolean} balanced  Whether to have the chunks balanced or not
+ * @return {Array}           An array of arrays, broken up into "n" chunks
+ */
 function chunkify(a, n, balanced) {
-
   if (n < 2) {
     return [a];
   }
 
-  let len = a.length,
-    out = [],
-    i = 0,
-    size;
+  let len = a.length;
+  let out = [];
+  let i = 0;
+  let size;
 
   if (len % n === 0) {
     size = Math.floor(len / n);

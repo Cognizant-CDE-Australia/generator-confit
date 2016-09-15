@@ -39,7 +39,7 @@
 	 * @private
 	 * @param {Boolean}  deep     If true, do a deep (or recursive) merge [optional]
 	 * @param {Object}   objects  The objects to merge together
-	 * @returns {Object}          Merged values of defaults and options
+	 * @return {Object}          Merged values of defaults and options
 	 */
 	var extend = function () {
 
@@ -247,7 +247,7 @@
 	 * @link https://gist.github.com/gre/1650294
 	 * @param {String} type Easing pattern
 	 * @param {Number} time Time animation should take to complete
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	var easingPattern = function ( type, time ) {
 		var pattern;
@@ -272,7 +272,7 @@
 	 * @param {Element} anchor The anchor element to scroll to
 	 * @param {Number} headerHeight Height of a fixed header, if any
 	 * @param {Number} offset Number of pixels by which to offset scroll
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	var getEndLocation = function ( anchor, headerHeight, offset ) {
 		var location = 0;
@@ -289,7 +289,7 @@
 	/**
 	 * Determine the viewport's height
 	 * @private
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	var getViewportHeight = function() {
         	return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -298,7 +298,7 @@
 	/**
 	 * Determine the document's height
 	 * @private
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	var getDocumentHeight = function () {
 		return Math.max(
@@ -312,7 +312,7 @@
 	 * Convert data-options attribute into an object of key/value pairs
 	 * @private
 	 * @param {String} options Link-specific options as a data attribute string
-	 * @returns {Object}
+	 * @return {Object}
 	 */
 	var getDataOptions = function ( options ) {
 		return !options || !(typeof JSON === 'object' && typeof JSON.parse === 'function') ? {} : JSON.parse( options );

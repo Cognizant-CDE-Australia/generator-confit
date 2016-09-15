@@ -167,53 +167,54 @@ verify:
       taskName: verify:js
       codingStandardExpression: config.verify.jsCodingStandard
 
+  # Common config across implementations
+  baseJSConfig: &jsCodingStandardBase
+    packages: &jsCodingBasePackages
+      - <<: *pkg_eslint
+      - <<: *pkg_eslint-plugin-node
+    templateFiles:
+      - src: eslintignore.yml.tpl
+        dest: .eslintignore
+        overwrite: true
+      - src: eslint.yml
+        dest: <%= paths.config.configDir %>verify/.eslintrc
+        overwrite: true
+
   jsCodingStandard:
+    # These keys are used in the UI...
     none:
+      <<: *jsCodingStandardBase
       supportedSourceFormat: ['ES6']
-      packages:
-        - <<: *pkg_eslint
-        - <<: *pkg_eslint-config-defaults
-      templateFiles:
-        - src: eslintignore.tpl
-          dest: .eslintignore
-        - src: eslint.yml
-          dest: <%= paths.config.configDir %>verify/.eslintrc
 
     AirBnB:
+      <<: *jsCodingStandardBase
       supportedSourceFormat: ['ES6']
       packages:
-        - <<: *pkg_eslint
-        - <<: *pkg_eslint-config-defaults
+        - *jsCodingBasePackages
+        - <<: *pkg_eslint-config-airbnb
+        - <<: *pkg_eslint-plugin-import
         - <<: *pkg_eslint-plugin-react
-        - <<: *pkg_babel-eslint
-      templateFiles:
-        - src: eslintignore.tpl
-          dest: .eslintignore
-        - src: eslint.yml
-          dest: <%= paths.config.configDir %>verify/.eslintrc
+        - <<: *pkg_eslint-plugin-jsx-a11y
+
+    ESLint:
+      <<: *jsCodingStandardBase
+      supportedSourceFormat: ['ES6']
 
     Google:
+      <<: *jsCodingStandardBase
       supportedSourceFormat: ['ES6']
       packages:
-        - <<: *pkg_eslint
-        - <<: *pkg_eslint-config-defaults
-      templateFiles:
-        - src: eslintignore.tpl
-          dest: .eslintignore
-        - src: eslint.yml
-          dest: <%= paths.config.configDir %>verify/.eslintrc
+        - *jsCodingBasePackages
+        - <<: *pkg_eslint-config-google
 
     StandardJS:
+      <<: *jsCodingStandardBase
       supportedSourceFormat: ['ES6']
       packages:
-        - <<: *pkg_eslint
+        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-standard
         - <<: *pkg_eslint-plugin-standard
-      templateFiles:
-        - src: eslintignore.tpl
-          dest: .eslintignore
-        - src: eslint.yml
-          dest: <%= paths.config.configDir %>verify/.eslintrc
+        - <<: *pkg_eslint-plugin-promise
 
     TypeScript:
       supportedSourceFormat: ['TypeScript']

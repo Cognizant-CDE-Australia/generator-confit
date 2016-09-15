@@ -16,19 +16,25 @@ let srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
 let useExistingNodeModules = true;    // Try to preserve node_modules between test runs
 let cleanTestDir = !(useExistingNodeModules || true);
 
-/*
+runGenerator();
+
+/**
  * Runs the confit:app generator
  *
- * @param testDir                Where to run the generator
- * @param srcConfitFilename      The path to the fixture file, which is copied to the testDir
- * @param useExistingNodeModules Boolean to indicate whether to try to re-use any existing node_modules directory (default: true)
- * @returns {Promise}
+ * @param {String} testDir                Where to run the generator
+ * @param {String} srcConfitFilename      The path to the fixture file, which is copied to the testDir
+ * @param {String} useExistingNodeModules Boolean to indicate whether to try to re-use any existing node_modules directory (default: true)
+ * @return {Promise}             Promise
  */
 function runGenerator() {
   return new Promise(install);
 }
 
-
+/**
+ * Installs Confit
+ * @param {Function} resolve  Function to call when installation succeeds
+ * @param {Function} reject   Function to call when installation fails
+ */
 function install(resolve, reject) {
   let destConfitConfigPath = path.join(testDirName, CONFIT_FILE_NAME);
   let previousCWD = process.cwd();  // Remember this, so we can return to this directory later
@@ -96,15 +102,18 @@ function install(resolve, reject) {
         process.chdir(previousCWD);
         resolve(config);
       });
-
-  } catch(err) {
+  } catch (err) {
     process.chdir(previousCWD);
     console.log(err);
     reject(err);
   }
 }
 
-
+/**
+ * Removes all files and directories
+ * @param {string} dir                Directory to clean
+ * @param {Boolean} cleanEverything   If true, removes everything. If false, keeps node_modules/ and confit.yml.previous.
+ */
 function clean(dir, cleanEverything) {
   fs.ensureDirSync(dir);
 
@@ -114,24 +123,26 @@ function clean(dir, cleanEverything) {
     // Keep the node_modules directory and CONFIT_FILE_NAME + .previous
     let files = fs.readdirSync(dir).filter(file => file !== 'node_modules' && file !== CONFIT_FILE_NAME + '.previous');
 
-    //console.log('Deleting:', files.join('\n'));
+    // console.log('Deleting:', files.join('\n'));
     files.forEach(function(file) {
       fs.removeSync(path.join(dir, file));
     });
   }
 }
 
-
+/**
+ * Returns true if both configs are identical
+ * @param {string} newConfigName    Name of the new config file
+ * @return {Boolean}                True if the newConfigName is identical to the previous config
+ */
 function isConfigIdentical(newConfigName) {
   let oldConfigName = newConfigName + '.previous';
 
   try {
     fs.statSync(oldConfigName).isFile();    // Produces an error if the file does not exist
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 
   return _.isEqual(fs.readFileSync(oldConfigName), fs.readFileSync(newConfigName));
 }
-
-runGenerator();

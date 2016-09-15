@@ -8,10 +8,8 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'zzfinish';
 
 describe('zzFinish Generator', () => {
-
   describe('should generate a README.md file', () => {
-
-    it('with the appropriate sections and content', (done) => {
+    it('with the appropriate sections and content', done => {
       utils.runGenerator(
         GENERATOR_UNDER_TEST,
         'zzFinish-browser-config.json',
@@ -45,7 +43,7 @@ describe('zzFinish Generator', () => {
     });
 
 
-    it('with different license content when the app has a license', (done) => {
+    it('with different license content when the app has a license', done => {
       utils.runGenerator(
         GENERATOR_UNDER_TEST,
         'zzFinish-node-withLicense.json',
@@ -74,8 +72,7 @@ describe('zzFinish Generator', () => {
 
 
   describe('should generate a CONTRIBUTING.md file', () => {
-
-    it('with the appropriate sections and content', (done) => {
+    it('with the appropriate sections and content', done => {
       utils.runGenerator(
         GENERATOR_UNDER_TEST,
         'zzFinish-browser-config.json',
@@ -112,7 +109,7 @@ describe('zzFinish Generator', () => {
     });
 
 
-    it('with a directory structure for Browser projects', (done) => {
+    it('with a directory structure for Browser projects', done => {
       utils.runGenerator(
         GENERATOR_UNDER_TEST,
         'zzFinish-browser-config.json',
@@ -161,7 +158,7 @@ describe('zzFinish Generator', () => {
       );
     });
 
-    it('with a directory structure for Node projects', (done) => {
+    it('with a directory structure for Node projects', done => {
       utils.runGenerator(
         GENERATOR_UNDER_TEST,
         'zzFinish-node-withLicense.json',

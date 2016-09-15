@@ -13,6 +13,10 @@ const FIXTURE_DIR = path.join(baseDir, 'test/fixtures/');
 
 main();
 
+
+/**
+ * Finds the generator versions and calls updateFixtures() after gathering the version numbers
+ */
 function main() {
   // Update the generators used by every project type
   let generatorFiles = _.uniq([':app'].concat(
@@ -27,7 +31,7 @@ function main() {
   let generatorName = resources.readYaml(baseDir + 'lib/core/resources.yml').rootGeneratorName;
 
   // Calculate the checksum on each generator file, then once that's done, update the fixtures
-  async.each(generatorFiles, (item, cb)  => {
+  async.each(generatorFiles, (item, cb) => {
     checksum.file(item.file, function(err, checksum) {
       item.version = checksum;
       cb(err);
@@ -35,7 +39,14 @@ function main() {
   }, () => updateFixtures(FIXTURE_DIR, generatorName, generatorFiles));
 }
 
-
+/**
+ * Updates a single integration test fixtures to have the latest Confit generator versions
+ * for each sub-generator.
+ *
+ * @param {string} dir                  Directory name
+ * @param {string} rootGeneratorName    Root generator name
+ * @param {string} generatorVersionInfo generator version number
+ */
 function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
   // Get the files
   let files = fs.readdirSync(dir)

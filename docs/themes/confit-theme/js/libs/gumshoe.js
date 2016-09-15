@@ -61,7 +61,7 @@
 	 * @private
 	 * @param {Boolean}  deep     If true, do a deep (or recursive) merge [optional]
 	 * @param {Object}   objects  The objects to merge together
-	 * @returns {Object}          Merged values of defaults and options
+	 * @return {Object}          Merged values of defaults and options
 	 */
 	var extend = function () {
 
@@ -114,7 +114,7 @@
 	/**
 	 * Get the document element's height
 	 * @private
-	 * @returns {Number}
+	 * @return {Number}
 	 */
 	var getDocumentHeight = function () {
 		return Math.max(
@@ -260,7 +260,7 @@
 	/**
 	 * Determine which navigation element is currently active and run activation method
 	 * @public
-	 * @returns {Object} The current nav data.
+	 * @return {Object} The current nav data.
 	 */
 	gumshoe.getCurrentNav = function () {
 

@@ -3,12 +3,17 @@
 const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
+const path = require('path');
 
 const VERIFY_CMD = 'npm run verify';
-const FIXTURE_DIR = __dirname + '/fixtures/';
+const FIXTURE_DIR = path.join(__dirname, '/fixtures/');
 
-// Pass the confit config to this module... (use module.exports
 
+/**
+ * Runs a command with an options I/O mode
+ * @param {string} ioMode   Can be 'pipe', or 'inherit' or any other
+ * @return {Process}        Process instance
+ */
 function runCommand(ioMode) {
   // If there is an error, an exception will be thrown
   return childProc.execSync(VERIFY_CMD, {
@@ -19,9 +24,7 @@ function runCommand(ioMode) {
 
 
 module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
-
   describe('npm run verify', () => {
-
     it('should not find errors in the sampleApp code', () => {
       // The verify command should contain the "thumbs-up" code when there are no errors
       let consoleData;
@@ -44,7 +47,7 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
     if (confitConfig.verify.jsCodingStandard !== 'none') {
       describe('- JS Coding Standards', () => {
         let jsFixtureFile = 'js-syntax-fail.js';
-        let destFixtureFile =  srcDir + jsFixtureFile;
+        let destFixtureFile = srcDir + jsFixtureFile;
 
         before(() => {
           fs.copySync(FIXTURE_DIR + jsFixtureFile, destFixtureFile);
@@ -66,7 +69,7 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
     if (confitConfig.buildCSS && confitConfig.buildCSS.sourceFormat !== 'css') {
       describe('- CSS Linting', () => {
         let cssFixtureFile = 'css-lint-fail.css';
-        let destFixtureFile =  process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
+        let destFixtureFile = process.env.TEST_DIR + confitConfig.paths.input.modulesDir + process.env.SAMPLE_APP_MODULE_DIR +
                                confitConfig.paths.input.stylesDir + cssFixtureFile;
 
         before(function() {

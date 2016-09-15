@@ -1,3 +1,4 @@
+# START_CONFIT_GENERATED_CONTENT
 # Common folders to ignore
 node_modules/*
 bower_components/*
@@ -9,3 +10,4 @@ bower_components/*
 # Sample project
 <%= paths.input.srcDir + demoDir %>*
 <% } -%>
+# END_CONFIT_GENERATED_CONTENT
