@@ -1,0 +1,15 @@
+generator-confit:
+  app:
+    buildProfile: Latest
+    projectType: browser
+    repositoryType: GitHub
+
+  paths:
+    input: {}
+    output: {}
+    config:
+      configDir: config/
+
+  buildJS:
+    framework:
+      - AngularJS 1.x

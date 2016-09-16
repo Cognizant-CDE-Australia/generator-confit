@@ -1,0 +1,50 @@
+generator-confit:
+  app:
+    _version: e4068007c2b244a3510165ffe60be44396919b2f
+    buildProfile: Latest
+    copyrightOwner: Brett Uglow
+    license: Apache-2.0
+    projectType: node
+    repositoryType: GitHub
+  paths:
+    _version: eab25c1e2ab68f10ed4586f634847751a89fb213
+    config:
+      configDir: config/
+    input:
+      srcDir: lib/
+      unitTestDir: test/
+    output:
+      prodDir: dist/
+      reportDir: reports/
+  buildJS:
+    _version: af120d905dd1fd946a932bd3c31ce18348ebf6a8
+    framework: []
+    frameworkScripts: []
+    outputFormat: ES6
+    sourceFormat: ES6
+  entryPoint:
+    _version: f6984dece1ce3e76617cbceeb0bed2b652dc2dac
+    entryPoints:
+      main:
+        - lib/generators/app/index.js
+  testUnit:
+    _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
+    testDependencies: []
+  verify:
+    _version: cb4a07a6b6fbcb8ba01c2c08742d4b688b8482d7
+    jsCodingStandard: Google
+  release:
+    _version: e8fac51ba6e3eb50b9f7d7da0684744c8b557611
+    commitMessageFormat: Conventional
+    useSemantic: true
+  sampleApp:
+    _version: bf7e250179d67f2adb641046e953478ac862bdeb
+    createSampleApp: false
+  zzfinish: {}
+  documentation:
+    _version: 253035278b3fb287d8f06a0435ec7a98eeb9f88b
+    createSampleDocs: false
+    generateDocs: true
+    outputDir: webdocs/
+    publishMethod: GitHub
+    srcDir: docs/

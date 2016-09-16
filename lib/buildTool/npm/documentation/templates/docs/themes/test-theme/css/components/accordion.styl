@@ -1,0 +1,17 @@
+:global
+  .sd-accordion:hover
+    cursor: pointer
+    
+  .sd-accordion-active
+    border-bottom-right-radius: 0 !important
+    border-bottom-left-radius: 0 !important
+
+  div.sd-panel
+    max-height: 0
+    overflow: hidden
+    transition: 0.25s ease-in-out
+    opacity: 0
+
+  div.sd-panel.sd-show
+    opacity: 1
+    max-height: 1000px

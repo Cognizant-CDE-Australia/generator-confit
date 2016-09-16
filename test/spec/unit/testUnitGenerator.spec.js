@@ -10,8 +10,7 @@ const GENERATOR_UNDER_TEST = 'testUnit';
 
 
 describe('testUnit Generator', () => {
-
-  it('should generate test config when there are no test dependencies due to a JS framework', (done) => {
+  it('should generate test config when there are no test dependencies due to a JS framework', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testUnit-no-test-deps.json',
@@ -30,7 +29,7 @@ describe('testUnit Generator', () => {
   });
 
 
-  it('should generate test dependencies when there are IS a JS framework which has test dependencies', (done) => {
+  it('should generate test dependencies when there are IS a JS framework which has test dependencies', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testUnit-framework-with-test-deps.json',
@@ -55,5 +54,4 @@ describe('testUnit Generator', () => {
       }
     );
   });
-
 });

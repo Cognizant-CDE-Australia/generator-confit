@@ -2,7 +2,6 @@ buildBrowser:
   packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
-    - <<: *pkg_lodash   # Used by the webpack-dev-server
 
   tasks:
     - name: build:dev
@@ -55,16 +54,7 @@ buildHTML:
 
 buildJS:
   sourceFormat:
-    ES6:
-      packages:
-        - <<: *pkg_babel-core
-        - <<: *pkg_babel-runtime
-        - <<: *pkg_babel-loader
-        - <<: *pkg_babel-preset-es2015
-        - <<: *pkg_babel-plugin-add-module-exports    # Adds export for the "default" export: module.exports = exports['default']; See http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default/34778391#34778391
-
-    ES5:
-      packages: []
+    ES6: {}   # Inherit from resources.yml
 
     TypeScript:
       packages:
@@ -270,24 +260,11 @@ serverDev:
 testUnit:
   # Use different coverage loaders for TypeScript as there currently isn't a loader that understands TypeScript natively?
   sourceFormat:
-    ES5:
-      loaderType: preLoaders
-      loaderName: isparta-instrumenter-loader
-      packages:
-        - <<: *pkg_isparta-instrumenter-loader
-
     ES6:
-      loaderType: preLoaders
-      loaderName: isparta-instrumenter-loader
-      query:
-        babel:
-          presets: ['es2015']
       packages:
-        - <<: *pkg_isparta-instrumenter-loader
+        - <<: *pkg_babel-plugin-istanbul
 
     TypeScript:
-      loaderType: postLoaders
-      loaderName: istanbul-instrumenter-loader
       packages:
         - <<: *pkg_istanbul-instrumenter-loader
 
@@ -297,7 +274,6 @@ testUnit:
     - <<: *pkg_karma-coverage
     - <<: *pkg_karma-jasmine
     - <<: *pkg_karma-junit-reporter
-    - <<: *pkg_karma-ng-html2js-preprocessor   # TODO: Shouldn't this be conditional? Or is it even needed with Webpack, if you require() HTML templates?
     - <<: *pkg_karma-phantomjs-launcher
     - <<: *pkg_karma-sourcemap-loader
     - <<: *pkg_karma-threshold-reporter
@@ -371,6 +347,7 @@ testUnit:
         which can then be used to change the default value of `testFilesRegEx`.
 
 zzfinish:
+  # TODO: Move this to the buildBrowser tool, except for the onEnd command
   packages:
     - <<: *pkg_extract-text-webpack-plugin
 

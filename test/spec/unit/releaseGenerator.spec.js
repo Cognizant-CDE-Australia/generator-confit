@@ -8,8 +8,7 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'release';
 
 describe('Release Generator', () => {
-
-  it('should generate a pre-push hook', (done) => {
+  it('should generate a pre-push hook', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -22,7 +21,7 @@ describe('Release Generator', () => {
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();
       }
@@ -32,7 +31,8 @@ describe('Release Generator', () => {
     });
   });
 
-  it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
+
+  it('should generate a commit message template and a hook when using conventional commit messages', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -49,7 +49,7 @@ describe('Release Generator', () => {
         assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
         assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
         assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
-        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:unit:once --silent');
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();
       }
@@ -60,7 +60,7 @@ describe('Release Generator', () => {
   });
 
 
-  it('should NOT generate a commit message template when NOT using conventional commit messages', (done) => {
+  it('should NOT generate a commit message template when NOT using conventional commit messages', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -87,7 +87,7 @@ describe('Release Generator', () => {
   });
 
 
-  it('should generate a "release" and a "semantic-release" script for semantic releases', (done) => {
+  it('should generate a "release" and a "semantic-release" script for semantic releases', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -110,7 +110,7 @@ describe('Release Generator', () => {
   });
 
 
-  it('should generate only a "release" script for non-semantic releases', (done) => {
+  it('should generate only a "release" script for non-semantic releases', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -133,7 +133,7 @@ describe('Release Generator', () => {
   });
 
 
-  it('should generate a "pre-release" script for non-semantic releases on GitHub and does not use the semantic-release-cli module', (done) => {
+  it('should generate a "pre-release" script for non-semantic releases on GitHub and does not use the semantic-release-cli module', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-github-repo-conventional-commit.json',
@@ -156,14 +156,14 @@ describe('Release Generator', () => {
   });
 
 
-  it('should generate a "pre-release" script for semantic releases on GitHub and use semantic-release-cli module', (done) => {
+  it('should generate a "pre-release" script for semantic releases on GitHub and use semantic-release-cli module', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-github-repo-conventional-commit.json',
       function before() { },
-      function after(/*testDir*/) {
+      function after(/* testDir*/) {
         yoassert.file(['package.json']);
-        //fs.readdirSync(testDir).forEach(file => console.log(file));
+        // fs.readdirSync(testDir).forEach(file => console.log(file));
 
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
@@ -171,7 +171,7 @@ describe('Release Generator', () => {
         assert(pkg.scripts['pre-release'].length > 0, 'scripts.release exists');
         assert(pkg.scripts['semantic-release'] === undefined, 'scripts.semantic-release does not exist');
         // This package is scheduled to be installed globally, so it doesn't show up in the dependency list
-        //assert(pkg.devDependencies['semantic-release-cli'] !== undefined, 'semantic-release-cli package exists');
+        // assert(pkg.devDependencies['semantic-release-cli'] !== undefined, 'semantic-release-cli package exists');
         done();
       }
     ).withPrompts({
@@ -179,5 +179,4 @@ describe('Release Generator', () => {
       commitMessageFormat: 'Conventional'
     });
   });
-
 });

@@ -1,0 +1,15 @@
+<div class="{$ styles['code-snippet'] $}">
+    <div class="{$ styles['example-wrapper'] $}">
+        {$ template $}
+    </div>
+    <div class="{$ styles['window-bar'] $} sd-accordion">
+        <div class="{$ styles.circles $}">
+            <span class="{$ styles.circle $} {$ styles['circle-red'] $}"></span>
+            <span class="{$ styles.circle $} {$ styles['circle-yellow'] $}"></span>
+            <span class="{$ styles.circle $} {$ styles['circle-green'] $}"></span>
+        </div>
+    </div>
+    <div class="{$ styles['code-wrapper'] $} sd-panel">
+        <pre class="line-numbers"><code class="language-markup">{$ encode(template) $}</code></pre>
+    </div>
+</div>

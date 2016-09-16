@@ -1,0 +1,21 @@
+// Base
+html, body
+  height 100%
+
+html
+  font-size 62.5% // 1rem = 10px
+
+body
+  font-size 1.4rem
+  font-family 'Open Sans', sans-serif
+  overflow-x hidden
+
+.section
+  margin-bottom: 6rem
+  &:after
+    @extend .clearfix
+
+.row
+  margin-bottom 4rem
+  &:after
+    @extend .clearfix

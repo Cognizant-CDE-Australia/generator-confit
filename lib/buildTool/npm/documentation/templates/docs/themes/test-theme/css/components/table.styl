@@ -1,0 +1,36 @@
+// Table styles
+// Copied from https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css
+// ...and tweaked a little
+
+table.table
+  border-spacing: 0
+  border-collapse: collapse
+  margin-top: 0
+  margin-bottom: 16px
+  width: 100%
+  overflow: auto
+  word-break: normal
+  word-break: keep-all
+
+
+td.td, th.th
+  padding 10px
+
+
+table.table th.th
+  text-align: left
+  font-weight: bold
+
+
+table.table th.th, table.table td.td
+  padding: 6px 13px
+  border: 1px solid $border-colour
+
+
+table.table tr.tr
+  background-color: #fff
+  border-top: 1px solid $grey-smoke
+
+
+table.table tr.tr:nth-child(2n)
+  background-color: $alabaster

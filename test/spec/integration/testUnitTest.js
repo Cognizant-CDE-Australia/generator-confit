@@ -3,45 +3,47 @@
 const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
+const path = require('path');
 
-const FIXTURE_DIR = __dirname + '/fixtures/';
+const FIXTURE_DIR = path.join(__dirname, '/fixtures/');
 
-// Pass the confit config to this module... (use module.exports
-
+/**
+ * Runs the specified command
+ * @param {string} cmd   Command to run
+ * @return {Process}     Process instance
+ */
 function runCommand(cmd) {
   // If there is an error, an exception will be thrown
   return childProc.execSync(cmd, {
-    //stdio: 'inherit', // Don't send output to the parent, return it to the callee instead (so that tests can check the output)
+    // stdio: 'inherit', // Don't send output to the parent, return it to the callee instead (so that tests can check the output)
     cwd: process.env.TEST_DIR
   });
 }
 
 
 module.exports = function(confitConfig, unitTestPath, commandToRun) {
-
   describe(commandToRun, () => {
-
     it('should pass the unit tests in the sampleApp code', function() {
       assert.doesNotThrow(() => runCommand(commandToRun));
     });
 
     // We get a table of results like this, which we need to filter to find 'All  files
-    //----------------|----------|----------|----------|----------|----------------|
-    //File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
-    //----------------|----------|----------|----------|----------|----------------|
-    //demoModule/    |    80.95 |      100 |    33.33 |    76.47 |                |
-    //app.js        |    78.57 |      100 |       25 |    72.73 |       15,26,27 |
-    //demoModule.js |    85.71 |      100 |       50 |    83.33 |              9 |
-    //----------------|----------|----------|----------|----------|----------------|
-    //All files       |    80.95 |      100 |    33.33 |    76.47 |                |
-    //----------------|----------|----------|----------|----------|----------------|
+    // ----------------|----------|----------|----------|----------|----------------|
+    // File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+    // ----------------|----------|----------|----------|----------|----------------|
+    // demoModule/    |    80.95 |      100 |    33.33 |    76.47 |                |
+    // app.js        |    78.57 |      100 |       25 |    72.73 |       15,26,27 |
+    // demoModule.js |    85.71 |      100 |       50 |    83.33 |              9 |
+    // ----------------|----------|----------|----------|----------|----------------|
+    // All files       |    80.95 |      100 |    33.33 |    76.47 |                |
+    // ----------------|----------|----------|----------|----------|----------------|
 
     it('should have 100% branch coverage for the test files', () => {
       let result = runCommand(commandToRun).toString();
 
       console.log(result);
       let results = result.split('\n');
-      //let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
+      // let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
 
       // console.log(fileLine);
 

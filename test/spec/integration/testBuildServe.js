@@ -9,7 +9,10 @@ const yaml = require('js-yaml');
 
 const CONFIT_CMD = 'npm run build:serve';
 
-
+/**
+ * Runs Protractor tests inside a browser
+ * @param {url} baseUrl   The URL of the website that is being tested
+ */
 function runBrowserTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
@@ -19,15 +22,13 @@ function runBrowserTest(baseUrl) {
   });
 
   if (proc.status !== 0) {
-    throw new Error('' + proc.error);
+    throw new Error(String(proc.error));
   }
 }
 
 
 module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
-
   describe('npm run build:serve', () => {
-
     let baseUrl;
 
     before(() => {
@@ -67,7 +68,13 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
   });
 };
 
-
+/**
+ * Helper function to modify the Confit.serverDEV/PROD config as it changes before each test
+ * @param {string} testDir                      Test directory where Confit file is located
+ * @param {number} port                         Port number of server
+ * @param {Object} configData                   serverDEV or ServerPROD
+ * @return {{baseUrl: string, details: Object}} Server configuration info
+ */
 function modifyConfitServerConfig(testDir, port, configData) {
   // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
   let confitData = yaml.load(fs.readFileSync(testDir + 'confit.yml'));
@@ -82,6 +89,14 @@ function modifyConfitServerConfig(testDir, port, configData) {
   };
 }
 
+
+/**
+ * Helper function to modify the package.json config as well as the confit.yml config as it changes before each test
+ * @param {string} testDir                      Test directory where Confit file is located
+ * @param {number} port                         Port number of server
+ * @param {Object} configData                   serverDEV or ServerPROD
+ * @return {{baseUrl: string, details: Object}} Server configuration info
+ */
 function modifyPackageServerConfig(testDir, port, configData) {
   // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
   const pkg = fs.readJsonSync(testDir + 'package.json');

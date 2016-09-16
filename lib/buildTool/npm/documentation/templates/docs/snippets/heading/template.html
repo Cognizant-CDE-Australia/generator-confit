@@ -1,0 +1,10 @@
+<div class="heading-wrapper">
+  <div class="heading-meta">
+    <div class="heading-label">{$ data.label if data.label else 'Heading 01' $}</div>
+    <div class="heading-font">{$ data.font if data.font else 'Arial' $}</div>
+    <div class="heading-size">{$ data.size if data.size else '22px' $}</div>
+  </div>
+  <div class="heading-example">
+    <{$ data.heading if data.heading else 'h1' $}>{$ data.text if data.text else 'The five boxing wizards jump quickly.' $}</{$ data.heading if data.heading else 'h1' $}>
+  </div>
+</div>

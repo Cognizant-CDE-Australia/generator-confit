@@ -6,16 +6,19 @@
 
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var testFilesRegEx = new RegExp(paths.input.unitTestDir.replace(/\//g, '\\/') + ".*spec\\.(" + jsExtensions.join('|') + ")$");
+var testFilesGlob = '**/' + paths.input.unitTestDir + '*.spec.(' + jsExtensions.join('|') + ')';
 
 // We only want to test the SOURCE FILES, but we still must IMPORT the test dependencies
 -%>
 var DefinePlugin = require('webpack').DefinePlugin;   // Needed to pass the testFilesRegEx to test.files.js
 var testFilesRegEx = <%= testFilesRegEx.toString() %>;
+var testFilesGlob = '<%- testFilesGlob %>';
 
 // Customise the testFilesRegEx to filter which files to test, if desired.
 // E.g.
 // if (process.argv.indexOf('--spec') !== -1) {
 //   testFilesRegEx = ...
+//   testFilesGlob = ...
 // }
 // END_CONFIT_GENERATED_CONTENT
 
@@ -27,10 +30,35 @@ var srcFileRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + ".*
 
 var configPath = paths.config.configDir + 'testUnit/';
 var relativePath = configPath.replace(/([^/]+)/g, '..');
+var preprocessorList = ['webpack', 'sourcemap'];
+
+// The Non-TypeScript code-coverage plugin doesn't need 'coverage' as a pre-processor.
+if (buildJS.sourceFormat === 'TypeScript') {
+  preprocessorList = ['coverage'].concat(preprocessorList);
+}
+
 -%>
 // We want to re-use the loaders from the dev.webpack.config
 var webpackConfig = require('./../webpack/dev.webpack.config.js');
-var preprocessorList = ['coverage', 'webpack', 'sourcemap'];
+var preprocessorList = ['<%- preprocessorList.join("', '") %>'];
+
+<% if (buildJS.sourceFormat === 'ES6') { %>
+// Modify the Babel loader to add the Istanbul Babel plugin for code coverage
+webpackConfig.module.loaders.forEach(loader => {
+  if (loader.loader === 'babel-loader') {
+    loader.query = loader.query || {};
+    loader.query.plugins = loader.query.plugins || [];
+    loader.query.plugins.push([
+      'istanbul',
+      {
+        'exclude': [
+          testFilesGlob
+        ]
+      }
+    ]);
+  }
+});
+<% } -%>
 
 var karmaConfig = {
   autoWatch: true,
@@ -99,27 +127,25 @@ var karmaConfig = {
   },
 
 <%
-// If the code is ES5 or ES6, we can use the instrumenter as a pre-loader, to instument the original source code
-// (which isparta understands).
 // For Typescript, there is no code coverage tool that understands TypeScript's source. So use a post-loader
-// to instrument the transpiled source code. This is less than ideal, but we are waiting for the tools to arrive
+// to instrument the transpiled source code. This is less than ideal, but we are waiting for the tools to improve.
 
 var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceFormat];
 %>
 
   webpack: {
     module: {
-      <%= testUnitSourceFormatConfig.loaderType %>: [
+      <% if (buildJS.sourceFormat === 'TypeScript') { %>
+      postLoaders: [
         // instrument only testing sources
         {
           test: <%= srcFileRegEx.toString() %>,
-          loader: '<%= testUnitSourceFormatConfig.loaderName %>',
+          loader: 'istanbul-instrumenter-loader',
           exclude: [
             /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/
-          ]<% if (testUnitSourceFormatConfig.query) { %>,
-          query: <%- printJson(testUnitSourceFormatConfig.query, 10) %><% } %>
+          ]
         }
-      ],
+      ],<% } %>
       loaders: webpackConfig.module.loaders
     },
     plugins: webpackConfig.plugins.concat([new DefinePlugin({

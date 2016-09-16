@@ -1,3 +1,122 @@
+documentation:
+  common:
+    packages:
+      - <<: *pkg_swanky-server
+      - <<: *pkg_swanky-processor-ngdocs
+      - <<: *pkg_prismjs
+      - <<: *pkg_http-server
+      - <<: *pkg_latest-version
+
+    tasks:
+      - name: docs:dev
+        tasks: ['NODE_ENV=development node <%- paths.config.configDir %>docs/serve.dev.js']
+        description: Creates a development-version of the documentation website and watches for changes.
+
+      - name: docs:build
+        tasks: ['NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir %>docs/swanky.webpack.config.js --colors']
+        description: Creates a production-version of the documentation website in the `<%- documentation.outputDir %>`.
+
+      - name: docs:build:serve
+        tasks: ['docs:build', 'docs:serve']
+        description: Builds then serves (via a web server) the production website.
+
+      - name: docs:serve
+        tasks: ['http-server <%- documentation.outputDir %> -o']
+        description: Builds then serves (via a web server) the production website.
+
+      - name: docs:prepublish
+        tasks: ['node <%- paths.config.configDir %>docs/prepublish.js']
+        description: Updates the information in `swanky.config.yaml` with production settings. This is designed to allow the documentation to be generated AFTER the NPM package has been successfully published.
+
+      - name: docs:postpublish
+        tasks: ['node <%- paths.config.configDir %>docs/postpublish.js']
+        description: Updates the information in `swanky.config.yaml` back to the development settings.
+
+
+    templateFiles:
+      - src: config/serve.dev.js.tpl
+        dest: <%- paths.config.configDir %>docs/serve.dev.js
+        overwrite: true
+      - src: config/swanky.webpack.config.js.tpl
+        dest: <%- paths.config.configDir %>docs/swanky.webpack.config.js
+        overwrite: true
+      - src: config/prepublish.js.tpl
+        dest: <%- paths.config.configDir %>docs/prepublish.js
+        overwrite: true
+      - src: config/postpublish.js.tpl
+        dest: <%- paths.config.configDir %>docs/postpublish.js
+        overwrite: true
+      # Have a single, common Swanky config file which has logic for each framework. This makes it easier to copy
+      # entire directory trees but treat this single file as special.
+      - src: swanky.config.yaml.tpl
+        dest: <%- documentation.srcDir %>/swanky.config.yaml
+        overwrite: true
+
+
+  manual:
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
+
+      - name: docs:_publish
+        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        description:
+
+    templateFiles:
+      - src: config/publish.js.tpl
+        dest: <%- paths.config.configDir %>docs/publish.js
+        overwrite: true
+
+  GitHub:
+    packages:
+      - <<: *pkg_gh-pages
+
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        description: Publishes the documentation to GitHub's /gh-pages branch
+
+      - name: docs:_publish
+        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        description:
+
+    templateFiles:
+      - src: config/publish.js.tpl
+        dest: <%- paths.config.configDir %>docs/publish.js
+        overwrite: true
+
+  cloud:
+    packages:
+      - <<: *pkg_now
+      - <<: *pkg_now-serve
+
+    tasks:
+      - name: docs:publish
+        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        description: Publishes the documentation to the cloud using `now`. This will require some setup when using from a CI server.
+
+      - name: docs:_publish
+        tasks: ['ns <%- documentation.outputDir %>']
+        description:
+
+  # If create sample app, copy everything under docs
+  sampleDocs:
+    templateFiles:
+      - src: docs/**/*
+        dest: <%- documentation.srcDir %>
+        overwrite: true
+        noParse: true
+
+  # Framework-specific content
+  frameworks:
+    AngularJS 1.x:
+      templateFiles:
+        - src: ng1/docs/**/*
+          dest: <%- documentation.srcDir %>
+          overwrite: true
+          noParse: true
+
 entryPoint:
   packageJsonConfig:
     - main: <%- entryPoint.entryPoints.main[0] %>
@@ -158,8 +277,7 @@ testUnit:
                 completeTestPaths.push(path + ext);
               });
             });
-          %>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent
-      #tasks: ['mocha --opts <%- paths.config.configDir %>testUnit/mocha.opts -w']
+          -%>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent<% -%>
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Mocha
@@ -197,7 +315,7 @@ verify:
         - >
           <% var verifyTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName);
              var verifyCmd = (verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + verifyTasks.join(' ');
-          %><%- verifyCmd -%> --silent
+          -%><%- verifyCmd -%> --silent<% -%>
       description: Verify code style and syntax
       features:
         - Verifies source *and test code* aginst customisable rules (unlike Webpack loaders)
@@ -207,7 +325,7 @@ verify:
         - >
           <% var verifyWatchTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName + ':watch');
              var verifyCmdWatch = (verifyWatchTasks.length > 1 ? 'npm-run-all --parallel ' : 'npm run ') + verifyWatchTasks.join(' ');
-          %><%- verifyCmdWatch -%> --silent
+          -%><%- verifyCmdWatch -%> --silent<% -%>
       description: Runs verify task whenever JS or CSS code is changed
       features: []
 
@@ -226,8 +344,23 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+              -%>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
+
+        - name: verify:js:fix
+          tasks:
+            - >
+              <%
+                var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+                var jsSourcePaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.', paths.config.configDir + '**/*.'];
+                var completeJSPaths = [];
+                jsSourcePaths.forEach(function(path) {
+                  jsExtensions.forEach(function(ext) {
+                    completeJSPaths.push(path + ext);
+                  });
+                });
+              -%>eslint --fix -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
+          description: Verify Javascript code style and syntax and fix any errors that can be fixed automatically
 
         - name: verify:js:watch
           tasks:
@@ -241,10 +374,13 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+              -%>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js:fix' --initial --silent<% -%>
           description: Verify Javascript code style and syntax and watch files for changes
 
     AirBnB:
+      <<: *verify:js
+
+    ESLint:
       <<: *verify:js
 
     Google:

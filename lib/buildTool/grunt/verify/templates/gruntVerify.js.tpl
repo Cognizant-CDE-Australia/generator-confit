@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     jsFiles = jsExtensions.map(ext => paths.input.srcDir + '**/*.' + ext).concat(jsExtensions.map(ext => paths.config.configDir + '**/*.' + ext));
   }
 -%>
-<% if (hasJSConfig && buildJS.sourceFormat === 'ES5' || buildJS.sourceFormat === 'ES6') {
+<% if (hasJSConfig && buildJS.sourceFormat === 'ES6') {
   lintTasks.push('eslint:all'); -%>
     eslint: {
       options: {

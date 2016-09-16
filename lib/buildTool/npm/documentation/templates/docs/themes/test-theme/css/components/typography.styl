@@ -1,0 +1,112 @@
+/*
+ * Swanky Theme
+ * Typography
+ */
+
+body
+  line-height rem(22)
+
+h1.h1, h2.h2, h3.h3, h4.h4, h5.h5, h6.h6
+  font-weight 300
+  font-family 'Open Sans', sans-serif
+  display block
+
+h1.h1
+  font-size 3rem
+
+h2.h2
+  font-size 2.2rem
+  padding 0 0 2rem
+  margin 2rem 0 4rem
+  border-bottom 1px solid $border-colour
+  width 100%
+
+h3.h3
+  font-size 1.8rem
+  margin 2rem 0 2rem
+
+h4.h4
+  font-size 1.6rem
+  margin 2rem 0 2rem
+
+h5.h5
+  font-size 1.3rem
+
+h6.h6
+  font-size 1.1rem
+
+strong.strong
+  font-weight 600
+
+// Links
+a.a, &:visited
+  color $brand-secondary
+  text-decoration none
+
+  &:hover
+    text-decoration underline
+
+blockquote.blockquote
+  margin 0 0 6rem 0
+  padding 0 20px
+  font-style italic
+  background: red
+  border-left 2px solid $brand-tertiary
+
+p.p
+  max-width 800px
+
+p.p, ul.ul, ol.ol
+  margin-bottom 1.5rem
+
+hr.hr
+  margin-top 40px
+  margin-bottom 40px
+  border 0
+  border-top 1px solid $border-colour
+
+em.em
+  font-style italic
+
+pre.pre, code.code
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace
+  font-size: 95%
+
+.column-layout
+  .p
+    max-width: none
+
+  @media screen and (min-width: $screen-is-bigger-than-md-desktop)
+    column-count 2
+    column-gap 4rem
+
+.lead
+  margin 0 0 6rem 0
+  padding 0 20px
+  border-left 2px solid $brand-tertiary
+  @extend .column-layout
+
+.page-header
+  padding 0 0 20px
+  box-sizing border-box
+  margin-bottom 40px
+  border-bottom 1px solid $border-colour
+
+  @media screen and (min-width: $screen-is-bigger-than-tablet)
+    margin 0
+    position fixed
+    padding: 0;
+    height: $header-height
+    line-height: $header-height
+    width 100%
+    background #fff
+    top 0;
+    z-index 10
+
+.text-block
+  border-left 2px solid $brand-primary
+  padding-left 30px
+  margin 0 0 20px 0
+
+.text-center
+  text-align center

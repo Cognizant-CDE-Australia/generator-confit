@@ -1,0 +1,11 @@
+<section id="{$ id $}" class="{$ styles.section $}">
+    {% if (title and hasPreprocessor) %}
+        {% if hasParent %}
+            <h3 class="{$ styles.h3 $}">{$ title $}</h3>
+        {% else %}
+            <h2 class="{$ styles.h2 $}">{$ title $}</h2>
+        {% endif %}
+    {% endif %}
+
+    {$ content $}
+</section>

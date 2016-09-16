@@ -7,13 +7,11 @@ const assert = require('assert');
 let originalSepValue = path.sep;
 
 describe('Webpack Helpers', () => {
-
   afterEach(() => {
     path.sep = originalSepValue;
   });
 
   describe('pathRegex()', () => {
-
     it('should convert a regular expression written in Unix/OSX format into a platform specific format', () => {
       path.sep = '_'; // Can use any separator, but in practice, the path.sep separator will be used
       let actual = helpers.pathRegEx(/a\/b/);

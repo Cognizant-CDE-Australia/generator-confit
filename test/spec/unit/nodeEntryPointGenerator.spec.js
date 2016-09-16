@@ -9,7 +9,6 @@ const yaml = require('js-yaml');
 const GENERATOR_UNDER_TEST = 'entryPoint';
 
 describe('Node EntryPoint Generator', () => {
-
   it('should should generate a default "main" entry in package.json for an ES6 sourceType', function(done) {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
@@ -39,7 +38,7 @@ describe('Node EntryPoint Generator', () => {
   });
 
 
-  it('should should generate a default "main" entry in package.json for a Typescript sourceType', (done) => {
+  it('should should generate a default "main" entry in package.json for a Typescript sourceType', done => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-entryPoint-TypeScript-config.json',
@@ -68,7 +67,7 @@ describe('Node EntryPoint Generator', () => {
   });
 
 
-  it('should be changed by the sampleApp generator to point to the sampleApp entry point', (done) => {
+  it('should be changed by the sampleApp generator to point to the sampleApp entry point', done => {
     utils.runGenerator(
       'sampleApp',
       'node-entryPoint-sampleApp-config.json',

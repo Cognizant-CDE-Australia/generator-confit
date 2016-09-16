@@ -1,7 +1,6 @@
 'use strict';
 
 function page1() {
-
   var page = {
     get: function() {
       browser.get('/');

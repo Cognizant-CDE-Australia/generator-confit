@@ -1,3 +1,4 @@
+# START_CONFIT_GENERATED_CONTENT
 # Common folders to ignore
 node_modules/*
 bower_components/*
@@ -5,7 +6,11 @@ bower_components/*
 # Config folder (optional - you might want to lint this...)
 config/*
 
+# END_CONFIT_GENERATED_CONTENT
+
 # ignore the test fixtures which are designed to trigger errors
+test/protractorSpec/*
 test/spec/integration/fixtures/*
-lib/buildTool/webpack/sampleApp/templates/*
+lib/buildTool/**/templates/**/*
+lib/generators/**/templates/**/*
 

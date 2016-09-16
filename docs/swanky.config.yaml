@@ -1,0 +1,39 @@
+# START_CONFIT_GENERATED_CONTENT
+title: generator-confit
+repo: https://github.com/odecee/generator-confit.git
+version: 0.0.0-semantically-released
+src: docs
+output: webdocs
+# serverPath will only be set when publishing the documentation
+serverPath:
+# END_CONFIT_GENERATED_CONTENT
+
+theme: docs/themes/confit-theme
+snippets: docs/snippets
+
+sections:
+
+  - title: Overview
+    content: docs/content/overview.md
+
+  - title: Usage
+    content: docs/content/usage.md
+
+  - title: Upgrading
+    content: docs/content/upgrading.md
+
+  - title: How it works
+    content: docs/content/architecture.md
+
+  - title: Contributing
+    content: CONTRIBUTING.md
+
+#  - title: Test
+#    content: docs/content/test.md
+
+    # Add sub-sections later
+#
+#  - title: API Doc
+#    content: lib/core/buildToolUtils.js
+#    processor:
+#      ngdocs: null
