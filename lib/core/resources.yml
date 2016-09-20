@@ -255,30 +255,6 @@ readme:
     <% }); %>
 
 
-# Where do we put this? It is conditional
-#  CN_VISUAL_REGRESSION_TEST: |
-#    ## Adding visual regression tests
-#
-#    You can create visual regression tests by placing them in a `<%- paths.input.visualRegressionTestDir %>` folder in any of your module folders (alongside `<%- paths.input.systemTestDir %>` and `<%- paths.input.unitTestDir %>`)
-#
-#    There is an example of scenario you can run:
-#
-#    ```js
-#    module.exports = {
-#      label: 'My Homepage',
-#      url: '/',
-#      selectors: [
-#        'header',
-#        'footer',
-#      ]
-#    };
-#    ```
-#
-#    You can either write your scenario in JSON or JavaScript.
-#    To run your visual regression tests you can use those commands:
-#    <pre>npm run test:css:ref</pre> | Create reference data
-#    <pre>npm run test:css</pre> | Run your visual regression tests against the reference data
-
 
 release:
   configSubDir: release/

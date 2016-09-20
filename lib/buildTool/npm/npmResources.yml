@@ -314,12 +314,14 @@ testVisualRegression:
   tasks:
     - name: test:visual
       tasks: ['cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
-      description: Run visual regression tests. Note that the web server must be already running for this command to work.
-      features: []
+      description: Run visual regression tests against the *development* web server (the development server **must** be running)
+      features:
+        - You can create visual regression tests by placing them in the `<%- testVisualRegression.moduleTestDir %>` folder inside any of your module folders (e.g. `<%- paths.input.srcDir + resources.sampleApp.demoDir + testVisualRegression.moduleTestDir %>`)
+        - "Example scenario:<pre>module.exports = {<br>  label: 'My Homepage',<br>  url: '/',<br>  selectors: ['header', 'footer']<br>};</pre>"
 
     - name: test:visual:ref
       tasks: ['cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
-      description: Creates visual regression testing reference images, to be used as the baseline for future tests. Note that the web server must be already running for this command to work.
+      description: Creates visual regression testing reference images which are subsequently used as the baseline for future tests. The development server **must** be running.
       features: []
 
   templateFiles:

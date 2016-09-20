@@ -131,7 +131,11 @@ var karmaConfig = {
 // to instrument the transpiled source code. This is less than ideal, but we are waiting for the tools to improve.
 
 var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceFormat];
-var testSourcesToExclude = [paths.input.unitTestDir, paths.input.systemTestDir, paths.input.visualRegressionTestDir];
+var testSourcesToExclude = [paths.input.unitTestDir, paths.input.systemTestDir];
+
+if (testVisualRegression.enabled) {
+  testSourcesToExclude.push(testVisualRegression.moduleTestDir);
+}
 testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replace(/\//g, '\\/');});
 %>
 
