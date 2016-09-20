@@ -30,7 +30,7 @@ describe('test "' + fixtureFileName + '"', () => {
       usesGrunt = confitConfig.app.buildProfile === 'Webpack';  // The OLD webpack profile uses Grunt
       hasCSS = !usesGrunt;  // The OLD webpack profile uses Grunt
 
-      require('./testBrowserDev')(confitConfig, SERVER_MAX_WAIT_TIME);
+      require('./testSystemTest')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testVerify')(confitConfig, srcDir, !usesGrunt, hasCSS);
       require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage');

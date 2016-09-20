@@ -13,7 +13,7 @@ const CONFIT_CMD = 'npm run build:serve';
  * Runs Protractor tests inside a browser
  * @param {url} baseUrl   The URL of the website that is being tested
  */
-function runBrowserTest(baseUrl) {
+function runSystemTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
   let proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
@@ -61,7 +61,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
     it('should start a webserver and build the sampleApp correctly', () => {
       assert.ok(baseUrl, 'baseUrl should be defined, server took too long to load.');
-      assert.doesNotThrow(() => runBrowserTest(baseUrl));
+      assert.doesNotThrow(() => runSystemTest(baseUrl));
     });
 
     after(() => server.stop());

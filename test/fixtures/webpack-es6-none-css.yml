@@ -9,18 +9,19 @@ generator-confit:
     browserSupport:
       - latest
   paths:
-    _version: ae38d9f72494dfc52733f696179f88146722462f
+    _version: 0fd28189be86caaeaa7a286fae3096e6afd6cac3
     config:
       configDir: config/
     input:
       assetsDir: assets/
-      browserTestDir: browserTest/
       modulesDir: src/modules/
       modulesSubDir: modules/
       srcDir: src/
       stylesDir: styles/
+      systemTestDir: systemTest/
       templateDir: template/
       unitTestDir: unitTest/
+      visualRegressionTestDir: visualTest/
     output:
       assetsSubDir: assets/
       cssSubDir: css/
@@ -63,7 +64,7 @@ generator-confit:
     protocol: https
   testUnit:
     _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
-  testBrowser: {}
+  testSystem: {}
   verify:
     _version: 13b1fbd2c3000fd3f1c12e52a4e4ed33d2e72ae8
     jsCodingStandard: StandardJS
@@ -72,6 +73,6 @@ generator-confit:
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
-    _version: 4614571e9ea6cc48ede31fcd1bb73e632dc66fc7
+    _version: 589c5238028e73f3c51f24af25573cfe7a625c5d
     createSampleApp: true
   zzfinish: {}

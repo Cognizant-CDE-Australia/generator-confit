@@ -65,25 +65,6 @@ buildJS:
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
 
-cssRegression:
-  packages:
-    - <<: *pkg_backstopjs
-    - <<: *pkg_glob
-
-  tasks:
-      - name: test:css
-        tasks: ['cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir %>cssRegression/backstop.config.js']
-        description: Run css regression tests
-        features: []
-      - name: test:css:ref
-        tasks: ['cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir %>cssRegression/backstop.config.js']
-        description: Creates css regression testing references
-        features: []
-
-  templateFiles:
-      - src: cssRegression/backstop.config.js.tpl
-        dest: <%= paths.config.configDir %>cssRegression/backstop.config.js
-        overwrite: true
 
 # sampleApp configuration
 sampleApp:
@@ -289,7 +270,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -297,14 +278,14 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
+      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
@@ -321,15 +302,15 @@ testUnit:
 
   templateFiles:
     - src: karma.conf.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/karma.conf.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>karma.conf.js
       overwrite: true
 
     - src: karma.common.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/karma.common.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>karma.common.js
       overwrite: true
 
     - src: test.files.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/test.files.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>test.files.js
       overwrite: true
 
 
@@ -337,12 +318,12 @@ testUnit:
     extensionPoint:
       testUnit: >
         `npm test:unit` can be extended by modifying
-        <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
-        <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
+        <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.conf.js') %> and <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.common.js') %>.
+        <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'test.files.js') %> is generated from the entry points in the Confit configuration.
         It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
 
         Note that it is possible to run a subset of unit tests by passing a command line argument to Karma, and then modifying the `testFilesRegEx`
-        variable in <%= link(paths.config.configDir + 'testUnit/karma.common.js') %> to refer to the command line argument value.
+        variable in <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.common.js') %> to refer to the command line argument value.
         For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
         which can then be used to change the default value of `testFilesRegEx`.
 

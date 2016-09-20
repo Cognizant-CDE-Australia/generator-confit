@@ -28,7 +28,7 @@ var testFilesGlob = '<%- testFilesGlob %>';
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var srcFileRegEx = new RegExp(paths.input.modulesDir.replace(/\//g, '\\/') + ".*\\.(" + jsExtensions.join('|') + ")$");
 
-var configPath = paths.config.configDir + 'testUnit/';
+var configPath = paths.config.configDir + resources.testUnit.configSubDir;
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 var preprocessorList = ['webpack', 'sourcemap'];
 
@@ -94,11 +94,11 @@ var karmaConfig = {
 
   files: [
     'node_modules/phantomjs-polyfill/bind-polyfill.js',
-    '<%- paths.config.configDir %>testUnit/test.files.js'
+    '<%- paths.config.configDir + resources.testUnit.configSubDir %>test.files.js'
   ],
 
   preprocessors: {
-    '<%- paths.config.configDir %>testUnit/test.files.js': preprocessorList
+    '<%- paths.config.configDir + resources.testUnit.configSubDir %>test.files.js': preprocessorList
   },
 
 
@@ -131,18 +131,20 @@ var karmaConfig = {
 // to instrument the transpiled source code. This is less than ideal, but we are waiting for the tools to improve.
 
 var testUnitSourceFormatConfig = buildTool.testUnit.sourceFormat[buildJS.sourceFormat];
+var testSourcesToExclude = [paths.input.unitTestDir, paths.input.systemTestDir, paths.input.visualRegressionTestDir];
+testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replace(/\//g, '\\/');});
 %>
 
   webpack: {
     module: {
       <% if (buildJS.sourceFormat === 'TypeScript') { %>
       postLoaders: [
-        // instrument only testing sources
+        // instrument only testing *sources* (not the tests)
         {
           test: <%= srcFileRegEx.toString() %>,
           loader: 'istanbul-instrumenter-loader',
           exclude: [
-            /node_modules|<%= paths.input.unitTestDir.replace(/\//g, '\\/') %>|<%= paths.input.browserTestDir.replace(/\//g, '\\/') %>/
+            /node_modules|<%= testSourcesToExclude.join('|') %>/
           ]
         }
       ],<% } %>

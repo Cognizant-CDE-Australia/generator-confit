@@ -41,6 +41,9 @@
       "hostname": "localhost",
       "protocol": "https",
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
+    },
+    "sampleApp": {
+      "createSampleApp": true
     }
   }
 }

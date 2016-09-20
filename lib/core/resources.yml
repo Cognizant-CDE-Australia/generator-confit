@@ -43,6 +43,7 @@ app:
 
 documentation:
   GITHUB_PUBLISH_METHOD: GitHub   # This is a special documentation method, so this global is handy to refer to it in code
+  configSubDir: docs/
 
   defaults:
     generateDocs: true
@@ -212,7 +213,7 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% if (readme.buildTask) { objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testSystem), objectValues(readme.buildTask.testVisualRegression)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
@@ -253,33 +254,55 @@ readme:
 
     <% }); %>
 
-  CN_CSS_REGRESSION_TEST: |
-    ## Adding css regression test
 
-    You can create some visual regression tests by placing them in a `cssTest` folder in any of your module folder (along with `browserTest` and `unitTest`)
-
-    There is an example of scenario you can run:
-
-    ```js
-    module.exports = {
-      label: 'My Homepage',
-      url: '/',
-      selectors: [
-        'header',
-        'footer',
-      ]
-    };
-    ```
-
-    You can either write your scenario in JSOn or JavaScript.
-    To run your visual regression tests you can use those commands:
-    <pre>npm run test:css:ref</pre> | Create reference data
-    <pre>npm run test:css</pre> | Run your visual regression tests against the reference data
+# Where do we put this? It is conditional
+#  CN_VISUAL_REGRESSION_TEST: |
+#    ## Adding visual regression tests
+#
+#    You can create visual regression tests by placing them in a `<%- paths.input.visualRegressionTestDir %>` folder in any of your module folders (alongside `<%- paths.input.systemTestDir %>` and `<%- paths.input.unitTestDir %>`)
+#
+#    There is an example of scenario you can run:
+#
+#    ```js
+#    module.exports = {
+#      label: 'My Homepage',
+#      url: '/',
+#      selectors: [
+#        'header',
+#        'footer',
+#      ]
+#    };
+#    ```
+#
+#    You can either write your scenario in JSON or JavaScript.
+#    To run your visual regression tests you can use those commands:
+#    <pre>npm run test:css:ref</pre> | Create reference data
+#    <pre>npm run test:css</pre> | Run your visual regression tests against the reference data
 
 
 release:
+  configSubDir: release/
+
   packages:
     - <<: *pkg_ghooks
 
   packageJsonConfig:
     - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
+
+
+testSystem:
+  configSubDir: testSystem/
+
+testUnit:
+  configSubDir: testUnit/
+
+testVisualRegression:
+  configSubDir: testVisualRegression/
+
+  defaults:
+    enabled: true
+    moduleTestDir: visualTest/
+    referenceImageDir: visualRegressionTest/referenceImages/
+
+verify:
+  configSubDir: verify/

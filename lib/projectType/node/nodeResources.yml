@@ -177,7 +177,7 @@ verify:
         dest: .eslintignore
         overwrite: true
       - src: eslint.yml
-        dest: <%= paths.config.configDir %>verify/.eslintrc
+        dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc
         overwrite: true
 
   jsCodingStandard:
@@ -222,4 +222,4 @@ verify:
         - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
-          dest: <%= paths.config.configDir %>verify/tslint.json
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>tslint.json

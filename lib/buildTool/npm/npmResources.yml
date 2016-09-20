@@ -9,11 +9,11 @@ documentation:
 
     tasks:
       - name: docs:dev
-        tasks: ['NODE_ENV=development node <%- paths.config.configDir %>docs/serve.dev.js']
+        tasks: ['NODE_ENV=development node <%- paths.config.configDir + resources.documentation.configSubDir %>serve.dev.js']
         description: Creates a development-version of the documentation website and watches for changes.
 
       - name: docs:build
-        tasks: ['NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir %>docs/swanky.webpack.config.js --colors']
+        tasks: ['NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js --colors']
         description: Creates a production-version of the documentation website in the `<%- documentation.outputDir %>`.
 
       - name: docs:build:serve
@@ -25,26 +25,26 @@ documentation:
         description: Builds then serves (via a web server) the production website.
 
       - name: docs:prepublish
-        tasks: ['node <%- paths.config.configDir %>docs/prepublish.js']
+        tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>prepublish.js']
         description: Updates the information in `swanky.config.yaml` with production settings. This is designed to allow the documentation to be generated AFTER the NPM package has been successfully published.
 
       - name: docs:postpublish
-        tasks: ['node <%- paths.config.configDir %>docs/postpublish.js']
+        tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>postpublish.js']
         description: Updates the information in `swanky.config.yaml` back to the development settings.
 
 
     templateFiles:
       - src: config/serve.dev.js.tpl
-        dest: <%- paths.config.configDir %>docs/serve.dev.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>serve.dev.js
         overwrite: true
       - src: config/swanky.webpack.config.js.tpl
-        dest: <%- paths.config.configDir %>docs/swanky.webpack.config.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js
         overwrite: true
       - src: config/prepublish.js.tpl
-        dest: <%- paths.config.configDir %>docs/prepublish.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>prepublish.js
         overwrite: true
       - src: config/postpublish.js.tpl
-        dest: <%- paths.config.configDir %>docs/postpublish.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>postpublish.js
         overwrite: true
       # Have a single, common Swanky config file which has logic for each framework. This makes it easier to copy
       # entire directory trees but treat this single file as special.
@@ -57,15 +57,15 @@ documentation:
     tasks:
       - name: docs:publish
         tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
-        description: Publishes the documentation manually (edit <%- link(paths.config.configDir + 'docs/publish.js') %> to provide your implementation)
+        description: Publishes the documentation manually (edit <%- link(paths.config.configDir + resources.documentation.configSubDir + 'publish.js') %> to provide your implementation)
 
       - name: docs:_publish
-        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
         description:
 
     templateFiles:
       - src: config/publish.js.tpl
-        dest: <%- paths.config.configDir %>docs/publish.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js
         overwrite: true
 
   GitHub:
@@ -78,12 +78,12 @@ documentation:
         description: Publishes the documentation to GitHub's /gh-pages branch
 
       - name: docs:_publish
-        tasks: ['node <%- paths.config.configDir %>docs/publish.js']
+        tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
         description:
 
     templateFiles:
       - src: config/publish.js.tpl
-        dest: <%- paths.config.configDir %>docs/publish.js
+        dest: <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js
         overwrite: true
 
   cloud:
@@ -132,12 +132,12 @@ release:
 
       packageJsonConfig:
         - config.commitizen.path: node_modules/cz-customizable
-        - config.cz-customizable.config: <%- paths.config.configDir %>release/commitMessageConfig.js
+        - config.cz-customizable.config: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
         - config.ghooks.commit-msg: ./node_modules/cz-customizable-ghooks/lib/index.js $2
 
       templateFiles:
         - src: commitMessageConfig.js
-          dest: <%- paths.config.configDir %>release/commitMessageConfig.js
+          dest: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
           overwrite: false
 
       readme:
@@ -148,7 +148,7 @@ release:
               description: Commit changes to local repository using Commitizen
               features:
                 - Asks questions about the change to generate a valid conventional commit message
-                - Can be customised by modifying <%- link(paths.config.configDir + 'release/commitMessageConfig.js') %>
+                - Can be customised by modifying <%- link(paths.config.configDir + resources.release.configSubDir + 'commitMessageConfig.js') %>
 
       onInstall:
         - cmd: git    # It is safe to run this multiple times
@@ -166,7 +166,7 @@ release:
 
         tasks:
           - name: pre-release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
             description: |
               Verify code, run unit tests, check test coverage, build software. This task is designed to be run before
               the `semantic-release` task.
@@ -180,7 +180,7 @@ release:
       manual:
         tasks:
           - name: pre-release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
             description: Verify code, run unit tests, check test coverage, build software.
             features:
               - Define another script-task called `postrelease` to define the rest of your release process
@@ -195,7 +195,7 @@ release:
             tasks: ['corp-semantic-release']
 
           - name: release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>', 'semantic-release']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
             description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
             features:
               - Generates `CHANGELOG.md`
@@ -206,7 +206,7 @@ release:
       manual:
         tasks:
           - name: release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testBrowser) { %>test:browser<% }%>']
+            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
             description: Create production version of software, verify code, run unit tests.
             features:
               - Define another script-task called `postrelease` to define the rest of your release process
@@ -256,7 +256,7 @@ testUnit:
 
   templateFiles:
     - src: '*'
-      dest: <%- paths.config.configDir %>testUnit/
+      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>
       overwrite: true
 
   tasks:
@@ -286,14 +286,14 @@ testUnit:
 
     - name: test:unit:once
       # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
-      tasks: ['istanbul cover --config <%- paths.config.configDir %>testUnit/istanbul.yml _mocha -- --opts <%- paths.config.configDir %>testUnit/mocha.opts']
+      tasks: ['istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
       description: Run unit tests once
       features:
         - Uses Mocha
         - Code coverage
 
     - name: test:check-coverage
-      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir %>testUnit/istanbul.yml']
+      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml']
       description:
       features:
 
@@ -303,6 +303,29 @@ testUnit:
       features:
         - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)
 
+testVisualRegression:
+  # Only do this if visual regression is enabled
+  condition: <%- testVisualRegression.enabled %>
+
+  packages:
+    - <<: *pkg_backstopjs
+    - <<: *pkg_glob
+
+  tasks:
+    - name: test:visual
+      tasks: ['cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
+      description: Run visual regression tests. Note that the web server must be already running for this command to work.
+      features: []
+
+    - name: test:visual:ref
+      tasks: ['cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
+      description: Creates visual regression testing reference images, to be used as the baseline for future tests. Note that the web server must be already running for this command to work.
+      features: []
+
+  templateFiles:
+    - src: backstop.config.js.tpl
+      dest: <%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js
+      overwrite: true
 
 verify:
   # Common packages
@@ -344,7 +367,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              -%>eslint -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+              -%>eslint -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
 
         - name: verify:js:fix
@@ -359,7 +382,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              -%>eslint --fix -c <%- paths.config.configDir %>verify/.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
+              -%>eslint --fix -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
           description: Verify Javascript code style and syntax and fix any errors that can be fixed automatically
 
         - name: verify:js:watch
@@ -403,7 +426,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>tslint -c <%- paths.config.configDir %>verify/tslint.json "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+              %>tslint -c <%- paths.config.configDir + resources.verify.configSubDir %>tslint.json "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Typescript code style and syntax
 
         - name: verify:js:watch
@@ -439,7 +462,7 @@ verify:
       tasks:
         - name: verify:css
           tasks:
-            - sass-lint -c <%- paths.config.configDir %>verify/sasslint.yml --verbose <%- onSuccessCmd('verify:css success') -%>
+            - sass-lint -c <%- paths.config.configDir + resources.verify.configSubDir %>sasslint.yml --verbose <%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
 
         - name: verify:css:watch
@@ -466,7 +489,7 @@ verify:
       tasks:
         - name: verify:css
           tasks:
-            - stylint -c <%- paths.config.configDir %>verify/.stylintrc <%- paths.input.srcDir -%><%- onSuccessCmd('verify:css success') -%>
+            - stylint -c <%- paths.config.configDir + resources.verify.configSubDir %>.stylintrc <%- paths.input.srcDir -%><%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
 
         - name: verify:css:watch

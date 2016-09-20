@@ -4,5 +4,6 @@ The following people have contributed to this project.
 * Michael Richardson <michael@mjrichardson.com.au>
 * Tim Weightman <tweightman@odecee.com.au>
 * Keren Burshtein <kburshtein@odecee.com.au>
+* Antoine Savignac <asavignac@odecee.com.au>
 
 For full details of all contributions, please refer to the project commit log stored in Git.

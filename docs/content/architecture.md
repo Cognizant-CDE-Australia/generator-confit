@@ -192,9 +192,9 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 - Only shown for **Browser** projects.
 - Name of directory *within each module* that contains the unit tests for the module.
 
-**Name of module FUNCTIONAL TEST directory**: [browserTest/] `input.browserTestDir`
+**Name of module SYSTEM TEST directory**: [systemTest/] `input.systemTestDir`
 - Only shown for **Browser** projects.
-- Name of directory *within each module* that contains the browser/functional tests for the module.
+- Name of directory *within each module* that contains the system/browser tests for the module.
 
 **Path to UNIT TEST directory (relative to the current directory)**: [unitTest/] `input.unitTestDir`
 - Only shown for **NodeJS** projects.
@@ -332,9 +332,9 @@ Captures server settings for serving the the web application in a production-mod
 
 ---
 
-### testBrowser [render badge list="browser"]
+### testSystem (formerly "testBrowser") [render badge list="browser"]
 
-Generates browser testing tools and configuration.
+Generates system testing tools and configuration. For browser applications, this tests the system through a web browser. 
 
 #### Questions
 None

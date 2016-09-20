@@ -25,7 +25,7 @@ if (testConfigForFramework) {
 }
 
 // Determine the relative path from this folder to the root directory
-var configPath = paths.config.configDir + 'testUnit/';
+var configPath = paths.config.configDir + resources.testUnit.configSubDir;
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 %>
 

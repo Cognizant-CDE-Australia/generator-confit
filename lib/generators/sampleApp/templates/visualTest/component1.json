@@ -1,0 +1,15 @@
+{
+  "label": "Page 1",
+  "url": "#/page1/",
+  "hideSelectors": [],
+  "removeSelectors": [],
+  "selectors": [
+    "document"
+  ],
+  "readyEvent": null,
+  "delay": 500,
+  "misMatchThreshold" : 0.1,
+  "onReadyScript": null,
+  "onBeforeScript": null
+}
+

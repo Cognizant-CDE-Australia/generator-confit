@@ -135,7 +135,7 @@ describe('zzFinish Generator', () => {
           assert.notEqual(readmeText.search(/styles\/.* css source code for this module/), -1, 'styles dir');
           assert.notEqual(readmeText.search(/templates\/.* HTML templates for this module/), -1, 'templates dir');
           assert.notEqual(readmeText.search(/unitTest\/.* unit test specs for this module/), -1, 'unitTestDir dir');
-          assert.notEqual(readmeText.search(/browserTest\/.* browser test specs for this module/), -1, 'browserTest dir');
+          assert.notEqual(readmeText.search(/systemTest\/.* system test specs for this module/), -1, 'systemTest dir');
 
           assert.notEqual(readmeText.search(/dev\/.* development-build code is output here/), -1, 'dev dir');
           assert.notEqual(readmeText.search(/dist\/.* production-build code is output here/), -1, 'prod dir');

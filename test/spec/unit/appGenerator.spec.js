@@ -36,7 +36,8 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:sampleApp'],
     [helpers.createDummyGenerator(), 'confit:serverDev'],
     [helpers.createDummyGenerator(), 'confit:serverProd'],
-    [helpers.createDummyGenerator(), 'confit:testBrowser'],
+    [helpers.createDummyGenerator(), 'confit:testSystem'],
+    [helpers.createDummyGenerator(), 'confit:testVisualRegression'],
     [helpers.createDummyGenerator(), 'confit:testUnit'],
     [helpers.createDummyGenerator(), 'confit:verify'],
     [helpers.createDummyGenerator(), 'confit:zzfinish']

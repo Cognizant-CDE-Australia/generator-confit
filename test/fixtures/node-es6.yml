@@ -7,7 +7,7 @@ generator-confit:
     projectType: node
     repositoryType: GitHub
   paths:
-    _version: ae38d9f72494dfc52733f696179f88146722462f
+    _version: 0fd28189be86caaeaa7a286fae3096e6afd6cac3
     config:
       configDir: config/
     input:
@@ -43,6 +43,6 @@ generator-confit:
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
-    _version: 4614571e9ea6cc48ede31fcd1bb73e632dc66fc7
+    _version: 589c5238028e73f3c51f24af25573cfe7a625c5d
     createSampleApp: true
   zzfinish: {}

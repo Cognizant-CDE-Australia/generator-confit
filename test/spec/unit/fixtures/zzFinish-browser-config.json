@@ -4,6 +4,9 @@
       "buildProfile": "null",
       "projectType": "browser"
     },
+    "buildCSS": {
+      "sourceFormat": "css"
+    },
     "buildJS": {
       "sourceFormat": "ES6"
     },
@@ -18,7 +21,7 @@
         "stylesDir": "styles/",
         "templateDir": "templates/",
         "unitTestDir": "unitTest/",
-        "browserTestDir": "browserTest/"
+        "systemTestDir": "systemTest/"
       },
       "output": {
         "devDir": "dev/",
@@ -47,6 +50,12 @@
       "hostname": "localhost",
       "protocol": "https",
       "_version": "01b15dd136236be875025175878631dc33d1fad7"
+    },
+    "sampleApp": {
+      "createSampleApp": true
+    },
+    "testVisualRegression": {
+      "enabled": true
     }
   }
 }

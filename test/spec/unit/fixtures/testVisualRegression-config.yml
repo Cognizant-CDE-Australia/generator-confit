@@ -1,0 +1,16 @@
+generator-confit:
+  app:
+    buildProfile: Latest
+    projectType: browser
+
+  paths:
+    input: {}
+    output:
+      reportDir: reports/
+    config:
+      configDir: config/
+
+  serverDev:
+    hostname: localhost
+    port: 3000
+    protocol: https

@@ -2,7 +2,7 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
-var rootDir = (paths.config.configDir + 'testBrowser/').replace(/(.+?\/)/g, '../');
+var rootDir = (paths.config.configDir + resources.testSystem.configSubDir).replace(/(.+?\/)/g, '../');
 // TODO: Add support for test specs written with non-JS extensions
 -%>
 
@@ -35,7 +35,7 @@ var config = {
   // --suite=smoke,full only the patterns matched by the specified suites will
   // run.
   suites: {
-    app: '<%= rootDir + paths.input.modulesDir %>**/<%= paths.input.browserTestDir %>*.spec.js'
+    app: '<%= rootDir + paths.input.modulesDir %>**/<%= paths.input.systemTestDir %>*.spec.js'
   },
 
   reportWriters: [

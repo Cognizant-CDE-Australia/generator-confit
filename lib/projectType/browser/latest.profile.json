@@ -1,7 +1,7 @@
 {
   "name": "Latest",
   "priority": "1",
-  "description": "Latest Webpack 2(beta)-based browser profile (23 August 2016)",
+  "description": "Latest Webpack 2(beta)-based browser profile with visual regression testing (16 September 2016)",
   "toolMap": {
     "app": "webpack",
     "buildBrowser": "webpack",
@@ -16,8 +16,9 @@
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "npm",
-    "testBrowser": "protractor",
+    "testSystem": "protractor",
     "testUnit": "webpack",
+    "testVisualRegression": "npm",
     "verify": "npm",
     "zzfinish": "webpack"
   }

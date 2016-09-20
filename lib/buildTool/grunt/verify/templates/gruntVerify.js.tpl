@@ -22,7 +22,7 @@ module.exports = function (grunt) {
   lintTasks.push('eslint:all'); -%>
     eslint: {
       options: {
-        configFile: path.join('<%= paths.config.configDir %>verify/.eslintrc'),
+        configFile: path.join('<%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc'),
         quiet: true // Report errors only
       },
       all: {
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
     lintTasks.push('tslint:all'); -%>
     tslint: {
       options: {
-        configuration: path.join('<%= paths.config.configDir %>verify/tslint.json')
+        configuration: path.join('<%= paths.config.configDir + resources.verify.configSubDir %>tslint.json')
       },
       all: {
         files: {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
     lintTasks.push('sasslint:all'); -%>
     sasslint: {
       options: {
-        configFile: path.join('<%= paths.config.configDir %>verify/.sasslintrc')
+        configFile: path.join('<%= paths.config.configDir + resources.verify.configSubDir %>.sasslintrc')
       },
       all: <%- printJson(cssFiles, 10) %>.map(pathJoin)
     },
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
     stylint: {
       all: {
         options: {
-          configFile: path.join('<%= paths.config.configDir %>verify/.stylintrc')
+          configFile: path.join('<%= paths.config.configDir + resources.verify.configSubDir %>.stylintrc')
         },
         src: <%- printJson(cssFiles, 10) %>.map(pathJoin)
       }
