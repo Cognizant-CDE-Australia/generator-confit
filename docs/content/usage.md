@@ -41,7 +41,7 @@ You can also run these tasks on an ad-hoc basis:
 
 ## Testing in the browser [render badge list="browser"]
 
-You can run `npm run test:browser` to run component and/or system tests in the browser.
+You can run `npm run test:system` to run component and/or system tests in the browser.
 
 ## Generating documentation
 

@@ -305,7 +305,7 @@ testUnit:
 
 testVisualRegression:
   # Only do this if visual regression is enabled
-  condition: <%- testVisualRegression.enabled %>
+  condition: <%- config.testVisualRegression && config.testVisualRegression.enabled %>
 
   packages:
     - <<: *pkg_backstopjs

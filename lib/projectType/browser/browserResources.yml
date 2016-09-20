@@ -404,7 +404,7 @@ readme:
     - [ ] Add a new module to `<%- paths.input.modulesDir %>`
     - [ ] Run `npm start`, change the stylesheet and see the changes appear immediately
     - [ ] Run `npm test` to execute the unit tests and see the test coverage
-    - [ ] Run `npm start && test:browser` to execute the browser tests
+    - [ ] Run `npm start && test:system` to execute the browser tests
     <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
     <% } -%>
 

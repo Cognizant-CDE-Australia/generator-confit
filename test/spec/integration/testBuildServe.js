@@ -16,7 +16,7 @@ const CONFIT_CMD = 'npm run build:serve';
 function runSystemTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
-  let proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
+  let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR
   });

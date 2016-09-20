@@ -21,7 +21,6 @@ generator-confit:
       systemTestDir: systemTest/
       templateDir: template/
       unitTestDir: unitTest/
-      visualRegressionTestDir: visualTest/
     output:
       assetsSubDir: assets/
       cssSubDir: css/
@@ -31,7 +30,8 @@ generator-confit:
       reportDir: reports/
       vendorJSSubDir: vendor/
       viewsSubDir: views/
-  buildAssets: {}
+  buildAssets:
+    _version: d4afcffac13cf613b2a5714061ecfb24d624db45
   buildCSS:
     _version: 7d6c23a7cc861d6286ee2a685208123a54c092e1
     autoprefixer: true
@@ -47,7 +47,7 @@ generator-confit:
     extension: .htm
   build: {}
   documentation:
-    _version: d854a9055501b46813fd481bef85e774a4226854
+    _version: 9e41ee2ce016687e6e22cc8304a5c05d0ee34dd5
     createSampleDocs: false
     generateDocs: true
     outputDir: webdocs/
@@ -68,7 +68,13 @@ generator-confit:
     protocol: https
   testUnit:
     _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
-  testSystem: {}
+  testSystem:
+    _version: 7fc73b06ceeb428b39d419e7dc6e5bdbd430d020
+  testVisualRegression:
+    _version: c1b0f303f311421aa85caf83b77b89bc1ee7c4fa
+    enabled: true
+    moduleTestDir: visualTest/
+    referenceImageDir: vrt/image/
   verify:
     _version: 13b1fbd2c3000fd3f1c12e52a4e4ed33d2e72ae8
     jsCodingStandard: Google
@@ -77,6 +83,7 @@ generator-confit:
     commitMessageFormat: None
     useSemantic: false
   sampleApp:
-    _version: 589c5238028e73f3c51f24af25573cfe7a625c5d
+    _version: 55d0e54b1271e1d5a31339acb7b9ead67e445b43
     createSampleApp: true
-  zzfinish: {}
+  zzfinish:
+    _version: 791cc4ccd65b5df40e00f6de2c058e76bf07f8e7

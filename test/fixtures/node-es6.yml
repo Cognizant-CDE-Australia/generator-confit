@@ -23,7 +23,7 @@ generator-confit:
     outputFormat: ES6
     sourceFormat: ES6
   documentation:
-    _version: d854a9055501b46813fd481bef85e774a4226854
+    _version: 9e41ee2ce016687e6e22cc8304a5c05d0ee34dd5
     createSampleDocs: true
     generateDocs: true
     outputDir: webdocs/
@@ -43,6 +43,7 @@ generator-confit:
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
-    _version: 589c5238028e73f3c51f24af25573cfe7a625c5d
+    _version: 55d0e54b1271e1d5a31339acb7b9ead67e445b43
     createSampleApp: true
-  zzfinish: {}
+  zzfinish:
+    _version: 791cc4ccd65b5df40e00f6de2c058e76bf07f8e7
