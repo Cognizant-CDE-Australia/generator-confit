@@ -41,7 +41,20 @@ You can also run these tasks on an ad-hoc basis:
 
 ## Testing in the browser [render badge list="browser"]
 
-You can run `npm run test:system` to run component and/or system tests in the browser.
+You can run `npm run test:system` to run component and/or system tests in the browser. You must have the development web server running for this to work.
+
+## Visual regression testing [render badge list="browser"]
+
+Visual regression testing is optionally enabled by default. It works by taking screenshots of the components on pages that you 
+specify in JS/JSON files.
+ 
+To get started, start the development web server: `npm start`.
+
+You can generate the reference images by running `npm run test:visual:ref`. The images
+should be committed into your repository so that you can perform comparison tests on your continuous integration server.
+
+You can run `npm run test:visual` to compare the reference images to the current images. 
+
 
 ## Generating documentation
 
