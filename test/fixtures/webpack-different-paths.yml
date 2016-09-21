@@ -1,15 +1,15 @@
 generator-confit:
   app:
-    _version: 73d1dfc8f44d4629ecb2145e2f363c55644228a3
+    _version: 7a5ee574d6e7e15603fa573549fed24d627acd73
     buildProfile: Latest
     projectType: browser
     repositoryType: Other
   buildBrowser:
-    _version: 785e9a9c7f5114b152a2b9a070722d0a5e85c1a5
+    _version: 8182060cfceb4bbc06a4c5e46be731798d858a40
     browserSupport:
       - latest
   paths:
-    _version: 0fd28189be86caaeaa7a286fae3096e6afd6cac3
+    _version: 216c600f9cbda401516b8402c2f71d5d8f390dfe
     config:
       configDir: config/a/b/
     input:
@@ -34,18 +34,18 @@ generator-confit:
   buildAssets:
     _version: d4afcffac13cf613b2a5714061ecfb24d624db45
   buildCSS:
-    _version: 7d6c23a7cc861d6286ee2a685208123a54c092e1
+    _version: c3b97d0a109518e378adc71255c5b2272ab8bb32
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: 0019092064a38b68b026f38083ba7217acdf6a04
+    _version: 734ab92556dd82a9fe8fe8933897f46e3a938975
     framework:
       - AngularJS 1.x
     outputFormat: ES5
     sourceFormat: ES6
     vendorScripts: []
   buildHTML:
-    _version: 18d9a4486a095ff0dcce0fb122c7f3b55dc8727a
+    _version: 0b2d3e4b4373b8299130b4b3aa9872dc225c51a1
     extension: .html
   build: {}
   documentation:
@@ -69,11 +69,11 @@ generator-confit:
     port: 3000
     protocol: https
   testUnit:
-    _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
+    _version: 6d2446b83cf049ed4e2c2616ad6266a24a03252b
   testSystem:
     _version: 7fc73b06ceeb428b39d419e7dc6e5bdbd430d020
   testVisualRegression:
-    _version: c1b0f303f311421aa85caf83b77b89bc1ee7c4fa
+    _version: 4377a3590725aebb2d862c8c658913adfd3695e5
     enabled: true
     moduleTestDir: visualTest/
     referenceImageDir: vrt/image/

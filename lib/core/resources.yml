@@ -5,7 +5,9 @@ rootGeneratorName: generator-confit
 
 # App configuration
 app:
-  defaultProjectType: 'browser'
+  defaults:
+    projectType: browser
+    license: UNLICENSED
 
   projectTypeList:
     - value: browser
@@ -30,7 +32,6 @@ app:
       - MPL-2.0
       - CDDL-1.0
       - EPL-1.0
-    default: UNLICENSED
 
     noLicenseFile:
       - UNLICENSED

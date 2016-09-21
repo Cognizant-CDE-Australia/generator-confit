@@ -33,16 +33,13 @@ buildCSS:
     - <<: *pkg_autoprefixer
     - <<: *pkg_postcss-loader
 
-  sourceFormat:
-    css:
-      packages: []
-
-    stylus:
+  configModules:
+    - condition: <%- buildCSS.sourceFormat === 'stylus' %>
       packages:
         - <<: *pkg_stylus
         - <<: *pkg_stylus-loader
 
-    sass:
+    - condition: <%- buildCSS.sourceFormat === 'sass' %>
       packages:
         - <<: *pkg_sass-loader
         - <<: *pkg_node-sass

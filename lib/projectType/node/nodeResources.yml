@@ -37,17 +37,18 @@ app:
       features:
 
 buildJS:
+  defaults:
+    sourceFormat: ES6
+    outputFormat: ES6
+
+  showVendorScripts: false
+
   sourceFormat:
     ES6:
       ext: ['js']
-      packages: []
-      tasks: []
-
-  sourceFormatDefault: ES6
 
   outputFormat:
     - ES6
-  outputFormatDefault: ES6
 
   frameworks: {}
 

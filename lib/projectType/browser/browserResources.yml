@@ -54,8 +54,11 @@ app:
       description:
       features:
 
+buildAssets: {}
+
 buildBrowser:
-  defaultSupportedBrowsers: ['latest']
+  defaults:
+    browserSupport: ['latest']
 
   supportedBrowsers:
     latest:
@@ -71,11 +74,12 @@ buildBrowser:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']
 
-buildAssets: {}
 
 # CSS configuration
 buildCSS:
-  defaultSourceFormat: stylus
+  defaults:
+    sourceFormat: stylus
+
   sourceFormat:
     css:
       ext: ['css']
@@ -86,9 +90,28 @@ buildCSS:
     stylus:
       ext: ['styl']
 
-buildHTML: {}
+buildHTML:
+  defaults:
+    extension: .html
 
 buildJS:
+  defaults:
+    sourceFormat: ES6
+    outputFormat: ES6
+    framework: []
+
+  showVendorScripts: true     # Flag to indicate that whether the vendorScripts question in buildJS should be shown or not. Not used for Node projects.
+
+  sourceFormat:
+    ES6:
+      ext: ['js']
+    TypeScript:
+      ext: ['ts']
+
+  outputFormat:
+    - ES5
+    - ES6
+
   readme:
     extensionPoint:
       buildJS.frameworkScripts: >
@@ -101,9 +124,62 @@ buildJS:
         This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
         For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
 
-  sourceFormat:
-    ES6:
-      ext: ['js']
+  # This data-structure is used by testUnit to add the test dependencies to confit.yml/testUnit/testDependencies
+  frameworks:
+    AngularJS 1.x: &ng1Framework
+      packages:
+        - <<: *pkg_angular
+      typeLibs:
+        - name: angular
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
+        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
+      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
+        - <<: *pkg_angular
+        - <<: *pkg_angular-mocks
+      testTypeLibs:
+        - name: angular-mocks
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
+
+    AngularJS 2.x: &ng2Framework
+      packages:
+        - <<: *pkg_core-js          # In polyfills.ts
+        - <<: *pkg_zone.js          # In polyfills.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
+        - <<: *pkg_angular2/core
+        - <<: *pkg_angular2/common
+      typeLibs:
+        - name: core-js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
+        - name: zone.js
+          key: dependencies
+          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
+      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+        - <<: *pkg_core-js
+        - <<: *pkg_ts-helpers
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_rxjs
+        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
+      testTypeLibs: []
+
+    React (latest): &reactFramework
+      packages:
+        - <<: *pkg_react
+      typeLibs: []
+      testPackages: []
+      testTypeLibs: []
+
+  configModules:
+    - condition: <%- buildJS.sourceFormat === 'ES6' %>
       templateFiles:  # We need to use Babel EVEN when outputFormat is NOT ES5 so that browser unit testing works (as the new unit testing plugin is tied to Babel)
         - src: .babelrc.tpl
           dest: .babelrc
@@ -115,100 +191,34 @@ buildJS:
         - <<: *pkg_babel-preset-es2015
       tasks: []
 
-
-    TypeScript:
-      ext: ['ts']
+    - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_typescript
         - <<: *pkg_typings
-
       templateFiles:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
           overwrite: true
-
       tasks:
         - name: typings:install
           tasks: ['typings install']
           description: ''
-
       typeLibs:
         - name: node
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
-
       onInstall:
         - cmd: npm
           args: ['run', 'typings:install']
 
-  sourceFormatDefault: ES6
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
+      <<: *ng1Framework
 
-  outputFormat:
-    - ES5
-    - ES6
-  outputFormatDefault: ES5
+    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
+      <<: *ng2Framework
 
-  showVendorScripts: true     # Flag to indicate that whether the vendorScripts question in buildJS should be shown or not
-
-  frameworks:
-    AngularJS 1.x:
-      packages:
-        - <<: *pkg_angular
-      typeLibs:
-        - name: angular
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
-        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
-
-      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
-        - <<: *pkg_angular
-        - <<: *pkg_angular-mocks
-      testTypeLibs:
-        - name: angular-mocks
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
-
-
-    AngularJS 2.x:
-      packages:
-        - <<: *pkg_core-js          # In polyfills.ts
-        - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # In vendor.ts
-        - <<: *pkg_angular2/platform/browser
-        - <<: *pkg_angular2/platform/common_dom
-        - <<: *pkg_angular2/core
-        - <<: *pkg_angular2/common
-
-      typeLibs:
-        - name: core-js
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
-
-        - name: zone.js
-          key: dependencies
-          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
-
-      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-        - <<: *pkg_core-js
-        - <<: *pkg_ts-helpers
-        - <<: *pkg_zone.js/dist/zone
-        - <<: *pkg_zone.js/dist/long-stack-trace-zone
-        - <<: *pkg_zone.js/dist/jasmine-patch
-        - <<: *pkg_zone.js/dist/async-test
-        - <<: *pkg_rxjs
-        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
-#        - <<: *pkg_angular2/core
-
-      testTypeLibs: []
-
-    React (latest):
-      packages:
-        - <<: *pkg_react
-      typeLibs: []
-      testPackages: []
-      testTypeLibs: []
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      <<: *reactFramework
 
 
 entryPoint:
@@ -414,20 +424,21 @@ readme:
 sampleApp:
   demoDir: <%= paths.input.modulesSubDir %>demoModule/
 
+  # Master config. If this config is not necessary, the configModules will not be installed either
+  condition: <%= sampleApp.createSampleApp === true %>
+  templateFiles:
+    - src: assets/**/*
+      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.assetsDir %>
+      overwrite: true
+      noParse: true
+
+    - src: systemTest/*
+      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.systemTestDir %>
+      overwrite: true
+      noParse: true
+
   configModules:
-    - condition: <%= sampleApp.createSampleApp === true %>
-      templateFiles:
-        - src: assets/**/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.assetsDir %>
-          overwrite: true
-          noParse: true
-
-        - src: systemTest/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.systemTestDir %>
-          overwrite: true
-          noParse: true
-
-    - condition: <%= sampleApp.createSampleApp === true && config.buildCSS.sourceFormat === 'css' %>
+    - condition: <%= buildCSS.sourceFormat === 'css' %>
       templateFiles:
         - src: css/app.css
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.css
@@ -436,7 +447,7 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
-    - condition: <%= sampleApp.createSampleApp === true && config.buildCSS.sourceFormat === 'sass' %>
+    - condition: <%= buildCSS.sourceFormat === 'sass' %>
       templateFiles:
         - src: css/app.sass
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.sass
@@ -445,7 +456,7 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
-    - condition: <%= sampleApp.createSampleApp === true && config.buildCSS.sourceFormat === 'stylus' %>
+    - condition: <%= buildCSS.sourceFormat === 'stylus' %>
       templateFiles:
         - src: css/app.styl
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.styl
@@ -454,7 +465,7 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
-    - condition: <%= sampleApp.createSampleApp === true && testVisualRegression.enabled === true %>
+    - condition: <%= testVisualRegression.enabled === true %>
       templateFiles:
         - src: visualTest/*
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + testVisualRegression.moduleTestDir %>

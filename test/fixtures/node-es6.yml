@@ -1,13 +1,13 @@
 generator-confit:
   app:
-    _version: 73d1dfc8f44d4629ecb2145e2f363c55644228a3
+    _version: 7a5ee574d6e7e15603fa573549fed24d627acd73
     buildProfile: Latest
     copyrightOwner: Brett Uglow
     license: UNLICENSED
     projectType: node
     repositoryType: GitHub
   paths:
-    _version: 0fd28189be86caaeaa7a286fae3096e6afd6cac3
+    _version: 216c600f9cbda401516b8402c2f71d5d8f390dfe
     config:
       configDir: config/
     input:
@@ -17,7 +17,7 @@ generator-confit:
       prodDir: dist/
       reportDir: reports/
   buildJS:
-    _version: 0019092064a38b68b026f38083ba7217acdf6a04
+    _version: 734ab92556dd82a9fe8fe8933897f46e3a938975
     framework: []
     frameworkScripts: []
     outputFormat: ES6
@@ -33,7 +33,7 @@ generator-confit:
     _version: 444293ad6ec67bdf3c6677ec9de12cc4732f9aab
     entryPoints: {}
   testUnit:
-    _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
+    _version: 6d2446b83cf049ed4e2c2616ad6266a24a03252b
     testDependencies: []
   verify:
     _version: 13b1fbd2c3000fd3f1c12e52a4e4ed33d2e72ae8
