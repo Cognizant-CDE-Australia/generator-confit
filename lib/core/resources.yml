@@ -19,6 +19,9 @@ app:
     - src: editorconfig
       dest: .editorconfig
       overwrite: false
+    - src: gitignore
+      dest: .gitignore
+      overwrite: false
 
   licenses:
     popular:    # Taken from https://opensource.org/licenses/category
@@ -60,6 +63,8 @@ documentation:
       name: Publish to the cloud
     - value: manual
       name: Publish manually
+
+  # There are no packages/templates to install globally, so no need to add a condition: here
 
 
 # README section for the template tags that will appear inside the README.md template
@@ -258,6 +263,14 @@ readme:
 
 
 release:
+  defaults:
+    useSemantic: true
+    commitMessageFormat: Conventional
+
+  commitMessageFormats:
+    - Conventional
+    - None
+
   configSubDir: release/
 
   packages:
@@ -282,4 +295,17 @@ testVisualRegression:
     referenceImageDir: visualRegressionTest/referenceImages/
 
 verify:
+  # Don't use defaults, as it varies based on the coding standard
+
   configSubDir: verify/
+
+  # These keys are used in the UI...
+  jsCodingStandard:
+    ES6:
+      - none
+      - AirBnB
+      - ESLint
+      - Google
+      - StandardJS
+    TypeScript:
+      - TypeScript

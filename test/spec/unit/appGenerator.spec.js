@@ -77,7 +77,7 @@ describe('App Generator', () => {
 
 
   it('should create an .editorConfig, package.json and confit.yml file when they do not exist', done => {
-    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml'];
+    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml', '.gitignore'];
 
     runGenerator('app-config.json',
       function beforeTest() {

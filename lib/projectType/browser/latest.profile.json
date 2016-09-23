@@ -20,6 +20,6 @@
     "testUnit": "webpack",
     "testVisualRegression": "npm",
     "verify": "npm",
-    "zzfinish": "webpack"
+    "zzfinish": ""
   }
 }

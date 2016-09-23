@@ -1,6 +1,7 @@
 documentation:
-  common:
-    packages:
+
+  configModules:
+  - packages:
       - <<: *pkg_swanky-server
       - <<: *pkg_swanky-processor-ngdocs
       - <<: *pkg_prismjs
@@ -52,94 +53,81 @@ documentation:
         dest: <%- documentation.srcDir %>/swanky.config.yaml
         overwrite: true
 
-
-  manual:
+  - condition: <%- documentation.publishMethod === 'manual' %>
     tasks:
       - name: docs:publish
         tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + resources.documentation.configSubDir + 'publish.js') %> to provide your implementation)
-
       - name: docs:_publish
         tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
         description:
-
     templateFiles:
       - src: config/publish.js.tpl
         dest: <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js
         overwrite: true
 
-  GitHub:
+  - condition: <%- documentation.publishMethod === 'GitHub' %>
     packages:
       - <<: *pkg_gh-pages
-
     tasks:
       - name: docs:publish
         tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation to GitHub's /gh-pages branch
-
       - name: docs:_publish
         tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
         description:
-
     templateFiles:
       - src: config/publish.js.tpl
         dest: <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js
         overwrite: true
 
-  cloud:
+  - condition: <%- documentation.publishMethod === 'cloud' %>
     packages:
       - <<: *pkg_now
       - <<: *pkg_now-serve
-
     tasks:
       - name: docs:publish
         tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation to the cloud using `now`. This will require some setup when using from a CI server.
-
       - name: docs:_publish
         tasks: ['ns <%- documentation.outputDir %>']
         description:
 
-  # If create sample app, copy everything under docs
-  sampleDocs:
+  - condition: <%- documentation.createSampleDocs %>
     templateFiles:
       - src: docs/**/*
         dest: <%- documentation.srcDir %>
         overwrite: true
         noParse: true
 
-  # Framework-specific content
-  frameworks:
-    AngularJS 1.x:
-      templateFiles:
-        - src: ng1/docs/**/*
-          dest: <%- documentation.srcDir %>
-          overwrite: true
-          noParse: true
+  - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
+    templateFiles:
+      - src: ng1/docs/**/*
+        dest: <%- documentation.srcDir %>
+        overwrite: true
+        noParse: true
 
 entryPoint:
   packageJsonConfig:
     - main: <%- entryPoint.entryPoints.main[0] %>
 
+
 release:
-  commitMessageFormat:
-    Conventional:
+  configModules:
+    - condition: <%- release.commitMessageFormat === 'Conventional' %>
       packages:
         - <<: *pkg_cz-customizable
         - <<: *pkg_commitizen
         - <<: *pkg_ghooks
         - <<: *pkg_cz-customizable-ghooks
-
       packageJsonConfig:
         - config.commitizen.path: node_modules/cz-customizable
         - config.cz-customizable.config: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
         - config.ghooks.commit-msg: ./node_modules/cz-customizable-ghooks/lib/index.js $2
-
       templateFiles:
         - src: commitMessageConfig.js
           dest: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
           overwrite: false
-
       readme:
         buildTask:  # This is a "special" task in that it is designed to appear only in the Readme, not in package.json
           commit:
@@ -149,67 +137,57 @@ release:
               features:
                 - Asks questions about the change to generate a valid conventional commit message
                 - Can be customised by modifying <%- link(paths.config.configDir + resources.release.configSubDir + 'commitMessageConfig.js') %>
-
       onInstall:
         - cmd: git    # It is safe to run this multiple times
           args: ['init']
 
-    None:
-      packages: []
+    - condition: <%- app.repositoryType === 'GitHub' && release.useSemantic %>
+      packages:
+        - <<: *pkg_semantic-release-cli
+      tasks:
+        - name: pre-release
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
+          description: |
+            Verify code, run unit tests, check test coverage, build software. This task is designed to be run before
+            the `semantic-release` task.
+          features:
+            - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details.
+            - |
+              Semantic-release integrates with Travis CI (or similar tools) to generate release notes
+              for each release (which appears in the "Releases" section in GitHub) and
+              publishes the package to NPM (when all the tests are successful) with a semantic version number.
 
+    - condition: <%- app.repositoryType === 'GitHub' && !release.useSemantic %>
+      tasks:
+        - name: pre-release
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
+          description: Verify code, run unit tests, check test coverage, build software.
+          features:
+            - Define another script-task called `postrelease` to define the rest of your release process
 
-  repositoryType:
-    GitHub:
-      semantic:
-        packages:
-          - <<: *pkg_semantic-release-cli
+    - condition: <%- app.repositoryType === 'Other' && release.useSemantic %>
+      packages:
+        - <<: *pkg_corp-semantic-release
+      tasks:
+        - name: semantic-release
+          tasks: ['corp-semantic-release']
 
-        tasks:
-          - name: pre-release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
-            description: |
-              Verify code, run unit tests, check test coverage, build software. This task is designed to be run before
-              the `semantic-release` task.
-            features:
-              - Run `semantic-release-cli setup` once you have a remote repository. See https://github.com/semantic-release/cli for details.
-              - |
-                Semantic-release integrates with Travis CI (or similar tools) to generate release notes
-                for each release (which appears in the "Releases" section in GitHub) and
-                publishes the package to NPM (when all the tests are successful) with a semantic version number.
+        - name: release
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
+          description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
+          features:
+            - Generates `CHANGELOG.md`
+            - Bumps `package.json`
+            - Tags the changes with the release
+            - Requires conventional commit messages to be used
 
-      manual:
-        tasks:
-          - name: pre-release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
-            description: Verify code, run unit tests, check test coverage, build software.
-            features:
-              - Define another script-task called `postrelease` to define the rest of your release process
-
-    Other:
-      semantic:
-        packages:
-          - <<: *pkg_corp-semantic-release
-
-        tasks:
-          - name: semantic-release
-            tasks: ['corp-semantic-release']
-
-          - name: release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
-            description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
-            features:
-              - Generates `CHANGELOG.md`
-              - Bumps `package.json`
-              - Tags the changes with the release
-              - Requires conventional commit messages to be used
-
-      manual:
-        tasks:
-          - name: release
-            tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
-            description: Create production version of software, verify code, run unit tests.
-            features:
-              - Define another script-task called `postrelease` to define the rest of your release process
+    - condition: <%- app.repositoryType === 'Other' && !release.useSemantic %>
+      tasks:
+        - name: release
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
+          description: Create production version of software, verify code, run unit tests.
+          features:
+            - Define another script-task called `postrelease` to define the rest of your release process
 
 sampleApp:
   js:
@@ -336,10 +314,9 @@ verify:
 
   tasks:
     - name: verify
-      tasks: # "--silent" makes it easier to see program errors
+      tasks:  # "--silent" makes it easier to see program errors
         - >
-          <% var verifyTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName);
-             var verifyCmd = (verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + verifyTasks.join(' ');
+          <% var verifyCmd = (resources.verify.verifyTasks.length > 1 ? 'npm-run-all ' : 'npm run ') + resources.verify.verifyTasks.join(' ');
           -%><%- verifyCmd -%> --silent<% -%>
       description: Verify code style and syntax
       features:
@@ -348,14 +325,14 @@ verify:
     - name: verify:watch
       tasks:
         - >
-          <% var verifyWatchTasks = resources.verify.codeToVerify.map(codeConfig => codeConfig.taskName + ':watch');
+          <% var verifyWatchTasks = resources.verify.verifyTasks.map(taskName => taskName + ':watch');
              var verifyCmdWatch = (verifyWatchTasks.length > 1 ? 'npm-run-all --parallel ' : 'npm run ') + verifyWatchTasks.join(' ');
           -%><%- verifyCmdWatch -%> --silent<% -%>
       description: Runs verify task whenever JS or CSS code is changed
       features: []
 
-  jsCodingStandard:
-    none: &verify:js
+  configModules:
+    - condition: <%- ['none', 'AirBnB', 'ESLint', 'Google', 'StandardJS'].indexOf(verify.jsCodingStandard) > -1 %>
       tasks:
         - name: verify:js
           tasks:
@@ -371,7 +348,6 @@ verify:
                 });
               -%>eslint -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
-
         - name: verify:js:fix
           tasks:
             - >
@@ -386,7 +362,6 @@ verify:
                 });
               -%>eslint --fix -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
           description: Verify Javascript code style and syntax and fix any errors that can be fixed automatically
-
         - name: verify:js:watch
           tasks:
             - >
@@ -402,19 +377,7 @@ verify:
               -%>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js:fix' --initial --silent<% -%>
           description: Verify Javascript code style and syntax and watch files for changes
 
-    AirBnB:
-      <<: *verify:js
-
-    ESLint:
-      <<: *verify:js
-
-    Google:
-      <<: *verify:js
-
-    StandardJS:
-      <<: *verify:js
-
-    TypeScript:
+    - condition: <%- ['TypeScript'].indexOf(verify.jsCodingStandard) > -1 %>
       tasks:
         - name: verify:js
           tasks:
@@ -430,7 +393,6 @@ verify:
                 });
               %>tslint -c <%- paths.config.configDir + resources.verify.configSubDir %>tslint.json "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Typescript code style and syntax
-
         - name: verify:js:watch
           tasks:
             - >
@@ -443,12 +405,10 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent
+              %>chokidar '<%- completeJSPaths.join('\' \'') -%>' -c 'npm run verify:js' --initial --silent<% -%>
           description: Verify Typescript code style and syntax and watch files for changes
 
-
-  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
-    css:
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'css' %>
       tasks: # dummy tasks to preserve task interface
         - name: verify:css
           tasks:
@@ -457,16 +417,14 @@ verify:
           tasks:
             - echo <%- onSuccessCmd('verify:css success') -%>
 
-    sass:
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'sass' %>
       packages:
         - <<: *pkg_sass-lint
-
       tasks:
         - name: verify:css
           tasks:
-            - sass-lint -c <%- paths.config.configDir + resources.verify.configSubDir %>sasslint.yml --verbose <%- onSuccessCmd('verify:css success') -%>
+            - sass-lint -c <%- paths.config.configDir + resources.verify.configSubDir %>sasslint.yml --verbose<%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
-
         - name: verify:css:watch
           tasks:
             - >
@@ -484,16 +442,14 @@ verify:
               %>chokidar '<%- completeCSSPaths.join('\' \'') -%>' -c 'npm run verify:css' --initial --silent<% } -%>
           description: Verify CSS code style and syntax and watch files for changes
 
-    stylus:
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'stylus' %>
       packages:
         - <<: *pkg_stylint
-
       tasks:
         - name: verify:css
           tasks:
             - stylint -c <%- paths.config.configDir + resources.verify.configSubDir %>.stylintrc <%- paths.input.srcDir -%><%- onSuccessCmd('verify:css success') -%>
           description: Verify CSS code style and syntax
-
         - name: verify:css:watch
           tasks:
             - >

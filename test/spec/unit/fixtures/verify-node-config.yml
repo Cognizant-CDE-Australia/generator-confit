@@ -1,0 +1,20 @@
+generator-confit:
+  app:
+    buildProfile: Latest
+    projectType: node
+
+  buildJS:
+    sourceFormat: ES6
+    framework: []
+
+  paths:
+    input:
+      srcDir: sourceDir/
+      unitTestDir: unitTestDir/
+    output:
+      reportDir: reports/
+    config:
+      configDir: config/
+
+  sampleApp:
+    createSampleApp: true

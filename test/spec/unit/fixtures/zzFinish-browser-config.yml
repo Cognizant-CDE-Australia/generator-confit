@@ -44,3 +44,4 @@ generator-confit:
     createSampleApp: true
   testVisualRegression:
     enabled: true
+  verify: {}

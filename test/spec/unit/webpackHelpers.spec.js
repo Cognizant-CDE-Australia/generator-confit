@@ -1,6 +1,6 @@
 'use strict';
 
-const helpers = require('../../../lib/buildTool/webpack/zzfinish/templates/webpackHelpers');
+const helpers = require('../../../lib/buildTool/webpack/buildBrowser/templates/webpackHelpers');
 const path = require('path');
 const assert = require('assert');
 

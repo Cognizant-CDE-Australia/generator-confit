@@ -53,9 +53,10 @@ buildJS:
   frameworks: {}
 
 entryPoint:
-  defaultEntryPointFileName: # This should be used
-    ES6: index.js
-    TypeScript: index.ts
+  defaults:
+    entryPoint:
+      ES6: index.js
+      TypeScript: index.ts
 
   readme:
     extensionPoint:
@@ -88,20 +89,13 @@ paths:
     input:
       srcDir: src/
       unitTestDir: test/
-
     output:
       prodDir: dist/
       reportDir: reports/
-
     config:
       configDir: config/
 
   pathsToGenerate: []
-
-  templateFiles:
-    - src: gitignore
-      dest: .gitignore
-      overwrite: false
 
 # README section for the template tags that will appear inside the README.md template
 readme:
@@ -163,64 +157,42 @@ sampleApp:
   additionalConfig: []
 
 verify:
-  codeToVerify:
-    - configKey: jsCodingStandard
-      taskName: verify:js
-      codingStandardExpression: config.verify.jsCodingStandard
+  verifyTasks: ['verify:js']
 
-  # Common config across implementations
-  baseJSConfig: &jsCodingStandardBase
-    packages: &jsCodingBasePackages
-      - <<: *pkg_eslint
-      - <<: *pkg_eslint-plugin-node
-    templateFiles:
-      - src: eslintignore.yml.tpl
-        dest: .eslintignore
-        overwrite: true
-      - src: eslint.yml
-        dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc
-        overwrite: true
+  configModules:
+    - packages:   # Common tools
+        - <<: *pkg_eslint
+        - <<: *pkg_eslint-plugin-node
+      templateFiles:
+        - src: eslintignore.yml.tpl
+          dest: .eslintignore
+          overwrite: true
+        - src: eslint.yml
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc
+          overwrite: true
 
-  jsCodingStandard:
-    # These keys are used in the UI...
-    none:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
-
-    AirBnB:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'AirBnB' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-airbnb
         - <<: *pkg_eslint-plugin-import
         - <<: *pkg_eslint-plugin-react
         - <<: *pkg_eslint-plugin-jsx-a11y
 
-    ESLint:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
-
-    Google:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'Google' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-google
 
-    StandardJS:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'StandardJS' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-standard
         - <<: *pkg_eslint-plugin-standard
         - <<: *pkg_eslint-plugin-promise
 
-    TypeScript:
-      supportedSourceFormat: ['TypeScript']
+    - condition: <%- verify.jsCodingStandard === 'TypeScript' %>
       packages:
         - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
           dest: <%= paths.config.configDir + resources.verify.configSubDir %>tslint.json
+
+zzfinish: {}    # For node projects, don't 'npm start' the project

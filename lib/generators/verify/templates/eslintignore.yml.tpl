@@ -8,6 +8,6 @@ bower_components/*
 
 <% if (sampleApp.createSampleApp) { %>
 # Sample project
-<%= paths.input.srcDir + demoDir %>*
+<%= paths.input.srcDir + resources.sampleApp.demoDir %>*
 <% } -%>
 # END_CONFIT_GENERATED_CONTENT

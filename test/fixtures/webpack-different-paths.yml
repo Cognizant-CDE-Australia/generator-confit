@@ -47,7 +47,6 @@ generator-confit:
   buildHTML:
     _version: 0b2d3e4b4373b8299130b4b3aa9872dc225c51a1
     extension: .html
-  build: {}
   documentation:
     _version: 9e41ee2ce016687e6e22cc8304a5c05d0ee34dd5
     createSampleDocs: true

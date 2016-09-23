@@ -2,6 +2,7 @@ buildBrowser:
   packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
+    - <<: *pkg_extract-text-webpack-plugin
 
   tasks:
     - name: build:dev
@@ -20,6 +21,30 @@ buildBrowser:
         - Dead code removal
         - Hashes added to file names for cache-busting
 
+  templateFiles:
+    - src: webpack.config.js.tpl
+      dest: <%= paths.config.configDir %>webpack/webpack.config.js
+      overwrite: true
+
+    - src: dev.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/dev.webpack.config.js
+      overwrite: true
+
+    - src: prod.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
+      overwrite: true
+
+    - src: webpackHelpers.js
+      dest: <%= paths.config.configDir %>webpack/webpackHelpers.js
+      overwrite: true
+
+  readme:
+    extensionPoint:
+      start: >
+        `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
+        and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
+        files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
+
 
 buildAssets:
   packages:
@@ -34,12 +59,12 @@ buildCSS:
     - <<: *pkg_postcss-loader
 
   configModules:
-    - condition: <%- buildCSS.sourceFormat === 'stylus' %>
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'stylus' %>
       packages:
         - <<: *pkg_stylus
         - <<: *pkg_stylus-loader
 
-    - condition: <%- buildCSS.sourceFormat === 'sass' %>
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'sass' %>
       packages:
         - <<: *pkg_sass-loader
         - <<: *pkg_node-sass
@@ -225,7 +250,6 @@ sampleApp:
 serverDev:
   packages:
     - <<: *pkg_js-yaml
-
   tasks:
     - name: serve:dev
       tasks: ['echo Starting DEV server']
@@ -323,36 +347,3 @@ testUnit:
         variable in <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.common.js') %> to refer to the command line argument value.
         For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
         which can then be used to change the default value of `testFilesRegEx`.
-
-zzfinish:
-  # TODO: Move this to the buildBrowser tool, except for the onEnd command
-  packages:
-    - <<: *pkg_extract-text-webpack-plugin
-
-  templateFiles:
-    - src: webpack.config.js.tpl
-      dest: <%= paths.config.configDir %>webpack/webpack.config.js
-      overwrite: true
-
-    - src: dev.webpack.config.js
-      dest: <%= paths.config.configDir %>webpack/dev.webpack.config.js
-      overwrite: true
-
-    - src: prod.webpack.config.js
-      dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
-      overwrite: true
-
-    - src: webpackHelpers.js
-      dest: <%= paths.config.configDir %>webpack/webpackHelpers.js
-      overwrite: true
-
-  readme:
-    extensionPoint:
-      start: >
-        `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
-        and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
-        files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
-
-  onEnd:
-    - cmd: npm
-      args: ['start']

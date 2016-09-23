@@ -19,6 +19,6 @@
     "testSystem": "protractor",
     "testUnit": "webpack",
     "verify": "npm",
-    "zzfinish": "webpack"
+    "zzfinish": ""
   }
 }

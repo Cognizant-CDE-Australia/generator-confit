@@ -14,10 +14,10 @@
     "release": "npm",
     "sampleApp": "webpack",
     "serverDev": "webpack",
-    "serverProd": "grunt",
+    "serverProd": "npm",
     "testSystem": "protractor",
     "testUnit": "webpack",
     "verify": "npm",
-    "zzfinish": "webpack"
+    "zzfinish": ""
   }
 }
