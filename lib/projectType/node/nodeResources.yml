@@ -153,9 +153,6 @@ readme:
 sampleApp:
   demoDir: demo/   # This is ALWAYS a subdirectory of the srcDir directory
 
-  # An array of optional configuration
-  additionalConfig: []
-
 verify:
   verifyTasks: ['verify:js']
 

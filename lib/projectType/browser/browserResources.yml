@@ -415,10 +415,13 @@ readme:
 
 # Sample App
 sampleApp:
+  # There is a problem in eslintignore.yml.tpl whereby we want to refer to sampleApp.deomDir, but this variable also contains an EJS template
+  # To work around this issue, we change eslintignore.yml.tpl to have a 'browser' and 'node' version of the directory to ignore.
+  # This is not ideal, but less evil than changing all the generators to support this use-case.
+  demoDirName: demoModule/
   demoDir: <%= paths.input.modulesSubDir %>demoModule/
 
-  # Master config. If this config is not necessary, the configModules will not be installed either
-  condition: <%= sampleApp.createSampleApp === true %>
+  # Master config
   templateFiles:
     - src: assets/**/*
       dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.assetsDir %>
