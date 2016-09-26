@@ -1,6 +1,6 @@
 documentation:
 
-  configModules:
+  toolModules:
   - packages:
       - <<: *pkg_swanky-server
       - <<: *pkg_swanky-processor-ngdocs
@@ -113,7 +113,7 @@ entryPoint:
 
 
 release:
-  configModules:
+  toolModules:
     - condition: <%- release.commitMessageFormat === 'Conventional' %>
       packages:
         - <<: *pkg_cz-customizable
@@ -190,22 +190,16 @@ release:
             - Define another script-task called `postrelease` to define the rest of your release process
 
 sampleApp:
-  js:
-    framework:
-      '':
-        sourceFormat:
-          ES6:
-            entryPointFileName: <%- paths.input.srcDir + resources.sampleApp.demoDir %>index.js
-            packages: []
-            testPackages: []
-            typeLibs: []
-            templateFiles:
-              - src: noFramework/ES6/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: noFramework/ES6/unitTest/*
-                dest: <%- paths.input.unitTestDir %>
-                overwrite: true
+
+  toolModules:
+    - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>
+      templateFiles:
+        - src: noFramework/ES6/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: noFramework/ES6/unitTest/*
+          dest: <%- paths.input.unitTestDir %>
+          overwrite: true
 
 serverProd:
   packages:
@@ -331,7 +325,7 @@ verify:
       description: Runs verify task whenever JS or CSS code is changed
       features: []
 
-  configModules:
+  toolModules:
     - condition: <%- ['none', 'AirBnB', 'ESLint', 'Google', 'StandardJS'].indexOf(verify.jsCodingStandard) > -1 %>
       tasks:
         - name: verify:js

@@ -5,12 +5,11 @@ config.entry = <%- printJson(entryPoint.entryPoints) %>;
 // There are benefits to having the vendor scripts separate to the source code (faster recompilation when changing source code, caching of vendor JS file)
 // So we create / edit a vendor entryPoint containing the known vendor scripts, including ones that the sampleApp may want to add
 
-var jsFrameworkConfig = buildTool.sampleApp.js.framework;
 var sourceFormat = buildJS.sourceFormat;
 var selectedFramework = buildJS.framework[0] || '';
-var selectedFrameworkConfig = jsFrameworkConfig[selectedFramework] || { sourceFormat: {} };
-var selectedFrameworkSourceFormatConfig = selectedFrameworkConfig.sourceFormat[sourceFormat]
-var sampleAppVendorScripts = (selectedFrameworkSourceFormatConfig || {}).vendorScripts;
+var selectedFrameworkConfig = resources.buildJS.frameworks[selectedFramework];
+var sampleAppVendorScripts = selectedFrameworkConfig[sourceFormat].vendorScripts
+
 
 // If there is a user-defined 'vendor' entryPoint or buildJS vendorsScripts or sampleApp vendor scripts, proceed...
 if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVendorScripts) {

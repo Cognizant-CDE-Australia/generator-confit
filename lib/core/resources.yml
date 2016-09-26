@@ -279,6 +279,9 @@ release:
   packageJsonConfig:
     - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
+sampleApp:
+  defaults:
+    createSampleApp: true
 
 testSystem:
   configSubDir: testSystem/
