@@ -8,8 +8,8 @@
 
     <title>generator-confit - How it works</title>
     <link rel="icon" href="/generator-confit/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="/generator-confit/theme.3e55f13c.css">
-    <link rel="stylesheet" type="text/css" href="/generator-confit/docs.3e55f13c.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit/theme.978a4834.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit/docs.978a4834.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600,600italic,300' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
@@ -76,7 +76,7 @@
         
 
         
-            <section id="sid-CFo42pes" class="index_section__2dFiP">
+            <section id="sid-kGL1NR6b" class="index_section__2dFiP">
     
 
     <p class="index_p__3ks-u">Confit is a Yeoman generator, composed of multiple sub-generators that are further composed into project-specific build-tools. 
@@ -419,12 +419,12 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 <li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains the unit tests for the module.</li>
 </ul>
 
-<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module FUNCTIONAL TEST directory</strong>: [browserTest/] <code class="index_code__3I9A0">input.browserTestDir</code></p>
+<p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Name of module SYSTEM TEST directory</strong>: [systemTest/] <code class="index_code__3I9A0">input.systemTestDir</code></p>
 
 <ul class="index_ul__3J_wJ">
 <li class="index_li__1SGDM">Only shown for <strong class="index_strong__mvoi8">Browser</strong> projects.</li>
 
-<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains the browser/functional tests for the module.</li>
+<li class="index_li__1SGDM">Name of directory <em class="index_em__3pkhd">within each module</em> that contains the system/browser tests for the module.</li>
 </ul>
 
 <p class="index_p__3ks-u"><strong class="index_strong__mvoi8">Path to UNIT TEST directory (relative to the current directory)</strong>: [unitTest/] <code class="index_code__3I9A0">input.unitTestDir</code></p>
@@ -616,7 +616,6 @@ software to be versioned &amp; released based automatically by following certain
 <h4 class="index_h4__2Mx7x" id="buildtools-10">Build Tools</h4>
 
 <ul class="index_ul__3J_wJ">
-<li class="index_li__1SGDM"><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a development web server which supports CORS request and other middleware.</li>
 <li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
 </ul>
 
@@ -653,19 +652,18 @@ software to be versioned &amp; released based automatically by following certain
 <h4 class="index_h4__2Mx7x" id="buildtools-11">Build Tools</h4>
 
 <ul class="index_ul__3J_wJ">
-<li class="index_li__1SGDM"><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a production web server which supports CORS request and other middleware.</li>
 <li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
 </ul>
 
 <hr class="index_hr__1Ve-V" />
 
-<h3 class="index_h3__1a7-h" id="testbrowserswankymd13">testBrowser 
+<h3 class="index_h3__1a7-h" id="testsystemformerlytestbrowserswankymd13">testSystem (formerly "testBrowser") 
 <div class="badge__browser" aria-label="browser"></div>
 
 
 </h3>
 
-<p class="index_p__3ks-u">Generates browser testing tools and configuration.</p>
+<p class="index_p__3ks-u">Generates system testing tools and configuration. For browser applications, this tests the system through a web browser. </p>
 
 <h4 class="index_h4__2Mx7x" id="questions-12">Questions</h4>
 
@@ -726,7 +724,6 @@ software to be versioned &amp; released based automatically by following certain
 
 <ul class="index_ul__3J_wJ">
 <li class="index_li__1SGDM"><div class="<%- styles.badge__npm -%>"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
-<li class="index_li__1SGDM"><em class="index_em__3pkhd">(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool creates `verify:*` tasks to verify source code in the `paths.input.srcDir` and `paths.input.configDir`.</li>
 </ul>
 
 <hr class="index_hr__1Ve-V" />
@@ -739,8 +736,7 @@ software to be versioned &amp; released based automatically by following certain
 
 </h3>
 
-<p class="index_p__3ks-u">A hook to allow different build tools to generate config after all other generators have run. Note that the <div class="<%- styles.badge__node -%>"></div> 
-version currently does nothing (it does not use <div class="<%- styles.badge__grunt -%>"></div> or <div class="<%- styles.badge__webpack -%>"></div>).</p>
+<p class="index_p__3ks-u">A hook to allow different build tools to generate config after all other generators have run.</p>
 
 <h4 class="index_h4__2Mx7x" id="questions-15">Questions</h4>
 
@@ -752,7 +748,6 @@ version currently does nothing (it does not use <div class="<%- styles.badge__gr
 
 <ul class="index_ul__3J_wJ">
 <li class="index_li__1SGDM"><div class="<%- styles.badge__webpack -%>"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
-<li class="index_li__1SGDM"><em class="index_em__3pkhd">(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool runs the `grunt dev` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
 </ul>
 </section>
 
@@ -762,9 +757,9 @@ version currently does nothing (it does not use <div class="<%- styles.badge__gr
 
             <footer class="">
                 
-                    <div class="index_version___kU-4">version 7.2.0</div>
+                    <div class="index_version___kU-4">version 7.3.0</div>
                 
             </footer>
         </div>
-    <script src="/generator-confit/theme.3e55f13c.bundle.js"></script><script src="/generator-confit/snippets.3e55f13c.bundle.js"></script><script src="/generator-confit/docs.3e55f13c.bundle.js"></script></body>
+    <script src="/generator-confit/theme.978a4834.bundle.js"></script><script src="/generator-confit/snippets.978a4834.bundle.js"></script><script src="/generator-confit/docs.978a4834.bundle.js"></script></body>
 </html>

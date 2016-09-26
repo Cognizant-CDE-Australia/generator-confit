@@ -8,8 +8,8 @@
 
     <title>generator-confit - Usage</title>
     <link rel="icon" href="/generator-confit/favicon.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="/generator-confit/theme.3e55f13c.css">
-    <link rel="stylesheet" type="text/css" href="/generator-confit/docs.3e55f13c.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit/theme.978a4834.css">
+    <link rel="stylesheet" type="text/css" href="/generator-confit/docs.978a4834.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600,600italic,300' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
@@ -76,7 +76,7 @@
         
 
         
-            <section id="sid-OKUqyX3n" class="index_section__2dFiP">
+            <section id="sid-Twq7MXbw" class="index_section__2dFiP">
     
 
     <h2 class="index_h2__14EQq" id="installation">Installation</h2>
@@ -137,7 +137,23 @@ and recompiles the application when changes are detected.</p>
 
 </h2>
 
-<p class="index_p__3ks-u">You can run <code class="index_code__3I9A0">npm run test:browser</code> to run component and/or system tests in the browser.</p>
+<p class="index_p__3ks-u">You can run <code class="index_code__3I9A0">npm run test:system</code> to run component and/or system tests in the browser. You must have the development web server running for this to work.</p>
+
+<h2 class="index_h2__14EQq" id="visualregressiontestingswankymd1">Visual regression testing 
+<div class="badge__browser" aria-label="browser"></div>
+
+
+</h2>
+
+<p class="index_p__3ks-u">Visual regression testing is optionally enabled by default. It works by taking screenshots of the components on pages that you 
+specify in JS/JSON files.</p>
+
+<p class="index_p__3ks-u">To get started, start the development web server: <code class="index_code__3I9A0">npm start</code>.</p>
+
+<p class="index_p__3ks-u">You can generate the reference images by running <code class="index_code__3I9A0">npm run test:visual:ref</code>. The images
+should be committed into your repository so that you can perform comparison tests on your continuous integration server.</p>
+
+<p class="index_p__3ks-u">You can run <code class="index_code__3I9A0">npm run test:visual</code> to compare the reference images to the current images. </p>
 
 <h2 class="index_h2__14EQq" id="generatingdocumentation">Generating documentation</h2>
 
@@ -195,9 +211,9 @@ the review process.</p>
 
             <footer class="">
                 
-                    <div class="index_version___kU-4">version 7.2.0</div>
+                    <div class="index_version___kU-4">version 7.3.0</div>
                 
             </footer>
         </div>
-    <script src="/generator-confit/theme.3e55f13c.bundle.js"></script><script src="/generator-confit/snippets.3e55f13c.bundle.js"></script><script src="/generator-confit/docs.3e55f13c.bundle.js"></script></body>
+    <script src="/generator-confit/theme.978a4834.bundle.js"></script><script src="/generator-confit/snippets.978a4834.bundle.js"></script><script src="/generator-confit/docs.978a4834.bundle.js"></script></body>
 </html>
