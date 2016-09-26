@@ -54,6 +54,92 @@ app:
       description:
       features:
 
+
+
+# Frameworks are used by multiple generators
+frameworks:
+  '': # This is not really a framework. It represents the configuration needed when there IS NO framework.
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+    frameworkPackages: {}
+    frameworkTestPackages: {}
+
+  AngularJS 1.x:
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+
+    frameworkPackages: &ng1Packages
+      packages:
+        - <<: *pkg_angular
+      typeLibs:
+        - name: angular
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
+        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
+
+    frameworkTestPackages: &ng1TestPackages
+      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
+        - <<: *pkg_angular
+        - <<: *pkg_angular-mocks
+      testTypeLibs:
+        - name: angular-mocks
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
+
+  AngularJS 2.x:
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+      vendorScripts:  # Add these items to the vendor scripts entryPoint
+        pre:
+          - './polyfills.ts'
+        post: []
+    frameworkPackages: &ng2Packages
+      packages:
+        - <<: *pkg_core-js          # In polyfills.ts
+        - <<: *pkg_zone.js          # In polyfills.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
+        - <<: *pkg_angular2/core
+        - <<: *pkg_angular2/common
+      typeLibs:
+        - name: core-js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
+        - name: zone.js
+          key: dependencies
+          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
+
+    frameworkTestPackages: &ng2TestPackages
+      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+        - <<: *pkg_core-js
+        - <<: *pkg_ts-helpers
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_rxjs
+        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
+      testTypeLibs: []
+
+  React (latest):
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    frameworkPackages: &reactPackages
+      packages:
+        - <<: *pkg_react
+      testPackages: []
+    frameworkTestPackages: &reactTestPackages {}
+
+
 buildAssets: {}
 
 buildBrowser:
@@ -110,84 +196,6 @@ buildJS:
     - ES5
     - ES6
 
-  # List of tests packages for different frameworks (no need to distinguish between sourceFormat)
-  frameworks:
-    '': # This is not really a framework. It represents the configuration needed when there IS NO framework.
-      ES6:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-      TypeScript:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-      frameworkPackages: {}
-
-    AngularJS 1.x:
-      ES6:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-      TypeScript:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-
-      frameworkPackages: &ng1Packages
-        packages:
-          - <<: *pkg_angular
-        typeLibs:
-          - name: angular
-            key: ambientDependencies
-            version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
-          - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
-            key: ambientDependencies
-            version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
-
-      frameworkTestPackages: &ng1TestPackages
-        testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
-          - <<: *pkg_angular
-          - <<: *pkg_angular-mocks
-        testTypeLibs:
-          - name: angular-mocks
-            key: ambientDependencies
-            version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
-
-    AngularJS 2.x:
-      ES6:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-      TypeScript:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-        vendorScripts:  # Add these items to the vendor scripts entryPoint
-          pre:
-            - './polyfills.ts'
-          post: []
-      frameworkPackages: &ng2Packages
-        packages:
-          - <<: *pkg_core-js          # In polyfills.ts
-          - <<: *pkg_zone.js          # In polyfills.ts
-          - <<: *pkg_rxjs             # In vendor.ts
-          - <<: *pkg_angular2/platform/browser
-          - <<: *pkg_angular2/platform/common_dom
-          - <<: *pkg_angular2/core
-          - <<: *pkg_angular2/common
-        typeLibs:
-          - name: core-js
-            key: ambientDependencies
-            version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
-          - name: zone.js
-            key: dependencies
-            version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
-
-      frameworkTestPackages: &ng2TestPackages
-        testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-          - <<: *pkg_core-js
-          - <<: *pkg_ts-helpers
-          - <<: *pkg_zone.js/dist/zone
-          - <<: *pkg_zone.js/dist/long-stack-trace-zone
-          - <<: *pkg_zone.js/dist/jasmine-patch
-          - <<: *pkg_zone.js/dist/async-test
-          - <<: *pkg_rxjs
-          # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
-        testTypeLibs: []
-
-    React (latest):
-      ES6:
-        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-      frameworkPackages: {}
-
   readme:
     extensionPoint:
       buildJS.frameworkScripts: >
@@ -240,11 +248,7 @@ buildJS:
       <<: *ng2Packages
 
     - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
-      packages:
-        - <<: *pkg_react
-      typeLibs: []
-      testPackages: []
-      testTypeLibs: []
+      <<: *reactPackages
 
 
 entryPoint:
@@ -526,33 +530,6 @@ testSystem: {}
 
 
 testUnit:
-
-  # List of tests packages for different frameworks (no need to distinguish between sourceFormat)
-  frameworks:
-
-    AngularJS 1.x: &ng1TestPackages
-      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
-        - <<: *pkg_angular
-        - <<: *pkg_angular-mocks
-      testTypeLibs:
-        - name: angular-mocks
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
-
-    AngularJS 2.x: &ng2TestPackages
-      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-        - <<: *pkg_core-js
-        - <<: *pkg_ts-helpers
-        - <<: *pkg_zone.js/dist/zone
-        - <<: *pkg_zone.js/dist/long-stack-trace-zone
-        - <<: *pkg_zone.js/dist/jasmine-patch
-        - <<: *pkg_zone.js/dist/async-test
-        - <<: *pkg_rxjs
-
-    React (latest): &reactTestPackages
-      testPackages: []
-
-
   configModules:
     - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
       <<: *ng1TestPackages

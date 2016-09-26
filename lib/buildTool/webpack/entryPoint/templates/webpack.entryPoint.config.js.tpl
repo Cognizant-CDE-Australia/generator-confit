@@ -7,7 +7,7 @@ config.entry = <%- printJson(entryPoint.entryPoints) %>;
 
 var sourceFormat = buildJS.sourceFormat;
 var selectedFramework = buildJS.framework[0] || '';
-var selectedFrameworkConfig = resources.buildJS.frameworks[selectedFramework];
+var selectedFrameworkConfig = resources.frameworks[selectedFramework];
 var sampleAppVendorScripts = selectedFrameworkConfig[sourceFormat].vendorScripts
 
 

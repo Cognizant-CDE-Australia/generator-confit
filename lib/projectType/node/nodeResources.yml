@@ -36,6 +36,15 @@ app:
       description:
       features:
 
+# Frameworks are used by multiple generators
+frameworks:
+  '':
+    ES6:
+      entryPointFileName: <%- paths.input.srcDir + resources.sampleApp.demoDir %>index.js
+    frameworkPackages: {}
+    frameworkTestPackages: {}
+
+
 buildJS:
   defaults:
     sourceFormat: ES6
@@ -51,10 +60,6 @@ buildJS:
   outputFormat:
     - ES6
 
-  frameworks:
-    '':
-      ES6:
-        entryPointFileName: <%- paths.input.srcDir + resources.sampleApp.demoDir %>index.js
 
 entryPoint:
   defaults:

@@ -210,7 +210,6 @@ sampleApp:
           overwrite: true
 
 
-
 serverDev:
   packages:
     - <<: *pkg_js-yaml
