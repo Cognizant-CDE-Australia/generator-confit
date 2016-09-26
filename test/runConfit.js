@@ -75,8 +75,9 @@ function install(resolve, reject) {
         path.join(GENERATOR_PATH, 'sampleApp'),
         path.join(GENERATOR_PATH, 'serverDev'),
         path.join(GENERATOR_PATH, 'serverProd'),
-        path.join(GENERATOR_PATH, 'testBrowser'),
+        path.join(GENERATOR_PATH, 'testSystem'),
         path.join(GENERATOR_PATH, 'testUnit'),
+        path.join(GENERATOR_PATH, 'testVisualRegression'),
         path.join(GENERATOR_PATH, 'verify'),
         path.join(GENERATOR_PATH, 'zzfinish')
       ])

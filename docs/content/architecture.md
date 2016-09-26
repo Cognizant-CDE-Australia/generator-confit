@@ -192,9 +192,9 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 - Only shown for **Browser** projects.
 - Name of directory *within each module* that contains the unit tests for the module.
 
-**Name of module FUNCTIONAL TEST directory**: [browserTest/] `input.browserTestDir`
+**Name of module SYSTEM TEST directory**: [systemTest/] `input.systemTestDir`
 - Only shown for **Browser** projects.
-- Name of directory *within each module* that contains the browser/functional tests for the module.
+- Name of directory *within each module* that contains the system/browser tests for the module.
 
 **Path to UNIT TEST directory (relative to the current directory)**: [unitTest/] `input.unitTestDir`
 - Only shown for **NodeJS** projects.
@@ -303,7 +303,6 @@ Captures server settings for serving the the web application in a development-mo
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a development web server which supports CORS request and other middleware.</li>
 <li><div class="<%- styles.badge__webpack -%>"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
 </ul>
 
@@ -326,15 +325,14 @@ Captures server settings for serving the the web application in a production-mod
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__grunt -%>"></div> build tool uses "connect" to start a production web server which supports CORS request and other middleware.</li>
 <li><div class="<%- styles.badge__npm -%>"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
 </ul>
 
 ---
 
-### testBrowser [render badge list="browser"]
+### testSystem (formerly "testBrowser") [render badge list="browser"]
 
-Generates browser testing tools and configuration.
+Generates system testing tools and configuration. For browser applications, this tests the system through a web browser. 
 
 #### Questions
 None
@@ -373,15 +371,13 @@ Generates code syntax and style-verification tools for JavaScript (and CSS <div 
 #### Build Tools
 <ul>
 <li><div class="<%- styles.badge__npm -%>"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
-<li><em>(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool creates `verify:*` tasks to verify source code in the `paths.input.srcDir` and `paths.input.configDir`.</li>
 </ul>
 
 ---
 
 ### zzfinish [render badge list="browser|node"]
 
-<p>A hook to allow different build tools to generate config after all other generators have run. Note that the <div class="<%- styles.badge__node -%>"></div> 
-version currently does nothing (it does not use <div class="<%- styles.badge__grunt -%>"></div> or <div class="<%- styles.badge__webpack -%>"></div>).</p>
+A hook to allow different build tools to generate config after all other generators have run.
 
 #### Questions
 - None
@@ -389,5 +385,4 @@ version currently does nothing (it does not use <div class="<%- styles.badge__gr
 #### Build Tools
 <ul>
 <li><div class="<%- styles.badge__webpack -%>"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
-<li><em>(Deprecated)</em> <div class="<%- styles.badge__grunt -%>"></div> build tool runs the `grunt dev` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
 </ul>

@@ -10,22 +10,27 @@ testUnit.testDependencies.forEach(function(moduleName) { %>
 require('<%= moduleName -%>');<%
 });
 
-// Add any Framework + SourceFormat -specific test unit config
-var jsFrameworkConfig = buildTool.sampleApp.js.framework;
 var sourceFormat = buildJS.sourceFormat;
 var selectedFramework = buildJS.framework[0] || '';
-var selectedFrameworkConfig = jsFrameworkConfig[selectedFramework] || { sourceFormat: {} };
-var selectedFrameworkSourceFormatConfig = selectedFrameworkConfig.sourceFormat[sourceFormat]
-var testConfigForFramework = (selectedFrameworkSourceFormatConfig || {}).testUnitConfig;
 
-if (testConfigForFramework) {
+// Framework + Source-Format specific rules...
+if (sourceFormat === 'TypeScript' && selectedFramework === 'AngularJS 2.x') {
 %>
-<%- testConfigForFramework %>
+// Load Angular 2's Jasmine helper methods:
+var testing = require('angular2/testing');
+var browser = require('angular2/platform/testing/browser');
+
+testing.setBaseTestProviders(
+  browser.TEST_BROWSER_PLATFORM_PROVIDERS,
+  browser.TEST_BROWSER_APPLICATION_PROVIDERS
+);
+
+Object.assign(global, testing);
 <%
 }
 
 // Determine the relative path from this folder to the root directory
-var configPath = paths.config.configDir + 'testUnit/';
+var configPath = paths.config.configDir + resources.testUnit.configSubDir;
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 %>
 

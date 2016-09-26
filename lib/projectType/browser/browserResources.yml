@@ -11,7 +11,8 @@ app:
     - confit:serverDev
     - confit:serverProd
     - confit:testUnit
-    - confit:testBrowser
+    - confit:testSystem
+    - confit:testVisualRegression
     - confit:verify
     - confit:documentation
     - confit:release
@@ -53,8 +54,97 @@ app:
       description:
       features:
 
+
+
+# Frameworks are used by multiple generators
+frameworks:
+  '': # This is not really a framework. It represents the configuration needed when there IS NO framework.
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+    frameworkPackages: {}
+    frameworkTestPackages: {}
+
+  AngularJS 1.x:
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+
+    frameworkPackages: &ng1Packages
+      packages:
+        - <<: *pkg_angular
+      typeLibs:
+        - name: angular
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
+        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
+
+    frameworkTestPackages: &ng1TestPackages
+      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
+        - <<: *pkg_angular
+        - <<: *pkg_angular-mocks
+      testTypeLibs:
+        - name: angular-mocks
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
+
+  AngularJS 2.x:
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    TypeScript:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+      vendorScripts:  # Add these items to the vendor scripts entryPoint
+        pre:
+          - './polyfills.ts'
+        post: []
+    frameworkPackages: &ng2Packages
+      packages:
+        - <<: *pkg_core-js          # In polyfills.ts
+        - <<: *pkg_zone.js          # In polyfills.ts
+        - <<: *pkg_rxjs             # In vendor.ts
+        - <<: *pkg_angular2/platform/browser
+        - <<: *pkg_angular2/platform/common_dom
+        - <<: *pkg_angular2/core
+        - <<: *pkg_angular2/common
+      typeLibs:
+        - name: core-js
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
+        - name: zone.js
+          key: dependencies
+          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
+
+    frameworkTestPackages: &ng2TestPackages
+      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
+        - <<: *pkg_core-js
+        - <<: *pkg_ts-helpers
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_rxjs
+        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
+      testTypeLibs: []
+
+  React (latest):
+    ES6:
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+    frameworkPackages: &reactPackages
+      packages:
+        - <<: *pkg_react
+      testPackages: []
+    frameworkTestPackages: &reactTestPackages {}
+
+
+buildAssets: {}
+
 buildBrowser:
-  defaultSupportedBrowsers: ['latest']
+  defaults:
+    browserSupport: ['latest']
 
   supportedBrowsers:
     latest:
@@ -70,24 +160,42 @@ buildBrowser:
       label: Legacy Mobile (Blackberry, Android Webview)
       browserList: ['bb', 'Android Webview']
 
-buildAssets: {}
 
 # CSS configuration
 buildCSS:
-  defaultSourceFormat: stylus
+  defaults:
+    sourceFormat: stylus
+
   sourceFormat:
     css:
       ext: ['css']
-
     sass:
       ext: ['sass', 'scss']
-
     stylus:
       ext: ['styl']
 
-buildHTML: {}
+buildHTML:
+  defaults:
+    extension: .html
 
 buildJS:
+  defaults:
+    sourceFormat: ES6
+    outputFormat: ES6
+    # No default framework
+
+  showVendorScripts: true     # Flag to indicate that whether the vendorScripts question in buildJS should be shown or not. Not used for Node projects.
+
+  sourceFormat:
+    ES6:
+      ext: ['js']
+    TypeScript:
+      ext: ['ts']
+
+  outputFormat:
+    - ES5
+    - ES6
+
   readme:
     extensionPoint:
       buildJS.frameworkScripts: >
@@ -100,9 +208,8 @@ buildJS:
         This property should contain NPM module names and/or references to JavaScript files (files must start with `./`).
         For example: `vendorScripts: ['jquery', './module/path/to/jsFile.js', 'moment/timezone',  ...]`
 
-  sourceFormat:
-    ES6:
-      ext: ['js']
+  configModules:
+    - condition: <%- buildJS.sourceFormat === 'ES6' %>
       templateFiles:  # We need to use Babel EVEN when outputFormat is NOT ES5 so that browser unit testing works (as the new unit testing plugin is tied to Babel)
         - src: .babelrc.tpl
           dest: .babelrc
@@ -114,100 +221,34 @@ buildJS:
         - <<: *pkg_babel-preset-es2015
       tasks: []
 
-
-    TypeScript:
-      ext: ['ts']
+    - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_typescript
         - <<: *pkg_typings
-
       templateFiles:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
           overwrite: true
-
       tasks:
         - name: typings:install
           tasks: ['typings install']
           description: ''
-
       typeLibs:
         - name: node
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
-
       onInstall:
         - cmd: npm
           args: ['run', 'typings:install']
 
-  sourceFormatDefault: ES6
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
+      <<: *ng1Packages
 
-  outputFormat:
-    - ES5
-    - ES6
-  outputFormatDefault: ES5
+    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
+      <<: *ng2Packages
 
-  showVendorScripts: true     # Flag to indicate that whether the vendorScripts question in buildJS should be shown or not
-
-  frameworks:
-    AngularJS 1.x:
-      packages:
-        - <<: *pkg_angular
-      typeLibs:
-        - name: angular
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
-        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
-
-      testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
-        - <<: *pkg_angular
-        - <<: *pkg_angular-mocks
-      testTypeLibs:
-        - name: angular-mocks
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
-
-
-    AngularJS 2.x:
-      packages:
-        - <<: *pkg_core-js          # In polyfills.ts
-        - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # In vendor.ts
-        - <<: *pkg_angular2/platform/browser
-        - <<: *pkg_angular2/platform/common_dom
-        - <<: *pkg_angular2/core
-        - <<: *pkg_angular2/common
-
-      typeLibs:
-        - name: core-js
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
-
-        - name: zone.js
-          key: dependencies
-          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
-
-      testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-        - <<: *pkg_core-js
-        - <<: *pkg_ts-helpers
-        - <<: *pkg_zone.js/dist/zone
-        - <<: *pkg_zone.js/dist/long-stack-trace-zone
-        - <<: *pkg_zone.js/dist/jasmine-patch
-        - <<: *pkg_zone.js/dist/async-test
-        - <<: *pkg_rxjs
-        # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
-#        - <<: *pkg_angular2/core
-
-      testTypeLibs: []
-
-    React (latest):
-      packages:
-        - <<: *pkg_react
-      typeLibs: []
-      testPackages: []
-      testTypeLibs: []
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      <<: *reactPackages
 
 
 entryPoint:
@@ -244,8 +285,8 @@ paths:
     - name: input.unitTestDir
       message: Name of module UNIT TEST directory
 
-    - name: input.browserTestDir
-      message: Name of module FUNCTIONAL TEST directory
+    - name: input.systemTestDir
+      message: Name of module SYSTEM TEST (browser test) directory
 
     - name: output.devDir
       heading: |
@@ -277,7 +318,6 @@ paths:
 
       message: Path to CONFIG directory (relative to the current directory)
 
-
   defaults:
     input:
       srcDir: src/
@@ -286,8 +326,8 @@ paths:
       stylesDir: styles/
       templateDir: template/
       unitTestDir: unitTest/
-      browserTestDir: browserTest/
-
+      systemTestDir: systemTest/
+      testDir: test/
     output:
       devDir: dev/
       prodDir: dist/
@@ -296,7 +336,6 @@ paths:
       jsSubDir: js/
       vendorJSSubDir: vendor/
       reportDir: reports/
-
     config:
       configDir: config/
 
@@ -304,10 +343,6 @@ paths:
     - name: input.modulesDir
       value: <%- paths.input.srcDir + '/' + paths.input.modulesSubDir %>
 
-  templateFiles:
-    - src: gitignore
-      dest: .gitignore
-      overwrite: false
 
 # README section for the template tags that will appear inside the README.md template
 readme:
@@ -317,7 +352,7 @@ readme:
     Code is organised into modules which contain one-or-more components. This a great way to ensure maintainable code by encapsulation of behavior logic. A component is basically a self contained app usually in a single file or a folder with each concern as a file: style, template, specs, e2e, and component class. Here's how it looks:
     ```<% var maxDirLen = 30; %>
     <%- pkg.name %>/
-     ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. grunt, webpack, verify, testUnit)
+     ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. webpack, <%- resources.documentation.configSubDir %>, <%- resources.testSystem.configSubDir %>, <%- resources.testUnit.configSubDir %>, <%- resources.testVisualRegression.configSubDir %>, <%- resources.verify.configSubDir %>)
      │
      ├──<%- rpad(paths.input.srcDir, maxDirLen) %>* source code files should be here
      │   └──<%- rpad(paths.input.modulesSubDir, maxDirLen - 4) %>* all source code modules|components|features should appear as sub-directories under this directory
@@ -329,8 +364,9 @@ readme:
      │           │   └──<%- rpad('img', maxDirLen - 16) %>* images for this module
      │           ├──<%- rpad(paths.input.stylesDir, maxDirLen - 12) %>* css source code for this module
      │           ├──<%- rpad(paths.input.templateDir, maxDirLen - 12) %>* HTML templates for this module
+     │           ├──<%- rpad(paths.input.systemTestDir, maxDirLen - 12) %>* system test specs for this module
      │           ├──<%- rpad(paths.input.unitTestDir, maxDirLen - 12) %>* unit test specs for this module
-     │           └──<%- rpad(paths.input.browserTestDir, maxDirLen - 12) %>* browser test specs for this module
+     │           └──<%- rpad(testVisualRegression.moduleTestDir, maxDirLen - 12) %>* visual regression test specs for this module (if enabled)
      │
      ├──<%- rpad(paths.output.devDir, maxDirLen) %>* development-build code is output here (Webpack may keep it in memory for speed)
      ├──<%- rpad(paths.output.prodDir, maxDirLen) %>* production-build code is output here
@@ -346,6 +382,8 @@ readme:
      │
      ├──<%- rpad(documentation.srcDir, maxDirLen) %>* source/content for the documentation website goes here
      ├──<%- rpad(documentation.outputDir, maxDirLen) %>* the documentation website is generated here<% } %>
+     │
+     ├──<%- rpad(testVisualRegression.referenceImageDir, maxDirLen) %>* visual regression testing reference images (if enabled)
      │
      ├──<%- rpad(configFile, maxDirLen) %>* the project config file generated by 'yo confit'
      ├──<%- rpad('CONTRIBUTING.md', maxDirLen) %>* how to contribute to the project
@@ -399,7 +437,7 @@ readme:
     - [ ] Add a new module to `<%- paths.input.modulesDir %>`
     - [ ] Run `npm start`, change the stylesheet and see the changes appear immediately
     - [ ] Run `npm test` to execute the unit tests and see the test coverage
-    - [ ] Run `npm start && test:browser` to execute the browser tests
+    - [ ] Run `npm start && test:system` to execute the browser tests
     <% if (release.commitMessageFormat === 'Conventional') { %>- [ ] Run `git cz` to commit changes with a conventional commit message
     <% } -%>
 
@@ -407,28 +445,25 @@ readme:
 
 # Sample App
 sampleApp:
+  # There is a problem in eslintignore.yml.tpl whereby we want to refer to sampleApp.deomDir, but this variable also contains an EJS template
+  # To work around this issue, we change eslintignore.yml.tpl to have a 'browser' and 'node' version of the directory to ignore.
+  # This is not ideal, but less evil than changing all the generators to support this use-case.
+  demoDirName: demoModule/
   demoDir: <%= paths.input.modulesSubDir %>demoModule/
 
-  # An array of optional configuration
-  additionalConfig:
-    - configKey: cssSourceFormat
-      codingStandardExpression: config.buildCSS.sourceFormat
-
+  # Master config
   templateFiles:
     - src: assets/**/*
       dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.assetsDir %>
       overwrite: true
       noParse: true
-
-    - src: browserTest/*
-      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.browserTestDir %>
+    - src: systemTest/*
+      dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.systemTestDir %>
       overwrite: true
       noParse: true
 
-  cssSourceFormat:
-    css:
-      entryPointFileNames:
-        - app.css
+  configModules:
+    - condition: <%= buildCSS.sourceFormat === 'css' %>
       templateFiles:
         - src: css/app.css
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.css
@@ -437,9 +472,7 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
-    sass:
-      entryPointFileNames:
-        - app.sass
+    - condition: <%= buildCSS.sourceFormat === 'sass' %>
       templateFiles:
         - src: css/app.sass
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.sass
@@ -448,9 +481,7 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
 
-    stylus:
-      entryPointFileNames:
-        - app.styl
+    - condition: <%= buildCSS.sourceFormat === 'stylus' %>
       templateFiles:
         - src: css/app.styl
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>app.styl
@@ -458,6 +489,26 @@ sampleApp:
         - src: css/iconFont.css
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.stylesDir %>iconFont.css
           overwrite: true
+
+    - condition: <%= testVisualRegression.enabled === true %>
+      templateFiles:
+        - src: visualTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + testVisualRegression.moduleTestDir %>
+          overwrite: true
+          noParse: true
+
+  # The SampleApp build tool needs to know what the entrypoint file name is.
+  cssSourceFormat:
+    css:
+      entryPointFileNames:
+        - app.css
+    sass:
+      entryPointFileNames:
+        - app.sass
+    stylus:
+      entryPointFileNames:
+        - app.styl
+
 
 
 # Server - Development
@@ -467,92 +518,85 @@ serverDev:
     hostname: localhost
     protocol: https
 
+
 serverProd:
   defaults:
     port: 3000
     hostname: localhost
     protocol: https
 
-testBrowser: {}
+
+testSystem: {}
+
+
+testUnit:
+  configModules:
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
+      <<: *ng1TestPackages
+
+    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
+      <<: *ng2TestPackages
+
+    - condition: <%- buildJS.framework.indexOf('React (Latest)') > -1 %>
+      <<: *reactTestPackages
+
+
+testVisualRegression: {}
+
 
 verify:
-  codeToVerify:
-    - configKey: cssCodingStandard
-      codingStandardExpression: config.buildCSS.sourceFormat
-      taskName: verify:css
+  verifyTasks: ['verify:js', 'verify:css']
 
-    - configKey: jsCodingStandard
-      codingStandardExpression: config.verify.jsCodingStandard
-      taskName: verify:js
+  configModules:
+    - packages:   # Common tools
+        - <<: *pkg_eslint
+        - <<: *pkg_babel-eslint     # We may not need this in the near future. ESLint can parse ES6 & ES7 things
+      templateFiles:
+        - src: eslintignore.yml.tpl
+          dest: .eslintignore
+          overwrite: true
+        - src: eslint.yml
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc
+          overwrite: true
 
- # Common config across implementations
-  baseJSConfig: &jsCodingStandardBase
-    packages: &jsCodingBasePackages
-      - <<: *pkg_eslint
-      - <<: *pkg_babel-eslint     # We may not need this in the near future. ESLint can parse ES6 & ES7 things
-    templateFiles:
-      - src: eslintignore.yml.tpl
-        dest: .eslintignore
-        overwrite: true
-      - src: eslint.yml
-        dest: <%= paths.config.configDir %>verify/.eslintrc
-        overwrite: true
-
-  jsCodingStandard:
-    # These keys are used in the UI...
-    none:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
-
-    AirBnB:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'AirBnB' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-airbnb
         - <<: *pkg_eslint-plugin-import
         - <<: *pkg_eslint-plugin-react
         - <<: *pkg_eslint-plugin-jsx-a11y
 
-    ESLint:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
-
-    Google:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'Google' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-google
 
-    StandardJS:
-      <<: *jsCodingStandardBase
-      supportedSourceFormat: ['ES6']
+    - condition: <%- verify.jsCodingStandard === 'StandardJS' %>
       packages:
-        - *jsCodingBasePackages
         - <<: *pkg_eslint-config-standard
         - <<: *pkg_eslint-plugin-standard
         - <<: *pkg_eslint-plugin-promise
 
-    TypeScript:
-      supportedSourceFormat: ['TypeScript']
+    - condition: <%- verify.jsCodingStandard === 'TypeScript' %>
       packages:
         - <<: *pkg_tslint
       templateFiles:
         - src: tslint.json
-          dest: <%= paths.config.configDir %>verify/tslint.json
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>tslint.json
 
-
-  cssCodingStandard:  # This is not quite an accurate name, but it is good enough for now.
-    css:
-      templateFiles: []
-    sass:
+    - condition: <%- buildCSS.sourceFormat === 'sass' %>
       # No packages to install, as the build-tools will have their own
       templateFiles:
         - src: sasslint.yml
-          dest: <%= paths.config.configDir %>verify/sasslint.yml
-    stylus:
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>sasslint.yml
+
+    - condition: <%- buildCSS.sourceFormat === 'stylus' %>
       # No packages to install, as the build-tools will have their own
       templateFiles:
         - src: stylintrc
-          dest: <%= paths.config.configDir %>verify/.stylintrc
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>.stylintrc
+
+zzfinish:
+  # For browser projects, after installation, start the project
+  onEnd:
+    - cmd: npm
+      args: ['start']

@@ -27,8 +27,9 @@ module.exports = {
     {name: 'release'},
     {name: 'sampleApp'},
     {name: 'server'},
-    {name: 'testBrowser'},
+    {name: 'testSystem'},
     {name: 'testUnit'},
+    {name: 'testVisualRegression'},
     {name: 'verify'},
     {name: 'zzfinish'}
   ],

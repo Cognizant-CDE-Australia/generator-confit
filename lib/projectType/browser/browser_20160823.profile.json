@@ -16,9 +16,9 @@
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "npm",
-    "testBrowser": "protractor",
+    "testSystem": "protractor",
     "testUnit": "webpack",
     "verify": "npm",
-    "zzfinish": "webpack"
+    "zzfinish": ""
   }
 }

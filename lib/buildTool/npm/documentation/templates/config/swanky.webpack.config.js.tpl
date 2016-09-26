@@ -2,7 +2,7 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
-var configPath = paths.config.configDir + 'docs/';
+var configPath = paths.config.configDir + resources.documentation.configSubDir;
 var relativePath = configPath.replace(/([^/]+)/g, '..');
 -%>
 const buildConfig = require('swanky-server').buildConfig(__dirname + '/<%- relativePath + documentation.srcDir %>swanky.config.yaml');

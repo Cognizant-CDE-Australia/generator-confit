@@ -36,7 +36,8 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:sampleApp'],
     [helpers.createDummyGenerator(), 'confit:serverDev'],
     [helpers.createDummyGenerator(), 'confit:serverProd'],
-    [helpers.createDummyGenerator(), 'confit:testBrowser'],
+    [helpers.createDummyGenerator(), 'confit:testSystem'],
+    [helpers.createDummyGenerator(), 'confit:testVisualRegression'],
     [helpers.createDummyGenerator(), 'confit:testUnit'],
     [helpers.createDummyGenerator(), 'confit:verify'],
     [helpers.createDummyGenerator(), 'confit:zzfinish']
@@ -76,7 +77,7 @@ describe('App Generator', () => {
 
 
   it('should create an .editorConfig, package.json and confit.yml file when they do not exist', done => {
-    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml'];
+    let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml', '.gitignore'];
 
     runGenerator('app-config.json',
       function beforeTest() {

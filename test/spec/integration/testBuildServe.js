@@ -13,10 +13,10 @@ const CONFIT_CMD = 'npm run build:serve';
  * Runs Protractor tests inside a browser
  * @param {url} baseUrl   The URL of the website that is being tested
  */
-function runBrowserTest(baseUrl) {
+function runSystemTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
-  let proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
+  let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR
   });
@@ -32,20 +32,17 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     let baseUrl;
 
     before(() => {
-      // Determine if we are dealing with the grunt server, or the NPM server
+      // Determine if we are dealing with the NPM server or something else
       const pkg = fs.readJsonSync(tempTestDir + 'package.json');
       let serverStartedRegEx;
       let configFn;
       let configData;
 
+      // This is a remnant of when we had different web servers with different output messages for when they are ready
       if (pkg.scripts['serve:prod:https']) {
         configFn = modifyPackageServerConfig;
         configData = 'serve:prod';
         serverStartedRegEx = /Serving .* at http(s)?:\/\//;
-      } else {
-        configFn = modifyConfitServerConfig;
-        configData = 'serverProd';
-        serverStartedRegEx = /Started connect web server on/;
       }
 
       // Start up the confit PROD webserver
@@ -61,7 +58,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
 
     it('should start a webserver and build the sampleApp correctly', () => {
       assert.ok(baseUrl, 'baseUrl should be defined, server took too long to load.');
-      assert.doesNotThrow(() => runBrowserTest(baseUrl));
+      assert.doesNotThrow(() => runSystemTest(baseUrl));
     });
 
     after(() => server.stop());

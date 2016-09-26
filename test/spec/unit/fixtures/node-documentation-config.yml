@@ -9,4 +9,5 @@ generator-confit:
     config:
       configDir: config/
 
-  buildJS: {}
+  buildJS:
+    framework: []

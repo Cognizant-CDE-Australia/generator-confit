@@ -2,6 +2,7 @@ buildBrowser:
   packages:
     - <<: *pkg_webpack
     - <<: *pkg_webpack-dev-server
+    - <<: *pkg_extract-text-webpack-plugin
 
   tasks:
     - name: build:dev
@@ -20,10 +21,35 @@ buildBrowser:
         - Dead code removal
         - Hashes added to file names for cache-busting
 
+  templateFiles:
+    - src: webpack.config.js.tpl
+      dest: <%= paths.config.configDir %>webpack/webpack.config.js
+      overwrite: true
+
+    - src: dev.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/dev.webpack.config.js
+      overwrite: true
+
+    - src: prod.webpack.config.js
+      dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
+      overwrite: true
+
+    - src: webpackHelpers.js
+      dest: <%= paths.config.configDir %>webpack/webpackHelpers.js
+      overwrite: true
+
+  readme:
+    extensionPoint:
+      start: >
+        `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
+        and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
+        files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
+
 
 buildAssets:
   packages:
     - <<: *pkg_file-loader
+
 
 buildCSS:
   # Common packages
@@ -33,33 +59,29 @@ buildCSS:
     - <<: *pkg_autoprefixer
     - <<: *pkg_postcss-loader
 
-  sourceFormat:
-    css:
-      packages: []
-
-    stylus:
+  toolModules:
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'stylus' %>
       packages:
         - <<: *pkg_stylus
         - <<: *pkg_stylus-loader
 
-    sass:
+    - condition: <%- config.buildCSS && buildCSS.sourceFormat === 'sass' %>
       packages:
         - <<: *pkg_sass-loader
         - <<: *pkg_node-sass
+
 
 buildHTML:
   packages:
     - <<: *pkg_html-loader
     - <<: *pkg_html-webpack-plugin
 
-buildJS:
-  sourceFormat:
-    ES6: {}   # Inherit from resources.yml
 
-    TypeScript:
+buildJS:
+  toolModules:
+    - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_awesome-typescript-loader
-
       typeLibs:
         - name: webpack
           key: ambientDependencies
@@ -68,167 +90,129 @@ buildJS:
 
 # sampleApp configuration
 sampleApp:
-  js:
-    framework:
-      '':
-        sourceFormat:
-          ES6:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-            packages: []
-            testPackages: []
-            typeLibs: []
-            templateFiles:
-              - src: noFramework/ES6/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: noFramework/ES6/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: noFramework/ES6/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: noFramework/ES6/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
 
-          TypeScript:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-            packages: []
-            testPackages: []
-            typeLibs: []
-            templateFiles:
-              - src: noFramework/TypeScript/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: noFramework/TypeScript/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: noFramework/TypeScript/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: noFramework/TypeScript/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
+  toolModules:
+    - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>
+      templateFiles:
+        - src: noFramework/ES6/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: noFramework/ES6/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: noFramework/ES6/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: noFramework/ES6/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
+    - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'TypeScript' %>
+      templateFiles:
+        - src: noFramework/TypeScript/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: noFramework/TypeScript/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: noFramework/TypeScript/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: noFramework/TypeScript/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
-      AngularJS 1.x:
-        sourceFormat:
-          ES6:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-            packages:
-              - <<: *pkg_angular-route
-            testPackages:
-              - <<: *pkg_angular-route
-            typeLibs: []
-            templateFiles:
-              - src: ng1/ES6/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: ng1/ES6/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: ng1/ES6/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: ng1/ES6/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 && buildJS.sourceFormat === 'ES6' %>
+      packages:
+        - <<: *pkg_angular-route
+      testPackages:
+        - <<: *pkg_angular-route
+      typeLibs: []
+      templateFiles:
+        - src: ng1/ES6/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: ng1/ES6/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: ng1/ES6/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: ng1/ES6/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
-          TypeScript:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-            packages:
-              - <<: *pkg_angular-route
-            testPackages:
-              - <<: *pkg_angular-route
-            typeLibs:
-              - name: angular-route
-                key: ambientDependencies
-                version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
-            templateFiles:
-              - src: ng1/TypeScript/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: ng1/TypeScript/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: ng1/TypeScript/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: ng1/TypeScript/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 && buildJS.sourceFormat === 'TypeScript' %>
+      packages:
+        - <<: *pkg_angular-route
+      testPackages:
+        - <<: *pkg_angular-route
+      typeLibs:
+        - name: angular-route
+          key: ambientDependencies
+          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
+      templateFiles:
+        - src: ng1/TypeScript/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: ng1/TypeScript/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: ng1/TypeScript/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: ng1/TypeScript/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
-      AngularJS 2.x:
-        sourceFormat:
-          ES6:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
-            packages:
-              - <<: *pkg_angular2/router
-            testPackages: []
-            typeLibs: []
-            templateFiles:
-              - src: ng2/ES6/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: ng2/ES6/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: ng2/ES6/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: ng2/ES6/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
+    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'ES6' %>
+      packages:
+        - <<: *pkg_angular2/router
+      testPackages: []
+      typeLibs: []
+      templateFiles:
+        - src: ng2/ES6/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: ng2/ES6/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: ng2/ES6/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: ng2/ES6/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
-          TypeScript:
-            entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-            packages:
-              - <<: *pkg_angular2/router
-            testPackages: []
-            typeLibs: []
-            templateFiles:
-              - src: ng2/TypeScript/*
-                dest: <%= paths.input.srcDir %>
-                overwrite: true
-                noParse: true
-              - src: ng2/TypeScript/demoModule/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-                overwrite: true
-              - src: ng2/TypeScript/demoModule/unitTest/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-                overwrite: true
-              - src: ng2/TypeScript/demoModule/templates/*
-                dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-                overwrite: true
+    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'TypeScript' %>
+      packages:
+        - <<: *pkg_angular2/router
+      testPackages: []
+      typeLibs: []
+      templateFiles:
+        - src: ng2/TypeScript/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: ng2/TypeScript/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: ng2/TypeScript/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+        - src: ng2/TypeScript/demoModule/templates/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
+          overwrite: true
 
-            testUnitConfig: |
-              // Load Angular 2's Jasmine helper methods:
-              var testing = require('angular2/testing');
-              var browser = require('angular2/platform/testing/browser');
-
-              testing.setBaseTestProviders(
-                browser.TEST_BROWSER_PLATFORM_PROVIDERS,
-                browser.TEST_BROWSER_APPLICATION_PROVIDERS
-              );
-
-              Object.assign(global, testing);
-            vendorScripts:  # Add these items to the vendor scripts entryPoint
-              pre:
-                - './polyfills.ts'
-              post: []
-
-      React (latest):
-        sourceFormat: {}
 
 serverDev:
   packages:
     - <<: *pkg_js-yaml
-
   tasks:
     - name: serve:dev
       tasks: ['echo Starting DEV server']
@@ -270,7 +254,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -278,14 +262,14 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir %>testUnit/karma.conf.js']
+      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir %>testUnit/karma.conf.js --debug']
+      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
@@ -302,15 +286,15 @@ testUnit:
 
   templateFiles:
     - src: karma.conf.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/karma.conf.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>karma.conf.js
       overwrite: true
 
     - src: karma.common.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/karma.common.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>karma.common.js
       overwrite: true
 
     - src: test.files.js.tpl
-      dest: <%= paths.config.configDir %>testUnit/test.files.js
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>test.files.js
       overwrite: true
 
 
@@ -318,44 +302,11 @@ testUnit:
     extensionPoint:
       testUnit: >
         `npm test:unit` can be extended by modifying
-        <%= link(paths.config.configDir + 'testUnit/karma.conf.js') %> and <%= link(paths.config.configDir + 'testUnit/karma.common.js') %>.
-        <%= link(paths.config.configDir + 'testUnit/test.files.js') %> is generated from the entry points in the Confit configuration.
+        <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.conf.js') %> and <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.common.js') %>.
+        <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'test.files.js') %> is generated from the entry points in the Confit configuration.
         It is **best** to modify the entry points in <%= link(configFile) %> then re-run `yo confit`.
 
         Note that it is possible to run a subset of unit tests by passing a command line argument to Karma, and then modifying the `testFilesRegEx`
-        variable in <%= link(paths.config.configDir + 'testUnit/karma.common.js') %> to refer to the command line argument value.
+        variable in <%= link(paths.config.configDir + resources.testUnit.configSubDir + 'karma.common.js') %> to refer to the command line argument value.
         For example, if the command is `...karma.conf.js --spec=testb`, then `karma.common.js` can access this value through `process.argv.indexOf('--spec=testb')`,
         which can then be used to change the default value of `testFilesRegEx`.
-
-zzfinish:
-  # TODO: Move this to the buildBrowser tool, except for the onEnd command
-  packages:
-    - <<: *pkg_extract-text-webpack-plugin
-
-  templateFiles:
-    - src: webpack.config.js.tpl
-      dest: <%= paths.config.configDir %>webpack/webpack.config.js
-      overwrite: true
-
-    - src: dev.webpack.config.js
-      dest: <%= paths.config.configDir %>webpack/dev.webpack.config.js
-      overwrite: true
-
-    - src: prod.webpack.config.js
-      dest: <%= paths.config.configDir %>webpack/prod.webpack.config.js
-      overwrite: true
-
-    - src: webpackHelpers.js
-      dest: <%= paths.config.configDir %>webpack/webpackHelpers.js
-      overwrite: true
-
-  readme:
-    extensionPoint:
-      start: >
-        `npm start` can be extended by modifying <%= link(paths.config.configDir + 'webpack/dev.webpack.config.js') %>
-        and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
-        files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
-
-  onEnd:
-    - cmd: npm
-      args: ['start']

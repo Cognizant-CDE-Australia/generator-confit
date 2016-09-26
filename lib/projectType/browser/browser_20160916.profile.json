@@ -1,0 +1,25 @@
+{
+  "name": "Browser 20160916",
+  "priority": "2",
+  "description": "Latest Webpack 2(beta)-based browser profile with visual regression testing (16 September 2016)",
+  "toolMap": {
+    "app": "webpack",
+    "buildBrowser": "webpack",
+    "buildAssets": "webpack",
+    "buildCSS": "webpack",
+    "buildHTML": "webpack",
+    "buildJS": "webpack",
+    "documentation": "npm",
+    "entryPoint": "webpack",
+    "paths": "",
+    "release": "npm",
+    "sampleApp": "webpack",
+    "serverDev": "webpack",
+    "serverProd": "npm",
+    "testSystem": "protractor",
+    "testUnit": "webpack",
+    "testVisualRegression": "npm",
+    "verify": "npm",
+    "zzfinish": ""
+  }
+}

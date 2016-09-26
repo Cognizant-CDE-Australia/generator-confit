@@ -11,10 +11,10 @@ const yaml = require('js-yaml');
  * Runs Protractor tests inside a browser
  * @param {url} baseUrl   The URL of the website that is being tested
  */
-function runBrowserTest(baseUrl) {
+function runSystemTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
-  let proc = childProc.spawnSync('npm', ['run', 'test:browser', '--', '--baseUrl', baseUrl], {
+  let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR
   });
@@ -30,7 +30,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     let baseUrl;
 
     before(() => {
-      // Determine if we are dealing with the grunt server, or the NPM server
+      // Determine if we are dealing with the NPM server or not
       const pkg = fs.readJsonSync(tempTestDir + 'package.json');
       let serverStartedRegEx;
       let configFn;
@@ -53,7 +53,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     });
 
     it('should start a webserver and build the sampleApp correctly', function() {
-      assert.doesNotThrow(() => runBrowserTest(baseUrl));
+      assert.doesNotThrow(() => runSystemTest(baseUrl));
     });
 
     after(function() {

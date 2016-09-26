@@ -5,7 +5,9 @@ rootGeneratorName: generator-confit
 
 # App configuration
 app:
-  defaultProjectType: 'browser'
+  defaults:
+    projectType: browser
+    license: UNLICENSED
 
   projectTypeList:
     - value: browser
@@ -16,6 +18,9 @@ app:
   templateFiles:
     - src: editorconfig
       dest: .editorconfig
+      overwrite: false
+    - src: gitignore
+      dest: .gitignore
       overwrite: false
 
   licenses:
@@ -30,7 +35,6 @@ app:
       - MPL-2.0
       - CDDL-1.0
       - EPL-1.0
-    default: UNLICENSED
 
     noLicenseFile:
       - UNLICENSED
@@ -43,6 +47,7 @@ app:
 
 documentation:
   GITHUB_PUBLISH_METHOD: GitHub   # This is a special documentation method, so this global is handy to refer to it in code
+  configSubDir: docs/
 
   defaults:
     generateDocs: true
@@ -58,6 +63,8 @@ documentation:
       name: Publish to the cloud
     - value: manual
       name: Publish manually
+
+  # There are no packages/templates to install globally, so no need to add a condition: here
 
 
 # README section for the template tags that will appear inside the README.md template
@@ -212,7 +219,7 @@ readme:
 
     Command | Description
     :------ | :----------
-    <% if (readme.buildTask) { objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testBrowser)).forEach(function(value) {
+    <% if (readme.buildTask) { objectValues(readme.buildTask.testUnit).concat(objectValues(readme.buildTask.testSystem), objectValues(readme.buildTask.testVisualRegression)).forEach(function(value) {
     %><pre><%- value.command %></pre> | <%- value.description %><%
       if (value.features && value.features.length) {
         %><ul><% value.features.forEach(function(feature){%><li><%- feature %></li><%}) %></ul><%
@@ -254,9 +261,54 @@ readme:
     <% }); %>
 
 
+
 release:
+  defaults:
+    useSemantic: true
+    commitMessageFormat: Conventional
+
+  commitMessageFormats:
+    - Conventional
+    - None
+
+  configSubDir: release/
+
   packages:
     - <<: *pkg_ghooks
 
   packageJsonConfig:
     - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
+
+sampleApp:
+  defaults:
+    createSampleApp: true
+
+testSystem:
+  configSubDir: testSystem/
+
+testUnit:
+  configSubDir: testUnit/
+
+testVisualRegression:
+  configSubDir: testVisualRegression/
+
+  defaults:
+    enabled: true
+    moduleTestDir: visualTest/
+    referenceImageDir: visualRegressionTest/referenceImages/
+
+verify:
+  # Don't use defaults, as it varies based on the coding standard
+
+  configSubDir: verify/
+
+  # These keys are used in the UI...
+  jsCodingStandard:
+    ES6:
+      - none
+      - AirBnB
+      - ESLint
+      - Google
+      - StandardJS
+    TypeScript:
+      - TypeScript

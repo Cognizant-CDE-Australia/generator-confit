@@ -32,7 +32,7 @@ To help you write great software, Confit asks the following questions:
 
 ## Vision
 
-It is designed to be extensible and upgradeable. When better tools become available, users can upgrade
+Confit is designed to be extensible and upgradeable. When better tools become available, users can upgrade
 to use those tools without having to spend the time to figure out how to integrate them into their own custom build config.
 
 Confit aims to codify best practices around building, testing and releasing source code.

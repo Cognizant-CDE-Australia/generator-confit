@@ -67,7 +67,7 @@ function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
         return;
       }
 
-      if (confit[item.name]._version && confit[item.name]._version !== item.version) {
+      if (confit[item.name]._version !== item.version) {
         console.log('Updating ' + file + '[' + item.name + '] from ' + confit[item.name]._version + ' to ' + item.version);
         confit[item.name]._version = item.version;
         fileChanged = true;

@@ -1,4 +1,4 @@
-testBrowser:
+testSystem:
 #  unsupported:
 #    - criteria:
 #        buildJS.framework[0]: AngularJS 2.x
@@ -22,18 +22,18 @@ testBrowser:
 
   readme:
     extensionPoint:
-      testBrowser: >
-        `npm run test:browser` can be extended by modifying <%= link(paths.config.configDir + 'testBrowser/protractor.conf.js') %>.
-        This task uses Protractor to run Jasmine2 test specs (located in `<%= paths.input.modulesDir %>**/<%= paths.input.browserTestDir %>`)
+      testSystem: >
+        `npm run test:system` can be extended by modifying <%= link(paths.config.configDir + resources.testSystem.configSubDir + 'protractor.conf.js') %>.
+        This task uses Protractor to run Jasmine2 test specs (located in `<%= paths.input.modulesDir %>**/<%= paths.input.systemTestDir %>`)
         against the development web server URL.
 
   tasks:
-    - name: test:browser
-      tasks: ['protractor <%= paths.config.configDir %>testBrowser/protractor.conf.js']
+    - name: test:system
+      tasks: ['protractor <%= paths.config.configDir + resources.testSystem.configSubDir %>protractor.conf.js']
       description: Run browser tests against the *development* web server (the development server **must** be running)
       features:
 
   templateFiles:
     - src: protractor.conf.js.tpl
-      dest: <%= paths.config.configDir %>testBrowser/protractor.conf.js
+      dest: <%= paths.config.configDir + resources.testSystem.configSubDir%>protractor.conf.js
       overwrite: true

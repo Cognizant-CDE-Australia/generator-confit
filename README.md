@@ -35,11 +35,12 @@
 
 ## Features
 
+- Write browser-based applications or NodeJS applications
 - Write code using ES6+ (using Babel) or TypeScript (pure ES5 support deprecated in Confit v7+)
 - Write plain CSS, SASS/SCSS or Stylus
 - Optional linting of CSS and JS code
 - Unit testing 
-- Browser testing
+- System testing (browser-based)
 - Support for releasing code using semantic releasing, conventional commits
 - Supports Angular 1.x and Angular 2.x frameworks, and more coming (PRs welcome!!!) 
 - Sample projects for some configurations (see below)
@@ -113,10 +114,11 @@ There are sample project implementations for the following technology combinatio
 
 Build Profile | JS Source Format | JS Frameworks Supported (optional)
 :------------ | :--------------- | :----------------------
-Webpack       | ES6              | Angular 1.x, Angular 2
-Webpack       | Typescript       | Angular 1.x, Angular 2
+Browser       | ES6              | Angular 1.x, Angular 2
+Browser       | Typescript       | Angular 1.x, Angular 2
+Node          | ES6              | 
 
-All sample projects support the chosen CSS compiler (or plain CSS files).
+All sample projects support the chosen CSS compiler (or plain CSS files) (only for Browser projects).
 
 ## Smart upgrading
 

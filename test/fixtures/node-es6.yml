@@ -1,13 +1,13 @@
 generator-confit:
   app:
-    _version: 73d1dfc8f44d4629ecb2145e2f363c55644228a3
+    _version: b8e397572d5b1e4e02eae0c9ed196b65dc334b22
     buildProfile: Latest
     copyrightOwner: Brett Uglow
     license: UNLICENSED
     projectType: node
     repositoryType: GitHub
   paths:
-    _version: ae38d9f72494dfc52733f696179f88146722462f
+    _version: 0d755ebadde5e9fb356239a0a1775294efd7aa81
     config:
       configDir: config/
     input:
@@ -17,32 +17,33 @@ generator-confit:
       prodDir: dist/
       reportDir: reports/
   buildJS:
-    _version: 0019092064a38b68b026f38083ba7217acdf6a04
+    _version: 9223efcd10fa38f2be1da6fd6e2746445e3011d3
     framework: []
     frameworkScripts: []
     outputFormat: ES6
     sourceFormat: ES6
   documentation:
-    _version: d854a9055501b46813fd481bef85e774a4226854
+    _version: ff5ca9d1ffe60da943e1685c6cb75177adec7bf8
     createSampleDocs: true
     generateDocs: true
     outputDir: webdocs/
     publishMethod: GitHub
     srcDir: docs/
   entryPoint:
-    _version: 444293ad6ec67bdf3c6677ec9de12cc4732f9aab
+    _version: f18cf5ae3b8bfdc77d8b330ef4827b4e6f34f127
     entryPoints: {}
   testUnit:
-    _version: 0d5f4bebd3e49bca25e66571a691997ea22f7cef
+    _version: 50bc80217e8218d87ed3389014b7ff503006c0dd
     testDependencies: []
   verify:
-    _version: 13b1fbd2c3000fd3f1c12e52a4e4ed33d2e72ae8
+    _version: 163484235f6455bdc75ff58506e6b6fe68f975e6
     jsCodingStandard: ESLint
   release:
-    _version: 08c84151a31df7e08115e1a5a98bd1c1b17b4d65
+    _version: 8e3296286f01e5f15dc8b98da2d2b498cc41e2e2
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
-    _version: 4614571e9ea6cc48ede31fcd1bb73e632dc66fc7
+    _version: 4bf6b2da62b2a472d0af7371804f833388e43a0a
     createSampleApp: true
-  zzfinish: {}
+  zzfinish:
+    _version: 3ab7acb0185fc592e1cd0c30be65aabe292d5fcc

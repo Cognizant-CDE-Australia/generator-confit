@@ -22,7 +22,6 @@ function writeBasicPackageJson(testDir) {
   });
 }
 
-
 describe('Documentation Generator', () => {
   it('should should generate default documentation values when the project is not hosted on GitHub', done => {
     utils.runGenerator(
@@ -60,8 +59,8 @@ describe('Documentation Generator', () => {
         assert.equal(swanky.output, 'webdocs');
         assert.equal(swanky.serverPath, null);    // Should be blank until we publish, THEN it will get a value
 
-        // No Angular framework => no angular framework config
-        assert.equal(confit['generator-confit'].buildJS.framework, undefined);
+        // No Angular framework => no Angular framework config
+        assert.deepEqual(confit['generator-confit'].buildJS.framework, []);
         assert.equal(swanky.sections[1].subSections[0].bootstrap, undefined);
         yoassert.noFile(['docs/config/bootstrap/angular.bootstrap.js']);
 
