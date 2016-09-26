@@ -117,6 +117,7 @@ buildJS:
         entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
       TypeScript:
         entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+      frameworkPackages: {}
 
     AngularJS 1.x:
       ES6:
@@ -182,7 +183,10 @@ buildJS:
           # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
         testTypeLibs: []
 
-    React (latest): {}
+    React (latest):
+      ES6:
+        entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+      frameworkPackages: {}
 
   readme:
     extensionPoint:

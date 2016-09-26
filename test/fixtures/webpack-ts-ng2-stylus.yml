@@ -1,6 +1,6 @@
 generator-confit:
   app:
-    _version: 7a5ee574d6e7e15603fa573549fed24d627acd73
+    _version: b8e397572d5b1e4e02eae0c9ed196b65dc334b22
     buildProfile: Latest
     projectType: browser
     repositoryType: Other
@@ -10,7 +10,7 @@ generator-confit:
       - latest
       - latest2
   paths:
-    _version: 216c600f9cbda401516b8402c2f71d5d8f390dfe
+    _version: 0d755ebadde5e9fb356239a0a1775294efd7aa81
     config:
       configDir: config/
     input:
@@ -38,7 +38,7 @@ generator-confit:
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: 734ab92556dd82a9fe8fe8933897f46e3a938975
+    _version: 7fa08046a619fd9d9912a706c9e18f137a577c49
     framework:
       - AngularJS 2.x
     outputFormat: ES5
@@ -48,40 +48,40 @@ generator-confit:
     _version: 0b2d3e4b4373b8299130b4b3aa9872dc225c51a1
     extension: .html
   documentation:
-    _version: 9e41ee2ce016687e6e22cc8304a5c05d0ee34dd5
+    _version: ff5ca9d1ffe60da943e1685c6cb75177adec7bf8
     generateDocs: false
   entryPoint:
-    _version: 444293ad6ec67bdf3c6677ec9de12cc4732f9aab
+    _version: f18cf5ae3b8bfdc77d8b330ef4827b4e6f34f127
     entryPoints: {}
   serverDev:
-    _version: 01982f73566196995db38c113e20777a4f91851c
+    _version: 571ee670e4d36b0edcf9a1b9d70e5b0d5bb9c7e1
     hostname: localhost
     port: 3000
     protocol: https
   serverProd:
-    _version: d743cdcadf93c69b5687a82ef83913a7afcec09f
+    _version: 8e2d37c12a03cf7813eabb5eac74ea9ecb6c14da
     hostname: localhost
     port: 3000
     protocol: https
   testUnit:
-    _version: 6d2446b83cf049ed4e2c2616ad6266a24a03252b
+    _version: 480b2b4966227fe34980bb5dbee4ef6c7e1b2ee7
     testDependencies: []
   testSystem:
     _version: 7fc73b06ceeb428b39d419e7dc6e5bdbd430d020
   testVisualRegression:
-    _version: 4377a3590725aebb2d862c8c658913adfd3695e5
+    _version: a973231f55e49bc7934e0a76930a0ca0656d2860
     enabled: true
     moduleTestDir: visualTest/
     referenceImageDir: vrt/image/
   verify:
-    _version: 13b1fbd2c3000fd3f1c12e52a4e4ed33d2e72ae8
+    _version: 163484235f6455bdc75ff58506e6b6fe68f975e6
     jsCodingStandard: TypeScript
   release:
-    _version: 08c84151a31df7e08115e1a5a98bd1c1b17b4d65
+    _version: 8e3296286f01e5f15dc8b98da2d2b498cc41e2e2
     commitMessageFormat: None
     useSemantic: false
   sampleApp:
-    _version: 55d0e54b1271e1d5a31339acb7b9ead67e445b43
+    _version: a8eb6b7a07ff753edac5a3b59f3b88983a1ac566
     createSampleApp: true
   zzfinish:
-    _version: 791cc4ccd65b5df40e00f6de2c058e76bf07f8e7
+    _version: 3ab7acb0185fc592e1cd0c30be65aabe292d5fcc

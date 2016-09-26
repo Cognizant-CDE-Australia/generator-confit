@@ -93,9 +93,6 @@ sampleApp:
 
   toolModules:
     - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>
-      packages: []
-      testPackages: []
-      typeLibs: []
       templateFiles:
         - src: noFramework/ES6/*
           dest: <%= paths.input.srcDir %>
@@ -112,9 +109,6 @@ sampleApp:
           overwrite: true
 
     - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'TypeScript' %>
-      packages: []
-      testPackages: []
-      typeLibs: []
       templateFiles:
         - src: noFramework/TypeScript/*
           dest: <%= paths.input.srcDir %>

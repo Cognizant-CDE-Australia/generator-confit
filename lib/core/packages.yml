@@ -112,7 +112,7 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 3.5.0
+    version: 3.6.0
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
@@ -120,7 +120,7 @@ $packages:
 
   - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-import
-    version: 1.14.0
+    version: 1.16.0
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
