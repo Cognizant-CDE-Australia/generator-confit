@@ -5,4 +5,4 @@ Key changes:
 - Karma 1.2 
 - YAML is the default Confit file format now
 - support for documentation generation using Swanky (beta)
-- Grunt is about to be deprecated. It is only used in the older Webpack_20160702 profile now
+- Grunt has been deprecated

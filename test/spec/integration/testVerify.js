@@ -23,7 +23,7 @@ function runCommand(ioMode) {
 }
 
 
-module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
+module.exports = function(confitConfig, srcDir, hasCSS) {
   describe('npm run verify', () => {
     it('should not find errors in the sampleApp code', () => {
       // The verify command should contain the "thumbs-up" code when there are no errors
@@ -34,10 +34,9 @@ module.exports = function(confitConfig, srcDir, hasJS, hasCSS) {
         console.log(consoleData);
       });
 
+      assert.equal(consoleData.indexOf('\u2705 verify:js success') > -1, true, 'expected "verify:js success" to be printed in the console');
+
       // NOTE: I'm not a fan of conditional logic in tests, but this is a small exception
-      if (hasJS) {
-        assert.equal(consoleData.indexOf('\u2705 verify:js success') > -1, true, 'expected "verify:js success" to be printed in the console');
-      }
       if (hasCSS) {
         assert.equal(consoleData.indexOf('\u2705 verify:css success') > -1, true, 'expected "verify:css success" to be printed in the console');
       }

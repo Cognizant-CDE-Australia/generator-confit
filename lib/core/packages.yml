@@ -170,46 +170,6 @@ $packages:
     name: glob
     version: 7.0.5
 
-  - &pkg_grunt
-    name: grunt
-    version: 0.4.5
-
-  - &pkg_grunt-cli
-    name: grunt-cli
-    version: 0.1.13
-
-  - &pkg_grunt-contrib-connect
-    name: grunt-contrib-connect
-    version: 0.11.2
-
-  - &pkg_grunt-contrib-watch
-    name: grunt-contrib-watch
-    version: 0.6.1
-
-  - &pkg_grunt-eslint
-    name: grunt-eslint
-    version: 17.3.1
-
-  - &pkg_grunt-extend-config
-    name: grunt-extend-config
-    version: 0.9.3
-
-  - &pkg_grunt-newer
-    name: grunt-newer
-    version: 1.1.1
-
-  - &pkg_grunt-sass-lint
-    name: grunt-sass-lint
-    version: 0.1.0
-
-  - &pkg_grunt-stylint
-    name: grunt-stylint
-    version: 0.1.2
-
-  - &pkg_grunt-tslint
-    name: grunt-tslint
-    version: 3.0.2
-
   - &pkg_html-loader
     name: html-loader
     version: 0.4.3
@@ -285,10 +245,6 @@ $packages:
   - &pkg_latest-version
     name: latest-version
     version: 2.0.0
-
-  - &pkg_load-grunt-tasks
-    name: load-grunt-tasks
-    version: 3.4.0
 
   - &pkg_lodash
     name: lodash

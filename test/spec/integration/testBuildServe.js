@@ -32,20 +32,17 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     let baseUrl;
 
     before(() => {
-      // Determine if we are dealing with the grunt server, or the NPM server
+      // Determine if we are dealing with the NPM server or something else
       const pkg = fs.readJsonSync(tempTestDir + 'package.json');
       let serverStartedRegEx;
       let configFn;
       let configData;
 
+      // This is a remnant of when we had different web servers with different output messages for when they are ready
       if (pkg.scripts['serve:prod:https']) {
         configFn = modifyPackageServerConfig;
         configData = 'serve:prod';
         serverStartedRegEx = /Serving .* at http(s)?:\/\//;
-      } else {
-        configFn = modifyConfitServerConfig;
-        configData = 'serverProd';
-        serverStartedRegEx = /Started connect web server on/;
       }
 
       // Start up the confit PROD webserver

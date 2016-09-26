@@ -34,15 +34,15 @@ Use [save-exact][save-exact] NPM setting and [exact-semver][exact-semver] to enf
 - [ ] setup a script to reliably update out of date dependencies using [next-update][next-update install]
   - [ ] setup automatic pull requests when newer versions of dependencies appear [greenkeeper.io][greenkeeper]
 
-- [ ] if writing a CLI tool, add a way to check if it is out of date and should be upgraded;
+- [x] if writing a CLI tool, add a way to check if it is out of date and should be upgraded;
 [update-notifier][update-notifier]
 
-- [ ] catch missing or invalid `package.json` values using [grunt-nice-package][grunt-nice-package]
+- [x] catch missing or invalid `package.json` values using [grunt-nice-package][grunt-nice-package]
 or [fixpack][fixpack]
 
 - [x] write simple installation commands for your module
 
-- [ ] write "quick intro" example showing the main feature of your module
+- [x] write "quick intro" example showing the main feature of your module
 
 - [x] add CONTRIBUTING.md file with clear guidelines how others can add new features or fix bugs
 in your module. [Atom editor][atom] and [lodash][lodash] have excellent examples to follow.

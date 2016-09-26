@@ -352,7 +352,7 @@ readme:
     Code is organised into modules which contain one-or-more components. This a great way to ensure maintainable code by encapsulation of behavior logic. A component is basically a self contained app usually in a single file or a folder with each concern as a file: style, template, specs, e2e, and component class. Here's how it looks:
     ```<% var maxDirLen = 30; %>
     <%- pkg.name %>/
-     ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. grunt, webpack, <%- resources.documentation.configSubDir %>, <%- resources.testSystem.configSubDir %>, <%- resources.testUnit.configSubDir %>, <%- resources.testVisualRegression.configSubDir %>, <%- resources.verify.configSubDir %>)
+     ├──<%- rpad(paths.config.configDir, maxDirLen)%>* configuration files live here (e.g. webpack, <%- resources.documentation.configSubDir %>, <%- resources.testSystem.configSubDir %>, <%- resources.testUnit.configSubDir %>, <%- resources.testVisualRegression.configSubDir %>, <%- resources.verify.configSubDir %>)
      │
      ├──<%- rpad(paths.input.srcDir, maxDirLen) %>* source code files should be here
      │   └──<%- rpad(paths.input.modulesSubDir, maxDirLen - 4) %>* all source code modules|components|features should appear as sub-directories under this directory

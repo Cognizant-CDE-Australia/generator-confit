@@ -30,7 +30,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     let baseUrl;
 
     before(() => {
-      // Determine if we are dealing with the grunt server, or the NPM server
+      // Determine if we are dealing with the NPM server or not
       const pkg = fs.readJsonSync(tempTestDir + 'package.json');
       let serverStartedRegEx;
       let configFn;
