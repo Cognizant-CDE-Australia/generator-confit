@@ -45,6 +45,6 @@ generator-confit:
     _version: 253035278b3fb287d8f06a0435ec7a98eeb9f88b
     createSampleDocs: false
     generateDocs: true
-    outputDir: webdocs/
+    outputDir: website/
     publishMethod: GitHub
     srcDir: docs/
