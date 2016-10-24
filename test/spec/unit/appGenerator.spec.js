@@ -102,6 +102,10 @@ describe('App Generator', () => {
       },
       function afterTest() {
         yoassert.noFile('LICENSE');
+
+        let pkg = fs.readJsonSync('package.json');
+
+        assert.equal(pkg.license, 'UNLICENSED');
         done();
       }
     ).withPrompts({
@@ -122,13 +126,13 @@ describe('App Generator', () => {
 
         let confit = yaml.load(fs.readFileSync('confit.yml'));
         let expectedCopyrightOwner = confit['generator-confit'].app.copyrightOwner;
-
-        assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
-
         let licenseText = fs.readFileSync('LICENSE', 'utf8');
         let year = (new Date()).getFullYear();
+        let pkg = fs.readJsonSync('package.json');
 
+        assert.ok(expectedCopyrightOwner, 'expectedCopyrightOwner is not falsy');
         assert.notEqual(licenseText.indexOf('Copyright (c) ' + year + ' ' + expectedCopyrightOwner), -1, 'Copyright message is in the correct format');
+        assert.equal(pkg.license, 'MIT');
         done();
       }
     ).withPrompts({

@@ -96,7 +96,7 @@ $packages:
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
-    version: 1.3.0
+    version: 2.0.0
 
   - &pkg_css-loader
     name: css-loader
@@ -164,7 +164,7 @@ $packages:
 
   - &pkg_ghooks
     name: ghooks
-    version: 1.2.1
+    version: 1.3.2
 
   - &pkg_glob
     name: glob
@@ -270,7 +270,7 @@ $packages:
 
   - &pkg_npm-run-all
     name: npm-run-all
-    version: 2.1.2
+    version: 3.1.0
 
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill

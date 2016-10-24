@@ -135,7 +135,7 @@ git clone https://github.com/odecee/generator-confit.git
 cd generator-confit
 ```
 
-Install Node.js 4+ or 6+ _(this can be easily automated with tools such as [nvm](https://github.com/creationix/nvm))
+Install NodeJS 4+ or 6+ _(this can be easily automated with tools such as [nvm](https://github.com/creationix/nvm))
 
 ```bash
 nvm install 6

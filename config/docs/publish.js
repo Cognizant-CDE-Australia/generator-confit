@@ -7,7 +7,7 @@ const basePath = path.join(__dirname, '/../../');
 // If the documentation.publish mechanism is GitHub, do this:
 
 const ghpages = require('gh-pages');
-const docOutputDir = path.join(basePath, 'webdocs/');
+const docOutputDir = path.join(basePath, 'website/');
 
 let callback = (err) => {
   if (!err) {

@@ -44,6 +44,8 @@ app:
         dest: LICENSE
         overwrite: false    # We only want to generate this file once. To change it, delete the file then re-run confit
 
+  packageJsonConfig:
+    - license: <%- app.license %>
 
 documentation:
   GITHUB_PUBLISH_METHOD: GitHub   # This is a special documentation method, so this global is handy to refer to it in code
