@@ -91,6 +91,27 @@ buildJS:
 # sampleApp configuration
 sampleApp:
 
+  # Special config for certain frameworks
+  frameworks:
+    AngularJS 2.x:
+      TypeScript:
+        vendorScripts:  # Add these items to the vendor scripts entryPoint
+          pre:
+            - './polyfills.ts'
+          post: []
+
+    React (latest):
+      ES6:
+        vendorScripts:  # Add these items to the vendor scripts entryPoint.
+          pre:
+            - './polyfills.js'
+          post:
+            - 'react-router'
+            - 'object-assign'
+            - 'promise'
+            - 'whatwg-fetch'
+
+
   toolModules:
     - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>
       templateFiles:
@@ -208,6 +229,25 @@ sampleApp:
         - src: ng2/TypeScript/demoModule/templates/*
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
           overwrite: true
+
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      packages:
+        - <<: *pkg_react-router
+        - <<: *pkg_object-assign    # In polyfills.js
+        - <<: *pkg_promise          # In polyfills.js
+        - <<: *pkg_whatwg-fetch     # In polyfills.js
+      templateFiles:
+        - src: react/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: react/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: react/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+
 
 
 serverDev:

@@ -4,6 +4,7 @@ var plugins = [];
 var extendArr = [];
 var globals = [];
 var env = [];
+var hasJSX = false;
 
 
 if (verify.jsCodingStandard === 'AirBnB') {
@@ -42,6 +43,10 @@ if (buildJS.framework[0] === 'AngularJS 1.x') {
   globals.push('angular');
 }
 
+if (buildJS.framework[0] === 'React (latest)') {
+  hasJSX = true;
+}
+
 -%>
 confit:
   extends: &confit-extends <% if (!extendArr.length) { %>[]<% }  else { %>
@@ -69,7 +74,7 @@ confit:
     ecmaFeatures:
       globalReturn: false
       impliedStrict: true
-      jsx: false
+      jsx: <%- hasJSX %>
 
 # END_CONFIT_GENERATED_CONTENT
 

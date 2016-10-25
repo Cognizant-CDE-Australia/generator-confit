@@ -72,6 +72,10 @@ $packages:
     name: babel-preset-es2015
     version: 6.14.0
 
+  - &pkg_babel-preset-react-app   # As used by create-react-app
+    name: babel-preset-react-app
+    version: 1.0.0
+
   - &pkg_babel-runtime
     name: babel-runtime
     version: 6.11.6
@@ -149,6 +153,22 @@ $packages:
   - &pkg_eslint-plugin-promise    # Required by StandardJS
     name: eslint-plugin-promise
     version: 2.0.1
+
+  - &pkg_eslint-config-react-app    # React
+    name: eslint-config-react-app
+    version: 0.2.1
+
+  - &pkg_eslint-plugin-import       # React
+    name: eslint-plugin-import
+    version: 1.12.0
+
+  - &pkg_eslint-plugin-jsx-a11y     # React
+    name: eslint-plugin-jsx-a11y
+    version: 2.2.2
+
+  - &pkg_eslint-plugin-react        # React
+    name: eslint-plugin-react
+    version: 6.3.0
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
@@ -272,6 +292,11 @@ $packages:
     name: npm-run-all
     version: 3.1.0
 
+  - &pkg_object-assign    # Polyfill for Object.assign (used by React)
+    name: object-assign
+    version: 4.1.0
+    isDependency: true
+
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill
     version: 0.0.2
@@ -291,13 +316,29 @@ $packages:
     name: prismjs
     version: 1.5.0
 
+  - &pkg_promise    # Promise polyfill for React
+    name: promise
+    version: 7.1.1
+    isDependency: true
+
   - &pkg_protractor
     name: protractor
     version: 3.2.1
 
   - &pkg_react
     name: react
-    version: '*'
+    version: 15.3.2
+    isDependency: true
+
+  - &pkg_react-dom
+    name: react-dom
+    version: 15.3.2
+    isDependency: true
+
+  - &pkg_react-router
+    name: react-router
+    version: 2.8.1
+    isDependency: true
 
   - &pkg_rimraf
     name: rimraf
@@ -377,6 +418,11 @@ $packages:
   - &pkg_webpack-dev-server
     name: webpack-dev-server
     version: 2.1.0-beta.2
+
+  - &pkg_whatwg-fetch   # Polyfill for fetch() API
+    name: whatwg-fetch
+    version: 1.0.0
+    isDependency: true
 
   - &pkg_zone.js
     name: zone.js

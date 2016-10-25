@@ -97,15 +97,11 @@ frameworks:
       entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
     TypeScript:
       entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
-      vendorScripts:  # Add these items to the vendor scripts entryPoint
-        pre:
-          - './polyfills.ts'
-        post: []
     frameworkPackages: &ng2Packages
       packages:
         - <<: *pkg_core-js          # In polyfills.ts
         - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # In vendor.ts
+        - <<: *pkg_rxjs             # In vendor.ts?
         - <<: *pkg_angular2/platform/browser
         - <<: *pkg_angular2/platform/common_dom
         - <<: *pkg_angular2/core
@@ -132,12 +128,14 @@ frameworks:
 
   React (latest):
     ES6:
-      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.jsx
     frameworkPackages: &reactPackages
       packages:
         - <<: *pkg_react
-      testPackages: []
-    frameworkTestPackages: &reactTestPackages {}
+        - <<: *pkg_react-dom
+    frameworkTestPackages: &reactTestPackages
+      testPackages:
+        - <<: *pkg_react
 
 
 buildAssets: {}
@@ -188,7 +186,7 @@ buildJS:
 
   sourceFormat:
     ES6:
-      ext: ['js']
+      ext: ['js', 'jsx']
     TypeScript:
       ext: ['ts']
 
@@ -216,8 +214,8 @@ buildJS:
           overwrite: true
       packages:
         - <<: *pkg_babel-core
-        - <<: *pkg_babel-runtime
         - <<: *pkg_babel-loader
+        #- <<: *pkg_babel-runtime          # TODO: This is the runtime for ES6 code - do we need this if we are not using the runtime-transform?
         - <<: *pkg_babel-preset-es2015
       tasks: []
 
@@ -249,6 +247,14 @@ buildJS:
 
     - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
       <<: *reactPackages
+
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      packages:
+        - <<: *pkg_babel-preset-react-app
+        - <<: *pkg_eslint-config-react-app
+        - <<: *pkg_eslint-plugin-import
+        - <<: *pkg_eslint-plugin-jsx-a11y
+        - <<: *pkg_eslint-plugin-react
 
 
 entryPoint:
@@ -537,7 +543,7 @@ testUnit:
     - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
       <<: *ng2TestPackages
 
-    - condition: <%- buildJS.framework.indexOf('React (Latest)') > -1 %>
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
       <<: *reactTestPackages
 
 

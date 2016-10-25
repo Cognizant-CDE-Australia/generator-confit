@@ -4,6 +4,8 @@
 // Webpack 2 understands ES6 modules, so Babel doesn't need to transform them.
 var modulesFlag = (app.projectType === 'browser') ? false : '"commonjs"';
 
+// Need a different preset for React
+
 -%>
   "presets": [
     <% if (buildJS.outputFormat === 'ES5') { %>
