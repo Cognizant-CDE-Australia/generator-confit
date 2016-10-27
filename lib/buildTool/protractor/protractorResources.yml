@@ -29,7 +29,7 @@ testSystem:
 
   tasks:
     - name: test:system
-      tasks: ['protractor <%= paths.config.configDir + resources.testSystem.configSubDir %>protractor.conf.js']
+      tasks: ['cross-env NODE_ENV=test protractor <%= paths.config.configDir + resources.testSystem.configSubDir %>protractor.conf.js']
       description: Run browser tests against the *development* web server (the development server **must** be running)
       features:
 

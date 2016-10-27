@@ -294,7 +294,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -302,14 +302,14 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
+      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
