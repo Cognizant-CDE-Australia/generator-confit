@@ -5,14 +5,15 @@
 var modulesFlag = (app.projectType === 'browser') ? false : '"commonjs"';
 
 var presets = [];
-var plugins = ['add-module-exports'];
+var plugins = [];
 
 if (buildJS.outputFormat === 'ES5') {
-  presets.push(["es2015", {"modules": modulesFlag }]);
+  presets.push(['es2015', {'modules': modulesFlag }]);
 }
 
 if (buildJS.framework.indexOf('React (latest)') > -1) {
-  presets.push("react-app");
+  presets.push('react-app');
+  plugins.push('react-hot-loader/babel');
 }
 
 -%>

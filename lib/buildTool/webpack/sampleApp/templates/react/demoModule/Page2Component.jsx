@@ -13,5 +13,5 @@ export default function Page2Component({demoAction}) {
 
 
 Page2Component.propTypes = {
-  demoService: PropTypes.func.isRequired
+  demoAction: PropTypes.func.isRequired
 };

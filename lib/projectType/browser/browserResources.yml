@@ -137,6 +137,8 @@ frameworks:
     frameworkTestPackages: &reactTestPackages
       testPackages:
         - <<: *pkg_react
+        - <<: *pkg_react-addons-test-utils
+        - <<: *pkg_enzyme
 
 
 buildAssets: {}
@@ -215,10 +217,10 @@ buildJS:
           overwrite: true
       packages:
         - <<: *pkg_babel-core
-        - <<: *pkg_babel-loader
         #- <<: *pkg_babel-runtime          # TODO: This is the runtime for ES6 code - do we need this if we are not using the runtime-transform?
         - <<: *pkg_babel-preset-es2015
-        - <<: *pkg_babel-plugin-add-module-exports    # Generate the "default" export when using Babel 6: http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default
+        #- <<: *pkg_babel-plugin-add-module-exports     # Generate the "default" export when using Babel 6: http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default
+                                                        # This causes issues for Angular 1 sampleApp.
       tasks: []
 
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>

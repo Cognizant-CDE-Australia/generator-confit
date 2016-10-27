@@ -2,10 +2,8 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
-import DemoService from './DemoService';
-import Page1 from './Page1Component';
-import Page2 from './Page2Component';
+import {AppContainer} from 'react-hot-loader';
+import AppComponent from './AppComponent';
 
 // Require the CSS file explicitly (or it could be defined as an entry-point too).
 <%
@@ -18,22 +16,14 @@ require('./<%= file %>');
 <% }); -%>
 
 
-const wrappedPage1 = function() {
-  return Page1({demoAction: DemoService.demo});
-};
-
-const wrappedPage2 = function() {
-  return Page2({demoAction: DemoService.demo});
-};
-
-
 render(
-  <Router history={hashHistory}>
-    <Route path="/">
-      <IndexRedirect to="/page1"/>
-      <Route path="/page1" component={wrappedPage1} />
-      <Route path="/page2" component={wrappedPage2} />
-    </Route>
-  </Router>,
+  <AppContainer>
+    <AppComponent/>
+  </AppContainer>,
   document.getElementById('content')
 );
+
+// Hot Module Replacement API.
+if (module.hot) {
+  module.hot.accept('./AppComponent', render);
+}

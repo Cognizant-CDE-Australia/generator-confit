@@ -1,5 +1,17 @@
 /** Entry point START **/
-config.entry = <%- printJson(entryPoint.entryPoints) %>;
+
+<%
+// Copy the entryPoint config into a new object to (minimise mutation)
+var newEntryPoints = {};
+
+// For React HMR to work, we need to add an entryPoint script before any other ones:
+if (buildJS.framework.indexOf('React (latest)') > -1) {
+  newEntryPoints.__reactHotModulePatch = 'react-hot-loader/patch';
+}
+
+newEntryPoints = merge(newEntryPoints, entryPoint.entryPoints);
+-%>
+config.entry = <%- printJson(newEntryPoints) %>;
 
 <%
 // There are benefits to having the vendor scripts separate to the source code (faster recompilation when changing source code, caching of vendor JS file)

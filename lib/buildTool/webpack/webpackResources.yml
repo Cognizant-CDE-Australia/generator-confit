@@ -79,6 +79,10 @@ buildHTML:
 
 buildJS:
   toolModules:
+    - condition: <%- buildJS.sourceFormat === 'ES6' %>
+      packages:
+        - <<: *pkg_babel-loader
+
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_awesome-typescript-loader
@@ -87,12 +91,18 @@ buildJS:
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
 
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      packages:
+        - <<: *pkg_react-hot-loader
 
 # sampleApp configuration
 sampleApp:
 
   # Special config for certain frameworks
   frameworks:
+    '': # This is the 'none' framework
+      ES6: {}
+      TypeScript: {}
     AngularJS 1.x:
       ES6: {}
       TypeScript: {}

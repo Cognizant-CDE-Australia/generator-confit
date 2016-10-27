@@ -141,8 +141,7 @@ testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replac
 
   webpack: {
     module: {
-      <% if (buildJS.sourceFormat === 'TypeScript') { %>
-      postLoaders: [
+      <% if (buildJS.sourceFormat === 'TypeScript') { %>postLoaders: [
         // instrument only testing *sources* (not the tests)
         {
           test: <%= srcFileRegEx.toString() %>,
@@ -154,6 +153,14 @@ testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replac
       ],<% } %>
       loaders: webpackConfig.module.loaders
     },
+    <% if (buildJS.framework.indexOf('React (latest)') > -1) { %>
+    // Externals needed for Enzyme to test React components. See https://github.com/airbnb/enzyme/blob/master/docs/guides/karma.md
+    externals: {
+      'cheerio': 'window',
+      'react/addons': true,
+      'react/lib/ExecutionEnvironment': true,
+      'react/lib/ReactContext': true
+    },<% } %>
     plugins: webpackConfig.plugins.concat([new DefinePlugin({
       __karmaTestSpec: testFilesRegEx
     })]),

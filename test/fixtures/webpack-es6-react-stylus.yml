@@ -48,8 +48,8 @@ generator-confit:
     extension: .html
   documentation:
     _version: ff5ca9d1ffe60da943e1685c6cb75177adec7bf8
-    createSampleDocs: true
-    generateDocs: true
+    createSampleDocs: false
+    generateDocs: false
     outputDir: webdocs/
     publishMethod: cloud
     srcDir: docs/

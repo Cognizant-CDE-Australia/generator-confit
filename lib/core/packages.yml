@@ -122,6 +122,10 @@ $packages:
     name: cz-customizable-ghooks
     version: 1.3.0
 
+  - &pkg_enzyme
+    name: enzyme
+    version: 2.5.1
+
   - &pkg_eslint
     name: eslint
     version: 3.8.1
@@ -330,10 +334,18 @@ $packages:
     version: 15.3.2
     isDependency: true
 
+  - &pkg_react-addons-test-utils
+    name: react-addons-test-utils
+    version: 15.3.2
+
   - &pkg_react-dom
     name: react-dom
     version: 15.3.2
     isDependency: true
+
+  - &pkg_react-hot-loader
+    name: react-hot-loader
+    version: 3.0.0-beta.6
 
   - &pkg_react-router
     name: react-router
