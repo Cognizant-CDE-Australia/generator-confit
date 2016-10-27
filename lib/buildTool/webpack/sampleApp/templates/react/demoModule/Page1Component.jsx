@@ -9,7 +9,7 @@ export default function Page1Component({demoAction}) {
 
       <img src={require('./assets/img/blank-logo.png')}/>
 
-      <Link className="btn" to="/page2" onClick={demoAction('Going to Page 2')}>Page 2</Link>
+      <Link className="btn" to="/page2" onClick={() => demoAction('Going to Page 2')}>Page 2</Link>
     </div>
   );
 }

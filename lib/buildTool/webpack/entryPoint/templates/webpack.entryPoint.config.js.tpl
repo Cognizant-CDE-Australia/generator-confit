@@ -8,19 +8,11 @@ config.entry = <%- printJson(entryPoint.entryPoints) %>;
 var sourceFormat = buildJS.sourceFormat;
 var selectedFramework = buildJS.framework[0] || '';
 var selectedFrameworkConfig = resources.frameworks[selectedFramework];
-var sampleAppVendorScripts = buildTool.sampleApp.frameworks[selectedFramework][sourceFormat].vendorScripts;
 
 // If there is a user-defined 'vendor' entryPoint or buildJS vendorsScripts or sampleApp vendor scripts, proceed...
-if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVendorScripts) {
+if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length) {
   var vendorScripts = [].concat(entryPoint.entryPoints.vendor || buildJS.vendorScripts || []);
-
-  if (sampleAppVendorScripts) {
-    vendorScripts = [].concat(
-      sampleAppVendorScripts.pre,
-      vendorScripts,
-      sampleAppVendorScripts.post
-    );
-  } -%>
+-%>
 // (Re)create the config.entry.vendor entryPoint
 config.entry.vendor = <%- printJson(vendorScripts) %>;
 

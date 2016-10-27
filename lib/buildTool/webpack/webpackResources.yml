@@ -93,7 +93,11 @@ sampleApp:
 
   # Special config for certain frameworks
   frameworks:
+    AngularJS 1.x:
+      ES6: {}
+      TypeScript: {}
     AngularJS 2.x:
+      ES6: {}
       TypeScript:
         vendorScripts:  # Add these items to the vendor scripts entryPoint
           pre:
@@ -107,10 +111,6 @@ sampleApp:
             - './polyfills.js'
           post:
             - 'react-router'
-            - 'object-assign'
-            - 'promise'
-            - 'whatwg-fetch'
-
 
   toolModules:
     - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>

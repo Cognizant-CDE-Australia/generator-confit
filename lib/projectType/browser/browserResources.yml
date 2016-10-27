@@ -31,12 +31,12 @@ app:
       features:
 
     - name: dev
-      tasks: ['cross-env NODE_ENV=development clean:dev', '--parallel verify:watch build:dev serve:dev']
+      tasks: ['cross-env NODE_ENV=development npm-run-all clean:dev --parallel verify:watch build:dev serve:dev']
       description: Run project in development mode (verify code, create dev build into <%= paths.output.devDir %> folder, serve on **<%= serverDev.protocol + '://' + serverDev.hostname + ':' + serverDev.port %>**, watch for changes and reload the browser automatically)
       features:
 
     - name: build
-      tasks: ['cross-env NODE_ENV=production clean:prod', 'build:prod']
+      tasks: ['cross-env NODE_ENV=production npm-run-all clean:prod build:prod']
       description: Generate production build into <%= link(paths.output.prodDir) %> folder
       features:
 
@@ -218,6 +218,7 @@ buildJS:
         - <<: *pkg_babel-loader
         #- <<: *pkg_babel-runtime          # TODO: This is the runtime for ES6 code - do we need this if we are not using the runtime-transform?
         - <<: *pkg_babel-preset-es2015
+        - <<: *pkg_babel-plugin-add-module-exports    # Generate the "default" export when using Babel 6: http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default
       tasks: []
 
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>

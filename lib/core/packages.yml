@@ -68,6 +68,10 @@ $packages:
     name: babel-plugin-istanbul
     version: 2.0.1
 
+  - &pkg_babel-plugin-add-module-exports
+    name: babel-plugin-add-module-exports
+    version: 0.2.1
+
   - &pkg_babel-preset-es2015    # Supports ES6 module transformation
     name: babel-preset-es2015
     version: 6.14.0
@@ -104,7 +108,7 @@ $packages:
 
   - &pkg_cross-env
     name: cross-env
-    version: 3.8.1
+    version: 3.1.3
 
   - &pkg_css-loader
     name: css-loader
@@ -120,27 +124,19 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 3.6.0
+    version: 3.8.1
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 11.1.0
-
-  - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
-    name: eslint-plugin-import
-    version: 1.16.0
-
-  - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
-    name: eslint-plugin-jsx-a11y
-    version: 2.2.2
+    version: 12.0.0
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
-    version: 6.2.1
+    version: 6.4.1
 
   - &pkg_eslint-config-google     # Required for Google
     name: eslint-config-google
-    version: 0.6.0
+    version: 0.7.0
 
   - &pkg_eslint-config-standard   # Required for Standard
     name: eslint-config-standard
@@ -160,15 +156,15 @@ $packages:
 
   - &pkg_eslint-config-react-app    # React
     name: eslint-config-react-app
-    version: 0.2.1
+    version: 0.3.0
 
-  - &pkg_eslint-plugin-import       # React
-    name: eslint-plugin-import
-    version: 1.12.0
+  - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
+      name: eslint-plugin-import
+      version: 2.0.1
 
-  - &pkg_eslint-plugin-jsx-a11y     # React
+  - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
-    version: 2.2.2
+    version: 2.2.3
 
   - &pkg_eslint-plugin-react        # React
     name: eslint-plugin-react

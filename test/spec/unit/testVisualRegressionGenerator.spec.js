@@ -33,8 +33,8 @@ describe('Visual Regression Test Generator', () => {
         // The package.json file should have visual regression test commands
         let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(pkg.scripts['test:visual'], 'cd node_modules/backstopjs && npm run test -- --configPath=../../config/testVisualRegression/backstop.config.js');
-        assert.equal(pkg.scripts['test:visual:ref'], 'cd node_modules/backstopjs && npm run reference -- --configPath=../../config/testVisualRegression/backstop.config.js');
+        assert.equal(pkg.scripts['test:visual'], 'cross-env NODE_ENV=test cd node_modules/backstopjs && npm run test -- --configPath=../../config/testVisualRegression/backstop.config.js');
+        assert.equal(pkg.scripts['test:visual:ref'], 'cross-env NODE_ENV=test cd node_modules/backstopjs && npm run reference -- --configPath=../../config/testVisualRegression/backstop.config.js');
 
         done();
       }
