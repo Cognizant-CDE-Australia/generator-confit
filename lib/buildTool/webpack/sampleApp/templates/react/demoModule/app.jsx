@@ -1,4 +1,6 @@
 'use strict';
+// This must be the FIRST import in the FIRST entry point in order for hot module loading to work
+import 'react-hot-loader/patch';
 
 import React from 'react';
 import {render} from 'react-dom';
