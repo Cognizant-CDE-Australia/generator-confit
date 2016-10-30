@@ -46,7 +46,7 @@ $packages:
 
   - &pkg_autoprefixer
     name: autoprefixer
-    version: 6.3.6
+    version: 6.4.1
 
   - &pkg_awesome-typescript-loader
     name: awesome-typescript-loader
@@ -314,7 +314,7 @@ $packages:
 
   - &pkg_postcss-loader
     name: postcss-loader
-    version: 0.8.2
+    version: 0.13.0
 
   - &pkg_prismjs
     name: prismjs
@@ -354,7 +354,7 @@ $packages:
 
   - &pkg_rimraf
     name: rimraf
-    version: 2.5.2
+    version: 2.5.4
 
   - &pkg_rxjs
     name: rxjs
@@ -384,7 +384,7 @@ $packages:
 
   - &pkg_style-loader
     name: style-loader
-    version: 0.13.0
+    version: 0.13.1
 
   - &pkg_stylint
     name: stylint
@@ -396,7 +396,7 @@ $packages:
 
   - &pkg_stylus-loader
     name: stylus-loader
-    version: 2.1.1
+    version: 2.3.1
 
   - &pkg_swanky-server
     name: swanky-server
