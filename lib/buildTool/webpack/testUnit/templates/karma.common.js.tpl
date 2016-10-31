@@ -52,7 +52,8 @@ webpackConfig.module.loaders.forEach(loader => {
       'istanbul',
       {
         'exclude': [
-          testFilesGlob
+          testFilesGlob,
+          'node_modules/**'
         ]
       }
     ]);
