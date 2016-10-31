@@ -1,4 +1,5 @@
 /** Entry point START **/
+
 config.entry = <%- printJson(entryPoint.entryPoints) %>;
 
 <%
@@ -8,22 +9,14 @@ config.entry = <%- printJson(entryPoint.entryPoints) %>;
 var sourceFormat = buildJS.sourceFormat;
 var selectedFramework = buildJS.framework[0] || '';
 var selectedFrameworkConfig = resources.frameworks[selectedFramework];
-var sampleAppVendorScripts = selectedFrameworkConfig[sourceFormat].vendorScripts
-
 
 // If there is a user-defined 'vendor' entryPoint or buildJS vendorsScripts or sampleApp vendor scripts, proceed...
-if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length || sampleAppVendorScripts) {
-  var vendorScripts = (buildJS.frameworkScripts || []).concat(entryPoint.entryPoints.vendor || buildJS.vendorScripts || []);
-
-  if (sampleAppVendorScripts) {
-    vendorScripts = [].concat(
-      sampleAppVendorScripts.pre,
-      vendorScripts,
-      sampleAppVendorScripts.post
-    );
-  } -%>
+if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length) {
+  var vendorScripts = [].concat(entryPoint.entryPoints.vendor || buildJS.vendorScripts || []);
+-%>
 // (Re)create the config.entry.vendor entryPoint
 config.entry.vendor = <%- printJson(vendorScripts) %>;
+
 
 // Create a common chunk for the vendor modules (https://webpack.github.io/docs/list-of-plugins.html#2-explicit-vendor-chunk)
 var commonsChunkPlugin = new webpack.optimize.CommonsChunkPlugin({

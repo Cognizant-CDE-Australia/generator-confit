@@ -124,7 +124,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 - The format that the source code should be compiled to before the application is deployed/run
 - If the source code language does not equal the target output language, a transpiler (e.g. Babel) will be required.
 
-**JavaScript framework**: [AngularJS 1.x, AngularJS 2.x] `buildJS.framework[]` and `buildJS.frameworkScripts[]`
+**JavaScript framework**: [AngularJS 1.x, AngularJS 2.x, React (latest)] `buildJS.framework[]` and `buildJS.frameworkScripts[]`
 - Only shown for **Browser** projects.
 - Optional - zero-to-many frameworks can be selected, but support for many frameworks is limited.
 - Designed to support new popular frameworks in the future (contributors wanted!).

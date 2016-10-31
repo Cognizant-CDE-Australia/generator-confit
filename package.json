@@ -82,7 +82,7 @@
       "config": "config/release/commitMessageConfig.js"
     },
     "ghooks": {
-      "pre-commit": "exact-semver",
+      "pre-commit": "exact-semver && npm-run-all test:unit:once",
       "commit-msg": "./node_modules/cz-customizable-ghooks/lib/index.js $2",
       "pre-push": "npm-run-all verify test:coverage --silent"
     }

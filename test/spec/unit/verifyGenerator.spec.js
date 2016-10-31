@@ -33,9 +33,9 @@ describe('Verify Test Generator', () => {
 
         assert.equal(pkg.scripts.verify, 'npm-run-all verify:js verify:css --silent');
         assert.equal(pkg.scripts['verify:watch'], 'npm-run-all --parallel verify:js:watch verify:css:watch --silent');
-        assert.equal(pkg.scripts['verify:js'], 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js success');
-        assert.equal(pkg.scripts['verify:js:fix'], 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js:fix success');
-        assert.equal(pkg.scripts['verify:js:watch'], 'chokidar \'sourceDir/**/*.js\' \'unitTestDir/**/*.js\' \'config/**/*.js\' -c \'npm run verify:js:fix\' --initial --silent');
+        assert.equal(pkg.scripts['verify:js'].substr(0, 75), 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
+        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 75), 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*');
+        assert.equal(pkg.scripts['verify:js:watch'].substr(0, 75), 'chokidar \'sourceDir/**/*.js\' \'sourceDir/**/*.jsx\' \'unitTestDir/**/*.js\' \'un');
         assert.equal(pkg.scripts['verify:css'], 'stylint -c config/verify/.stylintrc sourceDir/ && echo ✅ verify:css success');
         assert.equal(pkg.scripts['verify:css:watch'], 'chokidar \'sourceDir/**/*.styl\' -c \'npm run verify:css\' --initial --silent');
 
@@ -63,9 +63,9 @@ describe('Verify Test Generator', () => {
 
         assert.equal(pkg.scripts.verify, 'npm-run-all verify:js verify:css --silent');
         assert.equal(pkg.scripts['verify:watch'], 'npm-run-all --parallel verify:js:watch verify:css:watch --silent');
-        assert.equal(pkg.scripts['verify:js'], 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js success');
-        assert.equal(pkg.scripts['verify:js:fix'], 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js:fix success');
-        assert.equal(pkg.scripts['verify:js:watch'], 'chokidar \'sourceDir/**/*.js\' \'unitTestDir/**/*.js\' \'config/**/*.js\' -c \'npm run verify:js:fix\' --initial --silent');
+        assert.equal(pkg.scripts['verify:js'].substr(0, 75), 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
+        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 75), 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*');
+        assert.equal(pkg.scripts['verify:js:watch'].substr(0, 75), 'chokidar \'sourceDir/**/*.js\' \'sourceDir/**/*.jsx\' \'unitTestDir/**/*.js\' \'un');
         assert.equal(pkg.scripts['verify:css'], 'sass-lint -c config/verify/sasslint.yml --verbose && echo ✅ verify:css success');
         assert.equal(pkg.scripts['verify:css:watch'], 'chokidar \'sourceDir/**/*.sass\' \'sourceDir/**/*.scss\' -c \'npm run verify:css\' --initial --silent');
 

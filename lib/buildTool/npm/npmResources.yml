@@ -10,11 +10,11 @@ documentation:
 
     tasks:
       - name: docs:dev
-        tasks: ['NODE_ENV=development node <%- paths.config.configDir + resources.documentation.configSubDir %>serve.dev.js']
+        tasks: ['cross-env NODE_ENV=development node <%- paths.config.configDir + resources.documentation.configSubDir %>serve.dev.js']
         description: Creates a development-version of the documentation website and watches for changes.
 
       - name: docs:build
-        tasks: ['NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js --colors']
+        tasks: ['cross-env NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js --colors']
         description: Creates a production-version of the documentation website in the `<%- documentation.outputDir %>`.
 
       - name: docs:build:serve
@@ -258,14 +258,14 @@ testUnit:
 
     - name: test:unit:once
       # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
-      tasks: ['istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
+      tasks: ['cross-env NODE_ENV=test istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
       description: Run unit tests once
       features:
         - Uses Mocha
         - Code coverage
 
     - name: test:check-coverage
-      tasks: ['istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml']
+      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml']
       description:
       features:
 
@@ -285,14 +285,14 @@ testVisualRegression:
 
   tasks:
     - name: test:visual
-      tasks: ['cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
+      tasks: ['cross-env NODE_ENV=test cd node_modules/backstopjs && npm run test -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
       description: Run visual regression tests against the *development* web server (the development server **must** be running)
       features:
         - "<% if (config.testVisualRegression) { %>You can create visual regression tests by placing them in the `<%- testVisualRegression.moduleTestDir %>` folder inside any of your module folders (e.g. `<%- paths.input.srcDir + resources.sampleApp.demoDir + testVisualRegression.moduleTestDir %>`)<% } %>"
         - "Example scenario:<pre>module.exports = {<br>  label: 'My Homepage',<br>  url: '/',<br>  selectors: ['header', 'footer']<br>};</pre>"
 
     - name: test:visual:ref
-      tasks: ['cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
+      tasks: ['cross-env NODE_ENV=test cd node_modules/backstopjs && npm run reference -- --configPath=../../<%= paths.config.configDir + resources.testVisualRegression.configSubDir %>backstop.config.js']
       description: Creates visual regression testing reference images which are subsequently used as the baseline for future tests. The development server **must** be running.
       features: []
 

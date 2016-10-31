@@ -54,7 +54,7 @@ module.exports = function(confitConfig, unitTestPath, commandToRun) {
       let summaryParts = summaryLine[0].split('|');
 
       assert(summaryParts[0].indexOf('All files') === 0);
-      assert(parseFloat(summaryParts[2], 10) > 50, 'Branches have greater than 50% coverage');
+      assert(parseFloat(summaryParts[2], 10) >= 50, 'Branches have at-least 50% coverage');
     });
 
 

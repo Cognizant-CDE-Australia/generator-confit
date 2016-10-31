@@ -5,9 +5,20 @@
 // Polyfill required for PhantomJS
 require('phantomjs-polyfill');
 
-// Load the test dependencies!<%
-testUnit.testDependencies.forEach(function(moduleName) { %>
-require('<%= moduleName -%>');<%
+// Load the test dependencies!
+<%
+
+// Determine the relative path from this folder to the root directory
+var configPath = paths.config.configDir + resources.testUnit.configSubDir;
+var relativePath = configPath.replace(/([^/]+)/g, '..');
+
+// Need to support actual modules as well as relative path files (./path/to/file.js), which are relative to the srcDir
+testUnit.testDependencies.forEach(function(moduleName) {
+  if (moduleName.indexOf('./') === 0) {
+%>require('<%- relativePath + paths.input.srcDir + moduleName.substr(2) %>');
+<% } else {
+%>require('<%= moduleName -%>');
+<% }
 });
 
 var sourceFormat = buildJS.sourceFormat;
@@ -26,13 +37,7 @@ testing.setBaseTestProviders(
 );
 
 Object.assign(global, testing);
-<%
-}
-
-// Determine the relative path from this folder to the root directory
-var configPath = paths.config.configDir + resources.testUnit.configSubDir;
-var relativePath = configPath.replace(/([^/]+)/g, '..');
-%>
+<% } %>
 
 // Don't load any source code! The unit tests are responsible for loading the code-under-test.
 // Includes the *.spec.<ext> files in the unitTest directory. The '<%= relativePath %>' is the relative path from where

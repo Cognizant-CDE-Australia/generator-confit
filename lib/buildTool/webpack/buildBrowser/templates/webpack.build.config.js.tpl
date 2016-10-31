@@ -30,7 +30,10 @@ var config = {
   module: {
     loaders: []
   },
-  plugins: [],
+  plugins: [
+    // Prints more readable module names in the browser console on HMR updates
+    new webpack.NamedModulesPlugin()
+  ],
 
   resolve: {
     //https://gist.github.com/sokra/27b24881210b56bbaff7#resolving-options

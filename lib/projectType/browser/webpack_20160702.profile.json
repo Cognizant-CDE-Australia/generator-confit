@@ -1,6 +1,6 @@
 {
   "name": "Webpack (2 July 2016)",
-  "priority": "2",
+  "priority": "4",
   "description": "Webpack & NPM-based build profile (no Grunt)",
   "toolMap": {
     "app": "webpack",

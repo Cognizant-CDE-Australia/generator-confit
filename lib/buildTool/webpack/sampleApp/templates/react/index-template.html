@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>React Demo App</title>
+
+  <!-- Die frame! DIE! http://en.wikipedia.org/wiki/Framekiller -->
+  <style>html{display:none}</style>
+  <% htmlWebpackPlugin.files.css.forEach(function(cssFile) { %>
+  <link href="<%= cssFile %>" rel="stylesheet">
+  <% }); %>
+  <script>
+    if (window.self !== window.top) {
+      window.top.location.href = window.location.href;
+    } else {
+      document.documentElement.style.display = 'block';
+    }
+  </script>
+
+</head>
+<body onload="dispatchEvent(new Event('customBootEvent'))">
+
+  <div id="content"></div>
+  <div class="css-type"></div>
+
+  <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+  <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+  <% } %>
+</body>
+</html>

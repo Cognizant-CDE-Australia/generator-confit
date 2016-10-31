@@ -79,6 +79,10 @@ buildHTML:
 
 buildJS:
   toolModules:
+    - condition: <%- buildJS.sourceFormat === 'ES6' %>
+      packages:
+        - <<: *pkg_babel-loader
+
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_awesome-typescript-loader
@@ -87,9 +91,36 @@ buildJS:
           key: ambientDependencies
           version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
 
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      packages:
+        - <<: *pkg_react-hot-loader
 
 # sampleApp configuration
 sampleApp:
+
+  # Special config for certain frameworks
+  frameworks:
+    '': # This is the 'none' framework
+      ES6: {}
+      TypeScript: {}
+    AngularJS 1.x:
+      ES6: {}
+      TypeScript: {}
+    AngularJS 2.x:
+      ES6: {}
+      TypeScript:
+        vendorScripts:  # Add these items to the vendor scripts entryPoint
+          pre:
+            - './polyfills.ts'
+          post: []
+
+    React (latest):
+      ES6:
+        vendorScripts:  # Add these items to the vendor scripts entryPoint.
+          pre:
+            - './polyfills.js'
+          post:
+            - 'react-router'
 
   toolModules:
     - condition: <%- buildJS.framework.length === 0 && buildJS.sourceFormat === 'ES6' %>
@@ -209,6 +240,25 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
           overwrite: true
 
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
+      packages:
+        - <<: *pkg_react-router
+        - <<: *pkg_object-assign    # In polyfills.js
+        - <<: *pkg_promise          # In polyfills.js
+        - <<: *pkg_whatwg-fetch     # In polyfills.js
+      templateFiles:
+        - src: react/*
+          dest: <%= paths.input.srcDir %>
+          overwrite: true
+          noParse: true
+        - src: react/demoModule/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
+          overwrite: true
+        - src: react/demoModule/unitTest/*
+          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
+          overwrite: true
+
+
 
 serverDev:
   packages:
@@ -254,7 +304,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -262,14 +312,14 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
     - name: test:unit:debug
-      tasks: ['karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
+      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
