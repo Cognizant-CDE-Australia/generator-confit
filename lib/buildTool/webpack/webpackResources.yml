@@ -45,6 +45,12 @@ buildBrowser:
         and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
         files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
 
+  toolModules:
+    - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
+      packages:
+        - <<: *pkg_@types/source-map
+        - <<: *pkg_@types/uglify-js
+        - <<: *pkg_@types/webpack
 
 buildAssets:
   packages:
@@ -86,10 +92,7 @@ buildJS:
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_awesome-typescript-loader
-      typeLibs:
-        - name: webpack
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
+        - <<: *pkg_angular2-template-loader
 
     - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
       packages:
@@ -160,7 +163,6 @@ sampleApp:
         - <<: *pkg_angular-route
       testPackages:
         - <<: *pkg_angular-route
-      typeLibs: []
       templateFiles:
         - src: ng1/ES6/*
           dest: <%= paths.input.srcDir %>
@@ -181,10 +183,6 @@ sampleApp:
         - <<: *pkg_angular-route
       testPackages:
         - <<: *pkg_angular-route
-      typeLibs:
-        - name: angular-route
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
       templateFiles:
         - src: ng1/TypeScript/*
           dest: <%= paths.input.srcDir %>
@@ -204,7 +202,6 @@ sampleApp:
       packages:
         - <<: *pkg_angular2/router
       testPackages: []
-      typeLibs: []
       templateFiles:
         - src: ng2/ES6/*
           dest: <%= paths.input.srcDir %>
@@ -224,7 +221,6 @@ sampleApp:
       packages:
         - <<: *pkg_angular2/router
       testPackages: []
-      typeLibs: []
       templateFiles:
         - src: ng2/TypeScript/*
           dest: <%= paths.input.srcDir %>
@@ -296,6 +292,7 @@ testUnit:
     - <<: *pkg_jasmine-core
     - <<: *pkg_phantomjs-prebuilt
     - <<: *pkg_phantomjs-polyfill
+    - <<: *pkg_@types/jasmine
 
   tasks:
     - name: test
@@ -328,11 +325,6 @@ testUnit:
     - name: test:coverage   # Used by the pre-release / release task
       tasks: ['npm run test:unit:once']
       description: Alias for test:unit:once, which also does test coverage checks and will fail if test coverage is not sufficient
-
-  typeLibs:
-    - name: jasmine
-      key: ambientDependencies
-      version: github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
 
   templateFiles:
     - src: karma.conf.js.tpl

@@ -20,7 +20,7 @@ var srcLoader = {
 if (sourceFormat === 'TypeScript') { %>
 
 // Not used yet, but can speed up compile time for TypeScript AND Babel
-//const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
+const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var srcLoader = {
   test: helpers.pathRegEx(<%= srcDirRegEx.toString() %>),
