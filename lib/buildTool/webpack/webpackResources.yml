@@ -114,7 +114,7 @@ sampleApp:
       TypeScript:
         vendorScripts:  # Add these items to the vendor scripts entryPoint
           pre:
-            - './polyfills.ts'
+            - './polyfills.browser.ts'
           post: []
 
     React (latest):
@@ -200,7 +200,7 @@ sampleApp:
 
     - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'ES6' %>
       packages:
-        - <<: *pkg_angular2/router
+        - <<: *pkg_@angular/router
       testPackages: []
       templateFiles:
         - src: ng2/ES6/*
@@ -219,7 +219,7 @@ sampleApp:
 
     - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'TypeScript' %>
       packages:
-        - <<: *pkg_angular2/router
+        - <<: *pkg_@angular/router
       testPackages: []
       templateFiles:
         - src: ng2/TypeScript/*

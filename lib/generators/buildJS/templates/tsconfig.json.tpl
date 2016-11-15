@@ -8,7 +8,10 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noEmitHelpers": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
     "strictNullChecks": false,
+    "baseUrl": "./<%- paths.input.srcDir %>",
     "paths": {
     },
     "lib": [

@@ -14,32 +14,32 @@ $packages:
     version: 1.5.5
     isDependency: true
 
-  - &pkg_angular2/common
+  - &pkg_@angular/common
     name: '@angular/common'
     version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/compiler    # The compiler is a run-time dependency... Maybe will become a build step
+  - &pkg_@angular/compiler    # The compiler is a run-time dependency... Maybe will become a build step
     name: '@angular/compiler'
     version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/core
+  - &pkg_@angular/core
     name: '@angular/core'
     version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/platform-browser
+  - &pkg_@angular/platform-browser
     name: '@angular/platform-browser'
     version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/platform-browser-dynamic    # Note sure
+  - &pkg_@angular/platform-browser-dynamic      # Requires the @angular/compiler
     name: '@angular/platform-browser-dynamic'
     version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/router
+  - &pkg_@angular/router
     name: '@angular/router'
     version: 3.1.1
     isDependency: true
@@ -110,6 +110,78 @@ $packages:
     name: core-js
     version: 2.4.1
     isDependency: true
+
+  - &pkg_core-js/es6/symbol
+    <<: *pkg_core-js
+    name: core-js/es6/symbol
+
+  - &pkg_core-js/es6/object
+    <<: *pkg_core-js
+    name: core-js/es6/object
+
+  - &pkg_core-js/es6/function
+    <<: *pkg_core-js
+    name: core-js/es6/function
+
+  - &pkg_core-js/es6/parse-int
+    <<: *pkg_core-js
+    name: core-js/es6/parse-int
+
+  - &pkg_core-js/es6/parse-float
+    <<: *pkg_core-js
+    name: core-js/es6/parse-float
+
+  - &pkg_core-js/es6/number
+    <<: *pkg_core-js
+    name: core-js/es6/number
+
+  - &pkg_core-js/es6/math
+    <<: *pkg_core-js
+    name: core-js/es6/math
+
+  - &pkg_core-js/es6/string
+    <<: *pkg_core-js
+    name: core-js/es6/string
+
+  - &pkg_core-js/es6/date
+    <<: *pkg_core-js
+    name: core-js/es6/date
+
+  - &pkg_core-js/es6/array
+    <<: *pkg_core-js
+    name: core-js/es6/array
+
+  - &pkg_core-js/es6/regexp
+    <<: *pkg_core-js
+    name: core-js/es6/regexp
+
+  - &pkg_core-js/es6/map
+    <<: *pkg_core-js
+    name: core-js/es6/map
+
+  - &pkg_core-js/es6/set
+    <<: *pkg_core-js
+    name: core-js/es6/set
+
+  - &pkg_core-js/es6/weak-map
+    <<: *pkg_core-js
+    name: core-js/es6/weak-map
+
+  - &pkg_core-js/es6/weak-set
+    <<: *pkg_core-js
+    name: core-js/es6/weak-set
+
+  - &pkg_core-js/es6/typed
+    <<: *pkg_core-js
+    name: core-js/es6/typed
+
+  - &pkg_core-js/es6/reflect
+    <<: *pkg_core-js
+    name: core-js/es6/reflect
+
+  - &pkg_core-js/es7/reflect
+    <<: *pkg_core-js
+    name: core-js/es7/reflect
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
@@ -367,8 +439,16 @@ $packages:
 
   - &pkg_rxjs
     name: rxjs
-    version: 5.0.0-beta.7
+    version: 5.0.0-beta.12
     isDependency: true
+
+  - &pkg_rxjs/add/operator/map
+    <<: *pkg_rxjs
+    name: rxjs/add/operator/map
+
+  - &pkg_rxjs/add/operator/mergeMap
+    <<: *pkg_rxjs
+    name: rxjs/add/operator/mergeMap
 
   - &pkg_sass-lint
     name: sass-lint
@@ -387,7 +467,7 @@ $packages:
     name: serve
     version: 1.4.0
 
-  - &pkg_serve-https
+  - &pkg_serve-https    # This HTTPS server has it's own SSL certs, so it's easier to setup than 'http-server'
     name: serve-https
     version: 1.5.3
 
@@ -426,6 +506,7 @@ $packages:
   - &pkg_ts-helpers
     name: ts-helpers
     version: 1.1.2
+    isDependency: true
 
   - &pkg_@types/angular
     name: '@types/angular'
@@ -486,19 +567,18 @@ $packages:
     isDependency: true
 
   - &pkg_zone.js/dist/zone
+    <<: *pkg_zone.js
     name: zone.js/dist/zone
-    version: 0.6.26
-    isDependency: true
 
   - &pkg_zone.js/dist/long-stack-trace-zone
+    <<: *pkg_zone.js
     name: zone.js/dist/long-stack-trace-zone
-    version: 0.6.26
-    isDependency: true
+
 
   - &pkg_zone.js/dist/proxy
+    <<: *pkg_zone.js
     name: zone.js/dist/proxy
-    version: 0.6.26
 
   - &pkg_zone.js/dist/sync-test
+    <<: *pkg_zone.js
     name: zone.js/dist/sync-test
-    version: 0.6.26

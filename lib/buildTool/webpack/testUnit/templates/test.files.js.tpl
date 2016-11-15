@@ -28,8 +28,8 @@ var selectedFramework = buildJS.framework[0] || '';
 if (sourceFormat === 'TypeScript' && selectedFramework === 'AngularJS 2.x') {
 %>
 // Load Angular 2's Jasmine helper methods:
-var testing = require('angular2/testing');
-var browser = require('angular2/platform/testing/browser');
+var testing = require('@angular/testing');
+var browser = require('@angular/platform-browser/testing/browser');
 
 testing.setBaseTestProviders(
   browser.TEST_BROWSER_PLATFORM_PROVIDERS,

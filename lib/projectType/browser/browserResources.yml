@@ -90,16 +90,36 @@ frameworks:
     ES6:
       entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
     TypeScript:
-      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>main.browser.ts
     frameworkPackages: &ng2Packages
-      packages:
-        - <<: *pkg_core-js          # In polyfills.ts
-        - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # In vendor.ts?
-        - <<: *pkg_angular2/platform-browser
-        - <<: *pkg_angular2/platform-browser-dynamic
-        - <<: *pkg_angular2/core
-        - <<: *pkg_angular2/common
+      packages:   # All these files end up in the vendors bundle, created by the entryPoint buildTool
+        - <<: *pkg_@angular/platform-browser
+        - <<: *pkg_@angular/platform-browser-dynamic
+        - <<: *pkg_@angular/compiler
+        - <<: *pkg_@angular/core
+        - <<: *pkg_@angular/common
+        - <<: *pkg_rxjs/add/operator/map
+        - <<: *pkg_rxjs/add/operator/mergeMap
+        - <<: *pkg_core-js/es6/symbol     # Don't include es6/promise as it breaks zone.js
+        - <<: *pkg_core-js/es6/object
+        - <<: *pkg_core-js/es6/function
+        - <<: *pkg_core-js/es6/parse-int
+        - <<: *pkg_core-js/es6/parse-float
+        - <<: *pkg_core-js/es6/number
+        - <<: *pkg_core-js/es6/math
+        - <<: *pkg_core-js/es6/string
+        - <<: *pkg_core-js/es6/date
+        - <<: *pkg_core-js/es6/array
+        - <<: *pkg_core-js/es6/regexp
+        - <<: *pkg_core-js/es6/map
+        - <<: *pkg_core-js/es6/set
+        - <<: *pkg_core-js/es6/weak-map
+        - <<: *pkg_core-js/es6/weak-set
+        - <<: *pkg_core-js/es6/typed
+        - <<: *pkg_core-js/es6/reflect
+        - <<: *pkg_core-js/es7/reflect
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_ts-helpers
 
     frameworkTestPackages: &ng2TestPackages
       testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js

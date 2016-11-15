@@ -38,7 +38,7 @@ generator-confit:
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: 9223efcd10fa38f2be1da6fd6e2746445e3011d3
+    _version: 0fe60bd2a1dfc1c7c076b3b5e31954419fcb4f8e
     framework:
       - AngularJS 1.x
     outputFormat: ES5
@@ -68,7 +68,7 @@ generator-confit:
     port: 3000
     protocol: https
   testUnit:
-    _version: 50bc80217e8218d87ed3389014b7ff503006c0dd
+    _version: 1843f549322796a5dd891472a39129c5ae399e87
   testSystem:
     _version: 7fc73b06ceeb428b39d419e7dc6e5bdbd430d020
   testVisualRegression:

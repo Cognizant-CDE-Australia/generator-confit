@@ -34,7 +34,6 @@
     "curly": false,
     "forin": true,
     "label-position": true,
-    "label-undefined": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
@@ -48,7 +47,6 @@
     ],
     "no-construct": true,
     "no-debugger": true,
-    "no-duplicate-key": true,
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
@@ -58,7 +56,6 @@
     "no-switch-case-fall-through": true,
     "no-unreachable": true,
     "no-unused-expression": true,
-    "no-unused-variable": false,
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "radix": true,
@@ -67,11 +64,6 @@
       true,
       "allow-null-check"
     ],
-    "use-strict": [
-      true,
-      "check-module"
-    ],
-
     "eofline": true,
     "indent": [
       true,
@@ -101,7 +93,6 @@
     "interface-name": false,
     "jsdoc-format": true,
     "no-consecutive-blank-lines": false,
-    "no-constructor-vars": false,
     "one-line": [
       true,
       "check-open-brace",
