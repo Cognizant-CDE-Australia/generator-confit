@@ -87,8 +87,6 @@ frameworks:
         - <<: *pkg_@types/angular-mocks
 
   AngularJS 2.x:
-    ES6:
-      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
     TypeScript:
       entryPointFileName: ./<%- resources.sampleApp.demoDir %>main.browser.ts
     frameworkPackages: &ng2Packages
@@ -123,13 +121,17 @@ frameworks:
 
     frameworkTestPackages: &ng2TestPackages
       testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-        - <<: *pkg_core-js
+        - <<: *pkg_core-js/es6
+        - <<: *pkg_core-js/es7/reflect
         - <<: *pkg_ts-helpers
         - <<: *pkg_zone.js/dist/zone
         - <<: *pkg_zone.js/dist/long-stack-trace-zone
         - <<: *pkg_zone.js/dist/proxy
         - <<: *pkg_zone.js/dist/sync-test
-        - <<: *pkg_rxjs
+        - <<: *pkg_zone.js/dist/jasmine-patch
+        - <<: *pkg_zone.js/dist/async-test
+        - <<: *pkg_zone.js/dist/fake-async-test
+        - <<: *pkg_rxjs/Rx
         # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
 
   React (latest):

@@ -110,7 +110,6 @@ sampleApp:
       ES6: {}
       TypeScript: {}
     AngularJS 2.x:
-      ES6: {}
       TypeScript:
         vendorScripts:  # Add these items to the vendor scripts entryPoint
           pre:
@@ -195,25 +194,6 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
           overwrite: true
         - src: ng1/TypeScript/demoModule/templates/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-          overwrite: true
-
-    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'ES6' %>
-      packages:
-        - <<: *pkg_@angular/router
-      testPackages: []
-      templateFiles:
-        - src: ng2/ES6/*
-          dest: <%= paths.input.srcDir %>
-          overwrite: true
-          noParse: true
-        - src: ng2/ES6/demoModule/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-          overwrite: true
-        - src: ng2/ES6/demoModule/unitTest/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-          overwrite: true
-        - src: ng2/ES6/demoModule/templates/*
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
           overwrite: true
 

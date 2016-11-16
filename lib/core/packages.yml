@@ -111,6 +111,10 @@ $packages:
     version: 2.4.1
     isDependency: true
 
+  - &pkg_core-js/es6
+    <<: *pkg_core-js
+    name: core-js/es6
+
   - &pkg_core-js/es6/symbol
     <<: *pkg_core-js
     name: core-js/es6/symbol
@@ -442,6 +446,10 @@ $packages:
     version: 5.0.0-beta.12
     isDependency: true
 
+  - &pkg_rxjs/Rx
+    <<: *pkg_rxjs
+    name: rxjs/Rx
+
   - &pkg_rxjs/add/operator/map
     <<: *pkg_rxjs
     name: rxjs/add/operator/map
@@ -566,14 +574,21 @@ $packages:
     version: 0.6.26
     isDependency: true
 
-  - &pkg_zone.js/dist/zone
+  - &pkg_zone.js/dist/async-test
     <<: *pkg_zone.js
-    name: zone.js/dist/zone
+    name: zone.js/dist/async-test
+
+  - &pkg_zone.js/dist/fake-async-test
+    <<: *pkg_zone.js
+    name: zone.js/dist/fake-async-test
+
+  - &pkg_zone.js/dist/jasmine-patch
+    <<: *pkg_zone.js
+    name: zone.js/dist/jasmine-patch
 
   - &pkg_zone.js/dist/long-stack-trace-zone
     <<: *pkg_zone.js
     name: zone.js/dist/long-stack-trace-zone
-
 
   - &pkg_zone.js/dist/proxy
     <<: *pkg_zone.js
@@ -582,3 +597,7 @@ $packages:
   - &pkg_zone.js/dist/sync-test
     <<: *pkg_zone.js
     name: zone.js/dist/sync-test
+
+  - &pkg_zone.js/dist/zone
+    <<: *pkg_zone.js
+    name: zone.js/dist/zone

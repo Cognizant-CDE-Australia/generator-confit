@@ -22,8 +22,16 @@ function getConfitConfig(config) {
   if (debugMode) {
     <% if (buildJS.sourceFormat === 'TypeScript') { %>
     // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
-    commonConfig.webpack.module.postLoaders = commonConfig.webpack.module.postLoaders.filter(function (loader) {
-      return (loader.loader.indexOf('istanbul-instrumenter-loader') === -1);
+    commonConfig.webpack.module.rules = commonConfig.webpack.module.rules.filter(function (rule) {
+      if (!rule.use) {
+        return true;
+      }
+
+      var ruleHasInstrumenter = rule.use.filter(function(loader) {
+        return loader.loader.indexOf('istanbul-instrumenter-loader') === 0;
+      });
+
+      return !ruleHasInstrumenter.length;
     });
     <% } -%>
 

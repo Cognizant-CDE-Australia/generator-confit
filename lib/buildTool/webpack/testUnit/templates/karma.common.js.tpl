@@ -106,9 +106,8 @@ let karmaConfig = {
     lines: 80
   },
 
-  webpackServer: {
-    noInfo: true
-  },
+  // Webpack please don't spam the console when running in karma!
+  webpackMiddleware: { stats: 'errors-only'},
 
   singleRun: false,
   colors: true
@@ -150,17 +149,15 @@ testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replac
 
 <% if (buildJS.sourceFormat === 'TypeScript') { %>
 // instrument only testing *sources* (not the tests)
-webpackConfig.modules.rules.push({
+webpackConfig.module.rules.push({
   test: <%- srcFileRegEx.toString() %>,
   use: [
     {
       loader: 'istanbul-instrumenter-loader'
     }
   ],
-  enforce: 'post'
-  exclude: [
-    /node_modules|<%- testSourcesToExclude.join('|') %>/
-  ]
+  enforce: 'post',
+  exclude: [/node_modules|<%- testSourcesToExclude.join('|') %>/]
 });<% } %>
 
 <% if (buildJS.framework.indexOf('React (latest)') > -1) { %>
