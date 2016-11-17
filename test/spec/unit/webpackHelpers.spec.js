@@ -53,7 +53,7 @@ describe('Webpack Helpers', () => {
         prop: '/path/to/[id].[hash].js',
         prop2: '/path/to/[id].[hash:blah].js',
         prop3: '/path/to/[id].[contentHash].js',
-        prop4: '/path/to/[contentHash: blah blah][name].js'
+        prop4: '/path/to/[contentHash: blah blah][name].js',
       };
 
       helpers.removeHash(obj, 'prop');
@@ -74,7 +74,7 @@ describe('Webpack Helpers', () => {
         prop: '/path/to/[id].[hash].js',
         prop2: '/path/to/[id].[hash:blah].js',
         prop3: '/path/to/[id].[contentHash].js',
-        prop4: '/path/to/[contentHash: blah blah][name].js'
+        prop4: '/path/to/[contentHash: blah blah][name].js',
       };
 
       helpers.removeHash(obj, 'prop', /\.\[hash\]/);

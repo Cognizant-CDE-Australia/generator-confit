@@ -33,7 +33,7 @@ if (buildCSS.sourceFormat === 'sass') {
   cssLoaderOptions = '!stylus-loader';
 
 } else {
-  cssExtensions = '.css';
+  cssExtensions = 'css';
   cssLoaderOptions = '';
 }
 %>

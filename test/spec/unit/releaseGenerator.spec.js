@@ -8,7 +8,7 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'release';
 
 describe('Release Generator', () => {
-  it('should generate a pre-push hook', done => {
+  it('should generate a pre-push hook', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -27,12 +27,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: false,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 
 
-  it('should generate a commit message template and a hook when using conventional commit messages', done => {
+  it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -55,12 +55,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: false,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 
 
-  it('should NOT generate a commit message template when NOT using conventional commit messages', done => {
+  it('should NOT generate a commit message template when NOT using conventional commit messages', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -82,12 +82,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: false,
-      commitMessageFormat: 'None'
+      commitMessageFormat: 'None',
     });
   });
 
 
-  it('should generate a "release" and a "semantic-release" script for semantic releases', done => {
+  it('should generate a "release" and a "semantic-release" script for semantic releases', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -105,12 +105,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: true,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 
 
-  it('should generate only a "release" script for non-semantic releases', done => {
+  it('should generate only a "release" script for non-semantic releases', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -128,12 +128,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: false,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 
 
-  it('should generate a "pre-release" script for non-semantic releases on GitHub and does not use the semantic-release-cli module', done => {
+  it('should generate a "pre-release" script for non-semantic releases on GitHub and does not use the semantic-release-cli module', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-github-repo-conventional-commit.json',
@@ -151,12 +151,12 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: false,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 
 
-  it('should generate a "pre-release" script for semantic releases on GitHub and use semantic-release-cli module', done => {
+  it('should generate a "pre-release" script for semantic releases on GitHub and use semantic-release-cli module', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-github-repo-conventional-commit.json',
@@ -176,7 +176,7 @@ describe('Release Generator', () => {
       }
     ).withPrompts({
       useSemantic: true,
-      commitMessageFormat: 'Conventional'
+      commitMessageFormat: 'Conventional',
     });
   });
 });

@@ -10,7 +10,7 @@ const GENERATOR_UNDER_TEST = 'verify';
 
 
 describe('Verify Test Generator', () => {
-  it('should should generate default config values (for browser with Stylus)', done => {
+  it('should should generate default config values (for browser with Stylus)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-stylus-config.yml',
@@ -45,7 +45,7 @@ describe('Verify Test Generator', () => {
   });
 
 
-  it('should should allow the JS coding standard to be changed (for browser with SASS)', done => {
+  it('should should allow the JS coding standard to be changed (for browser with SASS)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-sass-config.yml',
@@ -72,12 +72,12 @@ describe('Verify Test Generator', () => {
         done();
       }
     ).withPrompts({
-      jsCodingStandard: 'AirBnB'
+      jsCodingStandard: 'AirBnB',
     });
   });
 
 
-  it('should should generate default config values for TypeScript (for Browser with CSS)', done => {
+  it('should should generate default config values for TypeScript (for Browser with CSS)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-typescript-config.yml',
@@ -106,7 +106,7 @@ describe('Verify Test Generator', () => {
   });
 
 
-  it('should should generate default config values (for Node)', done => {
+  it('should should generate default config values (for Node)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-node-config.yml',

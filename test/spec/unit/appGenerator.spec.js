@@ -40,13 +40,13 @@ function runGenerator(confitFixture, beforeTestCb, assertionCb) {
     [helpers.createDummyGenerator(), 'confit:testVisualRegression'],
     [helpers.createDummyGenerator(), 'confit:testUnit'],
     [helpers.createDummyGenerator(), 'confit:verify'],
-    [helpers.createDummyGenerator(), 'confit:zzfinish']
+    [helpers.createDummyGenerator(), 'confit:zzfinish'],
   ]);
 }
 
 
 describe('App Generator', () => {
-  it('should add an "app" section to the confit.json file with valid data inside it', done => {
+  it('should add an "app" section to the confit.json file with valid data inside it', (done) => {
     runGenerator('app-config.json',
       function beforeTest() {
         let confit = fs.readJsonSync('confit.json');
@@ -71,12 +71,12 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'Other',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 
 
-  it('should create an .editorConfig, package.json and confit.yml file when they do not exist', done => {
+  it('should create an .editorConfig, package.json and confit.yml file when they do not exist', (done) => {
     let filesThatShouldBeGenerated = ['.editorconfig', 'package.json', 'confit.yml', '.gitignore'];
 
     runGenerator('app-config.json',
@@ -90,12 +90,12 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'GitHub',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 
 
-  it('should not create a license file when the license type is UNLICENSED', done => {
+  it('should not create a license file when the license type is UNLICENSED', (done) => {
     runGenerator('app-config.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
@@ -111,12 +111,12 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'GitHub',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 
 
-  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', done => {
+  it('should create a license file when the license type is valid, and it should contain the copyrightOwner and year inside', (done) => {
     runGenerator('app-withCopyrightOwner.json',
       function beforeTest() {
         yoassert.noFile('LICENSE');
@@ -138,12 +138,12 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'Other',
-      license: 'MIT'
+      license: 'MIT',
     });
   });
 
 
-  it('should not overwrite an existing .editorconfig file', done => {
+  it('should not overwrite an existing .editorconfig file', (done) => {
     let originalContents = 'dummy data' + new Date();
 
     runGenerator('app-config.json',
@@ -159,12 +159,12 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'Other',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 
 
-  it('should not overwrite an existing package.json file with a template, but will add additional data', done => {
+  it('should not overwrite an existing package.json file with a template, but will add additional data', (done) => {
     let originalContents = {name: 'name-is-required', description: 'abc'};
 
     runGenerator('app-config.json',
@@ -184,11 +184,11 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'Other',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 
-  it('should generate scripts in package.json', done => {
+  it('should generate scripts in package.json', (done) => {
     runGenerator('app-config.json',
       function before(testDir) {
         yoassert.noFile(['package.json']);
@@ -196,7 +196,7 @@ describe('App Generator', () => {
         // Create a package.json file as the generator expects it will exist
         fs.writeJsonSync(testDir + '/package.json', {
           name: 'some-name',
-          description: 'desc'
+          description: 'desc',
         });
         yoassert.file(['package.json']);
       },
@@ -214,7 +214,7 @@ describe('App Generator', () => {
     ).withPrompts({
       buildProfile: 'Latest',
       repositoryType: 'GitHub',
-      license: 'UNLICENSED'
+      license: 'UNLICENSED',
     });
   });
 });

@@ -8,7 +8,7 @@ const MAX_LOG = process.argv.indexOf('--MAX_LOG=true') > -1;
 
 module.exports = {
   noop: () => {},
-  runGenerator: runGenerator
+  runGenerator: runGenerator,
 };
 
 /**
@@ -47,7 +47,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, error
       .withArguments(['--force=true'])    // Any file-conflicts, over-write
       .withOptions({
         skipInstall: true,
-        skipRun: true
+        skipRun: true,
       })
       .on('ready', function() {
         if (MAX_LOG) {

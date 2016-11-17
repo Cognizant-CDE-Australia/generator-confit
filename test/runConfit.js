@@ -79,16 +79,16 @@ function install(resolve, reject) {
         path.join(GENERATOR_PATH, 'testUnit'),
         path.join(GENERATOR_PATH, 'testVisualRegression'),
         path.join(GENERATOR_PATH, 'verify'),
-        path.join(GENERATOR_PATH, 'zzfinish')
+        path.join(GENERATOR_PATH, 'zzfinish'),
       ])
       .withOptions({
         configFile: CONFIT_FILE_NAME,
         skipInstall: skipInstall,     // Can only skip if the old confit file is identical to the new file
-        skipRun: true
+        skipRun: true,
       })
       .withPrompts({
         rebuildFromConfig: true,
-        createSampleApp: true
+        createSampleApp: true,
       })
       .on('error', function(err) {
         console.error('generator error', err);
@@ -122,7 +122,7 @@ function clean(dir, cleanEverything) {
     fs.emptyDirSync(dir);
   } else {
     // Keep the node_modules directory and CONFIT_FILE_NAME + .previous
-    let files = fs.readdirSync(dir).filter(file => file !== 'node_modules' && file !== CONFIT_FILE_NAME + '.previous');
+    let files = fs.readdirSync(dir).filter((file) => file !== 'node_modules' && file !== CONFIT_FILE_NAME + '.previous');
 
     // console.log('Deleting:', files.join('\n'));
     files.forEach(function(file) {

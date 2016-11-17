@@ -6,7 +6,7 @@ let child;
 
 module.exports = {
   start: startServer,
-  stop: stopServer
+  stop: stopServer,
 };
 
 /**
@@ -26,7 +26,7 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
   let result = {};
   let resolveCalled = false;
 
-  getFreePort().then(port => {
+  getFreePort().then((port) => {
     result = configFn(testDir, port, confitServerToStart);
 
     let cmdParams = cmd.split(' ');
@@ -34,18 +34,18 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
 
     child = spawn(mainCmd, cmdParams, {
       cwd: testDir,
-      detached: true
+      detached: true,
     });
 
-    child.on('exit', reason => {
+    child.on('exit', (reason) => {
       console.log('Server exited:', reason);
     });
 
-    child.on('error', err => {
+    child.on('error', (err) => {
       console.log('Failed to start server process:', err);
     });
 
-    child.stdout.on('data', data => {
+    child.stdout.on('data', (data) => {
       let dataStr = String(data);
 
       console.info('Server: ' + dataStr);
@@ -60,7 +60,7 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
     // Webpack is logging the %-complete on stderr! Filter out these messages
     let filterRE = /^\d*%/;
 
-    child.stderr.on('data', data => {
+    child.stderr.on('data', (data) => {
       let msg = data.toString();
 
       if (filterRE.test(msg)) {
@@ -68,7 +68,7 @@ function startServer(cmd, testDir, confitServerToStart, regExForStdioToIndicateS
       }
       // rejectFn('' + data);    // Don't reject these percentage complete messages
     });
-  }, err => rejectFn(err));
+  }, (err) => rejectFn(err));
 
 
   return new Promise((resolve, reject) => {

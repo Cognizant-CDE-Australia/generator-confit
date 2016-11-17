@@ -13,6 +13,11 @@ var selectedFrameworkConfig = resources.frameworks[selectedFramework];
 // If there is a user-defined 'vendor' entryPoint or buildJS vendorsScripts or sampleApp vendor scripts, proceed...
 if (entryPoint.entryPoints.vendor || buildJS.vendorScripts.length) {
   var vendorScripts = [].concat(entryPoint.entryPoints.vendor || buildJS.vendorScripts || []);
+
+  // Remove the @types from the vendor scripts, as they are development dependencies
+  vendorScripts = vendorScripts.filter(function(scriptName) {
+    return scriptName.indexOf('@types') !== 0
+  });
 -%>
 // (Re)create the config.entry.vendor entryPoint
 config.entry.vendor = <%- printJson(vendorScripts) %>;

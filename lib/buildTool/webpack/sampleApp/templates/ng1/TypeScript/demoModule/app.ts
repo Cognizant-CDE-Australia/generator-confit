@@ -1,6 +1,6 @@
 'use strict';
 
-import 'angular';
+import * as angular from 'angular';
 import 'angular-route';
 import demoModule from './demoModule';
 

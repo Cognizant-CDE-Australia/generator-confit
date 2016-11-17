@@ -281,7 +281,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env BABEL_ENV=test NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -289,18 +289,23 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env BABEL_ENV=test NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
-    - name: test:unit:debug
+    - name: test:unit:debug   # Deliberately don't add the BABEL_ENV for debugging
       tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
         - No code coverage to make it easier to read source & testcode
+
+    - name: test:unit:debug:once   # Deliberately don't add the BABEL_ENV for debugging
+      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
+      description: # Only used for integration testing
+
 
     - name: test:coverage   # Used by the pre-release / release task
       tasks: ['npm run test:unit:once']
@@ -318,6 +323,9 @@ testUnit:
     - src: test.files.js.tpl
       dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>test.files.js
       overwrite: true
+
+    - src: thresholds.json
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>thresholds.json
 
 
   readme:

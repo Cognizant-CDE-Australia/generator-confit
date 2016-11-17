@@ -10,7 +10,7 @@ const GENERATOR_UNDER_TEST = 'testVisualRegression';
 
 
 describe('Visual Regression Test Generator', () => {
-  it('should should generate default config values', done => {
+  it('should should generate default config values', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -42,7 +42,7 @@ describe('Visual Regression Test Generator', () => {
   });
 
 
-  it('should not ask for extra values when the user does not want documentation', done => {
+  it('should not ask for extra values when the user does not want documentation', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -61,12 +61,12 @@ describe('Visual Regression Test Generator', () => {
         done();
       }
     ).withPrompts({
-      enabled: false
+      enabled: false,
     });
   });
 
 
-  it('should allow the default values to be changed', done => {
+  it('should allow the default values to be changed', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -84,13 +84,13 @@ describe('Visual Regression Test Generator', () => {
     ).withPrompts({
       enabled: true,
       moduleTestDir: 'a/b/c',
-      referenceImageDir: 'magic-johnson/'
+      referenceImageDir: 'magic-johnson/',
     });
   });
 
 
 
-  it('should convert invalid paths into valid paths', done => {
+  it('should convert invalid paths into valid paths', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -106,12 +106,12 @@ describe('Visual Regression Test Generator', () => {
     ).withPrompts({
       enabled: true,
       moduleTestDir: './dotSlash/',
-      referenceImageDir: '   '
+      referenceImageDir: '   ',
     });
   });
 
 
-  it('should throw an error if a path contains ../', done => {
+  it('should throw an error if a path contains ../', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -122,12 +122,12 @@ describe('Visual Regression Test Generator', () => {
         done();
       }
     ).withPrompts({
-      moduleTestDir: 'a/../b//c/d'
+      moduleTestDir: 'a/../b//c/d',
     });
   });
 
 
-  it('should throw an error if a path is an absolute path', done => {
+  it('should throw an error if a path is an absolute path', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testVisualRegression-config.yml',
@@ -138,7 +138,7 @@ describe('Visual Regression Test Generator', () => {
         done();
       }
     ).withPrompts({
-      referenceImageDir: '/full/path/dir'
+      referenceImageDir: '/full/path/dir',
     });
   });
 });

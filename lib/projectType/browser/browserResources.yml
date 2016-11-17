@@ -77,14 +77,11 @@ frameworks:
       packages:
         - <<: *pkg_angular
         - <<: *pkg_@types/angular
-        - <<: *pkg_@types/jquery
 
     frameworkTestPackages: &ng1TestPackages
       testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
         - <<: *pkg_angular
         - <<: *pkg_angular-mocks
-        - <<: *pkg_@types/angular
-        - <<: *pkg_@types/angular-mocks
 
   AngularJS 2.x:
     TypeScript:

@@ -1,4 +1,4 @@
-import 'angular';
+import * as angular from 'angular';
 
 let mod = angular.module('demoModule', []);
 

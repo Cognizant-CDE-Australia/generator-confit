@@ -3,22 +3,19 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
-
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var testFilesRegEx = new RegExp(paths.input.unitTestDir.replace(/\//g, '\\/') + ".*spec\\.(" + jsExtensions.join('|') + ")$");
-var testFilesGlob = '**/' + paths.input.unitTestDir + '*.spec.(' + jsExtensions.join('|') + ')';
 
 // We only want to test the SOURCE FILES, but we still must IMPORT the test dependencies
 -%>
 const DefinePlugin = require('webpack').DefinePlugin;   // Needed to pass the testFilesRegEx to test.files.js
 let testFilesRegEx = <%- testFilesRegEx.toString() %>;
-let testFilesGlob = '<%- testFilesGlob %>';
 
 // Customise the testFilesRegEx to filter which files to test, if desired.
+// Remember to also update .babelrc
 // E.g.
 // if (process.argv.indexOf('--spec') !== -1) {
 //   testFilesRegEx = ...
-//   testFilesGlob = ...
 // }
 // END_CONFIT_GENERATED_CONTENT
 
@@ -99,12 +96,7 @@ let karmaConfig = {
     outputDir: '<%- paths.output.reportDir %>unit/'
   },
 
-  thresholdReporter: {
-    statements: 80,
-    branches: 80,
-    functions: 80,
-    lines: 80
-  },
+  thresholdReporter: require('./thresholds.json'),
 
   // Webpack please don't spam the console when running in karma!
   webpackMiddleware: { stats: 'errors-only'},
@@ -113,25 +105,6 @@ let karmaConfig = {
   colors: true
 };
 
-
-<% if (buildJS.sourceFormat === 'ES6') { %>
-// Modify the Babel loader to add the Istanbul Babel plugin for code coverage
-webpackConfig.module.rules.forEach(loader => {
-  if (loader.loader === 'babel-loader') {
-    loader.options = loader.options || {};
-    loader.options.plugins = loader.options.plugins || [];
-    loader.options.plugins.push([
-      'istanbul',
-      {
-        'exclude': [
-          testFilesGlob,
-          'node_modules/**'
-        ]
-      }
-    ]);
-  }
-});
-<% } -%>
 
 <%
 // For Typescript, there is no code coverage tool that understands TypeScript's source. So use a post-loader

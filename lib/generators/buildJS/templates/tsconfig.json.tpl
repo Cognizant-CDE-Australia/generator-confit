@@ -8,7 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "noEmitHelpers": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "noUnusedLocals": true,
     "strictNullChecks": false,
     "baseUrl": "./<%- paths.input.srcDir %>",
@@ -23,7 +23,6 @@
          // Currently these are the Angular 2 types. %>
       "jasmine",
       "node",
-      "protractor",
       "selenium-webdriver",
       "source-map",
       "uglify-js",

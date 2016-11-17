@@ -41,7 +41,7 @@ function main() {
   let procSuccess = 0;
   let results = [];
 
-  let runInSequence = process.argv.filter(arg => arg === '--sequence').length === 1;
+  let runInSequence = process.argv.filter((arg) => arg === '--sequence').length === 1;
   let processRunner = runInSequence ? 'spawnSync' : 'spawn';
   let asyncMethod = runInSequence ? 'waterfall' : 'parallel';
 
@@ -57,7 +57,7 @@ function main() {
       let proc = childProc[processRunner](cmd, cmdParams, {
         stdio: 'inherit',    // send the child console output to the parent process (us)
         // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
-        env: _.merge({}, process.env, envData)
+        env: _.merge({}, process.env, envData),
       });
 
       if (runInSequence) {
@@ -83,7 +83,7 @@ function main() {
       FIXTURE_DIR: fixtureDir,
       TEST_DIR: testDir,
       SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR,
-      MAX_LOG: MAX_LOG
+      MAX_LOG: MAX_LOG,
     });
   }
 
@@ -100,7 +100,7 @@ function main() {
       FIXTURE_DIR: fixtureDir,
       TEST_DIR: testDir,
       SAMPLE_APP_MODULE_DIR: SAMPLE_APP_MODULE_DIR,
-      MAX_LOG: MAX_LOG
+      MAX_LOG: MAX_LOG,
     });
   }
 
@@ -154,7 +154,7 @@ function main() {
   }
 
 
-  async[asyncMethod](fixtures.map(fixture => async.asyncify(function() {
+  async[asyncMethod](fixtures.map((fixture) => async.asyncify(function() {
     testConfitFixture(fixture);
   })));
 }
@@ -169,11 +169,11 @@ function main() {
 function getFixtures(dir) {
   // Get a list of files that end in '.yml' from the directory, that do not start with 'x'
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
+    .filter((file) => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
 
   // Check if there is TEST_SUITE variable. If so, use it instead
   if (TEST_SUITE_M_OF_N) {
-    let parts = TEST_SUITE_M_OF_N.split('-').map(n => Number(n));
+    let parts = TEST_SUITE_M_OF_N.split('-').map((n) => Number(n));
     let suiteNum = parts[0];
     let totalSuites = parts[1];
     let chunk = chunkify(files, totalSuites)[suiteNum - 1];
@@ -183,7 +183,7 @@ function getFixtures(dir) {
   }
 
   // get a list of the files that start with '-'. If there are any return them, otherwise return everything
-  let soloFiles = files.filter(file => file.charAt(0) === '-');
+  let soloFiles = files.filter((file) => file.charAt(0) === '-');
 
   return soloFiles.length ? soloFiles : files;
 }
@@ -192,7 +192,7 @@ function getFixtures(dir) {
  * Displays a Confit message to the console
  */
 function confitMsg() {
-  console.info.apply(null, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));
+  console.info.apply(null, ['\n', BLACK_START, LABEL_CONFIT].concat(Array.prototype.slice.call(arguments)).concat(BLACK_END));  // eslint-disable-line
 }
 
 /**

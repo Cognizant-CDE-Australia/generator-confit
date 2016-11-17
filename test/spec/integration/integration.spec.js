@@ -13,7 +13,7 @@ const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
 describe('test "' + fixtureFileName + '"', () => {
   // console.info(require(testDir + 'package.json'));
   if (process.env.MAX_LOG) {
-    fs.readdirSync(testDir).forEach(file => console.log(file));
+    fs.readdirSync(testDir).forEach((file) => console.log(file));
   }
 
   // Depending on the kind of Confit config, run different tests
@@ -31,7 +31,10 @@ describe('test "' + fixtureFileName + '"', () => {
       require('./testSystemTest')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testVerify')(confitConfig, srcDir, hasCSS);
-      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage');
+      // Execute unit tests but do not fail if coverage is too low
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage', true);
+      // Execute debug unit tests and ensure that there is NO coverage report
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:debug:once', false);
       require('./testDocumentation')(confitConfig);
       break;
 
@@ -42,7 +45,7 @@ describe('test "' + fixtureFileName + '"', () => {
 
       require('./testDocumentation')(confitConfig);
       require('./testVerify')(confitConfig, srcDir, hasCSS);
-      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once');
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once', true);
       break;
 
     default:

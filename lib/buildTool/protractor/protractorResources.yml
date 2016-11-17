@@ -8,7 +8,6 @@ testSystem:
     - <<: *pkg_protractor
     - <<: *pkg_jasmine-reporters
     - <<: *pkg_jasmine-spec-reporter
-    - <<: *pkg_@types/protractor
     - <<: *pkg_@types/selenium-webdriver
 
   readme:

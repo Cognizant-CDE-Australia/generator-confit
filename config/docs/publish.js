@@ -40,6 +40,5 @@ if (process.env.GH_TOKEN) {
 // START_CONFIT_GENERATED_CONTENT
 ghpages.publish(docOutputDir, options, callback);
 
-
 // END_CONFIT_GENERATED_CONTENT
 

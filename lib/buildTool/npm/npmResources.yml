@@ -227,9 +227,16 @@ testUnit:
     - <<: *pkg_istanbul
 
   templateFiles:
-    - src: '*'
-      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>
+    - src: istanbul.js
+      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js
       overwrite: true
+
+    - src: mocha.opts
+      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts
+      overwrite: true
+
+    - src: thresholds.json
+      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>thresholds.json
 
   tasks:
     - name: test
@@ -258,14 +265,14 @@ testUnit:
 
     - name: test:unit:once
       # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
-      tasks: ['cross-env NODE_ENV=test istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
+      tasks: ['cross-env NODE_ENV=test istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
       description: Run unit tests once
       features:
         - Uses Mocha
         - Code coverage
 
     - name: test:check-coverage
-      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.yml']
+      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js']
       description:
       features:
 
@@ -273,7 +280,7 @@ testUnit:
       tasks: ['npm-run-all test:unit:once test:check-coverage --silent']
       description: Run instrumented unit tests then verify coverage meets defined thresholds
       features:
-        - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.yml)
+        - Returns non-zero exit code when coverage does not meet thresholds (as defined in istanbul.js)
 
 testVisualRegression:
   # Only do this if visual regression is enabled

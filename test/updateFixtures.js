@@ -23,8 +23,8 @@ function main() {
       resources.readYaml(baseDir + 'lib/projectType/browser/browserResources.yml').app.subGenerators,
       resources.readYaml(baseDir + 'lib/projectType/node/nodeResources.yml').app.subGenerators
     ))
-    .map(item => item.split(':')[1])
-    .map(name => {
+    .map((item) => item.split(':')[1])
+    .map((name) => {
       return {name: name, file: path.resolve(baseDir + 'lib/generators/' + name + '/index.js')};
     });
 
@@ -50,18 +50,18 @@ function main() {
 function updateFixtures(dir, rootGeneratorName, generatorVersionInfo) {
   // Get the files
   let files = fs.readdirSync(dir)
-    .filter(file => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
+    .filter((file) => fs.statSync(path.join(dir, file)).isFile() && file.match(/^[^x]+\.yml$/) !== null);
 
   let filesChanged = 0;
 
   // Update each file
-  files.forEach(file => {
+  files.forEach((file) => {
     let data = yaml.load(fs.readFileSync(path.join(dir, file)));
     let confit = data[rootGeneratorName];
     let fileChanged = false;
 
     // Loop through the generator version information
-    generatorVersionInfo.forEach(item => {
+    generatorVersionInfo.forEach((item) => {
       // If this config does not use this generator, then ignore it
       if (!confit[item.name]) {
         return;

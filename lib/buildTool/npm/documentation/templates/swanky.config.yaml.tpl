@@ -17,7 +17,7 @@ serverPath:
 # END_CONFIT_GENERATED_CONTENT
 
 theme: <%- documentation.srcDir %>themes/test-theme
-snippets: docs/snippets
+#snippets: <%- documentation.srcDir %>snippets
 
 sections:
   - title: Foundation
@@ -38,7 +38,7 @@ sections:
       - title: Cards
         <% if (isNG1) { %>
         bootstrap:
-          - src: <%- documentation.srcDir %>config/bootstrap/angular.bootstrap.js
+          - <%- documentation.srcDir %>config/bootstrap/angular.bootstrap.js
         <% } %>
         content:
           - src: <%- documentation.srcDir %>content/components/card/card-overview.md

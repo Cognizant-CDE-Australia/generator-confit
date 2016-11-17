@@ -18,7 +18,7 @@ function runCommand(ioMode) {
   // If there is an error, an exception will be thrown
   return childProc.execSync(VERIFY_CMD, {
     stdio: ioMode || 'inherit',
-    cwd: process.env.TEST_DIR
+    cwd: process.env.TEST_DIR,
   });
 }
 

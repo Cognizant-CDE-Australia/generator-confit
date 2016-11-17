@@ -2,16 +2,16 @@
 $packages:
   - &pkg_angular
     name: angular
-    version: 1.5.5
+    version: 1.5.8
     isDependency: true
 
   - &pkg_angular-mocks
     name: angular-mocks
-    version: 1.5.5
+    version: 1.5.8
 
   - &pkg_angular-route
     name: angular-route
-    version: 1.5.5
+    version: 1.5.8
     isDependency: true
 
   - &pkg_@angular/common
@@ -75,7 +75,7 @@ $packages:
 
   - &pkg_babel-plugin-istanbul    # For code coverage
     name: babel-plugin-istanbul
-    version: 2.0.1
+    version: 3.0.0
 
   - &pkg_babel-plugin-add-module-exports
     name: babel-plugin-add-module-exports
@@ -213,11 +213,11 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 3.8.1
+    version: 3.10.2
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 12.0.0
+    version: 13.0.0
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
@@ -249,7 +249,7 @@ $packages:
 
   - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
       name: eslint-plugin-import
-      version: 2.0.1
+      version: 2.1.0
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
@@ -257,7 +257,7 @@ $packages:
 
   - &pkg_eslint-plugin-react        # React
     name: eslint-plugin-react
-    version: 6.3.0
+    version: 6.6.0
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
@@ -497,11 +497,11 @@ $packages:
 
   - &pkg_swanky-server
     name: swanky-server
-    version: 2.1.0
+    version: 2.9.0
 
   - &pkg_swanky-processor-ngdocs
     name: swanky-processor-ngdocs
-    version: 2.0.1
+    version: 2.1.0
 
   - &pkg_tslint
     name: tslint
@@ -518,11 +518,11 @@ $packages:
 
   - &pkg_@types/angular
     name: '@types/angular'
-    version: 1.5.5    # Matches Angular version
+    version: 1.5.20    # Matches Angular version
 
   - &pkg_@types/angular-mocks
     name: '@types/angular-mocks'
-    version: 1.5.5
+    version: 1.5.6
 
   - &pkg_@types/jasmine
     name: '@types/jasmine'
@@ -535,10 +535,6 @@ $packages:
   - &pkg_@types/node
     name: '@types/node'
     version: 6.0.46
-
-  - &pkg_@types/protractor
-    name: '@types/protractor'
-    version: 1.5.20   # Version 4.x is available presumably for protractor v4
 
   - &pkg_@types/selenium-webdriver
     name: '@types/selenium-webdriver'
