@@ -1,3 +1,4 @@
+import * as angular from 'angular';
 import demoModule from '../demoModule';
 
 describe('Basic unit test', function () {

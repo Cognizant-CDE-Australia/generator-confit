@@ -8,17 +8,7 @@ testSystem:
     - <<: *pkg_protractor
     - <<: *pkg_jasmine-reporters
     - <<: *pkg_jasmine-spec-reporter
-
-  typeLibs:
-    - name: selenium-webdriver
-      key: ambientDependencies
-      version: github:DefinitelyTyped/DefinitelyTyped/selenium-webdriver/selenium-webdriver.d.ts#a83677ed13add14c2ab06c7325d182d0ba2784ea
-
-# Temporarily remove this TypeLib as it confilicts with NG1/jQuery typelib. This is so stupid
-#    - name: angular-protractor
-#      key: ambientDependencies
-#      version: github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#64b25f63f0ec821040a5d3e049a976865062ed9d
-
+    - <<: *pkg_@types/selenium-webdriver
 
   readme:
     extensionPoint:

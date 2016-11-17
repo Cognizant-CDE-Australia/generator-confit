@@ -10,7 +10,7 @@ const GENERATOR_UNDER_TEST = 'testUnit';
 
 
 describe('testUnit Generator', () => {
-  it('should generate test config when there are no test dependencies due to a JS framework', done => {
+  it('should generate test config when there are no test dependencies due to a JS framework', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testUnit-no-test-deps.json',
@@ -29,7 +29,7 @@ describe('testUnit Generator', () => {
   });
 
 
-  it('should generate test dependencies when there are IS a JS framework which has test dependencies', done => {
+  it('should generate test dependencies when there are IS a JS framework which has test dependencies', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'testUnit-framework-with-test-deps.json',
@@ -38,10 +38,13 @@ describe('testUnit Generator', () => {
         // Confit.yml should now have an angular-mocks reference
         yoassert.file(['confit.yml']);
         let confit = yaml.load(fs.readFileSync('confit.yml'));
+        let testDeps = confit['generator-confit'].testUnit.testDependencies;
 
-        assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 2);
-        assert.equal(confit['generator-confit'].testUnit.testDependencies[0], 'angular');
-        assert.equal(confit['generator-confit'].testUnit.testDependencies[1], 'angular-mocks');
+        assert.equal(testDeps.length, 2);
+        assert.equal(testDeps[0], 'angular');
+        assert.equal(testDeps[1], 'angular-mocks');
+        // assert.equal(testDeps[2], '@types/angular');
+        // assert.equal(testDeps[3], '@types/angular-mocks');
 
         // And package.json should have a new dependency
         yoassert.file(['package.json']);
@@ -49,7 +52,6 @@ describe('testUnit Generator', () => {
 
         assert.ok(pkg.devDependencies['angular-mocks'], 'Dev dependency exists');
 
-        // Typings.json could be changed if there is a typelib defined
         done();
       }
     );

@@ -3,22 +3,19 @@
 
 // START_CONFIT_GENERATED_CONTENT
 <%
-
 var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
 var testFilesRegEx = new RegExp(paths.input.unitTestDir.replace(/\//g, '\\/') + ".*spec\\.(" + jsExtensions.join('|') + ")$");
-var testFilesGlob = '**/' + paths.input.unitTestDir + '*.spec.(' + jsExtensions.join('|') + ')';
 
 // We only want to test the SOURCE FILES, but we still must IMPORT the test dependencies
 -%>
-var DefinePlugin = require('webpack').DefinePlugin;   // Needed to pass the testFilesRegEx to test.files.js
-var testFilesRegEx = <%= testFilesRegEx.toString() %>;
-var testFilesGlob = '<%- testFilesGlob %>';
+const DefinePlugin = require('webpack').DefinePlugin;   // Needed to pass the testFilesRegEx to test.files.js
+let testFilesRegEx = <%- testFilesRegEx.toString() %>;
 
 // Customise the testFilesRegEx to filter which files to test, if desired.
+// Remember to also update .babelrc
 // E.g.
 // if (process.argv.indexOf('--spec') !== -1) {
 //   testFilesRegEx = ...
-//   testFilesGlob = ...
 // }
 // END_CONFIT_GENERATED_CONTENT
 
@@ -36,32 +33,12 @@ var preprocessorList = ['webpack', 'sourcemap'];
 if (buildJS.sourceFormat === 'TypeScript') {
   preprocessorList = ['coverage'].concat(preprocessorList);
 }
-
 -%>
 // We want to re-use the loaders from the dev.webpack.config
-var webpackConfig = require('./../webpack/dev.webpack.config.js');
-var preprocessorList = ['<%- preprocessorList.join("', '") %>'];
+let webpackConfig = require('./../webpack/dev.webpack.config.js');
+let preprocessorList = ['<%- preprocessorList.join("', '") %>'];
 
-<% if (buildJS.sourceFormat === 'ES6') { %>
-// Modify the Babel loader to add the Istanbul Babel plugin for code coverage
-webpackConfig.module.loaders.forEach(loader => {
-  if (loader.loader === 'babel-loader') {
-    loader.query = loader.query || {};
-    loader.query.plugins = loader.query.plugins || [];
-    loader.query.plugins.push([
-      'istanbul',
-      {
-        'exclude': [
-          testFilesGlob,
-          'node_modules/**'
-        ]
-      }
-    ]);
-  }
-});
-<% } -%>
-
-var karmaConfig = {
+let karmaConfig = {
   autoWatch: true,
 
   // base path, that will be used to resolve files and exclude
@@ -102,7 +79,6 @@ var karmaConfig = {
     '<%- paths.config.configDir + resources.testUnit.configSubDir %>test.files.js': preprocessorList
   },
 
-
   reporters: ['progress', 'junit', 'coverage', 'threshold'],
 
   coverageReporter: {
@@ -120,12 +96,15 @@ var karmaConfig = {
     outputDir: '<%- paths.output.reportDir %>unit/'
   },
 
-  thresholdReporter: {
-    statements: 80,
-    branches: 80,
-    functions: 80,
-    lines: 80
-  },
+  thresholdReporter: require('./thresholds.json'),
+
+  // Webpack please don't spam the console when running in karma!
+  webpackMiddleware: { stats: 'errors-only'},
+
+  singleRun: false,
+  colors: true
+};
+
 
 <%
 // For Typescript, there is no code coverage tool that understands TypeScript's source. So use a post-loader
@@ -140,42 +119,37 @@ if (testVisualRegression.enabled) {
 testSourcesToExclude = testSourcesToExclude.map(function(dir) {return dir.replace(/\//g, '\\/');});
 %>
 
-  webpack: {
-    module: {
-      <% if (buildJS.sourceFormat === 'TypeScript') { %>postLoaders: [
-        // instrument only testing *sources* (not the tests)
-        {
-          test: <%= srcFileRegEx.toString() %>,
-          loader: 'istanbul-instrumenter-loader',
-          exclude: [
-            /node_modules|<%= testSourcesToExclude.join('|') %>/
-          ]
-        }
-      ],<% } %>
-      loaders: webpackConfig.module.loaders
-    },
-    <% if (buildJS.framework.indexOf('React (latest)') > -1) { %>
-    // Externals needed for Enzyme to test React components. See https://github.com/airbnb/enzyme/blob/master/docs/guides/karma.md
-    externals: {
-      'cheerio': 'window',
-      'react/addons': true,
-      'react/lib/ExecutionEnvironment': true,
-      'react/lib/ReactContext': true
-    },<% } %>
-    plugins: webpackConfig.plugins.concat([new DefinePlugin({
-      __karmaTestSpec: testFilesRegEx
-    })]),
-    resolve: webpackConfig.resolve,
-    devtool: 'inline-source-map'      // Changed to allow the sourcemap loader to work: https://github.com/webpack/karma-webpack
-  },
 
-  webpackServer: {
-    noInfo: true
-  },
+<% if (buildJS.sourceFormat === 'TypeScript') { %>
+// instrument only testing *sources* (not the tests)
+webpackConfig.module.rules.push({
+  test: <%- srcFileRegEx.toString() %>,
+  use: [
+    {
+      loader: 'istanbul-instrumenter-loader'
+    }
+  ],
+  enforce: 'post',
+  exclude: [/node_modules|<%- testSourcesToExclude.join('|') %>/]
+});<% } %>
 
-  singleRun: false,
-  colors: true
-};
+<% if (buildJS.framework.indexOf('React (latest)') > -1) { %>
+// Externals needed for Enzyme to test React components. See https://github.com/airbnb/enzyme/blob/master/docs/guides/karma.md
+webpackConfig.externals = Object.assign(webpackConfig.externals || {}, {
+  'cheerio': 'window',
+  'react/addons': true,
+  'react/lib/ExecutionEnvironment': true,
+  'react/lib/ReactContext': true
+});<% } %>
+
+webpackConfig.plugins.push(new DefinePlugin({
+  __karmaTestSpec: testFilesRegEx
+}));
+
+// Change devtool to allow the sourcemap loader to work: https://github.com/webpack/karma-webpack
+webpackConfig.devtool = 'inline-source-map';
+
+karmaConfig.webpack = webpackConfig;
 // END_CONFIT_GENERATED_CONTENT
 
 module.exports = karmaConfig;

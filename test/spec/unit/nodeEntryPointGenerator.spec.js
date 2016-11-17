@@ -33,12 +33,12 @@ describe('Node EntryPoint Generator', () => {
         done();
       }
     ).withPrompts({
-      entryPoints: {}
+      entryPoints: {},
     });
   });
 
 
-  it('should should generate a default "main" entry in package.json for a Typescript sourceType', done => {
+  it('should should generate a default "main" entry in package.json for a Typescript sourceType', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-entryPoint-TypeScript-config.json',
@@ -62,12 +62,12 @@ describe('Node EntryPoint Generator', () => {
         done();
       }
     ).withPrompts({
-      entryPoints: {}
+      entryPoints: {},
     });
   });
 
 
-  it('should be changed by the sampleApp generator to point to the sampleApp entry point', done => {
+  it('should be changed by the sampleApp generator to point to the sampleApp entry point', (done) => {
     utils.runGenerator(
       'sampleApp',
       'node-entryPoint-sampleApp-config.json',
@@ -84,7 +84,7 @@ describe('Node EntryPoint Generator', () => {
         done();
       }
     ).withPrompts({
-      createSampleApp: true
+      createSampleApp: true,
     });
   });
 });

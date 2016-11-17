@@ -9,7 +9,7 @@ exports.config = {
   directConnect: true,
 
   capabilities: {
-    browserName: 'firefox'
+    browserName: 'firefox',
   },
 
   framework: 'jasmine2',
@@ -29,28 +29,28 @@ exports.config = {
   // --suite=smoke,full only the patterns matched by the specified suites will
   // run.
   suites: {
-    app: 'protractorSpec/testApp.spec.js'
+    app: 'protractorSpec/testApp.spec.js',
   },
 
   reportWriters: [
     function jUnitReporter(confitFixtureFileName) {
-      var JasmineReporters = require('jasmine-reporters');
-      var path = require('path');
+      let JasmineReporters = require('jasmine-reporters');
+      let path = require('path');
 
       jasmine.getEnv().addReporter(new JasmineReporters.JUnitXmlReporter({
         savePath: path.join(__dirname, '/../reports/e2e'),
         filePrefix: 'junit-' + confitFixtureFileName + '-',
-        consolidateAll: false
+        consolidateAll: false,
       }));
     },
     function consoleReporter() {
-      var SpecReporter = require('jasmine-spec-reporter');
+      let SpecReporter = require('jasmine-spec-reporter');
 
       jasmine.getEnv().addReporter(new SpecReporter({
         displayStacktrace: true,
-        displaySpecDuration: true
+        displaySpecDuration: true,
       }));
-    }
+    },
   ],
 
 
@@ -91,6 +91,6 @@ exports.config = {
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 20000,
     // Remove Jasmine's 'dots' console reporter
-    print: function() {}
-  }
+    print: function() {},
+  },
 };

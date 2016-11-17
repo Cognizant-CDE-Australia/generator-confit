@@ -13,7 +13,7 @@ const DOCS_COMMAND = 'npm run docs:build';
 function runCommand(ioMode) {
   return childProc.execSync(DOCS_COMMAND, {
     stdio: ioMode || 'inherit',
-    cwd: process.env.TEST_DIR
+    cwd: process.env.TEST_DIR,
   });
 }
 

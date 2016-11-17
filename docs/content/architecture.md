@@ -58,7 +58,7 @@ None
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses the Confit path information to create Webpack loaders for fonts and images.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool uses the Confit path information to create Webpack loaders for fonts and images.</li>
 </ul>
 
 ---
@@ -74,7 +74,7 @@ Browser-specific build configuration generator.
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates the foundational config for `webpack.config.js`.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool generates the foundational config for `webpack.config.js`.</li>
 </ul>
 
 ---
@@ -91,7 +91,7 @@ CSS-tool generator.
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen CSS language and target browser support.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool generates Webpack loaders for the chosen CSS language and target browser support.</li>
 </ul>
 
 ---
@@ -105,7 +105,7 @@ CSS-tool generator.
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.</li>
 </ul>
 
 ---
@@ -136,7 +136,7 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses this information extensively to determine which loaders, configuration and files are required to compile source code.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool uses this information extensively to determine which loaders, configuration and files are required to compile source code.</li>
 </ul>
 
 ---
@@ -152,8 +152,8 @@ It affects the verification (linting) tool selection, code coverage tools and wh
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool generates the `entryPoint` configuration from the `entryPoint.entryPoints`. An additional entry-point is also created if `vendorScripts` or `frameworkScripts` are supplied.</li>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool generates the `main` property inside `package.json` from `entryPoint.entryPoints`.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool generates the `entryPoint` configuration from the `entryPoint.entryPoints`. An additional entry-point is also created if `vendorScripts` or `frameworkScripts` are supplied.</li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool generates the `main` property inside `package.json` from `entryPoint.entryPoints`.</li>
 </ul>
 
 ---
@@ -261,7 +261,7 @@ Generates release-related configuration and tooling.
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool installs the global "semantic-release-cli" package, which requires further setup post installation. If conventional commit messages are used, some Git hooks and tools are installed to support this. </li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool installs the global "semantic-release-cli" package, which requires further setup post installation. If conventional commit messages are used, some Git hooks and tools are installed to support this. </li>
 </ul>
 
 ---
@@ -279,8 +279,8 @@ It is one of the more-complex generators because it is dependent on the answers 
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool creates a web application which demonstrates all of the tools working together.</li>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool creates a NodeJS application which demonstrates all the tools working together. Currently no build step is required, but that is likely to change in future versions.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool creates a web application which demonstrates all of the tools working together.</li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool creates a NodeJS application which demonstrates all the tools working together. Currently no build step is required, but that is likely to change in future versions.</li>
 </ul>
 
 
@@ -303,7 +303,7 @@ Captures server settings for serving the the web application in a development-mo
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool uses Webpack's built-in development web server to serve the web application.</li>
 </ul>
 
 ---
@@ -325,7 +325,7 @@ Captures server settings for serving the the web application in a production-mod
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool uses "serve" or "serve-https" to launch a production web server to serve the web application.</li>
 </ul>
 
 ---
@@ -339,7 +339,7 @@ None
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__protractor -%>"></div> build tool sets up Protractor configuration for testing web application. synchronises with Angular 1.x framework if framework is selected in `buildJS` generator.</li>
+<li><div class="{$ styles.badge__protractor $}"></div> build tool sets up Protractor configuration for testing web application. synchronises with Angular 1.x framework if framework is selected in `buildJS` generator.</li>
 </ul>
 
 ---
@@ -353,15 +353,15 @@ None
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool installs Mocha test framework with code coverage.</li>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool creates Webpack and Karma configuration (using Jasmine as test framework) with code coverage.</li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool installs Mocha test framework with code coverage.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool creates Webpack and Karma configuration (using Jasmine as test framework) with code coverage.</li>
 </ul>
 
 ---
 
 ### verify [render badge list="browser|node"]
 
-Generates code syntax and style-verification tools for JavaScript (and CSS <div class="<%- styles.badge__browser -%>"></div> only).
+Generates code syntax and style-verification tools for JavaScript (and CSS <div class="{$ styles.badge__browser $}"></div> only).
 
 #### Questions
 **JavaScript coding standard**: [**None**, AirBnb, Google, StandardJS, TypeScript] `verify.jsCodingStandard`
@@ -370,7 +370,7 @@ Generates code syntax and style-verification tools for JavaScript (and CSS <div 
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__npm -%>"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
+<li><div class="{$ styles.badge__npm $}"></div> build tool creates `verify:*` commands to verify source code in the `paths.input.srcDir`, `paths.input.unitTestDir` and `paths.input.configDir`.</li>
 </ul>
 
 ---
@@ -384,5 +384,5 @@ A hook to allow different build tools to generate config after all other generat
 
 #### Build Tools
 <ul>
-<li><div class="<%- styles.badge__webpack -%>"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool runs the `npm start` command once Confit has finished installing everything (unless `--skip-run` is specified).</li>
 </ul>

@@ -2,47 +2,56 @@
 $packages:
   - &pkg_angular
     name: angular
-    version: 1.5.5
+    version: 1.5.8
     isDependency: true
 
   - &pkg_angular-mocks
     name: angular-mocks
-    version: 1.5.5
+    version: 1.5.8
 
   - &pkg_angular-route
     name: angular-route
-    version: 1.5.5
+    version: 1.5.8
     isDependency: true
 
-  - &pkg_angular2
-    name: angular2
-    version: 2.0.0-beta.17
+  - &pkg_@angular/common
+    name: '@angular/common'
+    version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/core
-    name: angular2/core
-    version: 2.0.0-beta.17
+  - &pkg_@angular/compiler    # The compiler is a run-time dependency... Maybe will become a build step
+    name: '@angular/compiler'
+    version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/common
-    name: angular2/common
-    version: 2.0.0-beta.17
+  - &pkg_@angular/core
+    name: '@angular/core'
+    version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/platform/browser
-    name: angular2/platform/browser
-    version: 2.0.0-beta.17
+  - &pkg_@angular/platform-browser
+    name: '@angular/platform-browser'
+    version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/platform/common_dom
-    name: angular2/platform/common_dom
-    version: 2.0.0-beta.17
+  - &pkg_@angular/platform-browser-dynamic      # Requires the @angular/compiler
+    name: '@angular/platform-browser-dynamic'
+    version: 2.1.1
     isDependency: true
 
-  - &pkg_angular2/router
-    name: angular2/router
-    version: 2.0.0-beta.17
+  - &pkg_@angular/router
+    name: '@angular/router'
+    version: 3.1.1
     isDependency: true
+
+  #  - &pkg_angular2-hmr           # Is both a proper dependency. In prod mode, it does nothing (like the React HMR)
+  #    name: '@angularclass/hmr'     # Disabling for now - too complex
+  #    version: 1.2.2
+  #    isDependency: true
+
+  - &pkg_angular2-template-loader
+    name: angular2-template-loader
+    version: 0.6.0
 
   - &pkg_autoprefixer
     name: autoprefixer
@@ -50,7 +59,7 @@ $packages:
 
   - &pkg_awesome-typescript-loader
     name: awesome-typescript-loader
-    version: 0.17.0
+    version: 2.2.4
 
   - &pkg_babel-core
     name: babel-core
@@ -66,7 +75,7 @@ $packages:
 
   - &pkg_babel-plugin-istanbul    # For code coverage
     name: babel-plugin-istanbul
-    version: 2.0.1
+    version: 3.0.0
 
   - &pkg_babel-plugin-add-module-exports
     name: babel-plugin-add-module-exports
@@ -99,8 +108,84 @@ $packages:
 
   - &pkg_core-js
     name: core-js
-    version: 2.3.0
+    version: 2.4.1
     isDependency: true
+
+  - &pkg_core-js/es6
+    <<: *pkg_core-js
+    name: core-js/es6
+
+  - &pkg_core-js/es6/symbol
+    <<: *pkg_core-js
+    name: core-js/es6/symbol
+
+  - &pkg_core-js/es6/object
+    <<: *pkg_core-js
+    name: core-js/es6/object
+
+  - &pkg_core-js/es6/function
+    <<: *pkg_core-js
+    name: core-js/es6/function
+
+  - &pkg_core-js/es6/parse-int
+    <<: *pkg_core-js
+    name: core-js/es6/parse-int
+
+  - &pkg_core-js/es6/parse-float
+    <<: *pkg_core-js
+    name: core-js/es6/parse-float
+
+  - &pkg_core-js/es6/number
+    <<: *pkg_core-js
+    name: core-js/es6/number
+
+  - &pkg_core-js/es6/math
+    <<: *pkg_core-js
+    name: core-js/es6/math
+
+  - &pkg_core-js/es6/string
+    <<: *pkg_core-js
+    name: core-js/es6/string
+
+  - &pkg_core-js/es6/date
+    <<: *pkg_core-js
+    name: core-js/es6/date
+
+  - &pkg_core-js/es6/array
+    <<: *pkg_core-js
+    name: core-js/es6/array
+
+  - &pkg_core-js/es6/regexp
+    <<: *pkg_core-js
+    name: core-js/es6/regexp
+
+  - &pkg_core-js/es6/map
+    <<: *pkg_core-js
+    name: core-js/es6/map
+
+  - &pkg_core-js/es6/set
+    <<: *pkg_core-js
+    name: core-js/es6/set
+
+  - &pkg_core-js/es6/weak-map
+    <<: *pkg_core-js
+    name: core-js/es6/weak-map
+
+  - &pkg_core-js/es6/weak-set
+    <<: *pkg_core-js
+    name: core-js/es6/weak-set
+
+  - &pkg_core-js/es6/typed
+    <<: *pkg_core-js
+    name: core-js/es6/typed
+
+  - &pkg_core-js/es6/reflect
+    <<: *pkg_core-js
+    name: core-js/es6/reflect
+
+  - &pkg_core-js/es7/reflect
+    <<: *pkg_core-js
+    name: core-js/es7/reflect
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
@@ -128,11 +213,11 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 3.8.1
+    version: 3.10.2
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 12.0.0
+    version: 13.0.0
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
@@ -164,7 +249,7 @@ $packages:
 
   - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
       name: eslint-plugin-import
-      version: 2.0.1
+      version: 2.1.0
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
@@ -172,7 +257,7 @@ $packages:
 
   - &pkg_eslint-plugin-react        # React
     name: eslint-plugin-react
-    version: 6.3.0
+    version: 6.6.0
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
@@ -358,8 +443,20 @@ $packages:
 
   - &pkg_rxjs
     name: rxjs
-    version: 5.0.0-beta.7
+    version: 5.0.0-beta.12
     isDependency: true
+
+  - &pkg_rxjs/Rx
+    <<: *pkg_rxjs
+    name: rxjs/Rx
+
+  - &pkg_rxjs/add/operator/map
+    <<: *pkg_rxjs
+    name: rxjs/add/operator/map
+
+  - &pkg_rxjs/add/operator/mergeMap
+    <<: *pkg_rxjs
+    name: rxjs/add/operator/mergeMap
 
   - &pkg_sass-lint
     name: sass-lint
@@ -378,7 +475,7 @@ $packages:
     name: serve
     version: 1.4.0
 
-  - &pkg_serve-https
+  - &pkg_serve-https    # This HTTPS server has it's own SSL certs, so it's easier to setup than 'http-server'
     name: serve-https
     version: 1.5.3
 
@@ -400,36 +497,68 @@ $packages:
 
   - &pkg_swanky-server
     name: swanky-server
-    version: 2.1.0
+    version: 2.9.0
 
   - &pkg_swanky-processor-ngdocs
     name: swanky-processor-ngdocs
-    version: 2.0.1
+    version: 2.1.0
 
   - &pkg_tslint
     name: tslint
-    version: 3.8.1
+    version: 4.0.0-dev.1
 
   - &pkg_typescript
     name: typescript
-    version: 1.8.9
+    version: 2.0.6
 
   - &pkg_ts-helpers
     name: ts-helpers
-    version: 1.1.1
+    version: 1.1.2
+    isDependency: true
 
-  - &pkg_typings
-    name: typings
-    version: 0.6.7
-    global: true
+  - &pkg_@types/angular
+    name: '@types/angular'
+    version: 1.5.20    # Matches Angular version
+
+  - &pkg_@types/angular-mocks
+    name: '@types/angular-mocks'
+    version: 1.5.6
+
+  - &pkg_@types/jasmine
+    name: '@types/jasmine'
+    version: 2.2.34   # version 2.2 of Jasmine
+
+  - &pkg_@types/jquery    # Supports Angular 1.x which has references to jQuery
+    name: '@types/jquery'
+    version: 1.10.31
+
+  - &pkg_@types/node
+    name: '@types/node'
+    version: 6.0.46
+
+  - &pkg_@types/selenium-webdriver
+    name: '@types/selenium-webdriver'
+    version: 2.44.29  # Newer version available (based on Chrome Driver & protractor version?)
+
+  - &pkg_@types/source-map
+    name: '@types/source-map'
+    version: 0.1.29
+
+  - &pkg_@types/uglify-js
+    name: '@types/uglify-js'
+    version: 2.0.27   # 2.6.28 available
+
+  - &pkg_@types/webpack
+    name: '@types/webpack'
+    version: 1.12.35
 
   - &pkg_webpack
     name: webpack
-    version: 2.1.0-beta.21
+    version: 2.1.0-beta.25
 
   - &pkg_webpack-dev-server
     name: webpack-dev-server
-    version: 2.1.0-beta.2
+    version: 2.1.0-beta.9
 
   - &pkg_whatwg-fetch   # Polyfill for fetch() API
     name: whatwg-fetch
@@ -438,23 +567,33 @@ $packages:
 
   - &pkg_zone.js
     name: zone.js
-    version: 0.6.12
+    version: 0.6.26
     isDependency: true
-
-  - &pkg_zone.js/dist/zone
-    name: zone.js/dist/zone
-    version: 0.6.12
-    isDependency: true
-
-  - &pkg_zone.js/dist/long-stack-trace-zone
-    name: zone.js/dist/long-stack-trace-zone
-    version: 0.6.12
-    isDependency: true
-
-  - &pkg_zone.js/dist/jasmine-patch
-    name: zone.js/dist/jasmine-patch
-    version: 0.6.12
 
   - &pkg_zone.js/dist/async-test
+    <<: *pkg_zone.js
     name: zone.js/dist/async-test
-    version: 0.6.12
+
+  - &pkg_zone.js/dist/fake-async-test
+    <<: *pkg_zone.js
+    name: zone.js/dist/fake-async-test
+
+  - &pkg_zone.js/dist/jasmine-patch
+    <<: *pkg_zone.js
+    name: zone.js/dist/jasmine-patch
+
+  - &pkg_zone.js/dist/long-stack-trace-zone
+    <<: *pkg_zone.js
+    name: zone.js/dist/long-stack-trace-zone
+
+  - &pkg_zone.js/dist/proxy
+    <<: *pkg_zone.js
+    name: zone.js/dist/proxy
+
+  - &pkg_zone.js/dist/sync-test
+    <<: *pkg_zone.js
+    name: zone.js/dist/sync-test
+
+  - &pkg_zone.js/dist/zone
+    <<: *pkg_zone.js
+    name: zone.js/dist/zone

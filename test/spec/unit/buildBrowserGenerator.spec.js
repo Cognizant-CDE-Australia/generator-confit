@@ -10,7 +10,7 @@ const GENERATOR_UNDER_TEST = 'buildBrowser';
 
 
 describe('buildBrowser Generator', () => {
-  it('should have a default browser support value', done => {
+  it('should have a default browser support value', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'buildBrowser-config.json',

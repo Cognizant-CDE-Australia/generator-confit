@@ -1,15 +1,15 @@
 generator-confit:
   app:
-    _version: b8e397572d5b1e4e02eae0c9ed196b65dc334b22
+    _version: e33311babea61ce43d48fbda705c261d1fc56765
     buildProfile: Latest
     projectType: browser
     repositoryType: Other
   buildBrowser:
-    _version: 8182060cfceb4bbc06a4c5e46be731798d858a40
+    _version: 6fa137bf581f905e6befc705b674ade53821f7e2
     browserSupport:
       - latest
   paths:
-    _version: 0d755ebadde5e9fb356239a0a1775294efd7aa81
+    _version: 26db6b5793003b99c2b0f932c06fe8dbaae58cb1
     config:
       configDir: config/
     input:
@@ -31,58 +31,58 @@ generator-confit:
       vendorJSSubDir: vendor/
       viewsSubDir: views/
   buildAssets:
-    _version: d4afcffac13cf613b2a5714061ecfb24d624db45
+    _version: 959ea4308ed5892cd303a7ee3852d1bcb70d795c
   buildCSS:
-    _version: c3b97d0a109518e378adc71255c5b2272ab8bb32
+    _version: efddae1ec2debfecf6dbe5a9b804f2fb031a6f6e
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: 9223efcd10fa38f2be1da6fd6e2746445e3011d3
+    _version: 396db955d6691029bfe33e99fb8d17236c24b5ce
     framework: []
     outputFormat: ES5
     sourceFormat: ES6
     vendorScripts: []
   buildHTML:
-    _version: 0b2d3e4b4373b8299130b4b3aa9872dc225c51a1
+    _version: fa5101f43e6788985cc4b61b0f8a9f829f8c9524
     extension: .htm
   documentation:
-    _version: ff5ca9d1ffe60da943e1685c6cb75177adec7bf8
+    _version: 3cb3e6218cfb02f9b7e9f916487f05d161994a01
     createSampleDocs: false
     generateDocs: true
     outputDir: webdocs/
     publishMethod: cloud
     srcDir: docs/
   entryPoint:
-    _version: f18cf5ae3b8bfdc77d8b330ef4827b4e6f34f127
+    _version: fc4e0f7ff7a8d33ca153385e894d447aec6e7f58
     entryPoints: {}
   serverDev:
-    _version: 571ee670e4d36b0edcf9a1b9d70e5b0d5bb9c7e1
+    _version: 7842e6228edd5555c79d6ff81f2f9c3a9e203021
     hostname: localhost
     port: 3000
     protocol: https
   serverProd:
-    _version: 8e2d37c12a03cf7813eabb5eac74ea9ecb6c14da
+    _version: 3ecb63408923a19917ed0c527e816225024c4af0
     hostname: localhost
     port: 3000
     protocol: https
   testUnit:
-    _version: 50bc80217e8218d87ed3389014b7ff503006c0dd
+    _version: 10013110f7e3677430c44f5a333f291456001ef0
   testSystem:
-    _version: 7fc73b06ceeb428b39d419e7dc6e5bdbd430d020
+    _version: 5952b38839ff6583bde814c91b3cd919314f1b91
   testVisualRegression:
-    _version: a973231f55e49bc7934e0a76930a0ca0656d2860
+    _version: a269fff7accd9590ddde664f00b40e9a222e45e2
     enabled: true
     moduleTestDir: visualTest/
     referenceImageDir: vrt/image/
   verify:
-    _version: 163484235f6455bdc75ff58506e6b6fe68f975e6
+    _version: dfbbf57f85b6c581221db2d592dc1411661b0c18
     jsCodingStandard: Google
   release:
-    _version: 8e3296286f01e5f15dc8b98da2d2b498cc41e2e2
+    _version: c97c83a21fe57f70e7a814c9db0154f344080a91
     commitMessageFormat: None
     useSemantic: false
   sampleApp:
-    _version: 4bf6b2da62b2a472d0af7371804f833388e43a0a
+    _version: e70ad908eb36c3697280f40b33eabf6ec5ed9d68
     createSampleApp: true
   zzfinish:
-    _version: 3ab7acb0185fc592e1cd0c30be65aabe292d5fcc
+    _version: 4defe6966425ba9cd5b7fd54d8bb17efa3caad98

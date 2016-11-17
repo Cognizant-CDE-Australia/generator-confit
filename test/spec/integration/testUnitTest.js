@@ -16,18 +16,18 @@ function runCommand(cmd) {
   // If there is an error, an exception will be thrown
   return childProc.execSync(cmd, {
     // stdio: 'inherit', // Don't send output to the parent, return it to the callee instead (so that tests can check the output)
-    cwd: process.env.TEST_DIR
+    cwd: process.env.TEST_DIR,
   });
 }
 
 
-module.exports = function(confitConfig, unitTestPath, commandToRun) {
+module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCoverage) {
   describe(commandToRun, () => {
-    it('should pass the unit tests in the sampleApp code', function() {
+    it(`should pass the unit tests in the sampleApp code ${hasCodeCoverage ? 'WITH' : 'WITHOUT'} code coverage`, function() {
       assert.doesNotThrow(() => runCommand(commandToRun));
     });
 
-    // We get a table of results like this, which we need to filter to find 'All  files
+    // We get a table of results like this, which we need to filter to find 'File ' and 'All files '
     // ----------------|----------|----------|----------|----------|----------------|
     // File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
     // ----------------|----------|----------|----------|----------|----------------|
@@ -43,11 +43,19 @@ module.exports = function(confitConfig, unitTestPath, commandToRun) {
 
       console.log(result);
       let results = result.split('\n');
-      // let fileLine = results.filter(item => item.indexOf('app.') >= 0 || item.indexOf('index.') >= 0);
+      let fileLine = results.findIndex((item) => item.indexOf('File ') === 0);
+      let allFilesLine = results.findIndex((item) => item.indexOf('All files ') === 0);
+      let filesCovered = allFilesLine - fileLine;
 
-      // console.log(fileLine);
+      // console.log(results.length, fileLine, allFilesLine, filesCovered);
 
-      let summaryLine = results.filter(item => item.indexOf('All files') === 0);
+      if (hasCodeCoverage) {
+        assert(filesCovered > 3, 'Files were covered');
+      } else {
+        assert(filesCovered === 3, 'Files were not covered');
+      }
+
+      let summaryLine = results.filter((item) => item.indexOf('All files') === 0);
 
       assert(summaryLine.length === 1, 'Summary line array contains 1 item');
 

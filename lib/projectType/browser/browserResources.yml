@@ -76,56 +76,60 @@ frameworks:
     frameworkPackages: &ng1Packages
       packages:
         - <<: *pkg_angular
-      typeLibs:
-        - name: angular
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#17ef40452039d19e06dc2a3815ea898c505860fa
-        - name: jquery  # Needed when you use Angular, due to Angular's references to optionally use jQuery
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#fab0b336b0414fac23963bde83f7d7077f6cf14c
+        - <<: *pkg_@types/angular
 
     frameworkTestPackages: &ng1TestPackages
       testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
         - <<: *pkg_angular
         - <<: *pkg_angular-mocks
-      testTypeLibs:
-        - name: angular-mocks
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#77dd2668f85730372aa8e62152e652048e8b6b87
 
   AngularJS 2.x:
-    ES6:
-      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.js
     TypeScript:
-      entryPointFileName: ./<%- resources.sampleApp.demoDir %>app.ts
+      entryPointFileName: ./<%- resources.sampleApp.demoDir %>main.browser.ts
     frameworkPackages: &ng2Packages
-      packages:
-        - <<: *pkg_core-js          # In polyfills.ts
-        - <<: *pkg_zone.js          # In polyfills.ts
-        - <<: *pkg_rxjs             # In vendor.ts?
-        - <<: *pkg_angular2/platform/browser
-        - <<: *pkg_angular2/platform/common_dom
-        - <<: *pkg_angular2/core
-        - <<: *pkg_angular2/common
-      typeLibs:
-        - name: core-js
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd
-        - name: zone.js
-          key: dependencies
-          version: github:gdi2290/typed-zone.js#66ea8a3451542bb7798369306840e46be1d6ec89
+      packages:   # All these files end up in the vendors bundle, created by the entryPoint buildTool
+        - <<: *pkg_@angular/platform-browser
+        - <<: *pkg_@angular/platform-browser-dynamic
+        - <<: *pkg_@angular/compiler
+        - <<: *pkg_@angular/core
+        - <<: *pkg_@angular/common
+        - <<: *pkg_rxjs/add/operator/map
+        - <<: *pkg_rxjs/add/operator/mergeMap
+        - <<: *pkg_core-js/es6/symbol     # Don't include es6/promise as it breaks zone.js
+        - <<: *pkg_core-js/es6/object
+        - <<: *pkg_core-js/es6/function
+        - <<: *pkg_core-js/es6/parse-int
+        - <<: *pkg_core-js/es6/parse-float
+        - <<: *pkg_core-js/es6/number
+        - <<: *pkg_core-js/es6/math
+        - <<: *pkg_core-js/es6/string
+        - <<: *pkg_core-js/es6/date
+        - <<: *pkg_core-js/es6/array
+        - <<: *pkg_core-js/es6/regexp
+        - <<: *pkg_core-js/es6/map
+        - <<: *pkg_core-js/es6/set
+        - <<: *pkg_core-js/es6/weak-map
+        - <<: *pkg_core-js/es6/weak-set
+        - <<: *pkg_core-js/es6/typed
+        - <<: *pkg_core-js/es6/reflect
+        - <<: *pkg_core-js/es7/reflect
+        - <<: *pkg_zone.js/dist/zone
+        - <<: *pkg_ts-helpers
 
     frameworkTestPackages: &ng2TestPackages
       testPackages:  # Maps to Karma test.specs.js    https://github.com/AngularClass/angular2-webpack-starter/blob/master/config/spec-bundle.js
-        - <<: *pkg_core-js
+        - <<: *pkg_core-js/es6
+        - <<: *pkg_core-js/es7/reflect
         - <<: *pkg_ts-helpers
         - <<: *pkg_zone.js/dist/zone
         - <<: *pkg_zone.js/dist/long-stack-trace-zone
+        - <<: *pkg_zone.js/dist/proxy
+        - <<: *pkg_zone.js/dist/sync-test
         - <<: *pkg_zone.js/dist/jasmine-patch
         - <<: *pkg_zone.js/dist/async-test
-        - <<: *pkg_rxjs
+        - <<: *pkg_zone.js/dist/fake-async-test
+        - <<: *pkg_rxjs/Rx
         # Angular2 source code is loaded by each component that is being tested. So no need to include Angular2 here.
-      testTypeLibs: []
 
   React (latest):
     ES6:
@@ -226,22 +230,11 @@ buildJS:
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_typescript
-        - <<: *pkg_typings
+        - <<: *pkg_@types/node
       templateFiles:
         - src: tsconfig.json.tpl
           dest: tsconfig.json
           overwrite: true
-      tasks:
-        - name: typings:install
-          tasks: ['typings install']
-          description: ''
-      typeLibs:
-        - name: node
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#8cf8164641be73e8f1e652c2a5b967c7210b6729
-      onInstall:
-        - cmd: npm
-          args: ['run', 'typings:install']
 
     - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
       <<: *ng1Packages
@@ -410,8 +403,6 @@ readme:
     - [ ] Add a new **dependency** to your project:
       - For a **source-code** dependency:
         1. `npm i {nodeModule} --save`
-        <% if (buildJS.sourceFormat === 'TypeScript') {
-        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency <% } %>
         1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `buildJS.vendorScripts` array
         1. `yo confit` to regenerate your build configuration
       - For a **development** dependency:
@@ -433,8 +424,6 @@ readme:
          ```
       - For a **test** dependency:
         1. `npm i {nodeModule} --save`
-        <% if (buildJS.sourceFormat === 'TypeScript') {
-        -%>1. `typings install {nodeModule} --save --ambient` to install the type library as an (ambient) dependency<% } %>
         1. Edit <%- link(configFile) %> and include {nodeModule} as an item inside the `testUnit.testDependencies` array
         1. Run `yo confit` to regenerate your build configuration
     <% if (release.useSemantic) { %>- [ ] Complete the installation of the **semantic release** tool:

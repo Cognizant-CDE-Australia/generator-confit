@@ -1,4 +1,4 @@
-[wrap class="<%- styles.lead -%>"]**Confit** is a Yeoman generator that generates web-development tools for the main development processes in web projects.
+[wrap class="{$ styles.lead $}"]**Confit** is a Yeoman generator that generates web-development tools for the main development processes in web projects.
 - Developing code
 - Building
 - Verifying code style (linting)

@@ -18,7 +18,7 @@ function runSystemTest(baseUrl) {
 
   let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
     stdio: 'inherit',
-    cwd: process.env.TEST_DIR
+    cwd: process.env.TEST_DIR,
   });
 
   if (proc.status !== 0) {
@@ -82,7 +82,7 @@ function modifyConfitServerConfig(testDir, port, configData) {
 
   return {
     baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
-    details: server
+    details: server,
   };
 }
 

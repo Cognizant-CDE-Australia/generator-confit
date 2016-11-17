@@ -45,6 +45,12 @@ buildBrowser:
         and <%= link(paths.config.configDir + 'webpack/prod.webpack.config.js') %>. Confit will attempt to overwrite the contents
         files the next time `yo confit` is run, so make sure any modifications are committed to source control first.
 
+  toolModules:
+    - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
+      packages:
+        - <<: *pkg_@types/source-map
+        - <<: *pkg_@types/uglify-js
+        - <<: *pkg_@types/webpack
 
 buildAssets:
   packages:
@@ -86,10 +92,7 @@ buildJS:
     - condition: <%- buildJS.sourceFormat === 'TypeScript' %>
       packages:
         - <<: *pkg_awesome-typescript-loader
-      typeLibs:
-        - name: webpack
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#95c02169ba8fa58ac1092422efbd2e3174a206f4
+        - <<: *pkg_angular2-template-loader
 
     - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 %>
       packages:
@@ -107,11 +110,10 @@ sampleApp:
       ES6: {}
       TypeScript: {}
     AngularJS 2.x:
-      ES6: {}
       TypeScript:
         vendorScripts:  # Add these items to the vendor scripts entryPoint
           pre:
-            - './polyfills.ts'
+            - './polyfills.browser.ts'
           post: []
 
     React (latest):
@@ -160,7 +162,6 @@ sampleApp:
         - <<: *pkg_angular-route
       testPackages:
         - <<: *pkg_angular-route
-      typeLibs: []
       templateFiles:
         - src: ng1/ES6/*
           dest: <%= paths.input.srcDir %>
@@ -181,10 +182,6 @@ sampleApp:
         - <<: *pkg_angular-route
       testPackages:
         - <<: *pkg_angular-route
-      typeLibs:
-        - name: angular-route
-          key: ambientDependencies
-          version: github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-route.d.ts#cf172aab99c3139a718aa8e65398a22c53dd7ead
       templateFiles:
         - src: ng1/TypeScript/*
           dest: <%= paths.input.srcDir %>
@@ -200,31 +197,10 @@ sampleApp:
           dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
           overwrite: true
 
-    - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'ES6' %>
-      packages:
-        - <<: *pkg_angular2/router
-      testPackages: []
-      typeLibs: []
-      templateFiles:
-        - src: ng2/ES6/*
-          dest: <%= paths.input.srcDir %>
-          overwrite: true
-          noParse: true
-        - src: ng2/ES6/demoModule/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir %>
-          overwrite: true
-        - src: ng2/ES6/demoModule/unitTest/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.unitTestDir %>
-          overwrite: true
-        - src: ng2/ES6/demoModule/templates/*
-          dest: <%- paths.input.srcDir + resources.sampleApp.demoDir + paths.input.templateDir %>
-          overwrite: true
-
     - condition: <%- buildJS.framework.indexOf('AngularJS 2.x') > -1 && buildJS.sourceFormat === 'TypeScript' %>
       packages:
-        - <<: *pkg_angular2/router
+        - <<: *pkg_@angular/router
       testPackages: []
-      typeLibs: []
       templateFiles:
         - src: ng2/TypeScript/*
           dest: <%= paths.input.srcDir %>
@@ -296,6 +272,7 @@ testUnit:
     - <<: *pkg_jasmine-core
     - <<: *pkg_phantomjs-prebuilt
     - <<: *pkg_phantomjs-polyfill
+    - <<: *pkg_@types/jasmine
 
   tasks:
     - name: test
@@ -304,7 +281,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env BABEL_ENV=test NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Karma and Jasmine 2
@@ -312,27 +289,27 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
+      tasks: ['cross-env BABEL_ENV=test NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js']
       description: Run unit tests once
       features:
         - Tests are run a single time
         - Good command for continuous integration testing
 
-    - name: test:unit:debug
+    - name: test:unit:debug   # Deliberately don't add the BABEL_ENV for debugging
       tasks: ['cross-env NODE_ENV=test karma start ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
       description: Run unit tests but disable code coverage to make debugging in a browser easier
       features:
         - Runs continuously (best to run in a separate window)
         - No code coverage to make it easier to read source & testcode
 
+    - name: test:unit:debug:once   # Deliberately don't add the BABEL_ENV for debugging
+      tasks: ['cross-env NODE_ENV=test karma start --singleRun=true ./<%= paths.config.configDir + resources.testUnit.configSubDir %>karma.conf.js --debug']
+      description: # Only used for integration testing
+
+
     - name: test:coverage   # Used by the pre-release / release task
       tasks: ['npm run test:unit:once']
       description: Alias for test:unit:once, which also does test coverage checks and will fail if test coverage is not sufficient
-
-  typeLibs:
-    - name: jasmine
-      key: ambientDependencies
-      version: github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#4b36b94d5910aa8a4d20bdcd5bd1f9ae6ad18d3c
 
   templateFiles:
     - src: karma.conf.js.tpl
@@ -346,6 +323,9 @@ testUnit:
     - src: test.files.js.tpl
       dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>test.files.js
       overwrite: true
+
+    - src: thresholds.json
+      dest: <%= paths.config.configDir + resources.testUnit.configSubDir%>thresholds.json
 
 
   readme:

@@ -17,13 +17,13 @@ function writeBasicPackageJson(testDir) {
   fs.writeJsonSync(testDir + '/package.json', {
     name: 'some-name',
     repository: {
-      url: 'https://blah/foo/bar'
-    }
+      url: 'https://blah/foo/bar',
+    },
   });
 }
 
 describe('Documentation Generator', () => {
-  it('should should generate default documentation values when the project is not hosted on GitHub', done => {
+  it('should should generate default documentation values when the project is not hosted on GitHub', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -70,7 +70,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should should generate different default documentation values when the project is hosted on GitHub', done => {
+  it('should should generate different default documentation values when the project is hosted on GitHub', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-GitHub-config.yml',
@@ -103,7 +103,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should not ask for extra values when the user does not want documentation', done => {
+  it('should not ask for extra values when the user does not want documentation', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -126,12 +126,12 @@ describe('Documentation Generator', () => {
         done();
       }
     ).withPrompts({
-      generateDocs: false
+      generateDocs: false,
     });
   });
 
 
-  it('should allow the default values to be changed', done => {
+  it('should allow the default values to be changed', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -156,12 +156,12 @@ describe('Documentation Generator', () => {
       srcDir: 'a/b/c',
       outputDir: 'magic-johnson/',
       publishMethod: 'GitHub',
-      createSampleDocs: false
+      createSampleDocs: false,
     });
   });
 
 
-  it('should generate the correct config for generating the documentation for the default settings', done => {
+  it('should generate the correct config for generating the documentation for the default settings', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -186,7 +186,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should generate the correct config for generating the documentation for Github publishing', done => {
+  it('should generate the correct config for generating the documentation for Github publishing', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -208,12 +208,12 @@ describe('Documentation Generator', () => {
         done();
       }
     ).withPrompts({
-      publishMethod: 'GitHub'
+      publishMethod: 'GitHub',
     });
   });
 
 
-  it('should generate the correct config for generating the documentation for cloud publishing', done => {
+  it('should generate the correct config for generating the documentation for cloud publishing', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -235,12 +235,12 @@ describe('Documentation Generator', () => {
         done();
       }
     ).withPrompts({
-      publishMethod: 'cloud'
+      publishMethod: 'cloud',
     });
   });
 
 
-  it('should generate Angular-specific config and files when the framework is AngularJS 1.x', done => {
+  it('should generate Angular-specific config and files when the framework is AngularJS 1.x', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'browser-documentation-GitHub-config.yml',
@@ -270,7 +270,7 @@ describe('Documentation Generator', () => {
         // AngularJS-specific content
         assert.equal(confit['generator-confit'].buildJS.framework[0], 'AngularJS 1.x');
         assert.equal(swanky.sections[1].title, 'Components');
-        assert.equal(swanky.sections[1].subSections[0].bootstrap[0].src, 'docs/config/bootstrap/angular.bootstrap.js');
+        assert.equal(swanky.sections[1].subSections[0].bootstrap[0], 'docs/config/bootstrap/angular.bootstrap.js');
         yoassert.file(['docs/config/bootstrap/angular.bootstrap.js']);
 
         done();
@@ -279,7 +279,7 @@ describe('Documentation Generator', () => {
   });
 
 
-  it('should convert invalid paths into valid paths', done => {
+  it('should convert invalid paths into valid paths', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-documentation-config.yml',
@@ -298,12 +298,12 @@ describe('Documentation Generator', () => {
       generateDocs: true,
       srcDir: './dotSlash/',
       outputDir: '   ',
-      publishMethod: 'GitHub'
+      publishMethod: 'GitHub',
     });
   });
 
 
-  it('should throw an error if a path contains ../', done => {
+  it('should throw an error if a path contains ../', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -316,12 +316,12 @@ describe('Documentation Generator', () => {
         done();
       }
     ).withPrompts({
-      outputDir: 'a/../b//c/d'
+      outputDir: 'a/../b//c/d',
     });
   });
 
 
-  it('should throw an error if a path is an absolute path', done => {
+  it('should throw an error if a path is an absolute path', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'node-paths-config.json',
@@ -334,7 +334,7 @@ describe('Documentation Generator', () => {
         done();
       }
     ).withPrompts({
-      srcDir: '/full/path/dir'
+      srcDir: '/full/path/dir',
     });
   });
 });

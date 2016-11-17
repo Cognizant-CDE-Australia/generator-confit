@@ -17,6 +17,23 @@ if (buildJS.framework.indexOf('React (latest)') > -1) {
 }
 
 -%>
+<% if (buildJS.sourceFormat === 'ES6') {
+// Modify the Babel loader to add the Istanbul Babel plugin for code coverage
+
+var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
+var testFilesGlob = '**/' + paths.input.unitTestDir + '*.spec.(' + jsExtensions.join('|') + ')';
+%>
+  "env": {
+    "test": {
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "<%- testFilesGlob %>"
+          ]
+        }]
+      ]
+    }
+  },<% } %>
   "presets": <%- printJson(presets, 2, true) %>,
   "plugins": <%- printJson(plugins, 2, true) %>
 }
