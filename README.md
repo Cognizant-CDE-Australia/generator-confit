@@ -114,7 +114,7 @@ There are sample project implementations for the following technology combinatio
 
 Build Profile | JS Source Format | JS Frameworks Supported (optional)
 :------------ | :--------------- | :----------------------
-Browser       | ES6              | Angular 1.x, Angular 2, React
+Browser       | ES6              | Angular 1.x, React
 Browser       | Typescript       | Angular 1.x, Angular 2
 Node          | ES6              | 
 
