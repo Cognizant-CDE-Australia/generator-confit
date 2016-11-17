@@ -1,13 +1,13 @@
 generator-confit:
   app:
-    _version: b8e397572d5b1e4e02eae0c9ed196b65dc334b22
+    _version: e33311babea61ce43d48fbda705c261d1fc56765
     buildProfile: Latest
     copyrightOwner: Brett Uglow
     license: Apache-2.0
     projectType: node
     repositoryType: GitHub
   paths:
-    _version: 0d755ebadde5e9fb356239a0a1775294efd7aa81
+    _version: 26db6b5793003b99c2b0f932c06fe8dbaae58cb1
     config:
       configDir: config/
     input:
@@ -17,32 +17,32 @@ generator-confit:
       prodDir: dist/
       reportDir: reports/
   buildJS:
-    _version: 0fe60bd2a1dfc1c7c076b3b5e31954419fcb4f8e
+    _version: 396db955d6691029bfe33e99fb8d17236c24b5ce
     framework: []
     frameworkScripts: []
     outputFormat: ES6
     sourceFormat: ES6
   entryPoint:
-    _version: f18cf5ae3b8bfdc77d8b330ef4827b4e6f34f127
+    _version: fc4e0f7ff7a8d33ca153385e894d447aec6e7f58
     entryPoints:
       main:
         - lib/generators/app/index.js
   testUnit:
-    _version: 1843f549322796a5dd891472a39129c5ae399e87
+    _version: 10013110f7e3677430c44f5a333f291456001ef0
     testDependencies: []
   verify:
-    _version: 163484235f6455bdc75ff58506e6b6fe68f975e6
+    _version: dfbbf57f85b6c581221db2d592dc1411661b0c18
     jsCodingStandard: Google
   release:
-    _version: 8e3296286f01e5f15dc8b98da2d2b498cc41e2e2
+    _version: c97c83a21fe57f70e7a814c9db0154f344080a91
     commitMessageFormat: Conventional
     useSemantic: true
   sampleApp:
-    _version: 4bf6b2da62b2a472d0af7371804f833388e43a0a
+    _version: e70ad908eb36c3697280f40b33eabf6ec5ed9d68
     createSampleApp: false
   zzfinish: {}
   documentation:
-    _version: ff5ca9d1ffe60da943e1685c6cb75177adec7bf8
+    _version: 3cb3e6218cfb02f9b7e9f916487f05d161994a01
     createSampleDocs: false
     generateDocs: true
     outputDir: website/
