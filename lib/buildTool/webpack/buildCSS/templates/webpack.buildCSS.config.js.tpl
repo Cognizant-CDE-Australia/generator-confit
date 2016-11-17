@@ -21,8 +21,8 @@ config.loaderOptions.postcss = [
 <%
 }
 
-let cssExtensions = '';
-let cssLoaderOptions = ''
+var cssExtensions = '';
+var cssLoaderOptions = ''
 
 if (buildCSS.sourceFormat === 'sass') {
   cssExtensions = resources.buildCSS.sourceFormat.sass.ext.join('|');
