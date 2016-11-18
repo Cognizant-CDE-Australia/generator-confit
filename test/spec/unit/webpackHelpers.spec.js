@@ -1,6 +1,6 @@
 'use strict';
 
-const helpers = require('../../../lib/buildTool/webpack/buildBrowser/templates/webpackHelpers.js')('../../');
+const helpers = require('../../../lib/buildTool/webpack/buildBrowser/templates/webpackHelpers.js')('basePath/');
 const path = require('path');
 const assert = require('assert');
 
@@ -88,6 +88,111 @@ describe('Webpack Helpers', () => {
 
       helpers.removeHash(obj, 'prop4', /\[contentHash.*?\]/);
       assert.strictEqual(obj.prop4, '/path/to/[name].js');
+    });
+  });
+
+  describe('hasLoader()', () => {
+    it('should return true when the loader can be found', () => {
+      const rule = {
+        use: [
+          {
+            loader: 'abc'
+          }
+        ]
+      };
+      assert.equal(helpers.hasLoader(rule, 'abc'), true);
+    });
+
+    it('should return false when the loader cannot be found due to missing "use" property', () => {
+      const rule = {
+        loaders: [
+          {
+            loader: 'abc'
+          }
+        ]
+      };
+      assert.equal(helpers.hasLoader(rule, 'abc'), false);
+    });
+
+    it('should return false when the loader cannot be found due to it not being in the list of loaders', () => {
+      const rule = {
+        loaders: [
+          {
+            loader: 'xyz'
+          }
+        ]
+      };
+      assert.equal(helpers.hasLoader(rule, 'abc'), false);
+    });
+
+    it('should return true when the loader is in the list of loaders', () => {
+      const rule = {
+        use: [
+          {
+            loader: 'xyz'
+          },
+          {
+            loader: 'abc'
+          }
+        ]
+      };
+      assert.equal(helpers.hasLoader(rule, 'abc'), true);
+    });
+  });
+
+  describe('findLoader()', () => {
+    it('should return the loader that exists in the config', () => {
+      const targetLoader = {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'xyz'
+          },
+          {
+            loader: 'abc'
+          }
+        ]
+      };
+      const config = {
+        module: {
+          rules: [
+            targetLoader
+          ]
+        }
+      };
+      assert.equal(helpers.findLoader(config, 'abc'), targetLoader);
+
+      // And if the loader doesn't exist, undefined is returned.
+      assert.equal(helpers.findLoader(config, 'unknown'), undefined);
+    });
+  });
+
+
+  describe('hasProcessFlag()', () => {
+    it('should return true when the process has the flag', () => {
+      //console.log(process.argv);
+      assert.equal(helpers.hasProcessFlag('reporter'), true);
+      assert.equal(helpers.hasProcessFlag('made-up-flag-that-should not exist'), false);
+    });
+  });
+
+  describe('isWebpackDevServer()', () => {
+    it('should return true when the process is running inside webpack-dev-server', () => {
+      //console.log(process.argv[1]);
+      assert.equal(helpers.isWebpackDevServer(), false);  // Running inside Mocha, so this should be false
+
+      // Modify the argument for the sake of this test
+      process.argv[1] = 'blah_webpack-dev-server/foo';
+      assert.equal(helpers.isWebpackDevServer(), true);
+    });
+  });
+
+  describe('root()', () => {
+    it('should return a full path from the initialised root path', () => {
+      assert.equal(helpers.root(), 'basePath/'); //<-- See the require statement at the top of this file
+      assert.equal(helpers.root('abc'), 'basePath/abc');
+      assert.equal(helpers.root('abc/', 'de/'), 'basePath/abc/de/');
+      assert.equal(helpers.root('abc/', '../de/'), 'basePath/de/');
     });
   });
 });
