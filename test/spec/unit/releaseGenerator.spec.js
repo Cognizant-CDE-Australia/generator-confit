@@ -144,7 +144,7 @@ describe('Release Generator', () => {
       'release-github-repo-conventional-commit.json',
       function before() { },
       function after() {
-        yoassert.file(['package.json', '.codeclimate.yml']);
+        yoassert.file(['package.json']);
 
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
@@ -167,7 +167,7 @@ describe('Release Generator', () => {
       'release-github-repo-conventional-commit.json',
       function before() { },
       function after(/* testDir*/) {
-        yoassert.file(['package.json', '.codeclimate.yml']);
+        yoassert.file(['package.json']);
         // fs.readdirSync(testDir).forEach(file => console.log(file));
 
         // And there should be some scripts

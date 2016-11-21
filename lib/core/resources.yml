@@ -285,11 +285,7 @@ release:
 
     - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
       packages:
-        - <<: *pkg_codeclimate-test-reporter
-      templateFiles:
-        - src: codeclimate.yml.tpl
-          dest: .codeclimate.yml
-          overwrite: true
+        - <<: *pkg_coveralls
 
 
 sampleApp:
