@@ -8,7 +8,7 @@ const fs = require('fs-extra');
 const GENERATOR_UNDER_TEST = 'release';
 
 describe('Release Generator', () => {
-  it('should generate a pre-push hook', (done) => {
+  it('should not generate a pre-push hook when checkCodeCoverage is false', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -21,18 +21,20 @@ describe('Release Generator', () => {
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
+        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
+        assert.equal(pkg.config.ghooks['pre-push'], undefined);
 
         done();
       }
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'Conventional',
+      checkCodeCoverage: false
     });
   });
 
 
-  it('should generate a commit message template and a hook when using conventional commit messages', (done) => {
+  it('should generate a commit message template and a hook when using conventional commit messages and a pre-push hook when checkCodeCoverage is true', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'release-other-repo-conventional-commit.json',
@@ -56,6 +58,7 @@ describe('Release Generator', () => {
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'Conventional',
+      checkCodeCoverage: true
     });
   });
 
@@ -77,12 +80,14 @@ describe('Release Generator', () => {
         assert.equal(pkg.config.commitizen, undefined);
         assert.equal(pkg.config['cz-customizable'], undefined);
         assert.equal(pkg.config.ghooks['commit-msg'], undefined);
+        assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();
       }
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'None',
+      checkCodeCoverage: true
     });
   });
 
