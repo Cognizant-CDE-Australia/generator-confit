@@ -5,7 +5,12 @@
       "projectType": "node",
       "repositoryType": "GitHub"
     },
+    "buildJS": {
+      "sourceFormat": "ES6"
+    },
     "paths": {
+      "input": {},
+      "output": {},
       "config": {
         "configDir": "config/"
       }

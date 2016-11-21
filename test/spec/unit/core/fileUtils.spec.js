@@ -5,7 +5,6 @@ const path = require('path');
 const assert = require('assert');
 
 describe('fileUtils', () => {
-
   describe('validatePath()', () => {
     it('should return true when a path is valid, or an error message if not', () => {
       const tests = [
@@ -17,7 +16,7 @@ describe('fileUtils', () => {
         {path: 'path/path2', expected: true, desc: 'valid path'},
       ];
 
-      tests.forEach(test => assert.equal(fileUtils.validatePath(test.path), test.expected, test.desc));
+      tests.forEach((test) => assert.equal(fileUtils.validatePath(test.path), test.expected, test.desc));
     });
   });
 });

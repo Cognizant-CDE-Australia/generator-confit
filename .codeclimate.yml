@@ -1,0 +1,23 @@
+engines:
+  eslint:
+    enabled: true
+    channels: eslint-3
+    config:
+      config: config/verify/.eslintrc
+      extensions:
+        - .js
+        - .foo
+      
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+ratings:
+  paths:
+    - lib/**/*.js
+    - lib/**/*.foo
+  
+exclude_paths:
+  - "**/test/**"
+  

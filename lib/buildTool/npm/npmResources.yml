@@ -189,6 +189,15 @@ release:
           features:
             - Define another script-task called `postrelease` to define the rest of your release process
 
+    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
+      tasks:
+        - name: upload-coverage
+          tasks: ['codeclimate-test-reporter < <%- paths.output.reportDir %>lcov/lcov.info']
+          description: Uploads code-coverage metrics to Code Climate
+          features:
+            - Setup - https://docs.codeclimate.com/docs/getting-started-with-code-climate
+            - Define an environment variable called CODE_CLIMATE_REPO_TOKEN in your envrionment to provide Code Climate with access to your Github repo
+
 sampleApp:
 
   toolModules:

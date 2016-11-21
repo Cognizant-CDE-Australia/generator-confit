@@ -29,7 +29,7 @@ describe('Release Generator', () => {
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'Conventional',
-      checkCodeCoverage: false
+      checkCodeCoverage: false,
     });
   });
 
@@ -58,7 +58,7 @@ describe('Release Generator', () => {
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'Conventional',
-      checkCodeCoverage: true
+      checkCodeCoverage: true,
     });
   });
 
@@ -87,7 +87,7 @@ describe('Release Generator', () => {
     ).withPrompts({
       useSemantic: false,
       commitMessageFormat: 'None',
-      checkCodeCoverage: true
+      checkCodeCoverage: true,
     });
   });
 
@@ -144,7 +144,7 @@ describe('Release Generator', () => {
       'release-github-repo-conventional-commit.json',
       function before() { },
       function after() {
-        yoassert.file(['package.json']);
+        yoassert.file(['package.json', '.codeclimate.yml']);
 
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
@@ -167,7 +167,7 @@ describe('Release Generator', () => {
       'release-github-repo-conventional-commit.json',
       function before() { },
       function after(/* testDir*/) {
-        yoassert.file(['package.json']);
+        yoassert.file(['package.json', '.codeclimate.yml']);
         // fs.readdirSync(testDir).forEach(file => console.log(file));
 
         // And there should be some scripts

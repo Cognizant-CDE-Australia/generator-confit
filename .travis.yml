@@ -51,6 +51,7 @@ script:
   - npm run pre-release
 
 after_success:
+  - npm run upload-coverage
   - npm run semantic-release
 
 branches:

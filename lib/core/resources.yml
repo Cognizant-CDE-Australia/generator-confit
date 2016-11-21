@@ -283,6 +283,15 @@ release:
       packageJsonConfig:
         - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
+    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
+      packages:
+        - <<: *pkg_codeclimate-test-reporter
+      templateFiles:
+        - src: codeclimate.yml.tpl
+          dest: .codeclimate.yml
+          overwrite: true
+
+
 sampleApp:
   defaults:
     createSampleApp: true

@@ -96,9 +96,9 @@ describe('Webpack Helpers', () => {
       const rule = {
         use: [
           {
-            loader: 'abc'
-          }
-        ]
+            loader: 'abc',
+          },
+        ],
       };
       assert.equal(helpers.hasLoader(rule, 'abc'), true);
     });
@@ -107,9 +107,9 @@ describe('Webpack Helpers', () => {
       const rule = {
         loaders: [
           {
-            loader: 'abc'
-          }
-        ]
+            loader: 'abc',
+          },
+        ],
       };
       assert.equal(helpers.hasLoader(rule, 'abc'), false);
     });
@@ -118,9 +118,9 @@ describe('Webpack Helpers', () => {
       const rule = {
         loaders: [
           {
-            loader: 'xyz'
-          }
-        ]
+            loader: 'xyz',
+          },
+        ],
       };
       assert.equal(helpers.hasLoader(rule, 'abc'), false);
     });
@@ -129,12 +129,12 @@ describe('Webpack Helpers', () => {
       const rule = {
         use: [
           {
-            loader: 'xyz'
+            loader: 'xyz',
           },
           {
-            loader: 'abc'
-          }
-        ]
+            loader: 'abc',
+          },
+        ],
       };
       assert.equal(helpers.hasLoader(rule, 'abc'), true);
     });
@@ -146,19 +146,19 @@ describe('Webpack Helpers', () => {
         test: /\.css$/,
         use: [
           {
-            loader: 'xyz'
+            loader: 'xyz',
           },
           {
-            loader: 'abc'
-          }
-        ]
+            loader: 'abc',
+          },
+        ],
       };
       const config = {
         module: {
           rules: [
-            targetLoader
-          ]
-        }
+            targetLoader,
+          ],
+        },
       };
       assert.equal(helpers.findLoader(config, 'abc'), targetLoader);
 
@@ -170,7 +170,7 @@ describe('Webpack Helpers', () => {
 
   describe('hasProcessFlag()', () => {
     it('should return true when the process has the flag', () => {
-      //console.log(process.argv);
+      // console.log(process.argv);
       assert.equal(helpers.hasProcessFlag('reporter'), true);
       assert.equal(helpers.hasProcessFlag('made-up-flag-that-should not exist'), false);
     });
@@ -178,7 +178,7 @@ describe('Webpack Helpers', () => {
 
   describe('isWebpackDevServer()', () => {
     it('should return true when the process is running inside webpack-dev-server', () => {
-      //console.log(process.argv[1]);
+      // console.log(process.argv[1]);
       assert.equal(helpers.isWebpackDevServer(), false);  // Running inside Mocha, so this should be false
 
       // Modify the argument for the sake of this test
@@ -189,7 +189,7 @@ describe('Webpack Helpers', () => {
 
   describe('root()', () => {
     it('should return a full path from the initialised root path', () => {
-      assert.equal(helpers.root(), 'basePath/'); //<-- See the require statement at the top of this file
+      assert.equal(helpers.root(), 'basePath/'); // <-- See the require statement at the top of this file
       assert.equal(helpers.root('abc'), 'basePath/abc');
       assert.equal(helpers.root('abc/', 'de/'), 'basePath/abc/de/');
       assert.equal(helpers.root('abc/', '../de/'), 'basePath/de/');
