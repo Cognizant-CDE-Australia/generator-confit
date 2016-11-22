@@ -320,8 +320,8 @@ release:
         - <<: *pkg_coveralls
       readmeBadges:
         - name: Coverage Status
-          image: https://coveralls.io/repos/github/<%- repoConfig.repository %>/badge.svg
-          url: https://coveralls.io/github/<%- repoConfig.repository %>
+          image: https://coveralls.io/repos/github/<%- repoConfig.repository %>/badge.svg?branch=master
+          url: https://coveralls.io/github/<%- repoConfig.repository %>?branch=master
           priority: 30
 
 
