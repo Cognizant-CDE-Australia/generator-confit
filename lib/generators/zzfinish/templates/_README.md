@@ -7,6 +7,11 @@
 
 <!--[]-->
 
+<!--[RM_BADGES]-->
+<%- RM_BADGES %>
+
+<!--[]-->
+
 <!--[RM_INSTALL]-->
 <%- RM_INSTALL %>
 

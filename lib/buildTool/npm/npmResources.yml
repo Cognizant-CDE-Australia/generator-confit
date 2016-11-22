@@ -196,7 +196,7 @@ release:
           description: Uploads code-coverage metrics to Coveralls.io
           features:
             - Setup - https://coveralls.zendesk.com/hc/en-us/articles/201347419-Coveralls-currently-supports
-            - Define an environment variable called COVERALLS_REPO_TOKEN in your build envrionment with the repo token from https://coveralls.io/github/<repo-name>/settings
+            - Define an environment variable called COVERALLS_REPO_TOKEN in your build environment with the repo token from https://coveralls.io/github/<repo-name>/settings
 
 sampleApp:
 

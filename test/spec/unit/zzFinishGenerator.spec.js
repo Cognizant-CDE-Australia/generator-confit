@@ -32,6 +32,7 @@ describe('zzFinish Generator', () => {
           assert.notEqual(readmeText.indexOf('# some-name'), -1);
           assert.notEqual(readmeText.indexOf('<!--[RM_DESCRIPTION]-->'), -1);
           assert.notEqual(readmeText.indexOf('> desc'), -1);
+          assert.notEqual(readmeText.indexOf('<!--[RM_BADGES]-->'), -1);
           assert.notEqual(readmeText.indexOf('<!--[RM_INSTALL]-->'), -1);
           assert.notEqual(readmeText.indexOf('<!--[RM_NEXT_STEPS]-->'), -1);
           assert.notEqual(readmeText.indexOf('<!--[RM_CONTRIBUTING]-->'), -1);

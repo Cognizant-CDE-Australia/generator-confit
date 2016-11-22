@@ -1,10 +1,11 @@
 generator-confit:
   app:
-    _version: e33311babea61ce43d48fbda705c261d1fc56765
+    _version: 671cc98165ec57e30a53953be54cf23cf25e5ef2
     buildProfile: Latest
     copyrightOwner: Brett Uglow
     license: Apache-2.0
     projectType: node
+    publicRepository: true
     repositoryType: GitHub
   paths:
     _version: 26db6b5793003b99c2b0f932c06fe8dbaae58cb1
