@@ -3,11 +3,11 @@ it is extremely useful for any NPM project (OSS or closed-sourced).
 
 - [x] start unit testing right away, [pick your unit testing framework][pick testing framework]
 
-- [ ] start linting code to prevent obvious problems, like misspelled variable.
+- [x] start linting code to prevent obvious problems, like misspelled variable.
 [eslint][eslint], [jshint][jshint], [jscs][jscs] or all of them together
 [gulp-lint-everything][gulp-lint-everything]
 
-- [ ] run linting and unit tests on each commit locally. [pre-git][pre-git], [ghooks][ghooks]
+- [x] run linting and unit tests on each commit locally. [pre-git][pre-git], [ghooks][ghooks]
 
 - [x] validate commit message using [pre-git][pre-git] or [commitizen][commitizen] with [validate-commit-msg][validate-commit-msg]. This
 enables other tools, like intelligent release notes.
@@ -48,7 +48,7 @@ or [fixpack][fixpack]
 in your module. [Atom editor][atom] and [lodash][lodash] have excellent examples to follow.
 When GitHub finds a CONTRIBUTING.md file it [shows a message][contributing] to anyone opening an issue.
 
-- [ ] generate documentation automatically. [xplain][xplain] is my own tool for JS to HTML/Markdown
+- [x] generate documentation automatically. [xplain][xplain] is my own tool for JS to HTML/Markdown
 generation
 
 - [x] place most of the public API documentation in README file for simple retrieval.

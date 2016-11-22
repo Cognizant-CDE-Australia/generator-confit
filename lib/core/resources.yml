@@ -8,6 +8,11 @@ app:
   defaults:
     projectType: browser
     license: UNLICENSED
+    publicRepository: true
+
+  repositoryTypes:
+    - GitHub
+    - Other
 
   projectTypeList:
     - value: browser
@@ -47,6 +52,23 @@ app:
   packageJsonConfig:
     - license: <%- app.license %>
 
+  configModules:
+    - condition: <%- app.publicRepository %>
+      readmeBadges:
+        - name: NPM Version
+          image: https://img.shields.io/npm/v/<%- pkg.name %>.svg?style=flat-square
+          url: http://npm.im/<%- pkg.name %>
+          priority: 1
+        - name: Dependencies status
+          image: https://david-dm.org/<%- repoConfig.repository %>/status.svg?theme=shields.io
+          url: https://david-dm.org/<%- repoConfig.repository %>#info=dependencies
+          priority: 40
+        - name: Dev-dependencies status
+          image: https://david-dm.org/<%- repoConfig.repository %>/dev-status.svg?theme=shields.io
+          url: https://david-dm.org/<%- repoConfig.repository %>#info=devDependencies
+          priority: 41
+
+
 documentation:
   GITHUB_PUBLISH_METHOD: GitHub   # This is a special documentation method, so this global is handy to refer to it in code
   configSubDir: docs/
@@ -78,6 +100,11 @@ readme:
     ## Install
 
         npm install <%- pkg.name %>
+
+  RM_BADGES: |
+    <% objectValues(readme.badges).sort(function(a, b) { return a.priority > b.priority}).forEach(function(badge) {
+    %>[![<%- badge.name -%>](<%- badge.image -%>)](<%- badge.url -%>)
+    <% }); -%>
 
   RM_CONTRIBUTING: |
     ## Contributing
@@ -268,6 +295,12 @@ release:
   defaults:
     useSemantic: true
     commitMessageFormat: Conventional
+    checkCodeCoverage: true
+    publicRepository: true
+
+  repositoryTypes:
+    - GitHub
+    - Other
 
   commitMessageFormats:
     - Conventional
@@ -275,11 +308,29 @@ release:
 
   configSubDir: release/
 
-  packages:
-    - <<: *pkg_ghooks
+  configModules:
+    - condition: <%- release.checkCodeCoverage %>
+      packages:
+        - <<: *pkg_ghooks
+      packageJsonConfig:
+        - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
 
-  packageJsonConfig:
-    - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
+    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' && app.publicRepository %>
+      packages:
+        - <<: *pkg_coveralls
+      readmeBadges:
+        - name: Coverage Status
+          image: https://coveralls.io/repos/github/<%- repoConfig.repository %>/badge.svg
+          url: https://coveralls.io/github/<%- repoConfig.repository %>
+          priority: 30
+
+
+    - condition: <%- release.useSemantic %>
+      readmeBadges:
+        - name: semantic-release
+          image: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+          url: https://github.com/semantic-release/semantic-release
+          priority: 20
 
 sampleApp:
   defaults:

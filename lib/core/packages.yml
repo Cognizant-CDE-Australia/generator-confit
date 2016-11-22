@@ -191,6 +191,10 @@ $packages:
     name: corp-semantic-release
     version: 2.0.0
 
+  - &pkg_coveralls
+    name: coveralls
+    version: 2.11.15
+
   - &pkg_cross-env
     name: cross-env
     version: 3.1.3

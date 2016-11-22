@@ -189,6 +189,15 @@ release:
           features:
             - Define another script-task called `postrelease` to define the rest of your release process
 
+    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
+      tasks:
+        - name: upload-coverage
+          tasks: ['cat <%- paths.output.reportDir %>lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js']
+          description: Uploads code-coverage metrics to Coveralls.io
+          features:
+            - Setup - https://coveralls.zendesk.com/hc/en-us/articles/201347419-Coveralls-currently-supports
+            - Define an environment variable called COVERALLS_REPO_TOKEN in your build environment with the repo token from https://coveralls.io/github/<repo-name>/settings
+
 sampleApp:
 
   toolModules:

@@ -39,7 +39,7 @@ generator-confit:
     _version: dfbbf57f85b6c581221db2d592dc1411661b0c18
     jsCodingStandard: ESLint
   release:
-    _version: c97c83a21fe57f70e7a814c9db0154f344080a91
+    _version: 2966d288ddb7afaa8dd4b13e112bf5cf6cbc8ffb
     commitMessageFormat: Conventional
     useSemantic: false
   sampleApp:
