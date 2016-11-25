@@ -18,7 +18,7 @@ var config = {
     browserName: 'firefox' // chrome
   },
 
-  framework: 'jasmine2',
+  framework: 'jasmine',
 
   // The default Base URL.  This can be overridden on the command line: --baseUrl=https://hostname:port/path
   baseUrl: '<%= serverDev.protocol %>://<%= serverDev.hostname %>:<%= serverDev.port %>/',
@@ -50,7 +50,7 @@ var config = {
     function consoleReporter() {
       var SpecReporter = require('jasmine-spec-reporter');
       jasmine.getEnv().addReporter(new SpecReporter({
-        displayStacktrace: true,
+        displayStacktrace: 'summary',
         displaySpecDuration: true
       }));
     }
@@ -84,14 +84,8 @@ var config = {
 
   // ----- Options to be passed to minijasminenode -----
   jasmineNodeOpts: {
-    // onComplete will be called just before the driver quits.
-    onComplete: null,
-    // If true, display spec names.
-    isVerbose: true,
     // If true, print colors to the terminal.
     showColors: true,
-    // If true, include stack traces in failures.
-    includeStackTrace: true,
     // Default time to wait in ms before a test fails.
     defaultTimeoutInterval: 20000,
     // Remove Jasmine's 'dots' console reporter
