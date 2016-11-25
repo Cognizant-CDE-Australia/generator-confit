@@ -1,6 +1,7 @@
 buildBrowser:
   packages:
     - <<: *pkg_webpack
+    - <<: *pkg_loader-utils
     - <<: *pkg_webpack-dev-server
     - <<: *pkg_extract-text-webpack-plugin
 
@@ -107,18 +108,25 @@ sampleApp:
       ES6: {}
       TypeScript: {}
     AngularJS 1.x:
-      ES6: {}
-      TypeScript: {}
+      ES6:
+        vendorScripts:  # Add these items to the vendor scripts entryPoint
+          post:
+            - angular-route
+      TypeScript:
+        vendorScripts:
+          post:
+            - angular-route
     AngularJS 2.x:
       TypeScript:
-        vendorScripts:  # Add these items to the vendor scripts entryPoint
+        vendorScripts:
           pre:
             - './polyfills.browser.ts'
-          post: []
+          post:
+            - '@angular/router'
 
     React (latest):
       ES6:
-        vendorScripts:  # Add these items to the vendor scripts entryPoint.
+        vendorScripts:
           pre:
             - './polyfills.js'
           post:

@@ -14,7 +14,7 @@ documentation:
         description: Creates a development-version of the documentation website and watches for changes.
 
       - name: docs:build
-        tasks: ['cross-env NODE_ENV=production webpack -p --progress --config <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js --colors']
+        tasks: ['cross-env NODE_ENV=production webpack --progress --config <%- paths.config.configDir + resources.documentation.configSubDir %>swanky.webpack.config.js --colors']
         description: Creates a production-version of the documentation website in the `<%- documentation.outputDir %>`.
 
       - name: docs:build:serve

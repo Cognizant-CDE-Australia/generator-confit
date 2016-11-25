@@ -1,6 +1,6 @@
 generator-confit:
   app:
-    _version: e33311babea61ce43d48fbda705c261d1fc56765
+    _version: 79f049c89ce496892cf2385bf177fa588156332a
     buildProfile: Latest
     projectType: browser
     repositoryType: Other

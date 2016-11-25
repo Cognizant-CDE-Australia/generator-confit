@@ -31,8 +31,7 @@ config.devServer = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
     'Access-Control-Allow-Headers': 'accept, content-type, authorization',
-    'Access-Control-Allow-Credentials': true
-  },
-  outputPath: helpers.root('<%- paths.output.devDir %>')
+    'Access-Control-Allow-Credentials': 'true'
+  }
 };
 /* **/
