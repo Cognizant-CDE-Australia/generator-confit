@@ -52,7 +52,7 @@
     "dev": "cross-env NODE_ENV=development npm run verify:watch",
     "docs:_publish": "node config/docs/publish.js",
     "predocs:build": "rimraf website/",
-    "docs:build": "cross-env NODE_ENV=production webpack -p --progress --config config/docs/swanky.webpack.config.js --colors",
+    "docs:build": "cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors",
     "docs:build:serve": "npm-run-all docs:build docs:serve",
     "docs:dev": "cross-env NODE_ENV=development node config/docs/serve.dev.js",
     "docs:postpublish": "node config/docs/postpublish.js",
