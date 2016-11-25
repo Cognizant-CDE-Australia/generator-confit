@@ -1,6 +1,7 @@
 buildBrowser:
   packages:
     - <<: *pkg_webpack
+    - <<: *pkg_loader-utils
     - <<: *pkg_webpack-dev-server
     - <<: *pkg_extract-text-webpack-plugin
 
