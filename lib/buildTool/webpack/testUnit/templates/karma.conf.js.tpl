@@ -5,7 +5,7 @@
 var commonConfig = require('./karma.common.js');
 var webpackHelpers = require('../webpack/webpackHelpers.js')();
 var debugMode = process.argv.indexOf('--debug') > -1;
-var noCoverage = process.argv.indexOf('--no-coverage') > -1;
+var noThresholdCheck = process.argv.indexOf('--no-threshold-check') > -1;
 
 function getConfitConfig(config) {
   // level of logging
@@ -34,7 +34,7 @@ function getConfitConfig(config) {
     });
   }
 
-  if (noCoverage) {
+  if (noThresholdCheck) {
     commonConfig.reporters = commonConfig.reporters.filter(function(reporter) {
       return reporter !== 'threshold';
     });

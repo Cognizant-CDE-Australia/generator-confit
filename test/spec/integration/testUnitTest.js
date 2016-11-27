@@ -23,22 +23,34 @@ function runCommand(cmd) {
 
 module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCoverage) {
   describe(commandToRun, () => {
-    it(`should pass the unit tests in the sampleApp code ${hasCodeCoverage ? 'WITH' : 'WITHOUT'} code coverage`, function() {
+    it.only(`should pass the unit tests in the sampleApp code ${hasCodeCoverage ? 'WITH' : 'WITHOUT'} code coverage`, function() {
       assert.doesNotThrow(() => runCommand(commandToRun));
+
+      if (hasCodeCoverage) {
+        let reportDir = path.join(process.env.TEST_DIR, confitConfig.paths.output.reportDir);
+        fs.readdirSync(reportDir + 'coverage/').forEach((file) => console.log(file));
+
+        assert(fs.existsSync(reportDir + 'coverage/') === true, 'Coverage dir exists');
+        assert(fs.existsSync(reportDir + 'coverage/lcov/lcov.info') === true, 'lcov/lcov.info exists');
+        fs.removeSync(reportDir); // Remove the directory
+      } else {
+        assert(fs.existsSync(reportDir + 'coverage/') === false, 'Coverage directory does NOT exist');
+      }
     });
 
-    // We get a table of results like this, which we need to filter to find 'File ' and 'All files '
-    // ----------------|----------|----------|----------|----------|----------------|
-    // File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
-    // ----------------|----------|----------|----------|----------|----------------|
-    // demoModule/    |    80.95 |      100 |    33.33 |    76.47 |                |
-    // app.js        |    78.57 |      100 |       25 |    72.73 |       15,26,27 |
-    // demoModule.js |    85.71 |      100 |       50 |    83.33 |              9 |
-    // ----------------|----------|----------|----------|----------|----------------|
-    // All files       |    80.95 |      100 |    33.33 |    76.47 |                |
-    // ----------------|----------|----------|----------|----------|----------------|
 
     it('should have 100% branch coverage for the test files', () => {
+      // We get a table of results like this, which we need to filter to find 'File ' and 'All files '
+      // ----------------|----------|----------|----------|----------|----------------|
+      // File            |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+      // ----------------|----------|----------|----------|----------|----------------|
+      // demoModule/    |    80.95 |      100 |    33.33 |    76.47 |                |
+      // app.js        |    78.57 |      100 |       25 |    72.73 |       15,26,27 |
+      // demoModule.js |    85.71 |      100 |       50 |    83.33 |              9 |
+      // ----------------|----------|----------|----------|----------|----------------|
+      // All files       |    80.95 |      100 |    33.33 |    76.47 |                |
+      // ----------------|----------|----------|----------|----------|----------------|
+
       let result = runCommand(commandToRun).toString();
 
       console.log(result);
