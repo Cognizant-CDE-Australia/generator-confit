@@ -26,10 +26,9 @@ module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCover
     it.only(`should pass the unit tests in the sampleApp code ${hasCodeCoverage ? 'WITH' : 'WITHOUT'} code coverage`, function() {
       assert.doesNotThrow(() => runCommand(commandToRun));
 
-      if (hasCodeCoverage) {
-        let reportDir = path.join(process.env.TEST_DIR, confitConfig.paths.output.reportDir);
-        fs.readdirSync(reportDir + 'coverage/').forEach((file) => console.log(file));
+      let reportDir = path.join(process.env.TEST_DIR, confitConfig.paths.output.reportDir);
 
+      if (hasCodeCoverage) {
         assert(fs.existsSync(reportDir + 'coverage/') === true, 'Coverage dir exists');
         assert(fs.existsSync(reportDir + 'coverage/lcov/lcov.info') === true, 'lcov/lcov.info exists');
         fs.removeSync(reportDir); // Remove the directory
