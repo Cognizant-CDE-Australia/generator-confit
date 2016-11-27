@@ -1,6 +1,6 @@
 generator-confit:
   app:
-    _version: 671cc98165ec57e30a53953be54cf23cf25e5ef2
+    _version: 79f049c89ce496892cf2385bf177fa588156332a
     buildProfile: Latest
     copyrightOwner: Brett Uglow
     license: Apache-2.0
