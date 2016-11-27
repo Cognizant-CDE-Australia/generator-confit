@@ -45,7 +45,7 @@
     "url": "https://github.com/odecee/generator-confit.git"
   },
   "scripts": {
-    "pre-release": "npm-run-all verify test:coverage updateFixtures test:seq build",
+    "pre-release": "npm-run-all verify test:coverage updateFixtures test:int build",
     "build": "cross-env NODE_ENV=production npm run clean:prod",
     "clean:prod": "rimraf dist/",
     "coverage": "npm-run-all test:coverage test:check-coverage",
