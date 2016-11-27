@@ -6,7 +6,7 @@ var coverageConfig = {
   check: require('./thresholds.json'),
   reporting: {
     print: 'both',
-    dir: 'reports/',
+    dir: 'reports/coverage/',
     reports: [
       'cobertura',
       'html',

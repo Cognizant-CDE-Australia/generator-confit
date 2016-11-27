@@ -192,7 +192,7 @@ release:
     - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
       tasks:
         - name: upload-coverage
-          tasks: ['cat <%- paths.output.reportDir %>lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js']
+          tasks: ['cat <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js']
           description: Uploads code-coverage metrics to Coveralls.io
           features:
             - Setup - https://coveralls.zendesk.com/hc/en-us/articles/201347419-Coveralls-currently-supports
@@ -281,7 +281,7 @@ testUnit:
         - Code coverage
 
     - name: test:check-coverage
-      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js']
+      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js']
       description:
       features:
 

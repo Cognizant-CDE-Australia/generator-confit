@@ -82,7 +82,7 @@ let karmaConfig = {
   reporters: ['progress', 'junit', 'coverage', 'threshold'],
 
   coverageReporter: {
-    dir: '<%- paths.output.reportDir %>coverage',
+    dir: '<%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>',
     reporters: [
       { type: 'cobertura', subdir: 'cobertura' },
       { type: 'lcovonly', subdir: 'lcov' },

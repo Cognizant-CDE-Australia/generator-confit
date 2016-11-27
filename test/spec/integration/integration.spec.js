@@ -32,7 +32,7 @@ describe('test "' + fixtureFileName + '"', () => {
       require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
       require('./testVerify')(confitConfig, srcDir, hasCSS);
       // Execute unit tests but do not fail if coverage is too low
-      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-coverage', true);
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-threshold-check', true);
       // Execute debug unit tests and ensure that there is NO coverage report
       require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:debug:once', false);
       require('./testDocumentation')(confitConfig);

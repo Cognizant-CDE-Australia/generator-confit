@@ -341,6 +341,7 @@ testSystem:
 
 testUnit:
   configSubDir: testUnit/
+  coverageReportSubDir: coverage/
 
 testVisualRegression:
   configSubDir: testVisualRegression/
