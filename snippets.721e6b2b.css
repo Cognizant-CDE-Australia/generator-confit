@@ -1,0 +1,69 @@
+.badge,
+.badge__browser,
+.badge__node,
+.badge__npm,
+.badge__protractor,
+.badge__webpack {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  text-align: center;
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.badge > p,
+.badge__browser > p,
+.badge__node > p,
+.badge__npm > p,
+.badge__protractor > p,
+.badge__webpack > p {
+  margin: 0;
+}
+h3 .badge,
+h3 .badge__browser,
+h3 .badge__node,
+h3 .badge__npm,
+h3 .badge__protractor,
+h3 .badge__webpack {
+  position: relative;
+  top: -2px;
+}
+.badge__browser {
+  background-color: #d00;
+}
+.badge__browser:before {
+  content: 'Browser';
+}
+.badge__node {
+  background-color: #08d;
+}
+.badge__node:before {
+  content: 'NodeJS';
+}
+.badge__npm {
+  background-color: #f0dc00;
+  color: #000;
+}
+.badge__npm:before {
+  content: 'NPM';
+}
+.badge__protractor {
+  background-color: #800080;
+}
+.badge__protractor:before {
+  content: 'Protractor';
+}
+.badge__webpack {
+  background-color: #008000;
+}
+.badge__webpack:before {
+  content: 'Webpack';
+}
+
+/*# sourceMappingURL=snippets.721e6b2b.css.map*/
