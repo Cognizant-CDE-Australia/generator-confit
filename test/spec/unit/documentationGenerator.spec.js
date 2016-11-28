@@ -174,7 +174,7 @@ describe('Documentation Generator', () => {
         let pkg = fs.readJsonSync('package.json');
 
         assert.equal(pkg.scripts['docs:dev'], 'cross-env NODE_ENV=development node config/docs/serve.dev.js');
-        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
+        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production swanky-webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
@@ -199,7 +199,7 @@ describe('Documentation Generator', () => {
         let pkg = fs.readJsonSync('package.json');
 
         assert.equal(pkg.scripts['docs:dev'], 'cross-env NODE_ENV=development node config/docs/serve.dev.js');
-        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
+        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production swanky-webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
@@ -226,7 +226,7 @@ describe('Documentation Generator', () => {
         let pkg = fs.readJsonSync('package.json');
 
         assert.equal(pkg.scripts['docs:dev'], 'cross-env NODE_ENV=development node config/docs/serve.dev.js');
-        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
+        assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production swanky-webpack -p --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
         assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
