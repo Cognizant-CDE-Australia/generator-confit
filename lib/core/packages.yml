@@ -501,7 +501,7 @@ $packages:
 
   - &pkg_swanky-server
     name: swanky-server
-    version: 2.9.0
+    version: 2.11.2
 
   - &pkg_swanky-processor-ngdocs
     name: swanky-processor-ngdocs

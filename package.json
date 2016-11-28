@@ -52,7 +52,7 @@
     "dev": "cross-env NODE_ENV=development npm run verify:watch",
     "docs:_publish": "node config/docs/publish.js",
     "predocs:build": "rimraf website/",
-    "docs:build": "cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors",
+    "docs:build": "cross-env NODE_ENV=production swanky-webpack -p --progress --config config/docs/swanky.webpack.config.js --colors",
     "docs:build:serve": "npm-run-all docs:build docs:serve",
     "docs:dev": "cross-env NODE_ENV=development node config/docs/serve.dev.js",
     "docs:postpublish": "node config/docs/postpublish.js",
@@ -133,7 +133,8 @@
     "rimraf": "2.5.4",
     "semantic-release": "4.3.5",
     "swanky-processor-ngdocs": "2.1.0",
-    "swanky-server": "2.9.0",
+    "swanky-server": "2.11.2",
+    "webpack": "2.1.0-beta.25",
     "yeoman-assert": "2.2.1",
     "yeoman-test": "1.5.0"
   },
