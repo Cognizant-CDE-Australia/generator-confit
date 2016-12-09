@@ -3,7 +3,7 @@ const path = require('path');
 const baseDir = path.join(__dirname, '/../');
 const resources = require(baseDir + 'lib/core/resources.js');
 const _ = require('lodash');
-const checksum = require('checksum');
+const checksum = require('hash-files');
 const async = require('async');
 const fs = require('fs-extra');
 const yaml = require('js-yaml');
@@ -32,7 +32,7 @@ function main() {
 
   // Calculate the checksum on each generator file, then once that's done, update the fixtures
   async.each(generatorFiles, (item, cb) => {
-    checksum.file(item.file, function(err, checksum) {
+    checksum({files: [item.file]}, function(err, checksum) {
       item.version = checksum;
       cb(err);
     });
