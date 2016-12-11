@@ -1,15 +1,15 @@
 generator-confit:
   app:
-    _version: 79f049c89ce496892cf2385bf177fa588156332a
+    _version: f02196cc5cb7941ca46ec46d23bd6aef0dfcaca0
     buildProfile: Latest
     projectType: browser
     repositoryType: Other
   buildBrowser:
-    _version: 6fa137bf581f905e6befc705b674ade53821f7e2
+    _version: ed2e09f406d870194300b63a2d5d08816afd189f
     browserSupport:
       - latest
   paths:
-    _version: 26db6b5793003b99c2b0f932c06fe8dbaae58cb1
+    _version: 7f33e41600b34cd6867478d8f2b3d6b2bbd42508
     config:
       configDir: config/
     input:
@@ -31,13 +31,13 @@ generator-confit:
       vendorJSSubDir: vendor/
       viewsSubDir: views/
   buildAssets:
-    _version: 959ea4308ed5892cd303a7ee3852d1bcb70d795c
+    _version: 1323fcb6eabaf6e8a432e153dc2c7c2cce334b60
   buildCSS:
-    _version: efddae1ec2debfecf6dbe5a9b804f2fb031a6f6e
+    _version: fb21b6f45ccbaa55f597373e5d4a6221aba2a588
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: 396db955d6691029bfe33e99fb8d17236c24b5ce
+    _version: df428a706d926204228c5d9ebdbd7b49908926d9
     framework:
       - AngularJS 1.x
     outputFormat: ES5
@@ -45,46 +45,46 @@ generator-confit:
     vendorScripts:
       - angular
   buildHTML:
-    _version: fa5101f43e6788985cc4b61b0f8a9f829f8c9524
+    _version: 2d504dda228b29eeca588658d95e1b5f466f2b6f
     extension: .html
   documentation:
-    _version: 3cb3e6218cfb02f9b7e9f916487f05d161994a01
+    _version: b1658da3278b16d1982212f5e8bc05348af20e0b
     createSampleDocs: true
     generateDocs: true
     outputDir: webdocs/
     publishMethod: cloud
     srcDir: docs/
   entryPoint:
-    _version: fc4e0f7ff7a8d33ca153385e894d447aec6e7f58
+    _version: de20402bf85c703080ef6daf21e35325a3b9d604
     entryPoints: {}
   serverDev:
-    _version: 7842e6228edd5555c79d6ff81f2f9c3a9e203021
+    _version: 8107da2fb610f48d21463a97938a7cf009127fb9
     hostname: localhost
     port: 3000
     protocol: https
   serverProd:
-    _version: 3ecb63408923a19917ed0c527e816225024c4af0
+    _version: b91044bfb6b6875dbd2f84108bbff6993659e197
     hostname: localhost
     port: 3000
     protocol: https
   testUnit:
-    _version: 10013110f7e3677430c44f5a333f291456001ef0
+    _version: 4472a6d59b434226f463992d3c1914c77a6a115d
   testSystem:
-    _version: 5952b38839ff6583bde814c91b3cd919314f1b91
+    _version: e0d26db1dcc5b64990c14bd56d2c4fa5b55916e7
   testVisualRegression:
-    _version: a269fff7accd9590ddde664f00b40e9a222e45e2
+    _version: d747d5acc9a5eea7af14ac4d9f642bf698fc86e5
     enabled: true
     moduleTestDir: visualTest/
     referenceImageDir: vrt/image/
   verify:
-    _version: dfbbf57f85b6c581221db2d592dc1411661b0c18
+    _version: 30ae86c5022840a01fc08833e238a82c683fa1c7
     jsCodingStandard: AirBnB
   release:
-    _version: 2966d288ddb7afaa8dd4b13e112bf5cf6cbc8ffb
+    _version: 47f220593935b502abf17cb34a396f692e453c49
     commitMessageFormat: None
     useSemantic: false
   sampleApp:
-    _version: e70ad908eb36c3697280f40b33eabf6ec5ed9d68
+    _version: 00c0a2c6fc0ed17fcccce2d548d35896121e58ba
     createSampleApp: true
   zzfinish:
-    _version: 4defe6966425ba9cd5b7fd54d8bb17efa3caad98
+    _version: 28da28268c4011f4e03d6e11cb25600cdf11f1b3
