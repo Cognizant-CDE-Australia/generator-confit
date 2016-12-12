@@ -3,7 +3,6 @@
 
 // START_CONFIT_GENERATED_CONTENT
 var commonConfig = require('./karma.common.js');
-var webpackHelpers = require('../webpack/webpackHelpers.js')();
 var debugMode = process.argv.indexOf('--debug') > -1;
 var noThresholdCheck = process.argv.indexOf('--no-threshold-check') > -1;
 
@@ -22,6 +21,7 @@ function getConfitConfig(config) {
 
   if (debugMode) {
     <% if (buildJS.sourceFormat === 'TypeScript') { %>
+    var webpackHelpers = require('../webpack/webpackHelpers.js')();
     // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
     commonConfig.webpack.module.rules = commonConfig.webpack.module.rules.filter(function (rule) {
       return !webpackHelpers.hasLoader(rule, 'istanbul-instrumenter-loader');
