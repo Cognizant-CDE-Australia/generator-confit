@@ -22,6 +22,10 @@ documentation:
         tasks: ['docs:build', 'docs:serve']
         description: Builds then serves (via a web server) the production website.
 
+      - name: docs:clean
+        tasks: ['rimraf <%- documentation.outputDir %>']
+        description: Cleans the docs folder in preparation for building.
+
       - name: docs:serve
         tasks: ['http-server <%- documentation.outputDir %> -o']
         description: Builds then serves (via a web server) the production website.
@@ -57,7 +61,7 @@ documentation:
   - condition: <%- documentation.publishMethod === 'manual' %>
     tasks:
       - name: docs:publish
-        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        tasks: ['docs:prepublish', 'docs:clean', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation manually (edit <%- link(paths.config.configDir + resources.documentation.configSubDir + 'publish.js') %> to provide your implementation)
       - name: docs:_publish
         tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
@@ -72,7 +76,7 @@ documentation:
       - <<: *pkg_gh-pages
     tasks:
       - name: docs:publish
-        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        tasks: ['docs:prepublish', 'docs:clean', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation to GitHub's /gh-pages branch
       - name: docs:_publish
         tasks: ['node <%- paths.config.configDir + resources.documentation.configSubDir %>publish.js']
@@ -85,13 +89,12 @@ documentation:
   - condition: <%- documentation.publishMethod === 'cloud' %>
     packages:
       - <<: *pkg_now
-      - <<: *pkg_now-serve
     tasks:
       - name: docs:publish
-        tasks: ['docs:prepublish', 'docs:build', 'docs:_publish', 'docs:postpublish']
+        tasks: ['docs:prepublish', 'docs:clean', 'docs:build', 'docs:_publish', 'docs:postpublish']
         description: Publishes the documentation to the cloud using `now`. This will require some setup when using from a CI server.
       - name: docs:_publish
-        tasks: ['ns <%- documentation.outputDir %>']
+        tasks: ['now <%- documentation.outputDir %>']
         description:
 
   - condition: <%- documentation.createSampleDocs %>

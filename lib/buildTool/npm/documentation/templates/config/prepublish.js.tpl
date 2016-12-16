@@ -3,13 +3,19 @@
 // START_CONFIT_GENERATED_CONTENT<%
 var configPath = paths.config.configDir + resources.documentation.configSubDir;
 var relativePath = configPath.replace(/([^/]+)/g, '..');
+var pkgRepo = '';
+
+// If we are publishing to GitHub, we need to set the serverPath to be the repo path.
+if (documentation.publishMethod === 'GitHub') {
+  pkgRepo = pkg.repository.url.substr(pkg.repository.url.lastIndexOf('/') + 1).replace('.git', '');
+}
 %>
 const path = require('path');
 const basePath = path.join(__dirname, '/<%= relativePath %>');
 const latestVersion = require('latest-version');
 const fs = require('fs');
 const pkgName = '<%- pkg.name %>';
-const pkgRepo = '<%- pkg.repository.url.substr(pkg.repository.url.lastIndexOf('/') + 1).replace('.git', '') %>';
+const pkgRepo = '<%- pkgRepo %>';
 
 const IS_DRYRUN = process.argv.indexOf('-d') > -1;    // Allow a dry-run to see what changes would be made
 

@@ -373,12 +373,7 @@ $packages:
 
   - &pkg_now
     name: now
-    version: 0.23.0
-    global: true
-
-  - &pkg_now-serve
-    name: now-serve
-    version: 0.4.0
+    version: 0.37.0
     global: true
 
   - &pkg_npm-run-all
