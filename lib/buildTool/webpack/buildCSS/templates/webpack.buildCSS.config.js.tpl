@@ -13,10 +13,11 @@ if (buildCSS.autoprefixer) {
 -%>
 // Pass postCSS options onto the (temporary) loaderOptions property
 const autoprefixer = require('autoprefixer');
+let supportedBrowsers = {
+  browsers: <%- printJson(browserStringArray, 4) %>
+};
 config.loaderOptions.postcss = [
-  autoprefixer({
-    browsers: <%- printJson(browserStringArray, 4) %>
-  })
+  autoprefixer(supportedBrowsers)
 ];
 <%
 }
@@ -43,14 +44,14 @@ let cssLoader = {
   loader: ExtractTextPlugin.extract({
     fallbackLoader: 'style-loader',
     loader: 'css-loader!postcss-loader<%- cssLoaderOptions %>',
-    publicPath: '/'   // If this is not specified or is blank, it defaults to 'css/'
+    publicPath: '/'   // This is relative to 'extractCSSTextPlugin.filename' below.
   })
 };
 config.module.rules.push(cssLoader);
 
 // For any entry-point CSS file definitions, extract them as text files as well
 let extractCSSTextPlugin = new ExtractTextPlugin({
-  filename: 'css/[name].[contenthash:8].css',
+  filename: 'css/[name].[contenthash:8].css',     // This affects the cssLoader.loader.publicPath (see above)
   allChunks: true
 });
 config.plugins.push(extractCSSTextPlugin);

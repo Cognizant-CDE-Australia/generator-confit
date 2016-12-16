@@ -177,7 +177,7 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:clean docs:build docs:_publish docs:postpublish');
         assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
@@ -202,7 +202,7 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:clean docs:build docs:_publish docs:postpublish');
         assert.equal(pkg.scripts['docs:_publish'], 'node config/docs/publish.js');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
@@ -229,8 +229,8 @@ describe('Documentation Generator', () => {
         assert.equal(pkg.scripts['docs:build'], 'cross-env NODE_ENV=production webpack --progress --config config/docs/swanky.webpack.config.js --colors');
         assert.equal(pkg.scripts['docs:build:serve'], 'npm-run-all docs:build docs:serve');
         assert.equal(pkg.scripts['docs:serve'], 'http-server webdocs/ -o');
-        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:build docs:_publish docs:postpublish');
-        assert.equal(pkg.scripts['docs:_publish'], 'ns webdocs/');
+        assert.equal(pkg.scripts['docs:publish'], 'npm-run-all docs:prepublish docs:clean docs:build docs:_publish docs:postpublish');
+        assert.equal(pkg.scripts['docs:_publish'], 'now webdocs/');
         assert.equal(pkg.scripts['docs:prepublish'], 'node config/docs/prepublish.js');
         done();
       }
