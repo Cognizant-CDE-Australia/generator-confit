@@ -6,3 +6,7 @@ Key changes:
 - YAML is the default Confit file format now
 - support for documentation generation using Swanky (beta)
 - Grunt has been deprecated
+
+## Upgrading from 7.x
+
+Please refer to the [release log](https://github.com/odecee/confit/releases).
