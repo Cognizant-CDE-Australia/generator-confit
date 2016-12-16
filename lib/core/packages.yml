@@ -63,11 +63,11 @@ $packages:
 
   - &pkg_babel-core
     name: babel-core
-    version: 6.14.0
+    version: 6.20.0
 
-  - &pkg_babel-eslint
+  - &pkg_babel-eslint   # May not need in the future, as eslint understands more and more of ES5/6/7
     name: babel-eslint
-    version: 6.1.2
+    version: 7.1.1
 
   - &pkg_babel-loader
     name: babel-loader
@@ -83,15 +83,15 @@ $packages:
 
   - &pkg_babel-preset-es2015    # Supports ES6 module transformation
     name: babel-preset-es2015
-    version: 6.14.0
+    version: 6.18.0
 
   - &pkg_babel-preset-react-app   # As used by create-react-app
     name: babel-preset-react-app
-    version: 1.0.0
+    version: 1.0.0                # 2.0.1
 
   - &pkg_babel-runtime
     name: babel-runtime
-    version: 6.11.6
+    version: 6.20.0
 
   - &pkg_backstopjs
       name: backstopjs
@@ -103,7 +103,7 @@ $packages:
 
   - &pkg_commitizen
     name: commitizen
-    version: 2.8.6
+    version: 2.9.0
     global: true
 
   - &pkg_core-js
@@ -201,7 +201,7 @@ $packages:
 
   - &pkg_css-loader
     name: css-loader
-    version: 0.24.0
+    version: 0.26.1
 
   - &pkg_cz-customizable
     name: cz-customizable
@@ -273,7 +273,7 @@ $packages:
 
   - &pkg_gh-pages
     name: gh-pages
-    version: 0.11.0
+    version: 0.12.0
 
   - &pkg_ghooks
     name: ghooks
@@ -289,7 +289,7 @@ $packages:
 
   - &pkg_html-webpack-plugin
     name: html-webpack-plugin
-    version: 2.22.0
+    version: 2.24.1
 
   - &pkg_http-server
     name: http-server
@@ -459,11 +459,11 @@ $packages:
 
   - &pkg_sass-lint
     name: sass-lint
-    version: 1.8.2
+    version: 1.10.2
 
   - &pkg_sass-loader
     name: sass-loader
-    version: 4.0.1
+    version: 4.1.0
 
   - &pkg_semantic-release-cli
     name: semantic-release-cli
@@ -484,7 +484,7 @@ $packages:
 
   - &pkg_stylint
     name: stylint
-    version: 1.5.6
+    version: 1.5.8
 
   - &pkg_stylus
     name: stylus
@@ -492,7 +492,7 @@ $packages:
 
   - &pkg_stylus-loader
     name: stylus-loader
-    version: 2.3.1
+    version: 2.4.0
 
   - &pkg_swanky-server
     name: swanky-server
