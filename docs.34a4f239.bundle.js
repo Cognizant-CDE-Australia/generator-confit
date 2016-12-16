@@ -33,16 +33,18 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -69,71 +71,34 @@
 /***/ 1:
 /***/ function(module, exports, __webpack_require__) {
 
-var map = {
-	"./badge/index.js": 4
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 1;
+"use strict";
 
 
-/***/ },
+__webpack_require__(8);
 
-/***/ 10:
-/***/ function(module, exports) {
+// Add any javascript here
+if (false) {
+  module.hot.accept();
+}
 
-// removed by extract-text-webpack-plugin
+// Documentation specific styles
 
 /***/ },
 
 /***/ 14:
 /***/ function(module, exports, __webpack_require__) {
 
-"use strict";
-'use strict';
-
-module.exports = (function() {
-
-  function requireAll(requireContext) {
-    return requireContext.keys().map(requireContext);
-  }
-
-  requireAll(__webpack_require__(1));
-
-})();
+module.exports = __webpack_require__(1);
 
 
 /***/ },
 
-/***/ 4:
-/***/ function(module, exports, __webpack_require__) {
+/***/ 8:
+/***/ function(module, exports) {
 
-"use strict";
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-__webpack_require__(10);
-
-exports.default = function () {
-  console.log('badge');
-}();
+// removed by extract-text-webpack-plugin
 
 /***/ }
 
 /******/ });
-//# sourceMappingURL=snippets.721e6b2b.bundle.js.map
+//# sourceMappingURL=docs.34a4f239.bundle.js.map

@@ -33,16 +33,18 @@
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
 /******/
-/******/ 	// identity function for calling harmory imports with the correct context
+/******/ 	// identity function for calling harmony imports with the correct context
 /******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
-/******/ 	// define getter function for harmory exports
+/******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		Object.defineProperty(exports, name, {
-/******/ 			configurable: false,
-/******/ 			enumerable: true,
-/******/ 			get: getter
-/******/ 		});
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -61,16 +63,19 @@
 /******/ 	__webpack_require__.p = "/generator-confit/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 15:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(2);
+"use strict";
 
+module.exports = (function() {
+    __webpack_require__(2);
+  })();
 
 /***/ },
 
@@ -78,16 +83,17 @@ module.exports = __webpack_require__(2);
 /***/ function(module, exports, __webpack_require__) {
 
 "use strict";
-'use strict';
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 __webpack_require__(9);
 
-// Add any javascript here
-if (false) {
-  module.hot.accept();
-}
-
-// Documentation specific styles
+exports.default = function () {
+  console.log('badge');
+}();
 
 /***/ },
 
@@ -99,4 +105,4 @@ if (false) {
 /***/ }
 
 /******/ });
-//# sourceMappingURL=docs.721e6b2b.bundle.js.map
+//# sourceMappingURL=snippets.34a4f239.bundle.js.map
