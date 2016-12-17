@@ -21,7 +21,7 @@ describe('Release Generator', () => {
         // There should also be some configuration in package.json/config
         let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
+        assert.equal(pkg.config.ghooks['commit-msg'], 'node ./node_modules/cz-customizable-ghooks/lib/index.js $2');
         assert.equal(pkg.config.ghooks['pre-push'], undefined);
 
         done();
@@ -50,7 +50,7 @@ describe('Release Generator', () => {
 
         assert.equal(pkg.config.commitizen.path, 'node_modules/cz-customizable');
         assert.equal(pkg.config['cz-customizable'].config, 'config/release/commitMessageConfig.js');
-        assert.equal(pkg.config.ghooks['commit-msg'], './node_modules/cz-customizable-ghooks/lib/index.js $2');
+        assert.equal(pkg.config.ghooks['commit-msg'], 'node ./node_modules/cz-customizable-ghooks/lib/index.js $2');
         assert.equal(pkg.config.ghooks['pre-push'], 'npm-run-all verify test:coverage --silent');
 
         done();

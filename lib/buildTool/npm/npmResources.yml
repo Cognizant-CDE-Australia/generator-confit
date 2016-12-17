@@ -127,7 +127,7 @@ release:
       packageJsonConfig:
         - config.commitizen.path: node_modules/cz-customizable
         - config.cz-customizable.config: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
-        - config.ghooks.commit-msg: ./node_modules/cz-customizable-ghooks/lib/index.js $2
+        - config.ghooks.commit-msg: node ./node_modules/cz-customizable-ghooks/lib/index.js $2
       templateFiles:
         - src: commitMessageConfig.js
           dest: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js

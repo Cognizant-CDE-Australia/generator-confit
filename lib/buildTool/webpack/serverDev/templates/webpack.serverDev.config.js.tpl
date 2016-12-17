@@ -5,7 +5,7 @@ const fs = require('fs');   // path is declared elsewhere
 const confitConfig = yaml.load(fs.readFileSync(path.join(process.cwd(), 'confit.yml')))['generator-confit'];  // Try to keep the code lively! If confit.json changes, this code still works.
 
 const HOST = process.env.HOST || confitConfig.serverDev.hostname;
-const PORT = process.env.PORT || confitConfig.serverDev.port;
+const PORT = Number(process.env.PORT || confitConfig.serverDev.port);
 
 /**
  * Webpack Development Server configuration

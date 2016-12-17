@@ -48,6 +48,8 @@ module.exports = {
    */
 
   allowCustomScopes: false,
-  allowBreakingChanges: ['feat', 'fix']
+  allowBreakingChanges: ['feat', 'fix'],
 
+  // Appends the branch name to the footer of the commit. Useful for tracking commits after branches have been merged
+  appendBranchNameToCommitMessage: false
 };
