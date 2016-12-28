@@ -230,7 +230,7 @@ serverProd:
       tasks: ["<% if (config.serverProd) { %><%- 'serve-https -p ' + serverProd.port + ' -d ' + paths.output.prodDir + ' --servername ' + serverProd.hostname -%><% } -%>"]
 
     - name: serve:prod:http
-      tasks: ["<% if (config.serverProd) { %><%- 'serve -C -p ' + serverProd.port + ' ' + paths.output.prodDir -%><% } -%>"]
+      tasks: ["<% if (config.serverProd) { %><%- 'serve -C --compress -p ' + serverProd.port + ' ' + paths.output.prodDir -%><% } -%>"]
 
 
 testUnit:

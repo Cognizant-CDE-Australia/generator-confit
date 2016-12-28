@@ -28,7 +28,7 @@ config.module.rules.push(htmlLoader);
 var selectedFramework = buildJS.framework[0] || '';
 if (selectedFramework === 'AngularJS 2.x') { %>
 // Configuration that works with Angular 2
-config.loaderOptions.htmlLoader = {
+LOADER_OPTIONS.options.htmlLoader = {
   minimize: true,
   removeAttributeQuotes: false,
   caseSensitive: true,
