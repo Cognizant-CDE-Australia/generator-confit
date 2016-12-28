@@ -1,5 +1,4 @@
 /** Build START */
-
 <%
 var configPath = paths.config.configDir + 'webpack/';
 var relativePath = configPath.replace(/([^/]+)/g, '..');
@@ -14,13 +13,18 @@ const helpers = require('./webpackHelpers')(path.resolve(__dirname, '<%- relativ
  * Webpack Constants
  */
 const HMR = helpers.hasProcessFlag('hot');
-const METADATA = {
-  title: 'Confit Sample Project',
-  baseUrl: '/',
-  isDevServer: helpers.isWebpackDevServer(),
-  HMR: HMR
-};
-
+const METADATA = Object.assign(
+  {
+    title: 'Confit Sample Project',
+    baseUrl: '/',
+    isDevServer: helpers.isWebpackDevServer(),
+    HMR: HMR,
+    jsSourceMap: 'cheap-source-map',    // See https://webpack.js.org/configuration/devtool/#devtool
+    cssSourceMap: false,                 // There are issues with this option for the css-loader: https://github.com/webpack/css-loader#sourcemaps
+    performanceHints: 'warning'
+  },
+  mergeOptions.metaData
+);
 
 
 // https://gist.github.com/sokra/27b24881210b56bbaff7#resolving-options
@@ -35,13 +39,19 @@ let moduleDirectories = ['node_modules', 'bower_components']; // Only needed to 
 let config = {
   context: helpers.root('<%= paths.input.srcDir.slice(0, -1) %>'),  // The baseDir for resolving the entry option and the HTML-Webpack-Plugin
 
+  /**
+   * Performance settings - https://webpack.js.org/configuration/performance/#performance
+   */
+  performance: {
+    hints: METADATA.performanceHints
+  },
 
   /**
    * Devtool
    * Reference: https://webpack.js.org/configuration/devtool/
    * Type of sourcemap to use per build type
    */
-  devtool: 'source-map',
+  devtool: METADATA.jsSourceMap,
 
   /**
    * Options affecting the output of the compilation.
@@ -76,7 +86,6 @@ let config = {
    * See: http://webpack.github.io/docs/configuration.html#resolve
    */
   resolve: {
-
     /*
      * An array of extensions that should be used to resolve modules.
      *
@@ -101,7 +110,7 @@ let config = {
    * Include polyfills or mocks for various node stuff
    * Description: Node configuration
    *
-   * See: https://webpack.github.io/docs/configuration.html#node
+   * See: https://webpack.js.org/configuration/node/
    */
   node: {
     global: true,
@@ -110,8 +119,19 @@ let config = {
     module: false,
     clearImmediate: false,
     setImmediate: false
-  },
-
-  loaderOptions: {}     // Temporary property to allow multiple builders to add their options, then the dev/prod builds will add the LoaderOptionsPlugin
+  }
 };
+
+
+/*
+ * Loader options (for backwards compatibility)
+ * See https://webpack.js.org/guides/migrating/#loaderoptionsplugin-context
+ * E.g. https://github.com/jtangelder/sass-loader/issues/285
+ */
+let LOADER_OPTIONS = Object.assign(
+  {options: {
+    context: config.context
+  }},
+  mergeOptions.loaderOptions
+);
 /* **/
