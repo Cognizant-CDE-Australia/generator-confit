@@ -553,12 +553,7 @@ $packages:
 
   - &pkg_webpack
     name: webpack
-    version: 2.2.0-rc.0
-
-  # We only need to include this package with webpack 2.1.0-beta.25. Later betas include it already
-  - &pkg_loader-utils
-    name: loader-utils
-    version: 0.2.16
+    version: 2.2.0-rc.3
 
   - &pkg_webpack-dev-server
     name: webpack-dev-server
