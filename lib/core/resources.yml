@@ -12,6 +12,7 @@ app:
 
   repositoryTypes:
     - GitHub
+    - BitBucket
     - Other
 
   projectTypeList:
@@ -290,17 +291,12 @@ readme:
     <% }); %>
 
 
-
+# Not sure why all this config isn't in one place, not split with npmResources.yml
 release:
   defaults:
     useSemantic: true
     commitMessageFormat: Conventional
     checkCodeCoverage: true
-    publicRepository: true
-
-  repositoryTypes:
-    - GitHub
-    - Other
 
   commitMessageFormats:
     - Conventional
@@ -308,29 +304,6 @@ release:
 
   configSubDir: release/
 
-  configModules:
-    - condition: <%- release.checkCodeCoverage %>
-      packages:
-        - <<: *pkg_ghooks
-      packageJsonConfig:
-        - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
-
-    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' && app.publicRepository %>
-      packages:
-        - <<: *pkg_coveralls
-      readmeBadges:
-        - name: Coverage Status
-          image: https://coveralls.io/repos/github/<%- repoConfig.repository %>/badge.svg?branch=master
-          url: https://coveralls.io/github/<%- repoConfig.repository %>?branch=master
-          priority: 30
-
-
-    - condition: <%- release.useSemantic %>
-      readmeBadges:
-        - name: semantic-release
-          image: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-          url: https://github.com/semantic-release/semantic-release
-          priority: 20
 
 sampleApp:
   defaults:

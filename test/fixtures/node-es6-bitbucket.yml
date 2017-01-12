@@ -5,8 +5,8 @@ generator-confit:
     copyrightOwner: Brett Uglow
     license: UNLICENSED
     projectType: node
-    publicRepository: true
-    repositoryType: GitHub
+    publicRepository: false
+    repositoryType: BitBucket
   paths:
     _version: 7f33e41600b34cd6867478d8f2b3d6b2bbd42508
     config:
