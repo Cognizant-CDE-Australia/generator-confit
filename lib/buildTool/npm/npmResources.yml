@@ -1,3 +1,4 @@
+# Should only contain config that is for this build tool, which is dependent on project-type
 documentation:
 
   toolModules:
@@ -118,6 +119,30 @@ entryPoint:
 
 release:
   toolModules:
+    - condition: <%- release.checkCodeCoverage %>
+      packages:
+        - <<: *pkg_ghooks
+      packageJsonConfig:
+        - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
+
+    # Coveralls works for BitBucket and GitHub only
+    - condition: <%- release.checkCodeCoverage && (app.repositoryType === 'BitBucket' || app.repositoryType === 'GitHub') && app.publicRepository %>
+      packages:
+        - <<: *pkg_coveralls
+      readmeBadges:
+        - name: Coverage Status
+          image: https://coveralls.io/repos/<%- app.repositoryType.toLowerCase() %>/<%- repoConfig.repository %>/badge.svg?branch=master
+          url: https://coveralls.io/<%- app.repositoryType.toLowerCase() %>/<%- repoConfig.repository %>?branch=master
+          priority: 30
+
+
+    - condition: <%- release.useSemantic %>
+      readmeBadges:
+        - name: semantic-release
+          image: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+          url: https://github.com/semantic-release/semantic-release
+          priority: 20
+
     - condition: <%- release.commitMessageFormat === 'Conventional' %>
       packages:
         - <<: *pkg_cz-customizable
@@ -145,6 +170,14 @@ release:
         - cmd: git    # It is safe to run this multiple times
           args: ['init']
 
+    - condition: <%- !release.useSemantic %>
+      tasks:
+        - name: release
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
+          description: Verify code, run unit tests, check test coverage, build software.
+          features:
+            - Define another script-task called `postrelease` to define the rest of your release process
+
     - condition: <%- app.repositoryType === 'GitHub' && release.useSemantic %>
       packages:
         - <<: *pkg_semantic-release-cli
@@ -161,21 +194,12 @@ release:
               for each release (which appears in the "Releases" section in GitHub) and
               publishes the package to NPM (when all the tests are successful) with a semantic version number.
 
-    - condition: <%- app.repositoryType === 'GitHub' && !release.useSemantic %>
-      tasks:
-        - name: pre-release
-          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
-          description: Verify code, run unit tests, check test coverage, build software.
-          features:
-            - Define another script-task called `postrelease` to define the rest of your release process
-
-    - condition: <%- app.repositoryType === 'Other' && release.useSemantic %>
+    - condition: <%- app.repositoryType === 'BitBucket' && release.useSemantic %>
       packages:
         - <<: *pkg_corp-semantic-release
       tasks:
         - name: semantic-release
-          tasks: ['corp-semantic-release']
-
+          tasks: ['corp-semantic-release --changelogpreset angular-bitbucket']
         - name: release
           tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
           description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
@@ -185,15 +209,22 @@ release:
             - Tags the changes with the release
             - Requires conventional commit messages to be used
 
-    - condition: <%- app.repositoryType === 'Other' && !release.useSemantic %>
+    - condition: <%- app.repositoryType === 'Other' && release.useSemantic %>
+      packages:
+        - <<: *pkg_corp-semantic-release
       tasks:
+        - name: semantic-release
+          tasks: ['corp-semantic-release']
         - name: release
-          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>']
-          description: Create production version of software, verify code, run unit tests.
+          tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
+          description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
           features:
-            - Define another script-task called `postrelease` to define the rest of your release process
+            - Generates `CHANGELOG.md`
+            - Bumps `package.json`
+            - Tags the changes with the release
+            - Requires conventional commit messages to be used
 
-    - condition: <%- release.checkCodeCoverage && app.repositoryType === 'GitHub' %>
+    - condition: <%- app.repositoryType === 'GitHub' && release.checkCodeCoverage %>
       tasks:
         - name: upload-coverage
           tasks: ['cat <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js']
@@ -201,6 +232,7 @@ release:
           features:
             - Setup - https://coveralls.zendesk.com/hc/en-us/articles/201347419-Coveralls-currently-supports
             - Define an environment variable called COVERALLS_REPO_TOKEN in your build environment with the repo token from https://coveralls.io/github/<repo-name>/settings
+            - In your CI configuration (e.g. `travis.yml`), call `npm run upload-coverage` if the build is successful.
 
 sampleApp:
 

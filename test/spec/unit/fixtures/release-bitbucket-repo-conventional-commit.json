@@ -1,0 +1,15 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "Latest",
+      "projectType": "node",
+      "repositoryType": "BitBucket",
+      "publicRepository": true
+    },
+    "paths": {
+      "config": {
+        "configDir": "config/"
+      }
+    }
+  }
+}

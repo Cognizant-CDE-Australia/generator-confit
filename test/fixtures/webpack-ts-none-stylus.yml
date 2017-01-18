@@ -3,6 +3,7 @@ generator-confit:
     _version: f02196cc5cb7941ca46ec46d23bd6aef0dfcaca0
     buildProfile: Latest
     projectType: browser
+    publicRepository: false
     repositoryType: Other
   buildBrowser:
     _version: ed2e09f406d870194300b63a2d5d08816afd189f

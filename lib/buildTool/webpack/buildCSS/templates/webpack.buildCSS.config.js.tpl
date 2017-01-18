@@ -41,7 +41,8 @@
   }
   %>
   // If we are in development, we want live reloading for our CSS. So we cannot use ExtractTextPlugin
-  // (see https://github.com/css-modules/webpack-demo/issues/8#issuecomment-135647584 and https://ihaveabackup.net/article/sass-with-sourcemaps-webpack-and-live-reload)
+  // (see https://github.com/css-modules/webpack-demo/issues/8#issuecomment-135647584 and
+  // https://ihaveabackup.net/article/sass-with-sourcemaps-webpack-and-live-reload)
   let cssLoader;
   let cssLoaderOptions = <%- printJson(cssLoaderOptions, 2) %>;
 
@@ -65,7 +66,7 @@
       loader: ExtractTextPlugin.extract({
         fallbackLoader: 'style-loader',
         loader: 'css-loader!postcss-loader' + helpers.getLoaderQueryStr('<%- cssLoaderName %>', cssLoaderOptions),
-        publicPath: '/'   // This is relative to 'extractCSSTextPlugin.filename' below.
+        publicPath: '../'   // This is relative to 'extractCSSTextPlugin.filename' below.
       })
     };
 

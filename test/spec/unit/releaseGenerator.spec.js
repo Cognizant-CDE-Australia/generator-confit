@@ -149,7 +149,7 @@ describe('Release Generator', () => {
         // And there should be some scripts
         let pkg = fs.readJsonSync('package.json');
 
-        assert(pkg.scripts['pre-release'].length > 0, 'scripts.release exists');
+        assert(pkg.scripts['release'].length > 0, 'scripts.release exists');
         assert(pkg.scripts['semantic-release'] === undefined, 'scripts.semantic-release does not exist');
 
         done();
@@ -183,5 +183,28 @@ describe('Release Generator', () => {
       useSemantic: true,
       commitMessageFormat: 'Conventional',
     });
+  });
+
+  it('should generate the correct default config for public BitBucket repositories', (done) => {
+    utils.runGenerator(
+      GENERATOR_UNDER_TEST,
+      'release-bitbucket-repo-conventional-commit.json',
+      function before() {
+        yoassert.noFile(['package.json']);
+      },
+      function after() {
+        yoassert.file(['package.json']);
+
+        let pkg = fs.readJsonSync('package.json');
+
+        assert(pkg.devDependencies.ghooks, 'ghooks package included');
+        assert(pkg.devDependencies.coveralls, 'coveralls package included');
+        assert(pkg.devDependencies['corp-semantic-release'], 'ghooks package included');
+
+        assert.equal(pkg.scripts['semantic-release'], 'corp-semantic-release --changelogpreset angular-bitbucket');
+
+        done();
+      }
+    ).withPrompts();
   });
 });
