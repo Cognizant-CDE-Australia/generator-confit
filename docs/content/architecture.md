@@ -31,10 +31,13 @@ The `app` generator is all about capturing application-wide settings and generat
 - The `Latest` build profile is an alias to the newest set of tools and config recommended for projects. It will change every few months as new & better tooling arrives.
 - The other profiles will show the date that they were added. This allows projects to update their Confit-generator version but continue to use the same set of tools that were used by Confit on a certain date.
 
-**Where will this project be hosted?** [**GitHub**, Other] `app.repositoryType`
-- Repositories hosted on Github can take advantage of GitHub-specific integrations. E.g. *semantic-release* can generate release information within the "Releases" tab in GitHub.
-- Non-GitHub repositories have fewer integration options. 
-- Repositories hosted on "GitHub Enterprise" should choose "Other", as enterprise repositories are typically not public
+**Where will this project be hosted?** [**GitHub**, BitBucket, Other] `app.repositoryType`
+- Repositories hosted on Github or BitBucket can take advantage of repository-specific integrations. E.g. *semantic-release* can generate release information within the "Releases" tab in GitHub.
+- Other repositories have fewer integration options. 
+
+**Is this repository public?** [**true**, false] `app.publicRepository`
+- Public repositories are repositories that are viewable by everyone.
+- This setting affects what Readme badges can be generated, as some badges only work with public repositories
  
 **Choose a license**: [**UNLICENSED**, *common SPDX licences*, *full SPDX licence list*] `app.license`
 - Sets the `package.json` `license` field and optionally generates the license file (for every license type other than "UNLICENSED").

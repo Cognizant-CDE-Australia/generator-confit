@@ -1,4 +1,4 @@
-## Upgrading to 7.x from earlier versions
+## Upgrading *to* 7.x from earlier versions
 
 Key changes:
 - Webpack 2.1.0 beta 21. See [what's new in Webpack 2](https://gist.github.com/sokra/27b24881210b56bbaff7)
@@ -7,6 +7,6 @@ Key changes:
 - support for documentation generation using Swanky (beta)
 - Grunt has been deprecated
 
-## Upgrading from 7.x
+## Upgrading *from* 7.x
 
 Please refer to the [release log](https://github.com/odecee/confit/releases).
