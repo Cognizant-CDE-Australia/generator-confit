@@ -553,11 +553,11 @@ $packages:
 
   - &pkg_webpack
     name: webpack
-    version: 2.2.0-rc.3
+    version: 2.2.0
 
   - &pkg_webpack-dev-server
     name: webpack-dev-server
-    version: 2.2.0-rc.0
+    version: 2.2.0
 
   - &pkg_whatwg-fetch   # Polyfill for fetch() API
     name: whatwg-fetch

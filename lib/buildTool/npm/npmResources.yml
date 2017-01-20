@@ -166,6 +166,11 @@ release:
               features:
                 - Asks questions about the change to generate a valid conventional commit message
                 - Can be customised by modifying <%- link(paths.config.configDir + resources.release.configSubDir + 'commitMessageConfig.js') %>
+      readmeBadges:
+        - name: Commitizen friendly
+          image: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+          url: http://commitizen.github.io/cz-cli/
+          priority: 90
       onInstall:
         - cmd: git    # It is safe to run this multiple times
           args: ['init']

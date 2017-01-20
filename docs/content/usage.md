@@ -1,9 +1,9 @@
 ## Installation
 
-Install Node.js 4+ or 6+ (this can be easily automated with tools such as [nvm](https://github.com/creationix/nvm))
+Install Node.js 4+ (this can be easily automated with tools such as [nvm](https://github.com/creationix/nvm))
 
 ```bash
-nvm install 6
+nvm install 7
 #   OR
 nvm install 4
 ```
@@ -67,7 +67,7 @@ Depending on your configuration, you may delegate this process to your continuou
 or you can publish manually (not recommended).
 
 `npm run pre-release` runs all of the unit tests, verifies code, checks test coverage and builds your software for production. If there were
-no errors, you can then run `npm run semantic-release` if using semantic releasing.
+no errors, you can then run `npm run semantic-release` (if using semantic releasing).
  
 If you are not using semantic releasing, you must define your own `release` task in `package.json` and then call it yourself.
 
