@@ -283,6 +283,10 @@ $packages:
     name: glob
     version: 7.0.5
 
+  - &pkg_highlightjs
+    name: highlightjs
+    version: 9.8.0
+
   - &pkg_html-loader
     name: html-loader
     version: 0.4.4
@@ -400,10 +404,6 @@ $packages:
     name: postcss-loader
     version: 0.13.0
 
-  - &pkg_prismjs
-    name: prismjs
-    version: 1.5.0
-
   - &pkg_promise    # Promise polyfill for React
     name: promise
     version: 7.1.1
@@ -494,9 +494,9 @@ $packages:
     name: stylus-loader
     version: 2.4.0
 
-  - &pkg_swanky-server
-    name: swanky-server
-    version: 3.0.0
+  - &pkg_swanky
+    name: swanky
+    version: 2.5.0
 
   - &pkg_swanky-processor-ngdocs
     name: swanky-processor-ngdocs

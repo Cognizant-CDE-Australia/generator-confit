@@ -4,9 +4,9 @@ documentation:
   toolModules:
   - packages:
       - <<: *pkg_webpack
-      - <<: *pkg_swanky-server
+      - <<: *pkg_swanky
       - <<: *pkg_swanky-processor-ngdocs
-      - <<: *pkg_prismjs
+      - <<: *pkg_highlightjs
       - <<: *pkg_http-server
       - <<: *pkg_latest-version
 

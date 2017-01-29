@@ -3,31 +3,35 @@
  * Typography
  */
 
+$heading-colour = lighten($black, 20%)
+
 body
   line-height rem(22)
 
 h1.h1, h2.h2, h3.h3, h4.h4, h5.h5, h6.h6
-  font-weight 300
+  color $heading-colour
+  font-weight 600
   font-family 'Open Sans', sans-serif
   display block
 
 h1.h1
-  font-size 3rem
+  font-size 2.8rem
 
 h2.h2
   font-size 2.2rem
   padding 0 0 2rem
-  margin 2rem 0 4rem
-  border-bottom 1px solid $border-colour
+  margin 2rem 0 2rem
   width 100%
 
 h3.h3
   font-size 1.8rem
+  padding 0 0 1.75rem
   margin 2rem 0 2rem
+  border-bottom 1px solid $border-colour
 
 h4.h4
-  font-size 1.6rem
-  margin 2rem 0 2rem
+  font-size 1.5rem
+  margin 1.5rem 0 1.5rem
 
 h5.h5
   font-size 1.3rem
@@ -39,7 +43,7 @@ strong.strong
   font-weight 600
 
 // Links
-a.a, &:visited
+a.a, a.a:visited, a.a:focus
   color $brand-secondary
   text-decoration none
 
@@ -57,7 +61,7 @@ p.p
   max-width 800px
 
 p.p, ul.ul, ol.ol
-  margin-bottom 1.5rem
+  margin-bottom 2rem
 
 hr.hr
   margin-top 40px
@@ -91,6 +95,7 @@ pre.pre, code.code
   box-sizing border-box
   margin-bottom 40px
   border-bottom 1px solid $border-colour
+  width: 100%
 
   @media screen and (min-width: $screen-is-bigger-than-tablet)
     margin 0

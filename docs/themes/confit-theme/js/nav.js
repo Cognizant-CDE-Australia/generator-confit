@@ -5,7 +5,9 @@ let body;
 export default (() => {
   body = document.getElementsByTagName('body')[0];
   toggle = document.getElementById('navToggle');
-  toggle.addEventListener('click', toggleNav);
+  if (toggle) {
+    toggle.addEventListener('click', toggleNav);
+  }
 })();
 
 function toggleNav() {

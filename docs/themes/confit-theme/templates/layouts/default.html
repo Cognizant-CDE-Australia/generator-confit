@@ -63,6 +63,11 @@
         {% for item in contents %}
             {$ item.content $}
         {% endfor %}
+
+      <div class="{$ styles['guide-links'] $}">
+        {% if previousPage %}<a href="/{$ previousPage.url $}" class="{$ styles.a $} {$ styles.previous $}">← {$ previousPage.title $}</a>{% endif %}
+        {% if nextPage %}<a href="/{$ nextPage.url $}" class="{$ styles.a $} {$ styles.next $}">{$ nextPage.title $} →</a>{% endif %}
+      </div>
     </article>
 </section>
 

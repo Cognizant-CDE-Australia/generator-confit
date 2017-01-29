@@ -34,7 +34,7 @@
     padding 25px 20px 25px 30px
     border-bottom 1px solid darken($block-background-colour, 5%)
 
-  // Sub navigation
+// Sub navigation
   .li > .ul
     list-style none
     padding 0
@@ -103,3 +103,18 @@
 :global
   a.sw-active
     color: $brand-primary!important
+
+.guide-links
+  margin-bottom 40px
+  padding-bottom 20px
+  border-bottom 1px solid $white-smoke
+  width 100%
+  &:after
+    @extend .clearfix
+
+  .a
+    text-decoration none !important
+    font-weight 600
+
+  .next
+    float right
