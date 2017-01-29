@@ -9,7 +9,6 @@ serverPath:
 # END_CONFIT_GENERATED_CONTENT
 
 theme: docs/themes/confit-theme
-snippets: docs/snippets
 
 sections:
 
@@ -28,12 +27,3 @@ sections:
   - title: Contributing
     content: CONTRIBUTING.md
 
-#  - title: Test
-#    content: docs/content/test.md
-
-    # Add sub-sections later
-#
-#  - title: API Doc
-#    content: lib/core/buildToolUtils.js
-#    processor:
-#      ngdocs: null

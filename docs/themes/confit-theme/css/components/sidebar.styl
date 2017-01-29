@@ -5,14 +5,17 @@
 
 .sidebar
   background $block-background-colour
-  height 100%
   position fixed
   z-index 1
+  overflow-x auto
+  -webkit-overflow-scrolling touch
+  -ms-overflow-style none
   width $sidebar-width
   top $header-height-mobile
+  bottom 0
   left -($sidebar-width)
   transition all $duration ease
-  transform: translate3d(0, 0, 0);
+  transform translate3d(0, 0, 0)
 
   @media screen and (min-width: $screen-is-bigger-than-tablet)
     display block
@@ -29,5 +32,5 @@
       box-shadow 2px 0px 6px 0px rgba(0,0,0,0.2)
 
       @media screen and (min-width: $screen-is-bigger-than-tablet)
-        transform: translate3d(0, 0, 0);
+        transform translate3d(0, 0, 0)
         box-shadow none

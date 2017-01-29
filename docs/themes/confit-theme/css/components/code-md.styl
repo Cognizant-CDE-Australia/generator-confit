@@ -3,10 +3,11 @@
 // ...and tweaked a little
 
 .pre
+  position relative
   margin-top: 0
-  margin-bottom: 0
+  margin-bottom 4rem
   word-wrap: normal
-  padding: 16px
+  padding: 20px
   overflow: auto
   line-height: 1.45
   background-color: $alabaster
@@ -37,3 +38,16 @@
   word-wrap: normal
   background-color: transparent
   border: 0
+
+:global
+  .language-type
+    position absolute
+    top 5px
+    right 0
+    color $grey-smoke
+    text-align right
+    font-size 1.25rem
+    padding 5px 10px 0
+    line-height 15px
+    height 15px
+    font-weight 600

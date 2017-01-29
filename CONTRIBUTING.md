@@ -42,7 +42,7 @@ We seriously appreciate thoughtful comments. If an issue is important to you, ad
 
 Granted that you share your thoughts, we might even be able to come up with creative solutions to your specific problem. If everything you'd like to say has already been brought up but you'd still like to add a token of support, feel free to add a [👍 thumbs up reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) on the issue itself and on the comment which best summarizes your thoughts.
 
-### "My issue isn't getting enough attention"
+### 'My issue isn't getting enough attention'
 
 First of all, **sorry about that!** We want you to have a great time with Confit.
 
@@ -50,7 +50,7 @@ There's hundreds of open issues and prioritizing what to work on is an important
 
 Feel free to bump your issues if you think they've been neglected for a prolonged period!
 
-### "I want to help!"
+### 'I want to help!'
 
 **Now we're talking**. If you have a bug fix or new feature that you would like to contribute to Confit, please **find or open an issue about it before you start working on it.** Talk about what you would like to do. It may be that somebody is already working on it, or that there are particular issues that you should know about before implementing the change.
 

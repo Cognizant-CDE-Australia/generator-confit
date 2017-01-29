@@ -1,7 +1,7 @@
 // Code Preview Window
 .code-snippet
   position relative
-  margin-bottom 25px
+  margin-bottom 4rem
 
 .render-preview
   display: block;
@@ -12,6 +12,43 @@
 
 .code-wrapper
   clear: both
+
+  pre
+    position relative
+    margin-top: 0
+    margin-bottom 4rem
+    word-wrap: normal
+    padding: 20px
+    overflow: auto
+    line-height: 1.45
+    background-color: $alabaster
+    font-family: 'Fira Mono', monospace;
+
+  code
+    padding: 0.2em
+    margin: 0
+    background-color: rgba(0,0,0,0.04)
+    font-family: 'Fira Mono', monospace;
+
+  pre > code
+    padding: 0
+    margin: 0
+    font-size: 100%
+    word-break: normal
+    white-space: pre
+    background: transparent
+    border: 0
+
+  pre code
+    display: inline
+    max-width: auto
+    padding: 0
+    margin: 0
+    overflow: visible
+    line-height: inherit
+    word-wrap: normal
+    background-color: transparent
+    border: 0
 
 .example-wrapper
   padding: 2rem
@@ -28,8 +65,9 @@
 .window-bar
   transition: 0.25s ease-in-out
   height 38px
-  background #1D1F21
-  border-radius: 6px
+  background $white-smoke
+  border-top-left-radius 6px
+  border-top-right-radius 6px
 
 .window-bar .circles
   margin 10px 15px 0 15px
@@ -46,12 +84,12 @@
 
 .window-bar .circle-red
   background-color #FF5A57
-  border-color #E53C3C
+  border-color darken(#E53C3C, 5%)
 
 .window-bar .circle-yellow
   background-color #FFBE3E
-  border-color #E4A132
+  border-color darken(#FFBE3E, 5%)
 
 .window-bar .circle-green
   background-color #00CC50
-  border-color #00B140
+  border-color darken(#00CC50, 5%)
