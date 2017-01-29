@@ -10,7 +10,7 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600,600italic,300' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-<link rel="shortcut icon" href="/generator-confit/favicon.ico"><link href="/generator-confit/theme.34a4f239.css" rel="stylesheet"><link href="/generator-confit/snippets.34a4f239.css" rel="stylesheet"><link href="/generator-confit/docs.34a4f239.css" rel="stylesheet"></head>
+<link rel="shortcut icon" href="/generator-confit/favicon.ico"><link href="/generator-confit/theme.3ca91588.css" rel="stylesheet"><link href="/generator-confit/snippets.3ca91588.css" rel="stylesheet"><link href="/generator-confit/docs.3ca91588.css" rel="stylesheet"></head>
 
 <body class="">
     <div class="index_outer-wrap__1vW7y">
@@ -73,30 +73,28 @@
         
 
         
-            <section id="sid-s9qa8xb5" class="index_section__2eRdj">
+            <section id="sid-kmhax2fc" class="index_section__2eRdj">
     
 
-    <h2 class="index_h2__2oHd5" id="installation">Installation</h2>
+    <h2 class="index_h2__2oHd5" id="user-content-installation">Installation</h2>
 <p class="index_p__1NOy6">Install Node.js 4+ (this can be easily automated with tools such as <a class="index_a__oUQfl" href="https://github.com/creationix/nvm">nvm</a>)</p>
-<pre class="index_pre__brjEE"><code class="index_code__3EW9K" class="bash language-bash">nvm install 7
-#   OR
-nvm install 4
-</code></pre>
+<pre class="index_pre__brjEE"><code class="bash language-bash index_code__3EW9K">nvm <span class="hljs-keyword ">install</span> <span class="hljs-number ">7</span>
+<span class="hljs-comment ">#   OR</span>
+nvm <span class="hljs-keyword ">install</span> <span class="hljs-number ">4</span></code></pre>
 <p class="index_p__1NOy6">Install  <a class="index_a__oUQfl" href="https://yeoman.io">Yeoman</a> and then Confit:</p>
-<pre class="index_pre__brjEE"><code class="index_code__3EW9K" class="bash language-bash">npm install -g yo
-npm install -g generator-confit
-</code></pre>
-<h2 class="index_h2__2oHd5" id="generatinganewprojectwithconfit">Generating a new project with Confit</h2>
+<pre class="index_pre__brjEE"><code class="bash language-bash index_code__3EW9K">npm <span class="hljs-keyword ">install</span> -g yo
+npm <span class="hljs-keyword ">install</span> -g generator-confit</code></pre>
+<h2 class="index_h2__2oHd5" id="user-content-generating-a-new-project-with-confit">Generating a new project with Confit</h2>
 <ol class="index_ol__2XH-h">
 <li class="index_li__3iyTZ">Type <code class="index_code__3EW9K">yo confit</code></li>
 <li class="index_li__3iyTZ">Answer questions about the kind of project you want.</li>
 <li class="index_li__3iyTZ">Wait for the packages to be installed.</li>
 <li class="index_li__3iyTZ">Type <code class="index_code__3EW9K">npm start</code> to start the project in a development mode.</li>
 </ol>
-<h2 class="index_h2__2oHd5" id="writingcode">Writing code</h2>
-<p class="index_p__1NOy6">To write code, run <code class="index_code__3EW9K">npm start</code>. This starts the application in a development mode and watches for changes to code (and tests), verifies the code,
+<h2 class="index_h2__2oHd5" id="user-content-writing-code">Writing code</h2>
+<p class="index_p__1NOy6">To write code, run <code class="index_code__3EW9K">npm start</code>. This starts the application in a development mode and watches for changes to code (and tests), verifies the code,<br class=""/>
 and recompiles the application when changes are detected.</p>
-<h2 class="index_h2__2oHd5" id="testingverifyingcode">Testing &amp; Verifying code</h2>
+<h2 class="index_h2__2oHd5" id="user-content-testing--verifying-code">Testing &amp; Verifying code</h2>
 <p class="index_p__1NOy6">When writing code there are two main things you usually want to check as you go:</p>
 <ol class="index_ol__2XH-h">
 <li class="index_li__3iyTZ">Is my code styled correctly? <code class="index_code__3EW9K">npm run verify:watch</code>, or <code class="index_code__3EW9K">npm start</code></li>
@@ -108,65 +106,70 @@ and recompiles the application when changes are detected.</p>
 <li class="index_li__3iyTZ"><code class="index_code__3EW9K">npm run verify</code></li>
 <li class="index_li__3iyTZ"><code class="index_code__3EW9K">npm run test:unit:once</code></li>
 </ol>
-<h2 class="index_h2__2oHd5" id="testinginthebrowserswankymd0">Testing in the browser 
+<h2 class="index_h2__2oHd5" id="user-content-testing-in-the-browser-swanky-md-0">Testing in the browser 
 <div class="badge__browser" aria-label="browser"></div>
 
 
 </h2>
 <p class="index_p__1NOy6">You can run <code class="index_code__3EW9K">npm run test:system</code> to run component and/or system tests in the browser. You must have the development web server running for this to work.</p>
-<h2 class="index_h2__2oHd5" id="visualregressiontestingswankymd1">Visual regression testing 
+<h2 class="index_h2__2oHd5" id="user-content-visual-regression-testing-swanky-md-1">Visual regression testing 
 <div class="badge__browser" aria-label="browser"></div>
 
 
 </h2>
-<p class="index_p__1NOy6">Visual regression testing is optionally enabled by default. It works by taking screenshots of the components on pages that you 
+<p class="index_p__1NOy6">Visual regression testing is optionally enabled by default. It works by taking screenshots of the components on pages that you <br class=""/>
 specify in JS/JSON files.</p>
 <p class="index_p__1NOy6">To get started, start the development web server: <code class="index_code__3EW9K">npm start</code>.</p>
-<p class="index_p__1NOy6">You can generate the reference images by running <code class="index_code__3EW9K">npm run test:visual:ref</code>. The images
+<p class="index_p__1NOy6">You can generate the reference images by running <code class="index_code__3EW9K">npm run test:visual:ref</code>. The images<br class=""/>
 should be committed into your repository so that you can perform comparison tests on your continuous integration server.</p>
 <p class="index_p__1NOy6">You can run <code class="index_code__3EW9K">npm run test:visual</code> to compare the reference images to the current images. </p>
-<h2 class="index_h2__2oHd5" id="generatingdocumentation">Generating documentation</h2>
-<p class="index_p__1NOy6"><code class="index_code__3EW9K">npm run docs:build</code> will create the documentation, while <code class="index_code__3EW9K">npm run docs:serve</code> will also serve it in a browser and watch for
+<h2 class="index_h2__2oHd5" id="user-content-generating-documentation">Generating documentation</h2>
+<p class="index_p__1NOy6"><code class="index_code__3EW9K">npm run docs:build</code> will create the documentation, while <code class="index_code__3EW9K">npm run docs:serve</code> will also serve it in a browser and watch for<br class=""/>
  changes. Documentation is generated using <a class="index_a__oUQfl" href="https://github.com/swanky-docs">Swanky</a>.</p>
-<h2 class="index_h2__2oHd5" id="creatingapackagereleasingit">Creating a package &amp; releasing it</h2>
-<p class="index_p__1NOy6">Depending on your configuration, you may delegate this process to your continuous integration system (like <a class="index_a__oUQfl" href="https://travisci.io">Travis</a> or Jenkins),
+<h2 class="index_h2__2oHd5" id="user-content-creating-a-package--releasing-it">Creating a package &amp; releasing it</h2>
+<p class="index_p__1NOy6">Depending on your configuration, you may delegate this process to your continuous integration system (like <a class="index_a__oUQfl" href="https://travisci.io">Travis</a> or Jenkins),<br class=""/>
 or you can publish manually (not recommended).</p>
-<p class="index_p__1NOy6"><code class="index_code__3EW9K">npm run pre-release</code> runs all of the unit tests, verifies code, checks test coverage and builds your software for production. If there were
+<p class="index_p__1NOy6"><code class="index_code__3EW9K">npm run pre-release</code> runs all of the unit tests, verifies code, checks test coverage and builds your software for production. If there were<br class=""/>
 no errors, you can then run <code class="index_code__3EW9K">npm run semantic-release</code> (if using semantic releasing).</p>
 <p class="index_p__1NOy6">If you are not using semantic releasing, you must define your own <code class="index_code__3EW9K">release</code> task in <code class="index_code__3EW9K">package.json</code> and then call it yourself.</p>
-<h2 class="index_h2__2oHd5" id="addingconfittoanexistingproject">Adding Confit to an existing project</h2>
+<h2 class="index_h2__2oHd5" id="user-content-adding-confit-to-an-existing-project">Adding Confit to an existing project</h2>
 <p class="index_p__1NOy6">Before adding Confit to an existing project, there are a few things you should know:</p>
 <ul class="index_ul__1RNVH">
 <li class="index_li__3iyTZ">Confit will create files if they don't exist (e.g. <code class="index_code__3EW9K">package.json</code>)</li>
-<li class="index_li__3iyTZ">Confit will overwrite <em class="index_em__DbtVE">sections</em> within certain files, if those sections exist. This allows you to have a mixture of 
+<li class="index_li__3iyTZ">Confit will overwrite <em class="index_em__DbtVE">sections</em> within certain files, if those sections exist. This allows you to have a mixture of <br class=""/>
 generated configuration and custom configuration within the same file.</li>
 <li class="index_li__3iyTZ">Confit will <em class="index_em__DbtVE">not</em> overwrite certain files if they already exist.</li>
 </ul>
-<p class="index_p__1NOy6">To get an idea of which files will be created by Confit, it is recommended to run Confit with your desired configuration 
-in an empty folder first. You can then take the generated <code class="index_code__3EW9K">confit.yml</code> file and place it into the existing folder once
+<p class="index_p__1NOy6">To get an idea of which files will be created by Confit, it is recommended to run Confit with your desired configuration <br class=""/>
+in an empty folder first. You can then take the generated <code class="index_code__3EW9K">confit.yml</code> file and place it into the existing folder once<br class=""/>
 you are happy with the configuration.</p>
 <ol class="index_ol__2XH-h">
 <li class="index_li__3iyTZ">Make sure you have no outstanding changes to make (<code class="index_code__3EW9K">git status</code> should indicate there is nothing staged or ready to be committed).</li>
 <li class="index_li__3iyTZ">Run <code class="index_code__3EW9K">yo confit</code>, and choose the configuration you would like.</li>
 <li class="index_li__3iyTZ">Answer <code class="index_code__3EW9K">Yes</code> to all of the prompts about overwriting files - it's ok, no changes will be committed at this stage </li>
-<li class="index_li__3iyTZ">Review the changes that Confit has made. In some cases, you will not want Confit's changes. Use a merging/diffing tool
+<li class="index_li__3iyTZ">Review the changes that Confit has made. In some cases, you will not want Confit's changes. Use a merging/diffing tool<br class=""/>
 (like SourceTree) to select which changes to keep, and which to reject.</li>
 <li class="index_li__3iyTZ">When you are happy with the changes, commit them.</li>
 </ol>
-<p class="index_p__1NOy6">In the case where Confit does <em class="index_em__DbtVE">not</em> change one of your existing files (such as <code class="index_code__3EW9K">README.md</code>), you may wish to remove that 
-file and run <code class="index_code__3EW9K">yo confit</code> to see what Confit will generate. Then you can merge your changes back into the file as part of 
+<p class="index_p__1NOy6">In the case where Confit does <em class="index_em__DbtVE">not</em> change one of your existing files (such as <code class="index_code__3EW9K">README.md</code>), you may wish to remove that <br class=""/>
+file and run <code class="index_code__3EW9K">yo confit</code> to see what Confit will generate. Then you can merge your changes back into the file as part of <br class=""/>
 the review process.</p>
 </section>
 
         
+
+      <div class="index_guide-links__21PvE">
+        <a href="/index.html" class="index_a__oUQfl ">← Overview</a>
+        <a href="/upgrading.html" class="index_a__oUQfl index_next__geZCd">Upgrading →</a>
+      </div>
     </article>
 </section>
 
             <footer class="">
                 
-                    <div class="index_version__xY3_Z">version 9.3.0</div>
+                    <div class="index_version__xY3_Z">version 10.0.0</div>
                 
             </footer>
         </div>
-    <script type="text/javascript" src="/generator-confit/theme.34a4f239.bundle.js"></script><script type="text/javascript" src="/generator-confit/snippets.34a4f239.bundle.js"></script><script type="text/javascript" src="/generator-confit/docs.34a4f239.bundle.js"></script></body>
+    <script type="text/javascript" src="/generator-confit/theme.3ca91588.bundle.js"></script><script type="text/javascript" src="/generator-confit/snippets.3ca91588.bundle.js"></script><script type="text/javascript" src="/generator-confit/docs.3ca91588.bundle.js"></script></body>
 </html>
