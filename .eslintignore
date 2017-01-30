@@ -9,7 +9,6 @@ config/*
 # END_CONFIT_GENERATED_CONTENT
 
 # ignore the test fixtures which are designed to trigger errors
-test/protractorSpec/*
 test/spec/integration/fixtures/*
 lib/buildTool/**/templates/**/*
 lib/generators/**/templates/**/*

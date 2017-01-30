@@ -18,9 +18,18 @@ function main() {
   let packageData = {};
 
   // Get list of packages
-  packageFile.$packages.forEach(pkg => packageData[pkg.name] = pkg.version);
+  packageFile.$packages.filter(onlyNpmPackages).forEach(pkg => packageData[pkg.name] = pkg.version);
+
   // Pass list to ncu & display results
   checkForUpdates(packageData);//{'swanky': '1.0.0', 'webpack': '1.0.0'});
+}
+
+
+function onlyNpmPackages(pkg) {
+  let isScopedPackage = pkg.name.indexOf('@') === 0;
+  let pkgIndexOfSlash = pkg.name.indexOf('/');
+
+  return isScopedPackage || pkgIndexOfSlash === -1;
 }
 
 
