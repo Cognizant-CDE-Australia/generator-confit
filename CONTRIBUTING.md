@@ -81,7 +81,6 @@ Files that you will need to look at:
 - lib/generators/sampleApp
 - lib/resources.yml
 - lib/buildTool/\<tool (Webpack at this point in time)>/sampleApp
-- test/protractorSpec
 
 ### I want to change the generated `README.md` file
 

@@ -120,7 +120,8 @@ function main() {
 
     if (procComplete === procCount) {
       confitMsg(chalk.white.bold('Overall Result:'), procCount === procSuccess ? LABEL_SUCCESS : LABEL_FAILED, results.join(''), BLACK_END);
-      process.exit(procCount === procSuccess ? 0 : 1);  // Return a non-zero code for a failure
+      // Return a non-zero code for a failure:
+      process.exit(procCount === procSuccess ? 0 : 1);  // eslint-disable-line
     }
   }
 

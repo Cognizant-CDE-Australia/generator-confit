@@ -1,6 +1,6 @@
 {
   "label": "Page 1",
-  "url": "#/page1/",
+  "url": "#!/page1/",
   "hideSelectors": [],
   "removeSelectors": [],
   "selectors": [
