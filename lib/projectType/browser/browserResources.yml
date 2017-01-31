@@ -179,9 +179,7 @@ buildCSS:
     stylus:
       ext: ['styl']
 
-buildHTML:
-  defaults:
-    extension: .html
+buildHTML: {}
 
 buildJS:
   defaults:

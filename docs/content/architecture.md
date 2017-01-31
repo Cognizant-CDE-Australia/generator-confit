@@ -102,13 +102,11 @@ CSS-tool generator.
 ### buildHTML [render badge list="browser"]
 
 #### Questions
-
-**HTML source file extension?** [**.html**, .htm] `buildHTML.extension`
-- This question is designed to support other HTML source code formats (e.g. Jade) in the future.
+None
 
 #### Build Tools
 <ul>
-<li><div class="{$ styles.badge__webpack $}"></div> build tool generates Webpack loaders for the chosen HTML extension and also the `index.html` template file.</li>
+<li><div class="{$ styles.badge__webpack $}"></div> build tool generates Webpack loaders for HTML files (`.htm` and `.html` extensions) and also the `index.html` template file.</li>
 </ul>
 
 ---

@@ -44,7 +44,7 @@ generator-confit:
     sourceFormat: ES6
     vendorScripts: []
   buildHTML:
-    _version: 2d504dda228b29eeca588658d95e1b5f466f2b6f
+    _version: 1323fcb6eabaf6e8a432e153dc2c7c2cce334b60
     extension: .htm
   documentation:
     _version: b1658da3278b16d1982212f5e8bc05348af20e0b
