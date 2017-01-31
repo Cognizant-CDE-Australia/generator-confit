@@ -13,7 +13,7 @@
 
 
   let htmlLoader = {
-    test: /\<%= buildHTML.extension %>$/,
+    test: /\.html?$/,
     use: [
       {
         loader: 'html-loader'
