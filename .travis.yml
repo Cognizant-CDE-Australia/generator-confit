@@ -38,7 +38,7 @@ before_install:
   - npm set progress=false
 
 install:
-  - npm -g yo
+  - npm install -g yo
   - npm install
   - npm link
 #  - yarn global add yo
