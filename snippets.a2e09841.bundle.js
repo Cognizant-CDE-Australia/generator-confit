@@ -63,37 +63,33 @@
 /******/ 	__webpack_require__.p = "/generator-confit/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = (function() {
+    __webpack_require__(2);
+  })();
+
+/***/ }),
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(8);
-
-// Add any javascript here
-if (false) {
-  module.hot.accept();
-}
-
-// Documentation specific styles
+__webpack_require__(9);
 
 /***/ }),
 
-/***/ 13:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(1);
-
-
-/***/ }),
-
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -101,4 +97,4 @@ module.exports = __webpack_require__(1);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=docs.4661172c.bundle.js.map
+//# sourceMappingURL=snippets.a2e09841.bundle.js.map
