@@ -53,6 +53,7 @@
     "build": "cross-env NODE_ENV=production npm run clean:prod",
     "check-for-updates": "node config/check-update/checkForUpdates.js",
     "clean:prod": "rimraf dist/",
+    "commitmsg": "cz-customizable-ghooks",
     "coverage": "npm-run-all test:coverage test:check-coverage",
     "dev": "cross-env NODE_ENV=development npm run verify:watch",
     "docs:_publish": "node config/docs/publish.js",
@@ -65,6 +66,8 @@
     "docs:prepublish": "node config/docs/prepublish.js",
     "docs:publish": "npm-run-all docs:prepublish docs:clean docs:build docs:_publish docs:postpublish",
     "docs:serve": "http-server website/ -o",
+    "precommit": "exact-semver",
+    "prepush": "npm-run-all verify test:coverage --silent",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post && npm run docs:publish",
     "start": "npm run dev",
     "test": "npm-run-all updateFixtures test:unit:once test:int",
@@ -87,11 +90,6 @@
     },
     "cz-customizable": {
       "config": "config/release/commitMessageConfig.js"
-    },
-    "ghooks": {
-      "pre-commit": "exact-semver && npm-run-all test:unit:once",
-      "commit-msg": "node ./node_modules/cz-customizable-ghooks/lib/index.js $2",
-      "pre-push": "npm-run-all verify test:coverage --silent"
     }
   },
   "dependencies": {
@@ -116,16 +114,16 @@
     "coveralls": "2.11.15",
     "cross-env": "3.1.4",
     "cz-customizable": "4.0.0",
-    "cz-customizable-ghooks": "1.4.0",
+    "cz-customizable-ghooks": "1.5.0",
     "eslint": "3.14.1",
     "eslint-config-google": "0.7.1",
     "eslint-plugin-node": "3.0.5",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "gh-pages": "0.12.0",
-    "ghooks": "1.3.2",
     "highlightjs": "9.8.0",
     "http-server": "0.9.0",
+    "husky": "0.13.1",
     "istanbul": "0.4.5",
     "latest-version": "2.0.0",
     "mocha": "3.2.0",

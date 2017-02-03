@@ -30,7 +30,7 @@ before_install:
   # Repo for newer Node.js versions
   #- curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   # Repo for Yarn
-  - npm install -g yarn
+  #- npm install -g yarn
 
   # Install NPM 3.9.5
   - if [[ `npm -v` != 3* ]]; then npm i -g npm@3.9.5; fi
@@ -38,9 +38,12 @@ before_install:
   - npm set progress=false
 
 install:
-  - yarn global add yo
-  - yarn install
-  - yarn link
+  - npm install -g yo
+  - npm install
+  - npm link
+#  - yarn global add yo
+#  - yarn install
+#  - yarn link
 
 before_script:
   - export DISPLAY=:99.0

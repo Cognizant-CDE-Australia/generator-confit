@@ -209,7 +209,7 @@ $packages:
 
   - &pkg_cz-customizable-ghooks
     name: cz-customizable-ghooks
-    version: 1.4.0
+    version: 1.5.0
 
   - &pkg_enzyme
     name: enzyme
@@ -271,10 +271,6 @@ $packages:
     name: gh-pages
     version: 0.12.0
 
-  - &pkg_ghooks
-    name: ghooks
-    version: 1.3.2
-
   - &pkg_glob   # For Backstop
     name: glob
     version: 7.1.1
@@ -294,6 +290,10 @@ $packages:
   - &pkg_http-server
     name: http-server
     version: 0.9.0
+
+  - &pkg_husky
+    name: husky
+    version: 0.13.1
 
   - &pkg_istanbul   # Seems to some work towards an alpha version, but hundreds of open issues and tens of pull requests
     name: istanbul

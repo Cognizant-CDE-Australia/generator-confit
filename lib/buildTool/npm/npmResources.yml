@@ -121,9 +121,11 @@ release:
   toolModules:
     - condition: <%- release.checkCodeCoverage %>
       packages:
-        - <<: *pkg_ghooks
-      packageJsonConfig:
-        - config.ghooks.pre-push: npm-run-all verify test:coverage --silent
+        - <<: *pkg_husky
+      tasks:
+        - name: prepush
+          tasks: ['npm-run-all verify test:coverage --silent']
+          description: Git pre-push hook that verifies code and checks unit test coverage meet minimum thresholds.
 
     # Coveralls works for BitBucket and GitHub only
     - condition: <%- release.checkCodeCoverage && (app.repositoryType === 'BitBucket' || app.repositoryType === 'GitHub') && app.publicRepository %>
@@ -147,12 +149,15 @@ release:
       packages:
         - <<: *pkg_cz-customizable
         - <<: *pkg_commitizen
-        - <<: *pkg_ghooks
+        - <<: *pkg_husky
         - <<: *pkg_cz-customizable-ghooks
+      tasks:
+        - name: commitmsg
+          tasks: ['cz-customizable-ghooks']
+          description: Git commit message hook that validates the commit message conforms to your commit message conventions.
       packageJsonConfig:
         - config.commitizen.path: node_modules/cz-customizable
         - config.cz-customizable.config: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
-        - config.ghooks.commit-msg: node ./node_modules/cz-customizable-ghooks/lib/index.js $2
       templateFiles:
         - src: commitMessageConfig.js
           dest: <%- paths.config.configDir + resources.release.configSubDir %>commitMessageConfig.js
@@ -162,7 +167,7 @@ release:
           commit:
             commit:
               command: git cz
-              description: Commit changes to local repository using Commitizen
+              description: Commit changes to local repository using Commitizen.
               features:
                 - Asks questions about the change to generate a valid conventional commit message
                 - Can be customised by modifying <%- link(paths.config.configDir + resources.release.configSubDir + 'commitMessageConfig.js') %>

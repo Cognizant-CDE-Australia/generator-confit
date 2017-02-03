@@ -43,7 +43,7 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
       } else {
         configFn = modifyConfitServerConfig;
         configData = 'serverDev';
-        serverStartedRegEx = /webpack: bundle is now VALID\.\n$/;
+        serverStartedRegEx = /webpack\: Compiled/;
       }
 
       // Start up the confit DEV webserver
