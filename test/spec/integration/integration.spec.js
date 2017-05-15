@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 let testDir = process.env.TEST_DIR;
 let confitConfig = yaml.load(fs.readFileSync(testDir + 'confit.yml'))['generator-confit'];
 
-const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
+const SERVER_MAX_WAIT_TIME = 150000;  // 150 seconds
 
 
 describe('test "' + fixtureFileName + '"', () => {
