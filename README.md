@@ -145,9 +145,21 @@ There are several tags available for inserting generated content into the README
 Information inside README.md is aimed at end-users (consumers) of the package. Information inside CONTRIBUTING.md is
 aimed at developers who need to modify the package.
 
-Tag | Description | Example
-:-- | :-----------| :------
-<pre>&lt;!--[RM_HEADING]-->&#10;&lt;%- RM_HEADING %&gt;&#10;&#10;&lt;!--[]--></pre> | The package *name* as captured in the `package.json`, rendered as a H1 heading | # package-name
+Tag     | Description | Example
+:------ | :-----------| :------
+<pre>foo</pre> | The package *name* as captured in the rendered as a H1 heading | package-name
+<pre>foo</pre> | The package *name* as captured in the rendered as a H1 heading | # package-name
+
+
+
+Command | Description
+:------ | :----------
+<pre>git status</pre> | Lists the current branch and the status of changed files
+<pre>git log</pre> | Displays the commit log (press Q to quit viewing)
+<pre>git add .</pre> | Stages all modified & untracked files, ready to be committed
+<pre>git cz</pre> | Commit changes to local repository using Commitizen.<ul><li>Asks questions about the change to generate a valid conventional commit message</li><li>Can be customised by modifying [config/release/commitMessageConfig.js](config/release/commitMessageConfig.js)</li></ul>
+<pre>git push</pre> | Push local repository changes to remote repository
+
 <pre>&lt;!--[RM_DESCRIPTION]-->&#10;&lt;%- RM_DESCRIPTION %&gt;&#10;&#10;&lt;!--[]--></pre> | The package *description* as captured in the `package.json`, rendered as a block quote | > A description of my awesome package
 <pre>&lt;!--[RM_INSTALL]-->&#10;&lt;%- RM_INSTALL %&gt;&#10;&#10;&lt;!--[]--></pre> | The installation commands for the package, from a consumer's perspective | `npm install sample-app`
 <pre>&lt;!--[RM_DIR_STRUCTURE]-->&#10;&lt;%- RM_DIR_STRUCTURE %&gt;&#10;&#10;&lt;!--[]--></pre> | A tree representation of the directory structure | 
