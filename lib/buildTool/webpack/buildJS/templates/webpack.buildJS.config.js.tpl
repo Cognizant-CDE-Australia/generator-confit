@@ -28,8 +28,8 @@
    *
    * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
    */
-  const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-  config.plugins.push(new ForkCheckerPlugin());
+  const { CheckerPlugin } = require('awesome-typescript-loader');
+  config.plugins.push(new CheckerPlugin());
 
   <%
   }

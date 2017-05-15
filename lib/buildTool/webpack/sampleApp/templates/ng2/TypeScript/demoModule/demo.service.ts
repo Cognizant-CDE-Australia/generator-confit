@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class DemoService {
   demo(param) {
     window.console.log('Message from demoService.demo():' + param);
-  };
+  }
 }
 
 

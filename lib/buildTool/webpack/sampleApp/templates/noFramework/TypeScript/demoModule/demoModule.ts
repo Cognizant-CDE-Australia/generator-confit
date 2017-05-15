@@ -26,6 +26,6 @@ function stateChangeHandler(event) {
   if (event.state && event.state.isPushState) {
     demoModule.gotoPage(event.state.url, false);
   }
-};
+}
 
 export default demoModule;

@@ -77,6 +77,7 @@ frameworks:
       packages:
         - <<: *pkg_angular
         - <<: *pkg_@types/angular
+        - <<: *pkg_@types/angular-mocks
 
     frameworkTestPackages: &ng1TestPackages
       testPackages: # Test packages will be used *instead of* the framework packages, in the test harness!
@@ -585,6 +586,8 @@ verify:
         - <<: *pkg_eslint-config-standard
         - <<: *pkg_eslint-plugin-standard
         - <<: *pkg_eslint-plugin-promise
+        - <<: *pkg_eslint-plugin-import
+        - <<: *pkg_eslint-plugin-node
 
     - condition: <%- verify.jsCodingStandard === 'TypeScript' %>
       packages:

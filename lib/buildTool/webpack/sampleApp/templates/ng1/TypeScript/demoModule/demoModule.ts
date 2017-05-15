@@ -10,7 +10,7 @@ mod.factory('demoService', function () {
   };
 });
 
-export default mod.name;
+export default (mod as any).name;
 
 
 

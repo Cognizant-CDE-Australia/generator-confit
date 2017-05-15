@@ -43,7 +43,8 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
       } else {
         configFn = modifyConfitServerConfig;
         configData = 'serverDev';
-        serverStartedRegEx = /webpack\: Compiled/;
+        // Needed to cater for TypeScript Angular 2 projects which emit the second string, but not the first (due to the TSFork checker?)
+        serverStartedRegEx = /(webpack\: Compiled|webpack\: bundle is now VALID)/;
       }
 
       // Start up the confit DEV webserver

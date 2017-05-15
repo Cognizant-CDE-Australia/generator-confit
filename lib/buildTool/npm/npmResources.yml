@@ -209,7 +209,7 @@ release:
         - <<: *pkg_corp-semantic-release
       tasks:
         - name: semantic-release
-          tasks: ['corp-semantic-release --changelogpreset angular-bitbucket']
+          tasks: ['corp-semantic-release --changelogpreset angular-bitbucket --post-success "npm publish"']
         - name: release
           tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
           description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
@@ -224,7 +224,7 @@ release:
         - <<: *pkg_corp-semantic-release
       tasks:
         - name: semantic-release
-          tasks: ['corp-semantic-release']
+          tasks: ['corp-semantic-release --post-success "npm publish"']
         - name: release
           tasks: ['verify', 'test:coverage', 'build', '<% if (config.testSystem) { %>test:system<% }%>', 'semantic-release']
           description: Create production version of software, verify code, run unit tests then if everything is ok, release the package
