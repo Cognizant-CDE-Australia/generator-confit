@@ -3,9 +3,9 @@
 const assert = require('assert');
 const server = require('./server');
 const childProc = require('child_process');
-const tempTestDir = process.env.TEST_DIR;
-const fs = require('fs-extra');
-const yaml = require('js-yaml');
+// const tempTestDir = process.env.TEST_DIR;
+// const fs = require('fs-extra');
+// const yaml = require('js-yaml');
 
 /**
  * Runs Protractor tests inside a browser
@@ -14,7 +14,8 @@ const yaml = require('js-yaml');
 function runSystemTest(baseUrl) {
   console.info('Protractor baseUrl is', baseUrl);
 
-  let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
+  // let proc = childProc.spawnSync('npm', ['run', 'test:system', '--', '--baseUrl', baseUrl], {
+  let proc = childProc.spawnSync('npm', ['start'], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR,
   });
@@ -30,27 +31,27 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
     let baseUrl;
 
     before(() => {
-      // Determine if we are dealing with the NPM server or not
-      const pkg = fs.readJsonSync(tempTestDir + 'package.json');
-      let serverStartedRegEx;
-      let configFn;
-      let configData;
-
-      if (pkg.scripts['serve:dev:https']) {
-        configFn = modifyPackageServerConfig;
-        configData = 'serve:dev';
-        serverStartedRegEx = /Serving .* at http(s)?:\/\//;
-      } else {
-        configFn = modifyConfitServerConfig;
-        configData = 'serverDev';
-        // Needed to cater for TypeScript Angular 2 projects which emit the second string, but not the first (due to the TSFork checker?)
-        serverStartedRegEx = /(webpack\: Compiled|webpack\: bundle is now VALID)/;
-      }
-
-      // Start up the confit DEV webserver
-      return server.start('npm start', tempTestDir, configData, serverStartedRegEx, SERVER_MAX_WAIT_TIME, configFn).then(function success(result) {
-        baseUrl = result.baseUrl;
-      });
+      // // Determine if we are dealing with the NPM server or not
+      // const pkg = fs.readJsonSync(tempTestDir + 'package.json');
+      // let serverStartedRegEx;
+      // let configFn;
+      // let configData;
+      //
+      // if (pkg.scripts['serve:dev:https']) {
+      //   configFn = modifyPackageServerConfig;
+      //   configData = 'serve:dev';
+      //   serverStartedRegEx = /Serving .* at http(s)?:\/\//;
+      // } else {
+      //   configFn = modifyConfitServerConfig;
+      //   configData = 'serverDev';
+      //   // Needed to cater for TypeScript Angular 2 projects which emit the second string, but not the first (due to the TSFork checker?)
+      //   serverStartedRegEx = /(webpack\: Compiled|webpack\: bundle is now VALID)/;
+      // }
+      //
+      // // Start up the confit DEV webserver
+      // return server.start('npm start', tempTestDir, configData, serverStartedRegEx, SERVER_MAX_WAIT_TIME, configFn).then(function success(result) {
+      //   baseUrl = result.baseUrl;
+      // });
     });
 
     it('should start a webserver and build the sampleApp correctly', function() {
@@ -63,41 +64,41 @@ module.exports = function(confitConfig, SERVER_MAX_WAIT_TIME) {
   });
 };
 
-/**
- * Helper function to modify the Confit.serverDEV/PROD config as it changes before each test
- * @param {string} testDir                      Test directory where Confit file is located
- * @param {number} port                         Port number of server
- * @param {Object} configData                   serverDEV or ServerPROD
- * @return {{baseUrl: string, details: Object}} Server configuration info
- */
-function modifyConfitServerConfig(testDir, port, configData) {
-  // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
-  let confitData = yaml.load(fs.readFileSync(testDir + 'confit.yml'));
-  let server = confitData['generator-confit'][configData];
+// /**
+//  * Helper function to modify the Confit.serverDEV/PROD config as it changes before each test
+//  * @param {string} testDir                      Test directory where Confit file is located
+//  * @param {number} port                         Port number of server
+//  * @param {Object} configData                   serverDEV or ServerPROD
+//  * @return {{baseUrl: string, details: Object}} Server configuration info
+//  */
+// function modifyConfitServerConfig(testDir, port, configData) {
+//   // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
+//   let confitData = yaml.load(fs.readFileSync(testDir + 'confit.yml'));
+//   let server = confitData['generator-confit'][configData];
+//
+//   server.port = port;
+//   fs.writeFileSync(testDir + 'confit.yml', yaml.dump(confitData));
+//
+//   return {
+//     baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
+//     details: server,
+//   };
+// }
 
-  server.port = port;
-  fs.writeFileSync(testDir + 'confit.yml', yaml.dump(confitData));
-
-  return {
-    baseUrl: server.protocol + '://' + server.hostname + ':' + server.port,
-    details: server,
-  };
-}
-
-/**
- * Helper function to modify the package.json config as well as the confit.yml config as it changes before each test
- * @param {string} testDir                      Test directory where Confit file is located
- * @param {number} port                         Port number of server
- * @param {Object} configData                   serverDEV or ServerPROD
- * @return {{baseUrl: string, details: Object}} Server configuration info
- */
-function modifyPackageServerConfig(testDir, port, configData) {
-  // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
-  const pkg = fs.readJsonSync(testDir + 'package.json');
-
-  pkg.scripts[configData + ':https'] = pkg.scripts[configData + ':https'].replace(/-p \d*/, '-p ' + port);
-  pkg.scripts[configData + ':http'] = pkg.scripts[configData + ':http'].replace(/-p \d*/, '-p ' + port);
-  fs.writeJsonSync(testDir + 'package.json', pkg);
-
-  return modifyConfitServerConfig(testDir, port, 'serverProd');
-}
+// /**
+//  * Helper function to modify the package.json config as well as the confit.yml config as it changes before each test
+//  * @param {string} testDir                      Test directory where Confit file is located
+//  * @param {number} port                         Port number of server
+//  * @param {Object} configData                   serverDEV or ServerPROD
+//  * @return {{baseUrl: string, details: Object}} Server configuration info
+//  */
+// function modifyPackageServerConfig(testDir, port, configData) {
+//   // Once we have the port, MODIFY the confit.serverDEV configuration, then start the server
+//   const pkg = fs.readJsonSync(testDir + 'package.json');
+//
+//   pkg.scripts[configData + ':https'] = pkg.scripts[configData + ':https'].replace(/-p \d*/, '-p ' + port);
+//   pkg.scripts[configData + ':http'] = pkg.scripts[configData + ':http'].replace(/-p \d*/, '-p ' + port);
+//   fs.writeJsonSync(testDir + 'package.json', pkg);
+//
+//   return modifyConfitServerConfig(testDir, port, 'serverProd');
+// }
