@@ -7,7 +7,7 @@ const yaml = require('js-yaml');
 let testDir = process.env.TEST_DIR;
 let confitConfig = yaml.load(fs.readFileSync(testDir + 'confit.yml'))['generator-confit'];
 
-const SERVER_MAX_WAIT_TIME = 150000;  // 150 seconds
+const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
 
 
 describe('test "' + fixtureFileName + '"', () => {
@@ -29,13 +29,13 @@ describe('test "' + fixtureFileName + '"', () => {
       hasCSS = true;
 
       require('./testSystemTest')(confitConfig, SERVER_MAX_WAIT_TIME);
-      // require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
-      // require('./testVerify')(confitConfig, srcDir, hasCSS);
-      // // Execute unit tests but do not fail if coverage is too low
-      // require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-threshold-check', true);
-      // // Execute debug unit tests and ensure that there is NO coverage report
-      // require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:debug:once', false);
-      // require('./testDocumentation')(confitConfig);
+      require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
+      require('./testVerify')(confitConfig, srcDir, hasCSS);
+      // Execute unit tests but do not fail if coverage is too low
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-threshold-check', true);
+      // Execute debug unit tests and ensure that there is NO coverage report
+      require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:debug:once', false);
+      require('./testDocumentation')(confitConfig);
       break;
 
     case 'node':

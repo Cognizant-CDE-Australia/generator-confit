@@ -28,7 +28,7 @@
    *
    * See: https://github.com/s-panferov/awesome-typescript-loader#forkchecker-boolean-defaultfalse
    */
-  const { CheckerPlugin } = require('awesome-typescript-loader');
+  const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
   config.plugins.push(new CheckerPlugin());
 
   <%
