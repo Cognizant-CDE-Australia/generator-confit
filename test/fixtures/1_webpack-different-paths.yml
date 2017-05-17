@@ -61,12 +61,12 @@ generator-confit:
   serverDev:
     _version: 8107da2fb610f48d21463a97938a7cf009127fb9
     hostname: localhost
-    port: 3000
+    port: 3002
     protocol: https
   serverProd:
     _version: b91044bfb6b6875dbd2f84108bbff6993659e197
     hostname: localhost
-    port: 3000
+    port: 3002
     protocol: https
   testUnit:
     _version: 4472a6d59b434226f463992d3c1914c77a6a115d

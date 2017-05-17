@@ -19,6 +19,16 @@ testSystem:
 
   tasks:
     - name: test:system
+      tasks: ['npm-run-all -p -r build:dev "test:protractor -- --baseUrl=<%= serverDev.protocol %>://<%= serverDev.hostname %>:<%= serverDev.port %>/"']
+      description: Starts the development web server and runs Protractor tests
+      features:
+
+    - name: test:system:prod
+      tasks: ['npm-run-all build -p -r serve:prod test:protractor']
+      description: Builds the production site, starts the production web server and runs Protractor tests
+      features:
+
+    - name: test:protractor
       tasks: ['cross-env NODE_ENV=test protractor <%= paths.config.configDir + resources.testSystem.configSubDir %>protractor.conf.js']
       description: Run browser tests against the *development* web server (the development server **must** be running)
       features:
