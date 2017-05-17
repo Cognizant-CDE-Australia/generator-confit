@@ -200,7 +200,7 @@ describe('Release Generator', () => {
         assert(pkg.devDependencies.coveralls, 'coveralls package included');
         assert(pkg.devDependencies['corp-semantic-release'], 'corp-semantic-release package included');
 
-        assert.equal(pkg.scripts['semantic-release'], 'corp-semantic-release --changelogpreset angular-bitbucket');
+        assert.equal(pkg.scripts['semantic-release'], 'corp-semantic-release --changelogpreset angular-bitbucket --post-success "npm publish"');
 
         done();
       }

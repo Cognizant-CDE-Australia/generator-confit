@@ -7,8 +7,6 @@ const yaml = require('js-yaml');
 let testDir = process.env.TEST_DIR;
 let confitConfig = yaml.load(fs.readFileSync(testDir + 'confit.yml'))['generator-confit'];
 
-const SERVER_MAX_WAIT_TIME = 100000;  // 100 seconds
-
 
 describe('test "' + fixtureFileName + '"', () => {
   // console.info(require(testDir + 'package.json'));
@@ -28,8 +26,8 @@ describe('test "' + fixtureFileName + '"', () => {
       unitTestDir = srcDir + process.env.SAMPLE_APP_MODULE_DIR + confitConfig.paths.input.unitTestDir;
       hasCSS = true;
 
-      require('./testSystemTest')(confitConfig, SERVER_MAX_WAIT_TIME);
-      require('./testBuildServe')(confitConfig, SERVER_MAX_WAIT_TIME);
+      require('./testSystemTest')();
+      require('./testBuildServe')();
       require('./testVerify')(confitConfig, srcDir, hasCSS);
       // Execute unit tests but do not fail if coverage is too low
       require('./testUnitTest')(confitConfig, unitTestDir, 'npm run test:unit:once -- --no-threshold-check', true);

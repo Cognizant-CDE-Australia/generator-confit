@@ -64,8 +64,8 @@
     cssLoader = {
       test: helpers.pathRegEx(/\.(<%= cssExtensions %>)$/),
       loader: ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: 'css-loader!postcss-loader' + helpers.getLoaderQueryStr('<%- cssLoaderName %>', cssLoaderOptions),
+        fallback: 'style-loader',
+        use: 'css-loader!postcss-loader' + helpers.getLoaderQueryStr('<%- cssLoaderName %>', cssLoaderOptions),
         publicPath: '../'   // This is relative to 'extractCSSTextPlugin.filename' below.
       })
     };

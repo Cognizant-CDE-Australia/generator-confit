@@ -186,6 +186,8 @@ describe('App Generator', () => {
       repositoryType: 'Other',
       license: 'UNLICENSED',
     });
+      // .withArguments(['--force'])
+      // .withOptions({force: true});
   });
 
   it('should generate scripts in package.json', (done) => {

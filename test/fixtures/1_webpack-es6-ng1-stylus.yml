@@ -1,6 +1,6 @@
 generator-confit:
   app:
-    _version: f02196cc5cb7941ca46ec46d23bd6aef0dfcaca0
+    _version: 634fc0b0fca23bdfca8cce13f8b7e1823ceafb01
     buildProfile: Latest
     projectType: browser
     publicRepository: true
@@ -60,12 +60,12 @@ generator-confit:
   serverDev:
     _version: 8107da2fb610f48d21463a97938a7cf009127fb9
     hostname: localhost
-    port: 3000
+    port: 3003
     protocol: https
   serverProd:
     _version: b91044bfb6b6875dbd2f84108bbff6993659e197
     hostname: localhost
-    port: 3000
+    port: 3003
     protocol: https
   testUnit:
     _version: 4472a6d59b434226f463992d3c1914c77a6a115d

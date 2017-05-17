@@ -2,7 +2,7 @@
 
 // Angular 2
 // rc2 workaround
-import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
+import { enableDebugTools/*, disableDebugTools*/ } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
 
 // Environment Providers
@@ -17,7 +17,7 @@ let _decorateModuleRef = function identity<T>(value: T): T { return value; };
 
 if ('production' === ENV) {
   // Production
-  disableDebugTools();
+  // disableDebugTools();   // https://github.com/qdouble/angular-webpack2-starter/issues/263
   enableProdMode();
 
   PROVIDERS = [

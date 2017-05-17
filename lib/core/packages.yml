@@ -2,46 +2,46 @@
 $packages:
   - &pkg_angular
     name: angular
-    version: 1.6.1
+    version: 1.6.4
     isDependency: true
 
   - &pkg_angular-mocks
     name: angular-mocks
-    version: 1.6.1
+    version: 1.6.4
 
   - &pkg_angular-route
     name: angular-route
-    version: 1.6.1
+    version: 1.6.4
     isDependency: true
 
   - &pkg_@angular/common
     name: '@angular/common'
-    version: 2.1.1
+    version: 4.1.0
     isDependency: true
 
   - &pkg_@angular/compiler    # The compiler is a run-time dependency... Maybe will become a build step
     name: '@angular/compiler'
-    version: 2.1.1
+    version: 4.1.0
     isDependency: true
 
   - &pkg_@angular/core
     name: '@angular/core'
-    version: 2.1.1
+    version: 4.1.0
     isDependency: true
 
   - &pkg_@angular/platform-browser
     name: '@angular/platform-browser'
-    version: 2.1.1
+    version: 4.1.0
     isDependency: true
 
   - &pkg_@angular/platform-browser-dynamic      # Requires the @angular/compiler
     name: '@angular/platform-browser-dynamic'
-    version: 2.1.1
+    version: 4.1.0
     isDependency: true
 
   - &pkg_@angular/router
     name: '@angular/router'
-    version: 3.1.1
+    version: 4.1.0
     isDependency: true
 
   #  - &pkg_angular2-hmr           # Is both a proper dependency. In prod mode, it does nothing (like the React HMR)
@@ -51,15 +51,15 @@ $packages:
 
   - &pkg_angular2-template-loader
     name: angular2-template-loader
-    version: 0.6.0
+    version: 0.6.2
 
   - &pkg_autoprefixer
     name: autoprefixer
-    version: 6.7.0
+    version: 6.7.7
 
   - &pkg_awesome-typescript-loader
     name: awesome-typescript-loader
-    version: 2.2.4
+    version: 3.1.3
 
   - &pkg_babel-core
     name: babel-core
@@ -67,7 +67,7 @@ $packages:
 
   - &pkg_babel-eslint   # May not need in the future, as eslint understands more and more of ES5/6/7
     name: babel-eslint
-    version: 7.1.1
+    version: 7.2.3
 
   - &pkg_babel-loader
     name: babel-loader
@@ -94,8 +94,8 @@ $packages:
     version: 6.22.0
 
   - &pkg_backstopjs
-      name: backstopjs
-      version: 1.3.5
+    name: backstopjs
+    version: 2.7.0
 
   - &pkg_chokidar-cli
     name: chokidar-cli
@@ -103,7 +103,7 @@ $packages:
 
   - &pkg_commitizen
     name: commitizen
-    version: 2.9.5
+    version: 2.9.6
     global: true
 
   - &pkg_core-js
@@ -189,11 +189,11 @@ $packages:
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
-    version: 3.0.1
+    version: 5.0.0
 
   - &pkg_coveralls
     name: coveralls
-    version: 2.11.15
+    version: 2.13.1
 
   - &pkg_cross-env
     name: cross-env
@@ -205,7 +205,7 @@ $packages:
 
   - &pkg_cz-customizable
     name: cz-customizable
-    version: 4.0.0
+    version: 5.0.0
 
   - &pkg_cz-customizable-ghooks
     name: cz-customizable-ghooks
@@ -217,11 +217,11 @@ $packages:
 
   - &pkg_eslint
     name: eslint
-    version: 3.14.1
+    version: 3.19.0
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 14.0.0
+    version: 15.0.0
 
   - &pkg_eslint-config-google     # Required for Google
     name: eslint-config-google
@@ -229,19 +229,19 @@ $packages:
 
   - &pkg_eslint-config-standard   # Required for Standard
     name: eslint-config-standard
-    version: 6.2.1
+    version: 10.2.1
 
   - &pkg_eslint-plugin-node       # Required for Node
     name: eslint-plugin-node
-    version: 3.0.5
+    version: 4.2.2
 
   - &pkg_eslint-plugin-standard   # Required by StandardJS
     name:  eslint-plugin-standard
-    version: 2.0.1
+    version: 3.0.1
 
   - &pkg_eslint-plugin-promise    # Required by StandardJS
     name: eslint-plugin-promise
-    version: 3.4.0
+    version: 3.5.0
 
   - &pkg_eslint-config-react-app    # React
     name: eslint-config-react-app
@@ -253,19 +253,19 @@ $packages:
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
-    version: 3.0.2
+    version: 5.0.1
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
-    version: 6.9.0
+    version: 7.0.1
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
-    version: 2.0.0-rc.2
+    version: 2.1.0
 
   - &pkg_file-loader
     name: file-loader
-    version: 0.10.0
+    version: 0.11.1
 
   - &pkg_gh-pages
     name: gh-pages
@@ -277,11 +277,11 @@ $packages:
 
   - &pkg_highlightjs
     name: highlightjs
-    version: 9.8.0
+    version: 9.10.0
 
   - &pkg_html-loader
     name: html-loader
-    version: 0.4.4
+    version: 0.4.5
 
   - &pkg_html-webpack-plugin
     name: html-webpack-plugin
@@ -289,11 +289,11 @@ $packages:
 
   - &pkg_http-server
     name: http-server
-    version: 0.9.0
+    version: 0.10.0
 
   - &pkg_husky
     name: husky
-    version: 0.13.1
+    version: 0.13.3
 
   - &pkg_istanbul   # Seems to some work towards an alpha version, but hundreds of open issues and tens of pull requests
     name: istanbul
@@ -317,11 +317,11 @@ $packages:
 
   - &pkg_js-yaml
     name: js-yaml
-    version: 3.7.0
+    version: 3.8.3
 
   - &pkg_karma
     name: karma
-    version: 1.4.1
+    version: 1.6.0
 
   - &pkg_karma-chrome-launcher
     name: karma-chrome-launcher
@@ -341,7 +341,7 @@ $packages:
 
   - &pkg_karma-phantomjs-launcher
     name: karma-phantomjs-launcher
-    version: 1.0.2
+    version: 1.0.4
 
   - &pkg_karma-sourcemap-loader
     name: karma-sourcemap-loader
@@ -353,11 +353,11 @@ $packages:
 
   - &pkg_karma-webpack
     name: karma-webpack
-    version: 2.0.2
+    version: 2.0.3
 
   - &pkg_latest-version
     name: latest-version
-    version: 2.0.0
+    version: 3.1.0
 
   - &pkg_lodash
     name: lodash
@@ -365,11 +365,11 @@ $packages:
 
   - &pkg_mocha
     name: mocha
-    version: 3.2.0
+    version: 3.3.0
 
   - &pkg_node-sass
     name: node-sass
-    version: 4.4.0
+    version: 4.5.2
 
   - &pkg_now
     name: now
@@ -378,7 +378,7 @@ $packages:
 
   - &pkg_npm-run-all
     name: npm-run-all
-    version: 4.0.1
+    version: 4.0.2
 
   - &pkg_object-assign    # Polyfill for Object.assign (used by React)
     name: object-assign
@@ -398,7 +398,7 @@ $packages:
 
   - &pkg_postcss-loader
     name: postcss-loader
-    version: 1.2.2
+    version: 1.3.3
 
   - &pkg_promise    # Promise polyfill for React
     name: promise
@@ -434,11 +434,11 @@ $packages:
 
   - &pkg_rimraf
     name: rimraf
-    version: 2.5.4
+    version: 2.6.1
 
   - &pkg_rxjs
     name: rxjs
-    version: 5.0.3
+    version: 5.3.0
     isDependency: true
 
   - &pkg_rxjs/Rx
@@ -459,7 +459,7 @@ $packages:
 
   - &pkg_sass-loader
     name: sass-loader
-    version: 4.1.1
+    version: 6.0.3
 
   - &pkg_semantic-release-cli
     name: semantic-release-cli
@@ -476,7 +476,7 @@ $packages:
 
   - &pkg_style-loader
     name: style-loader
-    version: 0.13.1
+    version: 0.17.0
 
   - &pkg_stylint
     name: stylint
@@ -488,7 +488,7 @@ $packages:
 
   - &pkg_stylus-loader
     name: stylus-loader
-    version: 2.4.0
+    version: 3.0.1
 
   - &pkg_swanky
     name: swanky
@@ -500,11 +500,11 @@ $packages:
 
   - &pkg_tslint
     name: tslint
-    version: 4.4.2
+    version: 5.1.0
 
   - &pkg_typescript
     name: typescript
-    version: 2.0.6
+    version: 2.3.2
 
   - &pkg_ts-helpers
     name: ts-helpers
@@ -549,20 +549,20 @@ $packages:
 
   - &pkg_webpack
     name: webpack
-    version: 2.2.0
+    version: 2.4.1
 
   - &pkg_webpack-dev-server
     name: webpack-dev-server
-    version: 2.2.0
+    version: 2.4.5
 
   - &pkg_whatwg-fetch   # Polyfill for fetch() API
     name: whatwg-fetch
-    version: 2.0.2
+    version: 2.0.3
     isDependency: true
 
   - &pkg_zone.js
     name: zone.js
-    version: 0.7.6
+    version: 0.8.9
     isDependency: true
 
   - &pkg_zone.js/dist/async-test

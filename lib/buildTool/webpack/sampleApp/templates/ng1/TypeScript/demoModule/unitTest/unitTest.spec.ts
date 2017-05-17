@@ -1,5 +1,6 @@
 import * as angular from 'angular';
 import demoModule from '../demoModule';
+import 'angular-mocks';
 
 describe('Basic unit test', function () {
 
