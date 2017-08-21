@@ -132,7 +132,7 @@
     "npm-run-all": "4.0.1",
     "postcss": "5.0.21",
     "rimraf": "2.5.4",
-    "semantic-release": "6.3.2",
+    "semantic-release": "7.0.2",
     "swanky": "2.5.0",
     "swanky-processor-ngdocs": "2.2.3",
     "webpack": "2.2.0",
@@ -140,7 +140,7 @@
     "yeoman-test": "1.6.0"
   },
   "engines": {
-    "node": ">=4.x",
+    "node": ">=6.x",
     "npm": ">=3.9.5"
   }
 }

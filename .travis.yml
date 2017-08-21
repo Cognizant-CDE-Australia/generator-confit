@@ -1,8 +1,7 @@
 sudo: false
 language: node_js
 node_js:
-  - "4"
-  #- "6.2"
+  - 6
 
 # Need to specify a GCC compiler now!
 # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
