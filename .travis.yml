@@ -1,5 +1,6 @@
 sudo: false
 language: node_js
+dist: trusty
 node_js:
   - 6
 
@@ -17,13 +18,7 @@ matrix:
   fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
 
 addons:
-  firefox: "45.0"
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
-      - oracle-java8-set-default
+  chrome: stable
 
 before_install:
   # Installing Yarn - https://yarnpkg.com/en/docs/install-ci#travis-tab
