@@ -46,7 +46,7 @@ testSystem:
     - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 || buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
       tasks:
         - name: postinstall:testSystem
-          tasks: ['webdriver-manager update']
+          tasks: ['webdriver-manager update --gecko false']
           description: Downloads ChromeDriver, GeckoDriver and SeleniumJAR for use by Codecept
           features:
         - name: test:system:start
