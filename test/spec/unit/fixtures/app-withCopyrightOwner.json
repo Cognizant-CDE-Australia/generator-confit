@@ -4,7 +4,9 @@
       "copyrightOwner": "Ralph McGee"
     },
     "paths": {
-      "output": {}
+      "input": {},
+      "output": {},
+      "config": {}
     },
     "serverDev": {
       "port": 3000,

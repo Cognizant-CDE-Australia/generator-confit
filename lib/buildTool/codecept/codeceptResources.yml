@@ -1,0 +1,90 @@
+testSystem:
+  # Common
+  packages:
+    - <<: *pkg_codeceptjs
+    - <<: *pkg_mochawesome
+    - <<: *pkg_mocha-junit-reporter
+    - <<: *pkg_protractor   # Provides webmanager update support (which has Chrome directConnect driver)
+
+  readme:
+    extensionPoint:
+      testSystem: >
+        `npm run test:system` can be extended by modifying <%= link(paths.config.configDir + resources.testSystem.configSubDir + 'codecept.conf.js') %>.
+        This task uses CodeceptJS to execute browser specs (located in `<%= paths.input.modulesDir %>**/<%= paths.input.systemTestDir %>`)
+        against the development web server URL.
+
+  tasks:
+    - name: test:system
+      tasks: ['cross-env NODE_ENV=production npm-run-all clean:prod build test:system:start']
+      description: Starts the production web server and runs Protractor tests
+      features:
+
+    - name: codecept
+      tasks: ['codeceptjs run -c <%= paths.config.configDir + resources.testSystem.configSubDir %>codecept.conf.js --reporter mochawesome']
+      description: Run browser tests against the *development* web server (the development server **must** be running)
+      features:
+
+    - name: codecept:debug
+      tasks: ['codeceptjs run -c <%= paths.config.configDir + resources.testSystem.configSubDir %>codecept.conf.js --debug']
+      description: Debug mode for browser tests
+      features:
+
+  templateFiles:
+    - src: codeceptHelper.js
+      dest: <%= paths.config.configDir + resources.confitLib.configSubDir%>codecept/helper.js
+      overwrite: true
+
+    - src: codecept.conf.js
+      dest: <%= paths.config.configDir + resources.testSystem.configSubDir%>codecept.conf.js
+      overwrite: true
+
+    - src: stepsFile.js
+      dest: <%= paths.config.configDir + resources.testSystem.configSubDir%>stepsFile.js
+      overwrite: false
+
+  toolModules:
+    - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 || buildJS.framework.indexOf('AngularJS 2.x') > -1 %>
+      tasks:
+        - name: postinstall:testSystem
+          tasks: ['webdriver-manager update']
+          description: Downloads ChromeDriver, GeckoDriver and SeleniumJAR for use by Codecept
+          features:
+        - name: test:system:start
+          tasks: ['npm-run-all -p -r serve:prod codecept']
+          description: Starts the production web server and runs the tests
+          features:
+        - name: test:system:dev
+          tasks: ['npm-run-all clean:prod -p -r build:dev codecept:debug']
+          description: Starts the development web server and runs Protractor tests
+          features:
+        - name: ci:test:system:start
+          tasks: ['cross-env NODE_ENV=CI npm-run-all -p -r serve:prod "codecept -- --reporter mocha-junit-reporter"']
+          description: Starts the production web server and runs the tests with NODE_ENV=CI, to run Chrome headlessly
+          features:
+
+    - condition: <%- buildJS.framework.indexOf('React (latest)') > -1 || buildJS.framework.length === 0 %>
+      packages:
+        - <<: *pkg_webdriverio
+        - <<: *pkg_selenium-standalone
+      tasks:
+        - name: postinstall:testSystem
+          tasks: ['selenium-standalone install']
+          description: Downloads ChromeDriver, GeckoDriver and SeleniumJAR for use by Codecept
+          features:
+        - name: test:system:start
+          tasks: ['npm-run-all -p -r test:system:server serve:prod codecept']
+          description: Starts the production web server and runs the tests
+          features:
+        - name: test:system:dev
+          tasks: ['npm-run-all clean:prod -p -r test:system:server build:dev codecept:debug']
+          description: Starts the development web server and runs Protractor tests
+          features:
+        - name: test:system:server
+          tasks: ['selenium-standalone start > /dev/null 2>&1']
+          description: Starts the Selenium server and hides output messages
+          features:
+        - name: ci:test:system:start
+          tasks: ['cross-env NODE_ENV=CI npm-run-all -p -r test:system:server serve:prod "codecept -- --reporter mocha-junit-reporter"']
+          description: Starts the production web server and runs the tests with NODE_ENV=CI, to run Chrome headlessly
+          features:
+

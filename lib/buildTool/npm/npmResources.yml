@@ -119,6 +119,10 @@ entryPoint:
 
 release:
   toolModules:
+    - onInstall:
+      - cmd: git    # It is safe to run this multiple times
+        args: ['init']
+
     - condition: <%- release.checkCodeCoverage %>
       packages:
         - <<: *pkg_husky
@@ -176,9 +180,6 @@ release:
           image: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
           url: http://commitizen.github.io/cz-cli/
           priority: 90
-      onInstall:
-        - cmd: git    # It is safe to run this multiple times
-          args: ['init']
 
     - condition: <%- !release.useSemantic %>
       tasks:
