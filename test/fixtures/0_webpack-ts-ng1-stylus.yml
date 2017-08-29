@@ -1,16 +1,16 @@
 generator-confit:
   app:
-    _version: 7e07568e0cef2abb035b03a5900830ab1f3a02ea
+    _version: 462ecd915fd9db1aef6a37c2b5ce8b58b80c18ba
     buildProfile: Latest
     projectType: browser
     publicRepository: true
     repositoryType: Other
   buildBrowser:
-    _version: ed2e09f406d870194300b63a2d5d08816afd189f
+    _version: 1e40cc7130db817adb108397763f4d3c90a9a667
     browserSupport:
       - latest
   paths:
-    _version: 7f33e41600b34cd6867478d8f2b3d6b2bbd42508
+    _version: 780b129e0c7e5cab7e29c4f185bcf78524593a33
     config:
       configDir: config/
     input:
@@ -38,7 +38,7 @@ generator-confit:
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
-    _version: df428a706d926204228c5d9ebdbd7b49908926d9
+    _version: ead8ce4280b07d696aff499a5fca1a933727582f
     framework:
       - AngularJS 1.x
     outputFormat: ES5
@@ -50,7 +50,7 @@ generator-confit:
     _version: b1658da3278b16d1982212f5e8bc05348af20e0b
     generateDocs: false
   entryPoint:
-    _version: de20402bf85c703080ef6daf21e35325a3b9d604
+    _version: 39082c3df887fbc08744dfd088c25465e7a2e3a4
     entryPoints: {}
   serverDev:
     _version: 8107da2fb610f48d21463a97938a7cf009127fb9
@@ -63,11 +63,11 @@ generator-confit:
     port: 3000
     protocol: https
   testUnit:
-    _version: 4472a6d59b434226f463992d3c1914c77a6a115d
+    _version: e285a799d89f7e426be4b7020a6fd42613e67d72
   testSystem:
     _version: e0d26db1dcc5b64990c14bd56d2c4fa5b55916e7
   testVisualRegression:
-    _version: d747d5acc9a5eea7af14ac4d9f642bf698fc86e5
+    _version: 6a4755ca09581b6c54c233e09ae2dc943a6a7bd9
     enabled: true
     moduleTestDir: visualTest/
     referenceImageDir: vrt/image/

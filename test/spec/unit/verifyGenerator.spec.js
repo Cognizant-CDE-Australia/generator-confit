@@ -10,7 +10,7 @@ const GENERATOR_UNDER_TEST = 'verify';
 
 
 describe('Verify Test Generator', () => {
-  it('should should generate default config values (for browser with Stylus)', (done) => {
+  it('should generate default config values (for browser with Stylus)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-stylus-config.yml',
@@ -21,7 +21,7 @@ describe('Verify Test Generator', () => {
         assert.equal(config, undefined);
       },
       function after() {
-        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc', 'config/verify/.stylintrc']);
+        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc.js', 'config/verify/.stylintrc']);
 
         let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'].verify;
@@ -31,10 +31,11 @@ describe('Verify Test Generator', () => {
         // The package.json file should have verify commands
         let pkg = fs.readJsonSync('package.json');
 
+
         assert.equal(pkg.scripts.verify, 'npm-run-all verify:js verify:css --silent');
         assert.equal(pkg.scripts['verify:watch'], 'npm-run-all --parallel verify:js:watch verify:css:watch --silent');
-        assert.equal(pkg.scripts['verify:js'].substr(0, 75), 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
-        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 75), 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*');
+        assert.equal(pkg.scripts['verify:js'].substr(0, 78), 'eslint -c config/verify/.eslintrc.js "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
+        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 78), 'eslint --fix -c config/verify/.eslintrc.js "sourceDir/**/*.js" "sourceDir/**/*');
         assert.equal(pkg.scripts['verify:js:watch'].substr(0, 75), 'chokidar \'sourceDir/**/*.js\' \'sourceDir/**/*.jsx\' \'unitTestDir/**/*.js\' \'un');
         assert.equal(pkg.scripts['verify:css'], 'stylint -c config/verify/.stylintrc sourceDir/ && echo ✅ verify:css success');
         assert.equal(pkg.scripts['verify:css:watch'], 'chokidar \'sourceDir/**/*.styl\' -c \'npm run verify:css\' --initial --silent');
@@ -45,13 +46,13 @@ describe('Verify Test Generator', () => {
   });
 
 
-  it('should should allow the JS coding standard to be changed (for browser with SASS)', (done) => {
+  it('should allow the JS coding standard to be changed (for browser with SASS)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-sass-config.yml',
       function before() {},
       function after() {
-        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc', 'config/verify/sasslint.yml']);
+        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc.js', 'config/verify/sasslint.yml']);
 
         let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'].verify;
@@ -63,8 +64,8 @@ describe('Verify Test Generator', () => {
 
         assert.equal(pkg.scripts.verify, 'npm-run-all verify:js verify:css --silent');
         assert.equal(pkg.scripts['verify:watch'], 'npm-run-all --parallel verify:js:watch verify:css:watch --silent');
-        assert.equal(pkg.scripts['verify:js'].substr(0, 75), 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
-        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 75), 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "sourceDir/**/*');
+        assert.equal(pkg.scripts['verify:js'].substr(0, 78), 'eslint -c config/verify/.eslintrc.js "sourceDir/**/*.js" "sourceDir/**/*.jsx" ');
+        assert.equal(pkg.scripts['verify:js:fix'].substr(0, 78), 'eslint --fix -c config/verify/.eslintrc.js "sourceDir/**/*.js" "sourceDir/**/*');
         assert.equal(pkg.scripts['verify:js:watch'].substr(0, 75), 'chokidar \'sourceDir/**/*.js\' \'sourceDir/**/*.jsx\' \'unitTestDir/**/*.js\' \'un');
         assert.equal(pkg.scripts['verify:css'], 'sass-lint -c config/verify/sasslint.yml --verbose && echo ✅ verify:css success');
         assert.equal(pkg.scripts['verify:css:watch'], 'chokidar \'sourceDir/**/*.sass\' \'sourceDir/**/*.scss\' -c \'npm run verify:css\' --initial --silent');
@@ -77,7 +78,7 @@ describe('Verify Test Generator', () => {
   });
 
 
-  it('should should generate default config values for TypeScript (for Browser with CSS)', (done) => {
+  it('should generate default config values for TypeScript (for Browser with CSS)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-typescript-config.yml',
@@ -106,7 +107,7 @@ describe('Verify Test Generator', () => {
   });
 
 
-  it('should should generate default config values (for Node)', (done) => {
+  it('should generate default config values (for Node)', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
       'verify-node-config.yml',
@@ -117,7 +118,7 @@ describe('Verify Test Generator', () => {
         assert.equal(config, undefined);
       },
       function after() {
-        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc']);
+        yoassert.file(['confit.yml', 'package.json', '.eslintignore', 'config/verify/.eslintrc.js']);
 
         let confit = yaml.load(fs.readFileSync('confit.yml'));
         let config = confit['generator-confit'].verify;
@@ -130,8 +131,8 @@ describe('Verify Test Generator', () => {
         assert.equal(pkg.scripts.verify, 'npm run verify:js --silent');
         assert.equal(pkg.scripts['verify:watch'], 'npm run verify:js:watch --silent');
 
-        assert.equal(pkg.scripts['verify:js'], 'eslint -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js success');
-        assert.equal(pkg.scripts['verify:js:fix'], 'eslint --fix -c config/verify/.eslintrc "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js:fix success');
+        assert.equal(pkg.scripts['verify:js'], 'eslint -c config/verify/.eslintrc.js "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js success');
+        assert.equal(pkg.scripts['verify:js:fix'], 'eslint --fix -c config/verify/.eslintrc.js "sourceDir/**/*.js" "unitTestDir/**/*.js" "config/**/*.js" && echo ✅ verify:js:fix success');
         assert.equal(pkg.scripts['verify:js:watch'], 'chokidar \'sourceDir/**/*.js\' \'unitTestDir/**/*.js\' \'config/**/*.js\' -c \'npm run verify:js:fix\' --initial --silent');
         assert.equal(pkg.scripts['verify:css'], undefined);
         assert.equal(pkg.scripts['verify:css:watch'], undefined);

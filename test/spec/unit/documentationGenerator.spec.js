@@ -57,7 +57,7 @@ describe('Documentation Generator', () => {
         assert.equal(swanky.repo, 'https://blah/foo/bar');
         assert.equal(swanky.src, 'docs');
         assert.equal(swanky.output, 'webdocs');
-        assert.equal(swanky.serverPath, null);    // Should be blank until we publish, THEN it will get a value
+        assert.equal(swanky.serverPath, null); // Should be blank until we publish, THEN it will get a value
 
         // No Angular framework => no Angular framework config
         assert.deepEqual(confit['generator-confit'].buildJS.framework, []);
@@ -291,7 +291,7 @@ describe('Documentation Generator', () => {
         let docConfig = confit['generator-confit'].documentation;
 
         assert.equal(docConfig.srcDir, 'dotSlash/');
-        assert.equal(docConfig.outputDir, 'webdocs/');        // Changed to the default directory
+        assert.equal(docConfig.outputDir, 'webdocs/'); // Changed to the default directory
         done();
       }
     ).withPrompts({

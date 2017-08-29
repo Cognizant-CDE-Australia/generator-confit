@@ -13,7 +13,7 @@ const GENERATOR_PATH = path.join(__dirname, '../lib/generators/');
 
 let testDirName = process.env.TEST_DIR;
 let srcFixtureFile = path.join(process.env.FIXTURE_DIR, process.env.FIXTURE);
-let useExistingNodeModules = true;    // Try to preserve node_modules between test runs
+let useExistingNodeModules = true; // Try to preserve node_modules between test runs
 let cleanTestDir = !(useExistingNodeModules || true);
 
 runGenerator();
@@ -37,7 +37,7 @@ function runGenerator() {
  */
 function install(resolve, reject) {
   let destConfitConfigPath = path.join(testDirName, CONFIT_FILE_NAME);
-  let previousCWD = process.cwd();  // Remember this, so we can return to this directory later
+  let previousCWD = process.cwd(); // Remember this, so we can return to this directory later
 
   // This turns off the "May <packageName> ... insights?" prompt. See https://github.com/yeoman/insight/blob/master/lib/index.js#L106
   process.env.CI = true;
@@ -60,8 +60,8 @@ function install(resolve, reject) {
 
     // Need to update this every time there is a brand new confit:* generator, or you will get an error like this:
     // "You don't seem to have a generator with the name <generator-name> installed"
-    helpers.run(generatorName, {tmpdir: false})   // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
-      .withArguments(['--force=true'])    // Any file-conflicts, over-write
+    helpers.run(generatorName, {tmpdir: false}) // Don't clean (or create) a temporary directory, as we want to handle this ourselves (above)
+      .withArguments(['--force=true']) // Any file-conflicts, over-write
       .withGenerators([
         path.join(GENERATOR_PATH, 'buildAssets'),
         path.join(GENERATOR_PATH, 'buildBrowser'),
@@ -83,7 +83,7 @@ function install(resolve, reject) {
       ])
       .withOptions({
         configFile: CONFIT_FILE_NAME,
-        skipInstall: skipInstall,     // Can only skip if the old confit file is identical to the new file
+        skipInstall: skipInstall, // Can only skip if the old confit file is identical to the new file
         skipRun: true,
       })
       .withPrompts({
@@ -140,7 +140,7 @@ function isConfigIdentical(newConfigName) {
   let oldConfigName = newConfigName + '.previous';
 
   try {
-    fs.statSync(oldConfigName).isFile();    // Produces an error if the file does not exist
+    fs.statSync(oldConfigName).isFile(); // Produces an error if the file does not exist
   } catch (err) {
     return false;
   }

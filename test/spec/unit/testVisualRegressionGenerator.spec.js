@@ -89,7 +89,6 @@ describe('Visual Regression Test Generator', () => {
   });
 
 
-
   it('should convert invalid paths into valid paths', (done) => {
     utils.runGenerator(
       GENERATOR_UNDER_TEST,
@@ -100,7 +99,7 @@ describe('Visual Regression Test Generator', () => {
         let config = confit['generator-confit'].testVisualRegression;
 
         assert.equal(config.moduleTestDir, 'dotSlash/');
-        assert.equal(config.referenceImageDir, 'visualRegressionTest/referenceImages/');        // Changed to the default
+        assert.equal(config.referenceImageDir, 'visualRegressionTest/referenceImages/'); // Changed to the default
         done();
       }
     ).withPrompts({

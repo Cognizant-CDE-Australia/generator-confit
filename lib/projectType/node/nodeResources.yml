@@ -183,12 +183,13 @@ verify:
     - packages:   # Common tools
         - <<: *pkg_eslint
         - <<: *pkg_eslint-plugin-node
+        - <<: *pkg_eslint-friendly-formatter
       templateFiles:
         - src: eslintignore.yml.tpl
           dest: .eslintignore
           overwrite: true
-        - src: eslint.yml
-          dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc
+        - src: .eslintrc.js.tpl
+          dest: <%= paths.config.configDir + resources.verify.configSubDir %>.eslintrc.js
           overwrite: true
 
     - condition: <%- verify.jsCodingStandard === 'AirBnB' %>

@@ -69,7 +69,7 @@ describe('Node Paths Generator', () => {
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'dotSlash/');
-        assert.equal(paths.output.reportDir, 'reports/');        // Changed to the default directory
+        assert.equal(paths.output.reportDir, 'reports/'); // Changed to the default directory
         done();
       }
     ).withPrompts({

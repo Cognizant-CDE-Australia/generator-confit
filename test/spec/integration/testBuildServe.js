@@ -15,9 +15,7 @@ function runSystemTest() {
   if (proc.status !== 0) {
     throw new Error(String(proc.error));
   }
-
 }
-
 
 module.exports = function() {
   describe('npm run build:serve', () => {

@@ -1,6 +1,6 @@
 'use strict';
 
-const fixtureFileName = process.env.FIXTURE;   // Passed from the testRunner
+const fixtureFileName = process.env.FIXTURE; // Passed from the testRunner
 const fs = require('fs');
 const yaml = require('js-yaml');
 

@@ -217,15 +217,15 @@ $packages:
 
   - &pkg_enzyme
     name: enzyme
-    version: 2.7.1
+    version: 2.7.1    # TODO: 2.9.1
 
   - &pkg_eslint
     name: eslint
-    version: 3.19.0
+    version: 4.5.0
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 15.0.0
+    version: 15.1.0
 
   - &pkg_eslint-config-google     # Required for Google
     name: eslint-config-google
@@ -234,6 +234,10 @@ $packages:
   - &pkg_eslint-config-standard   # Required for Standard
     name: eslint-config-standard
     version: 10.2.1
+
+  - &pkg_eslint-friendly-formatter
+    name: eslint-friendly-formatter
+    version: 3.0.0
 
   - &pkg_eslint-plugin-node       # Required for Node
     name: eslint-plugin-node
@@ -249,19 +253,19 @@ $packages:
 
   - &pkg_eslint-config-react-app    # React
     name: eslint-config-react-app
-    version: 0.5.0
+    version: 2.0.0
 
   - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
       name: eslint-plugin-import
-      version: 2.2.0
+      version: 2.7.0
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
-    version: 5.0.1
+    version: 5.1.1                # TODO v6 (when fixed): https://github.com/airbnb/javascript/issues/1474
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
-    version: 7.0.1
+    version: 7.3.0
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin

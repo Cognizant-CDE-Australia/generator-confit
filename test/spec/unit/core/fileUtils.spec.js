@@ -126,7 +126,7 @@ Fragment 2
           readCount++;
           return SINGLE_FRAGMENT_TEMPLATE;
         }
-        return 'foo bar';   // existing file does not have any fragments inside it
+        return 'foo bar'; // existing file does not have any fragments inside it
       };
       const templateData = {templateValue: 'Bravo'};
       fileUtils.updateJSFile.call(mockThis, 'readFile.js.tpl', 'destFile.js', templateData);
@@ -284,7 +284,7 @@ Fragment 2
           readCount++;
           return SINGLE_FRAGMENT_TEMPLATE;
         }
-        return 'foo bar';   // existing file does not have any fragments inside it
+        return 'foo bar'; // existing file does not have any fragments inside it
       };
       const templateData = {templateValue: 'Bravo'};
       fileUtils.updateYAMLFile.call(mockThis, 'readFile.yml.tpl', 'destFile.yml', templateData);
