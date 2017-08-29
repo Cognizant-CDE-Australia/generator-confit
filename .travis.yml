@@ -23,6 +23,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+      - oracle-java8-set-default
 
 before_install:
   # Installing Yarn - https://yarnpkg.com/en/docs/install-ci#travis-tab

@@ -80,7 +80,7 @@ testSystem:
           description: Starts the development web server and runs Protractor tests
           features:
         - name: test:system:server
-          tasks: ['selenium-standalone start > /dev/null 2>&1']
+          tasks: ['selenium-standalone start']   #  > /dev/null 2>&1
           description: Starts the Selenium server and hides output messages
           features:
         - name: ci:test:system:start
