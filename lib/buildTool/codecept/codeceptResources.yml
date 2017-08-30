@@ -15,7 +15,7 @@ testSystem:
 
   tasks:
     - name: test:system
-      tasks: ['cross-env NODE_ENV=production npm-run-all clean:prod build test:system:start']
+      tasks: ['cross-env NODE_ENV=production npm-run-all clean:prod build test:system:prod']
       description: Starts the production web server and runs Protractor tests
       features:
 
@@ -49,7 +49,7 @@ testSystem:
           tasks: ['webdriver-manager update --gecko false']
           description: Downloads ChromeDriver, GeckoDriver and SeleniumJAR for use by Codecept
           features:
-        - name: test:system:start
+        - name: test:system:prod
           tasks: ['npm-run-all -p -r serve:prod codecept']
           description: Starts the production web server and runs the tests
           features:
@@ -57,7 +57,7 @@ testSystem:
           tasks: ['npm-run-all clean:prod -p -r build:dev codecept:debug']
           description: Starts the development web server and runs Protractor tests
           features:
-        - name: ci:test:system:start
+        - name: ci:test:system:prod
           tasks: ['cross-env NODE_ENV=CI npm-run-all -p -r serve:prod "codecept -- --reporter mocha-junit-reporter"']
           description: Starts the production web server and runs the tests with NODE_ENV=CI, to run Chrome headlessly
           features:
@@ -71,7 +71,7 @@ testSystem:
           tasks: ['selenium-standalone install']
           description: Downloads ChromeDriver, GeckoDriver and SeleniumJAR for use by Codecept
           features:
-        - name: test:system:start
+        - name: test:system:prod
           tasks: ['npm-run-all -p -r test:system:server serve:prod codecept']
           description: Starts the production web server and runs the tests
           features:
@@ -83,7 +83,7 @@ testSystem:
           tasks: ['selenium-standalone start > /dev/null 2>&1']
           description: Starts the Selenium server and hides output messages
           features:
-        - name: ci:test:system:start
+        - name: ci:test:system:prod
           tasks: ['cross-env NODE_ENV=CI npm-run-all -p -r test:system:server serve:prod "codecept -- --reporter mocha-junit-reporter"']
           description: Starts the production web server and runs the tests with NODE_ENV=CI, to run Chrome headlessly
           features:
