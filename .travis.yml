@@ -8,7 +8,7 @@ node_js:
 # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
 env:
   global:
-    - NODE_ENV=CI
+    - TRAVIS=true
   matrix: # Create a build matrix from the available test files
     - TEST_SUITE_M_OF_N=1-5
     - TEST_SUITE_M_OF_N=2-5
