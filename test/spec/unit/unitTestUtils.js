@@ -44,7 +44,7 @@ function runGenerator(generatorName, confitFixture, beforeTestCb, afterCb, error
           console.error('generator before handler exception', e);
         }
       })
-      .withArguments(['--force=true'])    // Any file-conflicts, over-write
+      .withArguments(['--force=true']) // Any file-conflicts, over-write
       .withOptions({
         skipInstall: true,
         skipRun: true,

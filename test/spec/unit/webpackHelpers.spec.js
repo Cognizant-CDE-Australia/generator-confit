@@ -179,7 +179,7 @@ describe('Webpack Helpers', () => {
   describe('isWebpackDevServer()', () => {
     it('should return true when the process is running inside webpack-dev-server', () => {
       // console.log(process.argv[1]);
-      assert.equal(helpers.isWebpackDevServer(), false);  // Running inside Mocha, so this should be false
+      assert.equal(helpers.isWebpackDevServer(), false); // Running inside Mocha, so this should be false
 
       // Modify the argument for the sake of this test
       process.argv[1] = 'blah_webpack-dev-server/foo';

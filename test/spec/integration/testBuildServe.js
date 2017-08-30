@@ -7,7 +7,7 @@ const childProc = require('child_process');
  * Runs Protractor tests inside a browser
  */
 function runSystemTest() {
-  let proc = childProc.spawnSync('npm', ['run', 'test:system:prod'], {
+  let proc = childProc.spawnSync('npm', ['run', 'test:system'], {
     stdio: 'inherit',
     cwd: process.env.TEST_DIR,
   });
@@ -16,7 +16,6 @@ function runSystemTest() {
     throw new Error(String(proc.error));
   }
 }
-
 
 module.exports = function() {
   describe('npm run build:serve', () => {

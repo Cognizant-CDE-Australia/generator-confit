@@ -55,7 +55,7 @@ function main() {
   function promiseRunner(cmd, cmdParams, envData) {
     return new Promise(function(resolve, reject) {
       let proc = childProc[processRunner](cmd, cmdParams, {
-        stdio: 'inherit',    // send the child console output to the parent process (us)
+        stdio: 'inherit', // send the child console output to the parent process (us)
         // Mocha / everyone needs the entire process.env, so let's just extend it rather than replace it
         env: _.merge({}, process.env, envData),
       });

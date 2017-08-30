@@ -119,6 +119,10 @@ entryPoint:
 
 release:
   toolModules:
+    - onInstall:
+      - cmd: git    # It is safe to run this multiple times
+        args: ['init']
+
     - condition: <%- release.checkCodeCoverage %>
       packages:
         - <<: *pkg_husky
@@ -176,9 +180,6 @@ release:
           image: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
           url: http://commitizen.github.io/cz-cli/
           priority: 90
-      onInstall:
-        - cmd: git    # It is safe to run this multiple times
-          args: ['init']
 
     - condition: <%- !release.useSemantic %>
       tasks:
@@ -402,7 +403,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              -%>eslint -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
+              -%>eslint -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc.js "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js success') -%>
           description: Verify Javascript code style and syntax
         - name: verify:js:fix
           tasks:
@@ -416,7 +417,7 @@ verify:
                     completeJSPaths.push(path + ext);
                   });
                 });
-              -%>eslint --fix -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
+              -%>eslint --fix -c <%- paths.config.configDir + resources.verify.configSubDir %>.eslintrc.js "<%- completeJSPaths.join('" "') -%>"<%- onSuccessCmd('verify:js:fix success') -%>
           description: Verify Javascript code style and syntax and fix any errors that can be fixed automatically
         - name: verify:js:watch
           tasks:

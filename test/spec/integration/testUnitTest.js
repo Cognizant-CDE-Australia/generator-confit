@@ -78,7 +78,7 @@ module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCover
 
 
     describe('with a unit test that finds a failure', function() {
-      let jsFixtureFile = 'unitTest-fail.js';   // If this file is named 'unitTest-fail.spec.js', Mocha will try to run it as a unit/integration test!
+      let jsFixtureFile = 'unitTest-fail.js'; // If this file is named 'unitTest-fail.spec.js', Mocha will try to run it as a unit/integration test!
       let destFixtureFile = unitTestPath + jsFixtureFile;
 
       before(function() {

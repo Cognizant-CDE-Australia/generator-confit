@@ -1,9 +1,9 @@
 {
   "name": "Latest",
   "priority": "1",
-  "description": "Webpack 2 browser profile (16 September 2016)",
+  "description": "Webpack 3 browser profile (22 August 2017)",
   "toolMap": {
-    "app": "webpack",
+    "app": "confit",
     "buildBrowser": "webpack",
     "buildAssets": "webpack",
     "buildCSS": "webpack",
@@ -16,7 +16,7 @@
     "sampleApp": "webpack",
     "serverDev": "webpack",
     "serverProd": "npm",
-    "testSystem": "protractor",
+    "testSystem": "codecept",
     "testUnit": "webpack",
     "testVisualRegression": "npm",
     "verify": "npm",

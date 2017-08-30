@@ -1,7 +1,7 @@
 # START_CONFIT_GENERATED_CONTENT
 title: generator-confit
 repo: https://github.com/odecee/generator-confit.git
-version: 0.0.0-semantically-released
+version: 0.0.0-development
 src: docs
 output: website
 # serverPath will only be set when publishing the documentation

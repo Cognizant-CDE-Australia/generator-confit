@@ -101,6 +101,10 @@ $packages:
     name: chokidar-cli
     version: 1.2.0
 
+  - &pkg_codeceptjs
+    name: codeceptjs
+    version: 1.0.1
+
   - &pkg_commitizen
     name: commitizen
     version: 2.9.6
@@ -189,7 +193,7 @@ $packages:
 
   - &pkg_corp-semantic-release
     name: corp-semantic-release
-    version: 5.0.0
+    version: 6.2.0
 
   - &pkg_coveralls
     name: coveralls
@@ -205,7 +209,7 @@ $packages:
 
   - &pkg_cz-customizable
     name: cz-customizable
-    version: 5.0.0
+    version: 5.2.0
 
   - &pkg_cz-customizable-ghooks
     name: cz-customizable-ghooks
@@ -213,27 +217,31 @@ $packages:
 
   - &pkg_enzyme
     name: enzyme
-    version: 2.7.1
+    version: 2.7.1    # TODO: 2.9.1
 
   - &pkg_eslint
     name: eslint
-    version: 3.19.0
+    version: 4.5.0
 
   - &pkg_eslint-config-airbnb     # Required for AirBnb (useful for ES6+?)
     name: eslint-config-airbnb
-    version: 15.0.0
+    version: 15.1.0
 
   - &pkg_eslint-config-google     # Required for Google
     name: eslint-config-google
-    version: 0.7.1
+    version: 0.9.1
 
   - &pkg_eslint-config-standard   # Required for Standard
     name: eslint-config-standard
     version: 10.2.1
 
+  - &pkg_eslint-friendly-formatter
+    name: eslint-friendly-formatter
+    version: 3.0.0
+
   - &pkg_eslint-plugin-node       # Required for Node
     name: eslint-plugin-node
-    version: 4.2.2
+    version: 5.1.1
 
   - &pkg_eslint-plugin-standard   # Required by StandardJS
     name:  eslint-plugin-standard
@@ -245,19 +253,19 @@ $packages:
 
   - &pkg_eslint-config-react-app    # React
     name: eslint-config-react-app
-    version: 0.5.0
+    version: 2.0.0
 
   - &pkg_eslint-plugin-import     # Required for AirBnb (useful for ES6+?)
       name: eslint-plugin-import
-      version: 2.2.0
+      version: 2.7.0
 
   - &pkg_eslint-plugin-jsx-a11y     # Required for AirBnb (useful for ES6+?)
     name: eslint-plugin-jsx-a11y
-    version: 5.0.1
+    version: 5.1.1                # TODO v6 (when fixed): https://github.com/airbnb/javascript/issues/1474
 
   - &pkg_eslint-plugin-react      # Required for AirBnb
     name: eslint-plugin-react
-    version: 7.0.1
+    version: 7.3.0
 
   - &pkg_extract-text-webpack-plugin
     name: extract-text-webpack-plugin
@@ -266,6 +274,10 @@ $packages:
   - &pkg_file-loader
     name: file-loader
     version: 0.11.1
+
+  - &pkg_findup-sync
+    name: findup-sync
+    version: 2.0.0
 
   - &pkg_gh-pages
     name: gh-pages
@@ -317,15 +329,15 @@ $packages:
 
   - &pkg_js-yaml
     name: js-yaml
-    version: 3.8.3
+    version: 3.9.1
 
   - &pkg_karma
     name: karma
-    version: 1.6.0
+    version: 1.7.0
 
   - &pkg_karma-chrome-launcher
     name: karma-chrome-launcher
-    version: 2.0.0
+    version: 2.2.0
 
   - &pkg_karma-coverage
     name: karma-coverage
@@ -365,7 +377,15 @@ $packages:
 
   - &pkg_mocha
     name: mocha
-    version: 3.3.0
+    version: 3.5.0
+
+  - &pkg_mochawesome
+    name: mochawesome
+    version: 2.3.0
+
+  - &pkg_mocha-junit-reporter
+    name: mocha-junit-reporter
+    version: 1.13.0
 
   - &pkg_node-sass
     name: node-sass
@@ -385,6 +405,7 @@ $packages:
     version: 4.1.1
     isDependency: true
 
+  # TODO: deprecate PhantomJS
   - &pkg_phantomjs-polyfill
     name: phantomjs-polyfill
     version: 0.0.2
@@ -405,9 +426,10 @@ $packages:
     version: 7.1.1
     isDependency: true
 
+  # TODO: deprecate in favour of CodeceptJS
   - &pkg_protractor   # v5 available, but breaking changes
     name: protractor
-    version: 3.3.0
+    version: 5.1.2
 
   - &pkg_react
     name: react
@@ -465,6 +487,10 @@ $packages:
     name: semantic-release-cli
     version: 3.0.3
     global: true
+
+  - &pkg_selenium-standalone
+    name: selenium-standalone
+    version: 6.8.0
 
   - &pkg_serve
     name: serve
@@ -546,6 +572,10 @@ $packages:
   - &pkg_@types/webpack
     name: '@types/webpack'
     version: 2.2.4
+
+  - &pkg_webdriverio
+    name: webdriverio
+    version: 4.8.0
 
   - &pkg_webpack
     name: webpack

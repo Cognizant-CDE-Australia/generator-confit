@@ -1,6 +1,6 @@
 {
   "name": "generator-confit",
-  "version": "0.0.0-semantically-released",
+  "version": "0.0.0-development",
   "description": "Yeoman generator for creating the development process, tools and a sample project for current-generation web applications",
   "keywords": [
     "build-system",
@@ -34,6 +34,10 @@
     {
       "name": "Antoine Savignac",
       "email": "asavignac@odecee.com.au"
+    },
+    {
+      "name": "Nivesh Ravindran",
+      "email": "nravindran@odecee.com.au"
     }
   ],
   "files": [
@@ -53,6 +57,7 @@
     "build": "cross-env NODE_ENV=production npm run clean:prod",
     "check-for-updates": "node config/check-update/checkForUpdates.js",
     "clean:prod": "rimraf dist/",
+    "precommit": "exact-semver",
     "commitmsg": "cz-customizable-ghooks",
     "coverage": "npm-run-all test:coverage test:check-coverage",
     "dev": "cross-env NODE_ENV=development npm run verify:watch",
@@ -66,9 +71,8 @@
     "docs:prepublish": "node config/docs/prepublish.js",
     "docs:publish": "npm-run-all docs:prepublish docs:clean docs:build docs:_publish docs:postpublish",
     "docs:serve": "http-server website/ -o",
-    "precommit": "exact-semver",
     "prepush": "npm-run-all verify test:coverage --silent",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post && npm run docs:publish",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "start": "npm run dev",
     "test": "npm-run-all updateFixtures test:unit:once test:int",
     "test:check-coverage": "cross-env NODE_ENV=test istanbul check-coverage reports/coverage/coverage.json --config config/testUnit/istanbul.js",
@@ -79,8 +83,8 @@
     "updateFixtures": "node test/updateFixtures.js",
     "upload-coverage": "cat reports/coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "verify": "npm run verify:js --silent",
-    "verify:js": "eslint -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js success",
-    "verify:js:fix": "eslint --fix -c config/verify/.eslintrc \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js:fix success",
+    "verify:js": "eslint -c config/verify/.eslintrc.js \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js success",
+    "verify:js:fix": "eslint --fix -c config/verify/.eslintrc.js \"lib/**/*.js\" \"test/**/*.js\" \"config/**/*.js\" && echo ✅ verify:js:fix success",
     "verify:js:watch": "chokidar 'lib/**/*.js' 'test/**/*.js' 'config/**/*.js' -c 'npm run verify:js:fix' --initial --silent",
     "verify:watch": "npm run verify:js:watch --silent"
   },
@@ -103,44 +107,45 @@
     "lodash-deep": "2.0.0",
     "parse-repo": "1.0.1",
     "sort-keys": "1.1.2",
-    "yeoman-generator": "0.24.1",
     "sort-package-json": "1.6.1",
     "spdx-license-list": "3.0.0",
-    "update-notifier": "2.1.0"
+    "update-notifier": "2.1.0",
+    "yeoman-generator": "0.24.1"
   },
   "devDependencies": {
     "async": "1.5.2",
     "chokidar-cli": "1.2.0",
-    "coveralls": "2.11.15",
+    "coveralls": "2.13.1",
     "cross-env": "3.1.4",
-    "cz-customizable": "4.0.0",
+    "cz-customizable": "5.2.0",
     "cz-customizable-ghooks": "1.5.0",
-    "eslint": "3.14.1",
-    "eslint-config-google": "0.7.1",
-    "eslint-plugin-node": "3.0.5",
+    "eslint": "4.5.0",
+    "eslint-config-google": "0.9.1",
+    "eslint-friendly-formatter": "3.0.0",
+    "eslint-plugin-node": "5.1.1",
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "gh-pages": "0.12.0",
-    "highlightjs": "9.8.0",
-    "http-server": "0.9.0",
-    "husky": "0.13.1",
+    "highlightjs": "9.10.0",
+    "http-server": "0.10.0",
+    "husky": "0.13.3",
     "istanbul": "0.4.5",
-    "latest-version": "2.0.0",
-    "mocha": "3.2.0",
+    "latest-version": "3.1.0",
+    "mocha": "3.5.0",
     "npm-check-updates": "2.8.9",
     "npm-module-checklist": "1.6.0",
-    "npm-run-all": "4.0.1",
+    "npm-run-all": "4.0.2",
     "postcss": "5.0.21",
-    "rimraf": "2.5.4",
-    "semantic-release": "6.3.2",
+    "rimraf": "2.6.1",
+    "semantic-release": "7.0.2",
     "swanky": "2.5.0",
     "swanky-processor-ngdocs": "2.2.3",
-    "webpack": "2.2.0",
+    "webpack": "2.4.1",
     "yeoman-assert": "3.0.0",
     "yeoman-test": "1.6.0"
   },
   "engines": {
-    "node": ">=4.x",
+    "node": ">=6.x",
     "npm": ">=3.9.5"
   }
 }

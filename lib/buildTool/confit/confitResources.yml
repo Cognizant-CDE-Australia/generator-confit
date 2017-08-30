@@ -1,0 +1,26 @@
+app:
+
+  packages:
+    - <<: *pkg_js-yaml
+    - <<: *pkg_findup-sync
+
+  tasks:
+    - name: postinstall
+      tasks: ['npm-run-all postinstall:*']
+      description: Runs all post-install tasks
+
+  templateFiles:
+    - src: helpers/*
+      dest: <%= paths.config.configDir + resources.confitLib.configSubDir%>helpers
+      overwrite: true
+      noParse: true
+
+    - src: confit.config.js.tpl
+      dest: <%= paths.config.configDir + resources.confitLib.configSubDir%>confit.config.js
+      overwrite: true
+
+    - src: README.md
+      dest: <%= paths.config.configDir + resources.confitLib.configSubDir%>README.md
+      overwrite: true
+
+

@@ -82,8 +82,8 @@ describe('Browser Paths Generator', () => {
         let paths = confit['generator-confit'].paths;
 
         assert.equal(paths.input.srcDir, 'dotSlash/');
-        assert.equal(paths.input.modulesSubDir, '');      // This is the only directory that can be blank
-        assert.equal(paths.output.devDir, 'dev/');        // Changed to the default directory
+        assert.equal(paths.input.modulesSubDir, ''); // This is the only directory that can be blank
+        assert.equal(paths.output.devDir, 'dev/'); // Changed to the default directory
         done();
       }
     ).withPrompts({

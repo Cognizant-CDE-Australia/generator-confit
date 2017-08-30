@@ -92,6 +92,10 @@ documentation:
   # There are no packages/templates to install globally, so no need to add a condition: here
 
 
+confitLib:
+  configSubDir: confit/
+
+
 # README section for the template tags that will appear inside the README.md template
 # All of these properties are COMMON across all project types
 readme:
