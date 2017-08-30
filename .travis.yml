@@ -7,12 +7,14 @@ node_js:
 # Need to specify a GCC compiler now!
 # https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements
 env:
-  # Create a build matrix from the available test files
-  - CXX=g++-4.8 TEST_SUITE_M_OF_N=1-5
-  - CXX=g++-4.8 TEST_SUITE_M_OF_N=2-5
-  - CXX=g++-4.8 TEST_SUITE_M_OF_N=3-5
-  - CXX=g++-4.8 TEST_SUITE_M_OF_N=4-5
-  - CXX=g++-4.8 TEST_SUITE_M_OF_N=5-5
+  global:
+    - NODE_ENV=CI
+  matrix: # Create a build matrix from the available test files
+    - TEST_SUITE_M_OF_N=1-5
+    - TEST_SUITE_M_OF_N=2-5
+    - TEST_SUITE_M_OF_N=3-5
+    - TEST_SUITE_M_OF_N=4-5
+    - TEST_SUITE_M_OF_N=5-5
 
 matrix:
   fast-finish: true     # https://docs.travis-ci.com/user/customizing-the-build/#Fast-Finishing
@@ -44,7 +46,6 @@ before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - sleep 3 # give xvfb some time to start
-  - pkill -f selenium-standalone    # Kill selenium standalone, in case it *is* running
 
 script:
   - npm run pre-release
