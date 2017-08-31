@@ -95,7 +95,7 @@ $packages:
 
   - &pkg_backstopjs
     name: backstopjs
-    version: 2.7.0
+    version: 3.0.22
 
   - &pkg_chokidar-cli
     name: chokidar-cli
@@ -351,10 +351,6 @@ $packages:
     name: karma-junit-reporter
     version: 1.2.0
 
-  - &pkg_karma-phantomjs-launcher
-    name: karma-phantomjs-launcher
-    version: 1.0.4
-
   - &pkg_karma-sourcemap-loader
     name: karma-sourcemap-loader
     version: 0.3.7
@@ -405,18 +401,6 @@ $packages:
     version: 4.1.1
     isDependency: true
 
-  # TODO: deprecate PhantomJS
-  - &pkg_phantomjs-polyfill
-    name: phantomjs-polyfill
-    version: 0.0.2
-
-  - &pkg_phantomjs-prebuilt
-    name: phantomjs-prebuilt
-    version: 2.1.14
-    # For karma-phantomjs-launcher to work, this package *must* appaear in package.json
-    # So install it globally AND include it in package.json
-    global: both
-
   - &pkg_postcss-loader
     name: postcss-loader
     version: 1.3.3
@@ -426,8 +410,7 @@ $packages:
     version: 7.1.1
     isDependency: true
 
-  # TODO: deprecate in favour of CodeceptJS
-  - &pkg_protractor   # v5 available, but breaking changes
+  - &pkg_protractor
     name: protractor
     version: 5.1.2
 

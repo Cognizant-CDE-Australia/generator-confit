@@ -13,9 +13,6 @@
 // START_CONFIT_GENERATED_CONTENT
 Error.stackTraceLimit = Infinity;
 
-// Polyfill required for PhantomJS
-require('phantomjs-polyfill');
-
 // Load the test dependencies!
 <%
 

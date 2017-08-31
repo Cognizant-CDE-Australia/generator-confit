@@ -272,13 +272,10 @@ testUnit:
     - <<: *pkg_karma-coverage
     - <<: *pkg_karma-jasmine
     - <<: *pkg_karma-junit-reporter
-    - <<: *pkg_karma-phantomjs-launcher
     - <<: *pkg_karma-sourcemap-loader
     - <<: *pkg_karma-threshold-reporter
     - <<: *pkg_karma-webpack
     - <<: *pkg_jasmine-core
-    - <<: *pkg_phantomjs-prebuilt
-    - <<: *pkg_phantomjs-polyfill
     - <<: *pkg_@types/jasmine
 
   tasks:

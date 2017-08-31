@@ -20,6 +20,8 @@ function getConfitConfig(config) {
 
 
   if (debugMode) {
+    commonConfig.browsers = ['Chrome']; // Use Chrome
+
     <% if (buildJS.sourceFormat === 'TypeScript') { %>
     var webpackHelpers = require('../webpack/webpackHelpers.js')();
     // Remove the coverage reporter, otherwise it runs against the instrumented code, making it difficult to debug the code.
