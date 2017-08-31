@@ -53,14 +53,24 @@ let karmaConfig = {
   // web server default port
   port: 8081,
 
-  // Start these browsers, currently available:
-  // - Chrome, ChromeCanary, Firefox, Opera, Safari (only Mac), PhantomJS, IE (only Windows)
+  // Browser to test with
   browsers: [
-    'PhantomJS'
+    'ChromeHeadless'
   ],
+  customLaunchers: {
+    ChromeHeadless: {
+      base: 'Chrome',
+      flags: [
+        '--no-sandbox',
+        // See https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
+        '--headless',
+        '--disable-gpu',
+        '--remote-debugging-port=9222',
+      ],
+    },
+  },
 
   plugins: [
-    'karma-phantomjs-launcher',
     'karma-jasmine',
     'karma-junit-reporter',
     'karma-coverage',
@@ -71,7 +81,6 @@ let karmaConfig = {
   ],
 
   files: [
-    'node_modules/phantomjs-polyfill/bind-polyfill.js',
     '<%- paths.config.configDir + resources.testUnit.configSubDir %>test.files.js'
   ],
 

@@ -30,7 +30,7 @@ testSystem:
       features:
 
   templateFiles:
-    - src: codeceptHelper.js
+    - src: helpers/codeceptHelper.js
       dest: <%= paths.config.configDir + resources.confitLib.configSubDir%>codecept/helper.js
       overwrite: true
 

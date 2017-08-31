@@ -46,7 +46,7 @@ let config = {
     testReportFileName: vis-reg-unit.xml
     testSuiteName:  'backstopJS'
   }
-  engine: 'phantomjs',
+  engine: 'chrome',
   report: ['CLI', 'browser', 'CI'],
   casperFlags: [
     '--ignore-ssl-errors=true',
