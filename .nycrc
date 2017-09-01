@@ -1,0 +1,25 @@
+{
+    "check-coverage": true,
+    "per-file": false,
+    "statements": 75,
+    "branches": 65,
+    "functions": 75,
+    "lines": 75,
+    "include": [
+      "lib/**/*.js"
+    ],
+    "exclude": [
+      "test/**/*.spec.js",
+      "lib/**/templates/*"
+    ],
+    "reporter": [
+      "lcovonly",
+      "html",
+      "text",
+      "cobertura",
+      "json"
+    ],
+    "cache": true,
+    "all": true,
+    "report-dir": "./reports/coverage/"
+}

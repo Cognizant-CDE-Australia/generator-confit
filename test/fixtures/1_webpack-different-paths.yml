@@ -35,7 +35,7 @@ generator-confit:
   buildAssets:
     _version: 1323fcb6eabaf6e8a432e153dc2c7c2cce334b60
   buildCSS:
-    _version: fb21b6f45ccbaa55f597373e5d4a6221aba2a588
+    _version: 9ebc86bc0ed6103b9ca161bb6cdf7f90fdba72f5
     autoprefixer: true
     sourceFormat: stylus
   buildJS:
@@ -69,7 +69,7 @@ generator-confit:
     port: 3002
     protocol: https
   testUnit:
-    _version: e285a799d89f7e426be4b7020a6fd42613e67d72
+    _version: 30eee42a88ee42cce4f1ae48fe0cbe81647d189a
   testSystem:
     _version: e0d26db1dcc5b64990c14bd56d2c4fa5b55916e7
   testVisualRegression:

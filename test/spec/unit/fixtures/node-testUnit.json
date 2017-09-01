@@ -1,0 +1,11 @@
+{
+  "generator-confit": {
+    "app": {
+      "buildProfile": "null",
+      "projectType": "node"
+    },
+    "buildJS": {
+      "framework": []
+    }
+  }
+}
