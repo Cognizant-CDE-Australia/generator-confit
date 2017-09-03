@@ -126,6 +126,7 @@
     "exact-semver": "1.2.0",
     "freeport": "1.0.5",
     "gh-pages": "0.12.0",
+    "glob-fs": "0.1.7",
     "highlightjs": "9.10.0",
     "http-server": "0.10.0",
     "husky": "0.13.3",
