@@ -238,12 +238,13 @@ release:
     - condition: <%- app.repositoryType === 'GitHub' && release.checkCodeCoverage %>
       tasks:
         - name: upload-coverage
-          tasks: ['cat <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js']
+          tasks: ['cat <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %><%- app.projectType === "node" ? "" : "lcov/" %>lcov.info | coveralls']
           description: Uploads code-coverage metrics to Coveralls.io
           features:
             - Setup - https://coveralls.zendesk.com/hc/en-us/articles/201347419-Coveralls-currently-supports
             - Define an environment variable called COVERALLS_REPO_TOKEN in your build environment with the repo token from https://coveralls.io/github/<repo-name>/settings
             - In your CI configuration (e.g. `travis.yml`), call `npm run upload-coverage` if the build is successful.
+
 
 sampleApp:
 
@@ -280,19 +281,22 @@ testUnit:
   packages:
     - <<: *pkg_chokidar-cli
     - <<: *pkg_mocha
-    - <<: *pkg_istanbul
+    - <<: *pkg_mocha-multi-reporters
+    - <<: *pkg_mocha-junit-reporter
+    - <<: *pkg_nyc
 
   templateFiles:
-    - src: istanbul.js
-      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js
+    - src: nycrc.json.tpl
+      dest: .nycrc
       overwrite: true
 
     - src: mocha.opts
       dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts
       overwrite: true
 
-    - src: thresholds.json
-      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>thresholds.json
+    - src: reporters.json
+      dest: <%- paths.config.configDir + resources.testUnit.configSubDir %>reporters.json
+      overwrite: true
 
   tasks:
     - name: test
@@ -301,18 +305,7 @@ testUnit:
       features: []
 
     - name: test:unit
-      tasks:
-        - >
-          <%
-            var jsExtensions = resources.buildJS.sourceFormat[buildJS.sourceFormat].ext;
-            var testWatchPaths = [paths.input.srcDir + '**/*.', paths.input.unitTestDir + '**/*.'];
-            var completeTestPaths = [];
-            testWatchPaths.forEach(function(path) {
-              jsExtensions.forEach(function(ext) {
-                completeTestPaths.push(path + ext);
-              });
-            });
-          -%>chokidar '<%- completeTestPaths.join('\' \'') -%>' -c 'npm run test:unit:once' --initial --silent<% -%>
+      tasks: ['cross-env NODE_ENV=test nyc mocha --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts -w']
       description: Run unit tests whenever JS source or tests change
       features:
         - Uses Mocha
@@ -320,15 +313,14 @@ testUnit:
         - Runs continuously (best to run in a separate window)
 
     - name: test:unit:once
-      # Note the use of "_mocha" instead of "mocha". "_mocha" is the real executable, "mocha" is a wrapper.
-      tasks: ['cross-env NODE_ENV=test istanbul cover --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js _mocha -- --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
+      tasks: ['cross-env NODE_ENV=test nyc mocha --opts <%- paths.config.configDir + resources.testUnit.configSubDir %>mocha.opts']
       description: Run unit tests once
       features:
         - Uses Mocha
         - Code coverage
 
     - name: test:check-coverage
-      tasks: ['cross-env NODE_ENV=test istanbul check-coverage <%- paths.output.reportDir + resources.testUnit.coverageReportSubDir %>coverage.json --config <%- paths.config.configDir + resources.testUnit.configSubDir %>istanbul.js']
+      tasks: ['nyc check-coverage']
       description:
       features:
 

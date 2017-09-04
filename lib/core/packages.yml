@@ -307,10 +307,6 @@ $packages:
     name: husky
     version: 0.13.3
 
-  - &pkg_istanbul   # Seems to some work towards an alpha version, but hundreds of open issues and tens of pull requests
-    name: istanbul
-    version: 0.4.5
-
   - &pkg_istanbul-instrumenter-loader
     name: istanbul-instrumenter-loader
     version: 0.2.0
@@ -379,6 +375,10 @@ $packages:
     name: mochawesome
     version: 2.3.0
 
+  - &pkg_mocha-multi-reporters
+    name: mocha-multi-reporters
+    version: 1.1.5
+
   - &pkg_mocha-junit-reporter
     name: mocha-junit-reporter
     version: 1.13.0
@@ -395,6 +395,10 @@ $packages:
   - &pkg_npm-run-all
     name: npm-run-all
     version: 4.0.2
+
+  - &pkg_nyc
+    name: nyc
+    version: 11.1.0
 
   - &pkg_object-assign    # Polyfill for Object.assign (used by React)
     name: object-assign

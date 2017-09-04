@@ -10,50 +10,63 @@ const GENERATOR_UNDER_TEST = 'testUnit';
 
 
 describe('testUnit Generator', () => {
-  it('should generate test config when there are no test dependencies due to a JS framework', (done) => {
-    utils.runGenerator(
+  /**
+   * Boilerplate test-harness for testUnit generator
+   * @param {function} done
+   * @param {string} confitInputFile
+   * @param {function} assertions
+   * @param {string} expectedFramework
+   * @param {string[]} expectedTestDependencies
+   * @return {GeneratorHelper}
+   */
+  function runGenerator(done, {confitInputFile = 'testUnit-no-test-deps.json', expectedFramework, expectedTestDependencies = []}, assertions = () => {}) {
+    return utils.runGenerator(
       GENERATOR_UNDER_TEST,
-      'testUnit-no-test-deps.json',
+      confitInputFile,
       utils.noop,
       function after() {
         yoassert.file(['confit.yml']);
         let confit = yaml.load(fs.readFileSync('confit.yml'));
+        let testUnitConfig = confit['generator-confit'].testUnit;
 
-        assert.equal(confit['generator-confit'].testUnit.testDependencies.length, 0);
+        assert.equal(testUnitConfig.testFramework, expectedFramework);
+        assert.equal(testUnitConfig.testDependencies.length, expectedTestDependencies.length);
 
-        // Package.json is not even created
-        yoassert.noFile(['package.json']);
+        // additional assertions
+        assertions();
+
         done();
       }
     );
+  }
+
+  it('should generate test config for browser projects with a default testFramework and no dependencies', (done) => {
+    runGenerator(done, {expectedFramework: 'jasmine', expectedTestDependencies: []}, () => yoassert.noFile(['package.json']));
+  });
+
+  it('should generate test config for node projects with a default testFramework and no dependencies', (done) => {
+    runGenerator(done, {confitInputFile: 'node-testUnit.json', expectedFramework: 'mocha', expectedTestDependencies: []}, () => yoassert.noFile(['package.json']));
+  });
+
+
+  it('should generate test config for browser projects with a specified testFramework and no dependencies', (done) => {
+    runGenerator(done, {expectedFramework: 'mocha', expectedTestDependencies: []}, () => yoassert.noFile(['package.json']))
+      .withPrompts({
+        'testFramework': 'mocha',
+      });
   });
 
 
   it('should generate test dependencies when there are IS a JS framework which has test dependencies', (done) => {
-    utils.runGenerator(
-      GENERATOR_UNDER_TEST,
-      'testUnit-framework-with-test-deps.json',
-      utils.noop,
-      function after() {
-        // Confit.yml should now have an angular-mocks reference
-        yoassert.file(['confit.yml']);
-        let confit = yaml.load(fs.readFileSync('confit.yml'));
-        let testDeps = confit['generator-confit'].testUnit.testDependencies;
+    runGenerator(done, {
+      confitInputFile: 'testUnit-framework-with-test-deps.json',
+      expectedFramework: 'jasmine',
+      expectedTestDependencies: ['angular', 'angular-mocks'],
+    }, () => {
+      yoassert.file(['package.json']);
+      let pkg = fs.readJsonSync('package.json');
 
-        assert.equal(testDeps.length, 2);
-        assert.equal(testDeps[0], 'angular');
-        assert.equal(testDeps[1], 'angular-mocks');
-        // assert.equal(testDeps[2], '@types/angular');
-        // assert.equal(testDeps[3], '@types/angular-mocks');
-
-        // And package.json should have a new dependency
-        yoassert.file(['package.json']);
-        let pkg = fs.readJsonSync('package.json');
-
-        assert.ok(pkg.devDependencies['angular-mocks'], 'Dev dependency exists');
-
-        done();
-      }
-    );
+      assert.ok(pkg.devDependencies['angular-mocks'], 'Dev dependency exists');
+    });
   });
 });

@@ -176,6 +176,13 @@ readme:
 sampleApp:
   demoDir: demo/   # This is ALWAYS a subdirectory of the srcDir directory
 
+testUnit:
+  defaults:
+    testFramework: mocha
+
+  testFrameworks:
+    - mocha
+
 verify:
   verifyTasks: ['verify:js']
 

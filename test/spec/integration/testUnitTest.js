@@ -4,6 +4,7 @@ const assert = require('assert');
 const childProc = require('child_process');
 const fs = require('fs-extra');
 const path = require('path');
+const glob = require('glob-fs')({builtins: false});
 
 const FIXTURE_DIR = path.join(__dirname, '/fixtures/');
 
@@ -25,13 +26,14 @@ module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCover
   describe(commandToRun, () => {
     it(`should pass the unit tests in the sampleApp code ${hasCodeCoverage ? 'WITH' : 'WITHOUT'} code coverage`, function() {
       let reportDir = path.join(process.env.TEST_DIR, confitConfig.paths.output.reportDir);
+      let relativeReportDir = reportDir.replace(process.cwd() + '/', '');
       fs.removeSync(reportDir); // Remove the directory
 
       assert.doesNotThrow(() => runCommand(commandToRun));
 
       if (hasCodeCoverage) {
         assert(fs.existsSync(reportDir + 'coverage/') === true, 'Coverage dir exists');
-        assert(fs.existsSync(reportDir + 'coverage/lcov/lcov.info') === true, 'lcov/lcov.info exists');
+        assert(glob.readdirSync(relativeReportDir + 'coverage/**/lcov.info').length > 0, 'lcov.info exists'); // Could be in sub directory
       } else {
         assert(fs.existsSync(reportDir + 'coverage/') === false, 'Coverage directory does NOT exist');
       }
@@ -50,18 +52,27 @@ module.exports = function(confitConfig, unitTestPath, commandToRun, hasCodeCover
       // All files       |    80.95 |      100 |    33.33 |    76.47 |                |
       // ----------------|----------|----------|----------|----------|----------------|
 
+      // This format is now appearing with nyc:
+      // ----------|----------|----------|----------|----------|----------------|
+      // File      |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+      // ----------|----------|----------|----------|----------|----------------|
+      // All files |       80 |      100 |       50 |      100 |                |
+      //  index.js |       80 |      100 |       50 |      100 |                |
+      // ----------|----------|----------|----------|----------|----------------|
+
+
       let result = runCommand(commandToRun).toString();
 
       console.log(result);
       let results = result.split('\n');
       let fileLine = results.findIndex((item) => item.indexOf('File ') === 0);
       let allFilesLine = results.findIndex((item) => item.indexOf('All files ') === 0);
-      let filesCovered = allFilesLine - fileLine;
+      let filesCovered = Math.abs(allFilesLine - fileLine);
 
       // console.log(results.length, fileLine, allFilesLine, filesCovered);
 
       if (hasCodeCoverage) {
-        assert(filesCovered > 3, 'Files were covered');
+        assert(filesCovered > 1, 'Files were covered');
 
         let summaryLine = results.filter((item) => item.indexOf('All files') === 0);
 

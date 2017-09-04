@@ -539,8 +539,14 @@ serverProd:
 
 testSystem: {}
 
-
 testUnit:
+  defaults:
+    testFramework: jasmine
+
+  testFrameworks:
+    - jasmine
+    - mocha
+
   configModules:
     - condition: <%- buildJS.framework.indexOf('AngularJS 1.x') > -1 %>
       <<: *ng1TestPackages
